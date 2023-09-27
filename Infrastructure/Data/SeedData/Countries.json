@@ -1,0 +1,1752 @@
+[
+  {
+    "Id": 1,
+    "CountryName": "Afghanistan",
+    "Country3LetterCode": "AFG",
+    "Country2LetterCode": "AF",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 2,
+    "CountryName": "Aland Islands",
+    "Country3LetterCode": "ALA",
+    "Country2LetterCode": "AX",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 3,
+    "CountryName": "Albania",
+    "Country3LetterCode": "ALB",
+    "Country2LetterCode": "AL",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 4,
+    "CountryName": "Algeria",
+    "Country3LetterCode": "DZA",
+    "Country2LetterCode": "DZ",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 5,
+    "CountryName": "American Samoa",
+    "Country3LetterCode": "ASM",
+    "Country2LetterCode": "AS",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 6,
+    "CountryName": "Andorra",
+    "Country3LetterCode": "AND",
+    "Country2LetterCode": "AD",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 7,
+    "CountryName": "Angola",
+    "Country3LetterCode": "AGO",
+    "Country2LetterCode": "AO",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 8,
+    "CountryName": "Anguilla",
+    "Country3LetterCode": "AIA",
+    "Country2LetterCode": "AI",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 9,
+    "CountryName": "Antarctica",
+    "Country3LetterCode": "ATA",
+    "Country2LetterCode": "AQ",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 10,
+    "CountryName": "Antigua and Barbuda",
+    "Country3LetterCode": "ATG",
+    "Country2LetterCode": "AG",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 11,
+    "CountryName": "Argentina",
+    "Country3LetterCode": "ARG",
+    "Country2LetterCode": "AR",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 12,
+    "CountryName": "Armenia",
+    "Country3LetterCode": "ARM",
+    "Country2LetterCode": "AM",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 13,
+    "CountryName": "Aruba",
+    "Country3LetterCode": "ABW",
+    "Country2LetterCode": "AW",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 14,
+    "CountryName": "Australia",
+    "Country3LetterCode": "AUS",
+    "Country2LetterCode": "AU",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 15,
+    "CountryName": "Austria",
+    "Country3LetterCode": "AUT",
+    "Country2LetterCode": "AT",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 16,
+    "CountryName": "Azerbaijan",
+    "Country3LetterCode": "AZE",
+    "Country2LetterCode": "AZ",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 17,
+    "CountryName": "Bahamas",
+    "Country3LetterCode": "BHS",
+    "Country2LetterCode": "BS",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 18,
+    "CountryName": "Bahrain",
+    "Country3LetterCode": "BHR",
+    "Country2LetterCode": "BH",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 19,
+    "CountryName": "Bangladesh",
+    "Country3LetterCode": "BGD",
+    "Country2LetterCode": "BD",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 20,
+    "CountryName": "Barbados",
+    "Country3LetterCode": "BRB",
+    "Country2LetterCode": "BB",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 21,
+    "CountryName": "Belarus",
+    "Country3LetterCode": "BLR",
+    "Country2LetterCode": "BY",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 22,
+    "CountryName": "Belgium",
+    "Country3LetterCode": "BEL",
+    "Country2LetterCode": "BE",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 23,
+    "CountryName": "Belize",
+    "Country3LetterCode": "BLZ",
+    "Country2LetterCode": "BZ",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 24,
+    "CountryName": "Benin",
+    "Country3LetterCode": "BEN",
+    "Country2LetterCode": "BJ",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 25,
+    "CountryName": "Bermuda",
+    "Country3LetterCode": "BMU",
+    "Country2LetterCode": "BM",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 26,
+    "CountryName": "Bhutan",
+    "Country3LetterCode": "BTN",
+    "Country2LetterCode": "BT",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 27,
+    "CountryName": "Bolivia",
+    "Country3LetterCode": "BOL",
+    "Country2LetterCode": "BO",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 28,
+    "CountryName": "Bonaire, Sint Eustatius and Saba",
+    "Country3LetterCode": "BES",
+    "Country2LetterCode": "BQ",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 29,
+    "CountryName": "Bosnia and Herzegovina",
+    "Country3LetterCode": "BIH",
+    "Country2LetterCode": "BA",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 30,
+    "CountryName": "Botswana",
+    "Country3LetterCode": "BWA",
+    "Country2LetterCode": "BW",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 31,
+    "CountryName": "Bouvet Island",
+    "Country3LetterCode": "BVT",
+    "Country2LetterCode": "BV",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 32,
+    "CountryName": "Brazil",
+    "Country3LetterCode": "BRA",
+    "Country2LetterCode": "BR",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 33,
+    "CountryName": "British Indian Ocean Territory",
+    "Country3LetterCode": "IOT",
+    "Country2LetterCode": "IO",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 34,
+    "CountryName": "Brunei",
+    "Country3LetterCode": "BRN",
+    "Country2LetterCode": "BN",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 35,
+    "CountryName": "Bulgaria",
+    "Country3LetterCode": "BGR",
+    "Country2LetterCode": "BG",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 36,
+    "CountryName": "Burkina Faso",
+    "Country3LetterCode": "BFA",
+    "Country2LetterCode": "BF",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 37,
+    "CountryName": "Burundi",
+    "Country3LetterCode": "BDI",
+    "Country2LetterCode": "BI",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 38,
+    "CountryName": "Cambodia",
+    "Country3LetterCode": "KHM",
+    "Country2LetterCode": "KH",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 39,
+    "CountryName": "Cameroon",
+    "Country3LetterCode": "CMR",
+    "Country2LetterCode": "CM",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 40,
+    "CountryName": "Canada",
+    "Country3LetterCode": "CAN",
+    "Country2LetterCode": "CA",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 41,
+    "CountryName": "Cape Verde",
+    "Country3LetterCode": "CPV",
+    "Country2LetterCode": "CV",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 42,
+    "CountryName": "Cayman Islands",
+    "Country3LetterCode": "CYM",
+    "Country2LetterCode": "KY",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 43,
+    "CountryName": "Central African Republic",
+    "Country3LetterCode": "CAF",
+    "Country2LetterCode": "CF",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 44,
+    "CountryName": "Chad",
+    "Country3LetterCode": "TCD",
+    "Country2LetterCode": "TD",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 45,
+    "CountryName": "Chile",
+    "Country3LetterCode": "CHL",
+    "Country2LetterCode": "CL",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 46,
+    "CountryName": "China, People's Republic of",
+    "Country3LetterCode": "CHN",
+    "Country2LetterCode": "CN",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 47,
+    "CountryName": "Christmas Island",
+    "Country3LetterCode": "CXR",
+    "Country2LetterCode": "CX",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 48,
+    "CountryName": "Cocos (Keeling) Islands",
+    "Country3LetterCode": "CCK",
+    "Country2LetterCode": "CC",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 49,
+    "CountryName": "Colombia",
+    "Country3LetterCode": "COL",
+    "Country2LetterCode": "CO",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 50,
+    "CountryName": "Comoros",
+    "Country3LetterCode": "COM",
+    "Country2LetterCode": "KM",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 51,
+    "CountryName": "Congo",
+    "Country3LetterCode": "COG",
+    "Country2LetterCode": "CG",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 52,
+    "CountryName": "Congo, the Democratic Republic of the",
+    "Country3LetterCode": "COD",
+    "Country2LetterCode": "CD",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 53,
+    "CountryName": "Cook Islands",
+    "Country3LetterCode": "COK",
+    "Country2LetterCode": "CK",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 54,
+    "CountryName": "Costa Rica",
+    "Country3LetterCode": "CRI",
+    "Country2LetterCode": "CR",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 55,
+    "CountryName": "Cote d'Ivoire",
+    "Country3LetterCode": "CIV",
+    "Country2LetterCode": "CI",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 56,
+    "CountryName": "Croatia",
+    "Country3LetterCode": "HRV",
+    "Country2LetterCode": "HR",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 57,
+    "CountryName": "Cuba",
+    "Country3LetterCode": "CUB",
+    "Country2LetterCode": "CU",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 58,
+    "CountryName": "Curacao",
+    "Country3LetterCode": "CUW",
+    "Country2LetterCode": "CW",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 59,
+    "CountryName": "Cyprus",
+    "Country3LetterCode": "CYP",
+    "Country2LetterCode": "CY",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 60,
+    "CountryName": "Czech Republic",
+    "Country3LetterCode": "CZE",
+    "Country2LetterCode": "CZ",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 61,
+    "CountryName": "Denmark",
+    "Country3LetterCode": "DNK",
+    "Country2LetterCode": "DK",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 62,
+    "CountryName": "Djibouti",
+    "Country3LetterCode": "DJI",
+    "Country2LetterCode": "DJ",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 63,
+    "CountryName": "Dominica",
+    "Country3LetterCode": "DMA",
+    "Country2LetterCode": "DM",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 64,
+    "CountryName": "Dominican Republic",
+    "Country3LetterCode": "DOM",
+    "Country2LetterCode": "DO",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 65,
+    "CountryName": "Ecuador",
+    "Country3LetterCode": "ECU",
+    "Country2LetterCode": "EC",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 66,
+    "CountryName": "Egypt",
+    "Country3LetterCode": "EGY",
+    "Country2LetterCode": "EG",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 67,
+    "CountryName": "El Salvador",
+    "Country3LetterCode": "SLV",
+    "Country2LetterCode": "SV",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 68,
+    "CountryName": "Equatorial Guinea",
+    "Country3LetterCode": "GNQ",
+    "Country2LetterCode": "GQ",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 69,
+    "CountryName": "Eritrea",
+    "Country3LetterCode": "ERI",
+    "Country2LetterCode": "ER",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 70,
+    "CountryName": "Estonia",
+    "Country3LetterCode": "EST",
+    "Country2LetterCode": "EE",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 71,
+    "CountryName": "Ethiopia",
+    "Country3LetterCode": "ETH",
+    "Country2LetterCode": "ET",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 72,
+    "CountryName": "Falkland Islands (Malvinas)",
+    "Country3LetterCode": "FLK",
+    "Country2LetterCode": "FK",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 73,
+    "CountryName": "Faroe Islands",
+    "Country3LetterCode": "FRO",
+    "Country2LetterCode": "FO",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 74,
+    "CountryName": "Fiji",
+    "Country3LetterCode": "FJI",
+    "Country2LetterCode": "FJ",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 75,
+    "CountryName": "Finland",
+    "Country3LetterCode": "FIN",
+    "Country2LetterCode": "FI",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 76,
+    "CountryName": "France",
+    "Country3LetterCode": "FRA",
+    "Country2LetterCode": "FR",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 77,
+    "CountryName": "French Guiana",
+    "Country3LetterCode": "GUF",
+    "Country2LetterCode": "GF",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 78,
+    "CountryName": "French Polynesia",
+    "Country3LetterCode": "PYF",
+    "Country2LetterCode": "PF",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 79,
+    "CountryName": "French Southern Territories",
+    "Country3LetterCode": "ATF",
+    "Country2LetterCode": "TF",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 80,
+    "CountryName": "Gabon",
+    "Country3LetterCode": "GAB",
+    "Country2LetterCode": "GA",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 81,
+    "CountryName": "Gambia",
+    "Country3LetterCode": "GMB",
+    "Country2LetterCode": "GM",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 82,
+    "CountryName": "Georgia",
+    "Country3LetterCode": "GEO",
+    "Country2LetterCode": "GE",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 83,
+    "CountryName": "Germany",
+    "Country3LetterCode": "DEU",
+    "Country2LetterCode": "DE",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 84,
+    "CountryName": "Ghana",
+    "Country3LetterCode": "GHA",
+    "Country2LetterCode": "GH",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 85,
+    "CountryName": "Gibraltar",
+    "Country3LetterCode": "GIB",
+    "Country2LetterCode": "GI",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 86,
+    "CountryName": "Greece",
+    "Country3LetterCode": "GRC",
+    "Country2LetterCode": "GR",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 87,
+    "CountryName": "Greenland",
+    "Country3LetterCode": "GRL",
+    "Country2LetterCode": "GL",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 88,
+    "CountryName": "Grenada",
+    "Country3LetterCode": "GRD",
+    "Country2LetterCode": "GD",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 89,
+    "CountryName": "Guadeloupe",
+    "Country3LetterCode": "GLP",
+    "Country2LetterCode": "GP",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 90,
+    "CountryName": "Guam",
+    "Country3LetterCode": "GUM",
+    "Country2LetterCode": "GU",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 91,
+    "CountryName": "Guatemala",
+    "Country3LetterCode": "GTM",
+    "Country2LetterCode": "GT",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 92,
+    "CountryName": "Guernsey",
+    "Country3LetterCode": "GGY",
+    "Country2LetterCode": "GG",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 93,
+    "CountryName": "Guinea",
+    "Country3LetterCode": "GIN",
+    "Country2LetterCode": "GN",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 94,
+    "CountryName": "Guinea-Bissau",
+    "Country3LetterCode": "GNB",
+    "Country2LetterCode": "GW",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 95,
+    "CountryName": "Guyana",
+    "Country3LetterCode": "GUY",
+    "Country2LetterCode": "GY",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 96,
+    "CountryName": "Haiti",
+    "Country3LetterCode": "HTI",
+    "Country2LetterCode": "HT",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 97,
+    "CountryName": "Heard Island and McDonald Islands",
+    "Country3LetterCode": "HMD",
+    "Country2LetterCode": "HM",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 98,
+    "CountryName": "Holy See (Vatican City State)",
+    "Country3LetterCode": "VAT",
+    "Country2LetterCode": "VA",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 99,
+    "CountryName": "Honduras",
+    "Country3LetterCode": "HND",
+    "Country2LetterCode": "HN",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 100,
+    "CountryName": "Hong Kong",
+    "Country3LetterCode": "HKG",
+    "Country2LetterCode": "HK",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 101,
+    "CountryName": "Hungary",
+    "Country3LetterCode": "HUN",
+    "Country2LetterCode": "HU",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 102,
+    "CountryName": "Iceland",
+    "Country3LetterCode": "ISL",
+    "Country2LetterCode": "IS",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 103,
+    "CountryName": "India",
+    "Country3LetterCode": "IND",
+    "Country2LetterCode": "IN",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 104,
+    "CountryName": "Indonesia",
+    "Country3LetterCode": "IDN",
+    "Country2LetterCode": "ID",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 105,
+    "CountryName": "Iran, Islamic Republic of",
+    "Country3LetterCode": "IRN",
+    "Country2LetterCode": "IR",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 106,
+    "CountryName": "Iraq",
+    "Country3LetterCode": "IRQ",
+    "Country2LetterCode": "IQ",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 107,
+    "CountryName": "Ireland",
+    "Country3LetterCode": "IRL",
+    "Country2LetterCode": "IE",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 108,
+    "CountryName": "Isle of Man",
+    "Country3LetterCode": "IMN",
+    "Country2LetterCode": "IM",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 109,
+    "CountryName": "Israel",
+    "Country3LetterCode": "ISR",
+    "Country2LetterCode": "IL",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 110,
+    "CountryName": "Italy",
+    "Country3LetterCode": "ITA",
+    "Country2LetterCode": "IT",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 111,
+    "CountryName": "Jamaica",
+    "Country3LetterCode": "JAM",
+    "Country2LetterCode": "JM",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 112,
+    "CountryName": "Japan",
+    "Country3LetterCode": "JPN",
+    "Country2LetterCode": "JP",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 113,
+    "CountryName": "Jersey",
+    "Country3LetterCode": "JEY",
+    "Country2LetterCode": "JE",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 114,
+    "CountryName": "Jordan",
+    "Country3LetterCode": "JOR",
+    "Country2LetterCode": "JO",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 115,
+    "CountryName": "Kazakhstan",
+    "Country3LetterCode": "KAZ",
+    "Country2LetterCode": "KZ",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 116,
+    "CountryName": "Kenya",
+    "Country3LetterCode": "KEN",
+    "Country2LetterCode": "KE",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 117,
+    "CountryName": "Kiribati",
+    "Country3LetterCode": "KIR",
+    "Country2LetterCode": "KI",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 118,
+    "CountryName": "North Korea",
+    "Country3LetterCode": "PRK",
+    "Country2LetterCode": "KP",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 119,
+    "CountryName": "South Korea",
+    "Country3LetterCode": "KOR",
+    "Country2LetterCode": "KR",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 120,
+    "CountryName": "Kuwait",
+    "Country3LetterCode": "KWT",
+    "Country2LetterCode": "KW",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 121,
+    "CountryName": "Kyrgyzstan",
+    "Country3LetterCode": "KGZ",
+    "Country2LetterCode": "KG",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 122,
+    "CountryName": "Lao People's Democratic Republic",
+    "Country3LetterCode": "LAO",
+    "Country2LetterCode": "LA",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 123,
+    "CountryName": "Latvia",
+    "Country3LetterCode": "LVA",
+    "Country2LetterCode": "LV",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 124,
+    "CountryName": "Lebanon",
+    "Country3LetterCode": "LBN",
+    "Country2LetterCode": "LB",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 125,
+    "CountryName": "Lesotho",
+    "Country3LetterCode": "LSO",
+    "Country2LetterCode": "LS",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 126,
+    "CountryName": "Liberia",
+    "Country3LetterCode": "LBR",
+    "Country2LetterCode": "LR",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 127,
+    "CountryName": "Libya",
+    "Country3LetterCode": "LBY",
+    "Country2LetterCode": "LY",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 128,
+    "CountryName": "Liechtenstein",
+    "Country3LetterCode": "LIE",
+    "Country2LetterCode": "LI",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 129,
+    "CountryName": "Lithuania",
+    "Country3LetterCode": "LTU",
+    "Country2LetterCode": "LT",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 130,
+    "CountryName": "Luxembourg",
+    "Country3LetterCode": "LUX",
+    "Country2LetterCode": "LU",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 131,
+    "CountryName": "Macao",
+    "Country3LetterCode": "MAC",
+    "Country2LetterCode": "MO",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 132,
+    "CountryName": "Macedonia",
+    "Country3LetterCode": "MKD",
+    "Country2LetterCode": "MK",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 133,
+    "CountryName": "Madagascar",
+    "Country3LetterCode": "MDG",
+    "Country2LetterCode": "MG",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 134,
+    "CountryName": "Malawi",
+    "Country3LetterCode": "MWI",
+    "Country2LetterCode": "MW",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 135,
+    "CountryName": "Malaysia",
+    "Country3LetterCode": "MYS",
+    "Country2LetterCode": "MY",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 136,
+    "CountryName": "Maldives",
+    "Country3LetterCode": "MDV",
+    "Country2LetterCode": "MV",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 137,
+    "CountryName": "Mali",
+    "Country3LetterCode": "MLI",
+    "Country2LetterCode": "ML",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 138,
+    "CountryName": "Malta",
+    "Country3LetterCode": "MLT",
+    "Country2LetterCode": "MT",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 139,
+    "CountryName": "Marshall Islands",
+    "Country3LetterCode": "MHL",
+    "Country2LetterCode": "MH",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 140,
+    "CountryName": "Martinique",
+    "Country3LetterCode": "MTQ",
+    "Country2LetterCode": "MQ",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 141,
+    "CountryName": "Mauritania",
+    "Country3LetterCode": "MRT",
+    "Country2LetterCode": "MR",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 142,
+    "CountryName": "Mauritius",
+    "Country3LetterCode": "MUS",
+    "Country2LetterCode": "MU",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 143,
+    "CountryName": "Mayotte",
+    "Country3LetterCode": "MYT",
+    "Country2LetterCode": "YT",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 144,
+    "CountryName": "Mexico",
+    "Country3LetterCode": "MEX",
+    "Country2LetterCode": "MX",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 145,
+    "CountryName": "Micronesia, Federated States of",
+    "Country3LetterCode": "FSM",
+    "Country2LetterCode": "FM",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 146,
+    "CountryName": "Moldova",
+    "Country3LetterCode": "MDA",
+    "Country2LetterCode": "MD",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 147,
+    "CountryName": "Monaco",
+    "Country3LetterCode": "MCO",
+    "Country2LetterCode": "MC",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 148,
+    "CountryName": "Mongolia",
+    "Country3LetterCode": "MNG",
+    "Country2LetterCode": "MN",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 149,
+    "CountryName": "Montenegro",
+    "Country3LetterCode": "MNE",
+    "Country2LetterCode": "ME",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 150,
+    "CountryName": "Montserrat",
+    "Country3LetterCode": "MSR",
+    "Country2LetterCode": "MS",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 151,
+    "CountryName": "Morocco",
+    "Country3LetterCode": "MAR",
+    "Country2LetterCode": "MA",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 152,
+    "CountryName": "Mozambique",
+    "Country3LetterCode": "MOZ",
+    "Country2LetterCode": "MZ",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 153,
+    "CountryName": "Myanmar",
+    "Country3LetterCode": "MMR",
+    "Country2LetterCode": "MM",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 154,
+    "CountryName": "Namibia",
+    "Country3LetterCode": "NAM",
+    "Country2LetterCode": "NA",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 155,
+    "CountryName": "Nauru",
+    "Country3LetterCode": "NRU",
+    "Country2LetterCode": "NR",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 156,
+    "CountryName": "Nepal",
+    "Country3LetterCode": "NPL",
+    "Country2LetterCode": "NP",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 157,
+    "CountryName": "Netherlands",
+    "Country3LetterCode": "NLD",
+    "Country2LetterCode": "NL",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 158,
+    "CountryName": "New Caledonia",
+    "Country3LetterCode": "NCL",
+    "Country2LetterCode": "NC",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 159,
+    "CountryName": "New Zealand",
+    "Country3LetterCode": "NZL",
+    "Country2LetterCode": "NZ",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 160,
+    "CountryName": "Nicaragua",
+    "Country3LetterCode": "NIC",
+    "Country2LetterCode": "NI",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 161,
+    "CountryName": "Niger",
+    "Country3LetterCode": "NER",
+    "Country2LetterCode": "NE",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 162,
+    "CountryName": "Nigeria",
+    "Country3LetterCode": "NGA",
+    "Country2LetterCode": "NG",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 163,
+    "CountryName": "Niue",
+    "Country3LetterCode": "NIU",
+    "Country2LetterCode": "NU",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 164,
+    "CountryName": "Norfolk Island",
+    "Country3LetterCode": "NFK",
+    "Country2LetterCode": "NF",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 165,
+    "CountryName": "Northern Mariana Islands",
+    "Country3LetterCode": "MNP",
+    "Country2LetterCode": "MP",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 166,
+    "CountryName": "Norway",
+    "Country3LetterCode": "NOR",
+    "Country2LetterCode": "NO",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 167,
+    "CountryName": "Oman",
+    "Country3LetterCode": "OMN",
+    "Country2LetterCode": "OM",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 168,
+    "CountryName": "Pakistan",
+    "Country3LetterCode": "PAK",
+    "Country2LetterCode": "PK",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 169,
+    "CountryName": "Palau",
+    "Country3LetterCode": "PLW",
+    "Country2LetterCode": "PW",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 170,
+    "CountryName": "Palestinian Territory",
+    "Country3LetterCode": "PSE",
+    "Country2LetterCode": "PS",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 171,
+    "CountryName": "Panama",
+    "Country3LetterCode": "PAN",
+    "Country2LetterCode": "PA",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 172,
+    "CountryName": "Papua New Guinea",
+    "Country3LetterCode": "PNG",
+    "Country2LetterCode": "PG",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 173,
+    "CountryName": "Paraguay",
+    "Country3LetterCode": "PRY",
+    "Country2LetterCode": "PY",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 174,
+    "CountryName": "Peru",
+    "Country3LetterCode": "PER",
+    "Country2LetterCode": "PE",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 175,
+    "CountryName": "Philippines",
+    "Country3LetterCode": "PHL",
+    "Country2LetterCode": "PH",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 176,
+    "CountryName": "Pitcairn",
+    "Country3LetterCode": "PCN",
+    "Country2LetterCode": "PN",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 177,
+    "CountryName": "Poland",
+    "Country3LetterCode": "POL",
+    "Country2LetterCode": "PL",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 178,
+    "CountryName": "Portugal",
+    "Country3LetterCode": "PRT",
+    "Country2LetterCode": "PT",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 179,
+    "CountryName": "Puerto Rico",
+    "Country3LetterCode": "PRI",
+    "Country2LetterCode": "PR",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 180,
+    "CountryName": "Qatar",
+    "Country3LetterCode": "QAT",
+    "Country2LetterCode": "QA",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 181,
+    "CountryName": "Reunion",
+    "Country3LetterCode": "REU",
+    "Country2LetterCode": "RE",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 182,
+    "CountryName": "Romania",
+    "Country3LetterCode": "ROU",
+    "Country2LetterCode": "RO",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 183,
+    "CountryName": "Russian Federation",
+    "Country3LetterCode": "RUS",
+    "Country2LetterCode": "RU",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 184,
+    "CountryName": "Rwanda",
+    "Country3LetterCode": "RWA",
+    "Country2LetterCode": "RW",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 185,
+    "CountryName": "Saint Barthelemy",
+    "Country3LetterCode": "BLM",
+    "Country2LetterCode": "BL",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 186,
+    "CountryName": "Saint Helena",
+    "Country3LetterCode": "SHN",
+    "Country2LetterCode": "SH",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 187,
+    "CountryName": "Saint Kitts and Nevis",
+    "Country3LetterCode": "KNA",
+    "Country2LetterCode": "KN",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 188,
+    "CountryName": "Saint Lucia",
+    "Country3LetterCode": "LCA",
+    "Country2LetterCode": "LC",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 189,
+    "CountryName": "Saint Martin (French part)",
+    "Country3LetterCode": "MAF",
+    "Country2LetterCode": "MF",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 190,
+    "CountryName": "Saint Pierre and Miquelon",
+    "Country3LetterCode": "SPM",
+    "Country2LetterCode": "PM",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 191,
+    "CountryName": "Saint Vincent and the Grenadines",
+    "Country3LetterCode": "VCT",
+    "Country2LetterCode": "VC",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 192,
+    "CountryName": "Samoa",
+    "Country3LetterCode": "WSM",
+    "Country2LetterCode": "WS",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 193,
+    "CountryName": "San Marino",
+    "Country3LetterCode": "SMR",
+    "Country2LetterCode": "SM",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 194,
+    "CountryName": "Sao Tome and Principe",
+    "Country3LetterCode": "STP",
+    "Country2LetterCode": "ST",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 195,
+    "CountryName": "Saudi Arabia",
+    "Country3LetterCode": "SAU",
+    "Country2LetterCode": "SA",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 196,
+    "CountryName": "Senegal",
+    "Country3LetterCode": "SEN",
+    "Country2LetterCode": "SN",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 197,
+    "CountryName": "Serbia",
+    "Country3LetterCode": "SRB",
+    "Country2LetterCode": "RS",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 198,
+    "CountryName": "Seychelles",
+    "Country3LetterCode": "SYC",
+    "Country2LetterCode": "SC",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 199,
+    "CountryName": "Sierra Leone",
+    "Country3LetterCode": "SLE",
+    "Country2LetterCode": "SL",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 200,
+    "CountryName": "Singapore",
+    "Country3LetterCode": "SGP",
+    "Country2LetterCode": "SG",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 201,
+    "CountryName": "Sint Maarten (Dutch part)",
+    "Country3LetterCode": "SXM",
+    "Country2LetterCode": "SX",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 202,
+    "CountryName": "Slovakia",
+    "Country3LetterCode": "SVK",
+    "Country2LetterCode": "SK",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 203,
+    "CountryName": "Slovenia",
+    "Country3LetterCode": "SVN",
+    "Country2LetterCode": "SI",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 204,
+    "CountryName": "Solomon Islands",
+    "Country3LetterCode": "SLB",
+    "Country2LetterCode": "SB",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 205,
+    "CountryName": "Somalia",
+    "Country3LetterCode": "SOM",
+    "Country2LetterCode": "SO",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 206,
+    "CountryName": "South Africa",
+    "Country3LetterCode": "ZAF",
+    "Country2LetterCode": "ZA",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 207,
+    "CountryName": "South Georgia and the South Sandwich Islands",
+    "Country3LetterCode": "SGS",
+    "Country2LetterCode": "GS",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 208,
+    "CountryName": "South Sudan",
+    "Country3LetterCode": "SSD",
+    "Country2LetterCode": "SS",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 209,
+    "CountryName": "Spain",
+    "Country3LetterCode": "ESP",
+    "Country2LetterCode": "ES",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 210,
+    "CountryName": "Sri Lanka",
+    "Country3LetterCode": "LKA",
+    "Country2LetterCode": "LK",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 211,
+    "CountryName": "Sudan",
+    "Country3LetterCode": "SDN",
+    "Country2LetterCode": "SD",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 212,
+    "CountryName": "Suriname",
+    "Country3LetterCode": "SUR",
+    "Country2LetterCode": "SR",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 213,
+    "CountryName": "Svalbard",
+    "Country3LetterCode": "SJM",
+    "Country2LetterCode": "SJ",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 214,
+    "CountryName": "Swaziland",
+    "Country3LetterCode": "SWZ",
+    "Country2LetterCode": "SZ",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 215,
+    "CountryName": "Sweden",
+    "Country3LetterCode": "SWE",
+    "Country2LetterCode": "SE",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 216,
+    "CountryName": "Switzerland",
+    "Country3LetterCode": "CHE",
+    "Country2LetterCode": "CH",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 217,
+    "CountryName": "Syria",
+    "Country3LetterCode": "SYR",
+    "Country2LetterCode": "SY",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 218,
+    "CountryName": "Taiwan",
+    "Country3LetterCode": "TWN",
+    "Country2LetterCode": "TW",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 219,
+    "CountryName": "Tajikistan",
+    "Country3LetterCode": "TJK",
+    "Country2LetterCode": "TJ",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 220,
+    "CountryName": "Tanzania",
+    "Country3LetterCode": "TZA",
+    "Country2LetterCode": "TZ",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 221,
+    "CountryName": "Thailand",
+    "Country3LetterCode": "THA",
+    "Country2LetterCode": "TH",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 222,
+    "CountryName": "Timor Leste",
+    "Country3LetterCode": "TLS",
+    "Country2LetterCode": "TL",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 223,
+    "CountryName": "Togo",
+    "Country3LetterCode": "TGO",
+    "Country2LetterCode": "TG",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 224,
+    "CountryName": "Tokelau",
+    "Country3LetterCode": "TKL",
+    "Country2LetterCode": "TK",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 225,
+    "CountryName": "Tonga",
+    "Country3LetterCode": "TON",
+    "Country2LetterCode": "TO",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 226,
+    "CountryName": "Trinidad and Tobago",
+    "Country3LetterCode": "TTO",
+    "Country2LetterCode": "TT",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 227,
+    "CountryName": "Tunisia",
+    "Country3LetterCode": "TUN",
+    "Country2LetterCode": "TN",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 228,
+    "CountryName": "Turkey",
+    "Country3LetterCode": "TUR",
+    "Country2LetterCode": "TR",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 229,
+    "CountryName": "Turkmenistan",
+    "Country3LetterCode": "TKM",
+    "Country2LetterCode": "TM",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 230,
+    "CountryName": "Turks and Caicos Islands",
+    "Country3LetterCode": "TCA",
+    "Country2LetterCode": "TC",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 231,
+    "CountryName": "Tuvalu",
+    "Country3LetterCode": "TUV",
+    "Country2LetterCode": "TV",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 232,
+    "CountryName": "Uganda",
+    "Country3LetterCode": "UGA",
+    "Country2LetterCode": "UG",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 233,
+    "CountryName": "Ukraine",
+    "Country3LetterCode": "UKR",
+    "Country2LetterCode": "UA",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 234,
+    "CountryName": "United Arab Emirates",
+    "Country3LetterCode": "ARE",
+    "Country2LetterCode": "AE",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 235,
+    "CountryName": "United Kingdom",
+    "Country3LetterCode": "GBR",
+    "Country2LetterCode": "GB",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 236,
+    "CountryName": "United States of America",
+    "Country3LetterCode": "USA",
+    "Country2LetterCode": "US",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 237,
+    "CountryName": "United States Minor Outlying Islands",
+    "Country3LetterCode": "UMI",
+    "Country2LetterCode": "UM",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 238,
+    "CountryName": "Uruguay",
+    "Country3LetterCode": "URY",
+    "Country2LetterCode": "UY",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 239,
+    "CountryName": "Uzbekistan",
+    "Country3LetterCode": "UZB",
+    "Country2LetterCode": "UZ",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 240,
+    "CountryName": "Vanuatu",
+    "Country3LetterCode": "VUT",
+    "Country2LetterCode": "VU",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 241,
+    "CountryName": "Venezuela",
+    "Country3LetterCode": "VEN",
+    "Country2LetterCode": "VE",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 242,
+    "CountryName": "Vietnam",
+    "Country3LetterCode": "VNM",
+    "Country2LetterCode": "VN",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 243,
+    "CountryName": "Virgin Islands, British",
+    "Country3LetterCode": "VGB",
+    "Country2LetterCode": "VG",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 244,
+    "CountryName": "Virgin Islands, U.S.",
+    "Country3LetterCode": "VIR",
+    "Country2LetterCode": "VI",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 245,
+    "CountryName": "Wallis and Futuna",
+    "Country3LetterCode": "WLF",
+    "Country2LetterCode": "WF",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 246,
+    "CountryName": "Western Sahara",
+    "Country3LetterCode": "ESH",
+    "Country2LetterCode": "EH",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 247,
+    "CountryName": "Yemen",
+    "Country3LetterCode": "YEM",
+    "Country2LetterCode": "YE",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 248,
+    "CountryName": "Zambia",
+    "Country3LetterCode": "ZMB",
+    "Country2LetterCode": "ZM",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 249,
+    "CountryName": "Zimbabwe",
+    "Country3LetterCode": "ZWE",
+    "Country2LetterCode": "ZW",
+    "AircraftRegistrationPrefix": "NULL"
+  },
+  {
+    "Id": 250,
+    "CountryName": "Saint Pierre and Miquelon",
+    "Country3LetterCode": "SPM",
+    "Country2LetterCode": "PM",
+    "AircraftRegistrationPrefix": "NULL"
+  }
+]

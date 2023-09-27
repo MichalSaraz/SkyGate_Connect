@@ -1,0 +1,1598 @@
+[
+  {
+    "AircraftTypeIATACode": 100,
+    "ModelName": "Fokker 100"
+  },
+  {
+    "AircraftTypeIATACode": 141,
+    "ModelName": "BAe 146-100 Pax"
+  },
+  {
+    "AircraftTypeIATACode": 142,
+    "ModelName": "BAe 146-200 Pax"
+  },
+  {
+    "AircraftTypeIATACode": 143,
+    "ModelName": "BAe 146-300 Pax"
+  },
+  {
+    "AircraftTypeIATACode": 146,
+    "ModelName": "BAe 146 all pax models"
+  },
+  {
+    "AircraftTypeIATACode": "14F",
+    "ModelName": "BAe 146 Freighter (-100/200/300QT & QC)"
+  },
+  {
+    "AircraftTypeIATACode": "14X",
+    "ModelName": "BAe 146 Freighter (-100QT & QC)"
+  },
+  {
+    "AircraftTypeIATACode": "14Y",
+    "ModelName": "BAe 146 Freighter (-200QT & QC)"
+  },
+  {
+    "AircraftTypeIATACode": "14Z",
+    "ModelName": "BAe 146 Freighter (-200QT & QC)"
+  },
+  {
+    "AircraftTypeIATACode": 290,
+    "ModelName": "Embraer E190-E2"
+  },
+  {
+    "AircraftTypeIATACode": 295,
+    "ModelName": "Embraer E195-E2"
+  },
+  {
+    "AircraftTypeIATACode": 221,
+    "ModelName": "Airbus A220-100"
+  },
+  {
+    "AircraftTypeIATACode": 223,
+    "ModelName": "Airbus A220-200"
+  },
+  {
+    "AircraftTypeIATACode": 310,
+    "ModelName": "Airbus A310 all pax models"
+  },
+  {
+    "AircraftTypeIATACode": 312,
+    "ModelName": "Airbus A310-200 pax"
+  },
+  {
+    "AircraftTypeIATACode": 313,
+    "ModelName": "Airbus A310-300 pax"
+  },
+  {
+    "AircraftTypeIATACode": 318,
+    "ModelName": "Airbus A318"
+  },
+  {
+    "AircraftTypeIATACode": 319,
+    "ModelName": "Airbus A319 Ceo"
+  },
+  {
+    "AircraftTypeIATACode": "31F",
+    "ModelName": "Airbus A310 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "31N",
+    "ModelName": "Airbus A319 Neo"
+  },
+  {
+    "AircraftTypeIATACode": "31X",
+    "ModelName": "Airbus A310-200 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "31Y",
+    "ModelName": "Airbus A310-300 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": 320,
+    "ModelName": "Airbus A320-100/200 Ceo"
+  },
+  {
+    "AircraftTypeIATACode": 321,
+    "ModelName": "Airbus A321-100/200 Ceo"
+  },
+  {
+    "AircraftTypeIATACode": "32A",
+    "ModelName": "Airbus A320-200 Ceo (Sharklets)"
+  },
+  {
+    "AircraftTypeIATACode": "32C",
+    "ModelName": "Airbus A318 (Sharkelts)"
+  },
+  {
+    "AircraftTypeIATACode": "32D",
+    "ModelName": "Airbus A319 Ceo (Sharklets)"
+  },
+  {
+    "AircraftTypeIATACode": "32N",
+    "ModelName": "Airbus A320-200 Neo"
+  },
+  {
+    "AircraftTypeIATACode": "32Q",
+    "ModelName": "Airbus A321-200 Neo"
+  },
+  {
+    "AircraftTypeIATACode": "32S",
+    "ModelName": "Airbus A318/319/320/321"
+  },
+  {
+    "AircraftTypeIATACode": 330,
+    "ModelName": "Airbus A330 all models"
+  },
+  {
+    "AircraftTypeIATACode": 332,
+    "ModelName": "Airbus A330-200"
+  },
+  {
+    "AircraftTypeIATACode": 333,
+    "ModelName": "Airbus A330-300"
+  },
+  {
+    "AircraftTypeIATACode": 338,
+    "ModelName": "Airbus A330-800 Neo"
+  },
+  {
+    "AircraftTypeIATACode": 339,
+    "ModelName": "Airbus A330-900 Neo"
+  },
+  {
+    "AircraftTypeIATACode": "33X",
+    "ModelName": "Airbus A330-200 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": 340,
+    "ModelName": "Airbus A340 all models"
+  },
+  {
+    "AircraftTypeIATACode": 342,
+    "ModelName": "Airbus A340-200"
+  },
+  {
+    "AircraftTypeIATACode": 343,
+    "ModelName": "Airbus A340-300"
+  },
+  {
+    "AircraftTypeIATACode": 345,
+    "ModelName": "Airbus A340-500"
+  },
+  {
+    "AircraftTypeIATACode": 346,
+    "ModelName": "Airbus A340-600"
+  },
+  {
+    "AircraftTypeIATACode": 351,
+    "ModelName": "Airbus A350-1000"
+  },
+  {
+    "AircraftTypeIATACode": 359,
+    "ModelName": "Airbus A350-900"
+  },
+  {
+    "AircraftTypeIATACode": 380,
+    "ModelName": "Airbus A380 pax"
+  },
+  {
+    "AircraftTypeIATACode": "38F",
+    "ModelName": "Airbus A380 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": 703,
+    "ModelName": "Boeing 707-300 pax"
+  },
+  {
+    "AircraftTypeIATACode": 707,
+    "ModelName": "Boeing 707/720 all pax models"
+  },
+  {
+    "AircraftTypeIATACode": "70F",
+    "ModelName": "Boeing 707 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "70M",
+    "ModelName": "Boeing 707 Combi"
+  },
+  {
+    "AircraftTypeIATACode": 717,
+    "ModelName": "Boeing 717"
+  },
+  {
+    "AircraftTypeIATACode": 721,
+    "ModelName": "Boeing 727-100 pax"
+  },
+  {
+    "AircraftTypeIATACode": 722,
+    "ModelName": "Boeing 727-200 pax"
+  },
+  {
+    "AircraftTypeIATACode": 727,
+    "ModelName": "Boeing 727 all pax models"
+  },
+  {
+    "AircraftTypeIATACode": "72B",
+    "ModelName": "Boeing 727-100 Mixed Configuration"
+  },
+  {
+    "AircraftTypeIATACode": "72C",
+    "ModelName": "Boeing 727-200 Mixed Configuration"
+  },
+  {
+    "AircraftTypeIATACode": "72F",
+    "ModelName": "Boeing 727 Freighter (-100/200)"
+  },
+  {
+    "AircraftTypeIATACode": "72M",
+    "ModelName": "Boeing 727 Combi"
+  },
+  {
+    "AircraftTypeIATACode": "72S",
+    "ModelName": "Boeing 727-200 Advanced pax"
+  },
+  {
+    "AircraftTypeIATACode": "72W",
+    "ModelName": "Boeing 727-200 (winglets) pax"
+  },
+  {
+    "AircraftTypeIATACode": "72X",
+    "ModelName": "Boeing 727-100 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "72Y",
+    "ModelName": "Boeing 727-200 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": 731,
+    "ModelName": "Boeing 737-100 pax"
+  },
+  {
+    "AircraftTypeIATACode": 732,
+    "ModelName": "Boeing 737-200 pax"
+  },
+  {
+    "AircraftTypeIATACode": 733,
+    "ModelName": "Boeing 737-300 pax"
+  },
+  {
+    "AircraftTypeIATACode": 734,
+    "ModelName": "Boeing 737-400 pax"
+  },
+  {
+    "AircraftTypeIATACode": 735,
+    "ModelName": "Boeing 737-500 pax"
+  },
+  {
+    "AircraftTypeIATACode": 736,
+    "ModelName": "Boeing 737-600 pax"
+  },
+  {
+    "AircraftTypeIATACode": 737,
+    "ModelName": "Boeing 737 all pax models"
+  },
+  {
+    "AircraftTypeIATACode": 738,
+    "ModelName": "Boeing 737-800 pax"
+  },
+  {
+    "AircraftTypeIATACode": 739,
+    "ModelName": "Boeing 737-900 pax"
+  },
+  {
+    "AircraftTypeIATACode": "73C",
+    "ModelName": "Boeing 737-300 (winglets) pax"
+  },
+  {
+    "AircraftTypeIATACode": "73E",
+    "ModelName": "Boeing 737-500 (winglets)pax"
+  },
+  {
+    "AircraftTypeIATACode": "73F",
+    "ModelName": "Boeing 737 all Freighter models"
+  },
+  {
+    "AircraftTypeIATACode": "73G",
+    "ModelName": "Boeing 737-700 pax"
+  },
+  {
+    "AircraftTypeIATACode": "73H",
+    "ModelName": "Boeing 737-800 (winglets) pax"
+  },
+  {
+    "AircraftTypeIATACode": "73J",
+    "ModelName": "Boeing 737-900 (winglets) pax"
+  },
+  {
+    "AircraftTypeIATACode": "73L",
+    "ModelName": "Boeing 737-200 Combi"
+  },
+  {
+    "AircraftTypeIATACode": "73M",
+    "ModelName": "Boeing 737 Combi"
+  },
+  {
+    "AircraftTypeIATACode": "73P",
+    "ModelName": "Boeing 737-400 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "73Q",
+    "ModelName": "Boeing 737-400 Combi"
+  },
+  {
+    "AircraftTypeIATACode": "73R",
+    "ModelName": "Boeing 737-700 Combi"
+  },
+  {
+    "AircraftTypeIATACode": "73W",
+    "ModelName": "Boeing 737-700 (winglets) pax"
+  },
+  {
+    "AircraftTypeIATACode": "73X",
+    "ModelName": "Boeing 737-200 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "73Y",
+    "ModelName": "Boeing 737-300 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": 741,
+    "ModelName": "Boeing 747-100 pax"
+  },
+  {
+    "AircraftTypeIATACode": 742,
+    "ModelName": "Boeing 747-200 pax"
+  },
+  {
+    "AircraftTypeIATACode": 743,
+    "ModelName": "Boeing 747-300 pax"
+  },
+  {
+    "AircraftTypeIATACode": 744,
+    "ModelName": "Boeing 747-400 pax"
+  },
+  {
+    "AircraftTypeIATACode": 747,
+    "ModelName": "Boeing 747 all pax models"
+  },
+  {
+    "AircraftTypeIATACode": 748,
+    "ModelName": "Boeing 747-8 pax"
+  },
+  {
+    "AircraftTypeIATACode": "74B",
+    "ModelName": "Boeing 747-400 Swingtail Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "74C",
+    "ModelName": "Boeing 747-200 Combi"
+  },
+  {
+    "AircraftTypeIATACode": "74D",
+    "ModelName": "Boeing 747-300 Combi"
+  },
+  {
+    "AircraftTypeIATACode": "74E",
+    "ModelName": "Boeing 747-400 Combi"
+  },
+  {
+    "AircraftTypeIATACode": "74F",
+    "ModelName": "Boeing 747 all Freighter models"
+  },
+  {
+    "AircraftTypeIATACode": "74H",
+    "ModelName": "Boeing 747-8I Passenger"
+  },
+  {
+    "AircraftTypeIATACode": "74J",
+    "ModelName": "Boeing 747-400 (Domestic) pax"
+  },
+  {
+    "AircraftTypeIATACode": "74L",
+    "ModelName": "Boeing 747SP"
+  },
+  {
+    "AircraftTypeIATACode": "74M",
+    "ModelName": "Boeing 747 all Combi models"
+  },
+  {
+    "AircraftTypeIATACode": "74N",
+    "ModelName": "Boeing 747-8F"
+  },
+  {
+    "AircraftTypeIATACode": "74R",
+    "ModelName": "Boeing 747SR pax"
+  },
+  {
+    "AircraftTypeIATACode": "74T",
+    "ModelName": "Boeing 747-100 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "74U",
+    "ModelName": "Boeing 747-300 / 747-200 SUD Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "74V",
+    "ModelName": "Boeing 747SR Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "74X",
+    "ModelName": "Boeing 747-200 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "74Y",
+    "ModelName": "Boeing 747-400 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": 752,
+    "ModelName": "Boeing 757-200 pax"
+  },
+  {
+    "AircraftTypeIATACode": 753,
+    "ModelName": "Boeing 757-300 pax"
+  },
+  {
+    "AircraftTypeIATACode": 757,
+    "ModelName": "Boeing 757 all pax models"
+  },
+  {
+    "AircraftTypeIATACode": "75F",
+    "ModelName": "Boeing 757 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "75M",
+    "ModelName": "Boeing 757 Mixed Configuration"
+  },
+  {
+    "AircraftTypeIATACode": "75T",
+    "ModelName": "Boeing 757-300 (winglets) pax"
+  },
+  {
+    "AircraftTypeIATACode": "75W",
+    "ModelName": "Boeing 757-200 (winglets) pax"
+  },
+  {
+    "AircraftTypeIATACode": 762,
+    "ModelName": "Boeing 767-200 pax"
+  },
+  {
+    "AircraftTypeIATACode": 763,
+    "ModelName": "Boeing 767-300 pax"
+  },
+  {
+    "AircraftTypeIATACode": 764,
+    "ModelName": "Boeing 767-400 pax"
+  },
+  {
+    "AircraftTypeIATACode": 767,
+    "ModelName": "Boeing 767 all pax models"
+  },
+  {
+    "AircraftTypeIATACode": "76F",
+    "ModelName": "Boeing 767 all Freighter models"
+  },
+  {
+    "AircraftTypeIATACode": "76W",
+    "ModelName": "Boeing 767-300 (winglets) pax"
+  },
+  {
+    "AircraftTypeIATACode": "76V",
+    "ModelName": "Boeing 767-300 (winglets) Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "76X",
+    "ModelName": "Boeing 767-200 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "76Y",
+    "ModelName": "Boeing 767-300 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": 772,
+    "ModelName": "Boeing 777-200 pax"
+  },
+  {
+    "AircraftTypeIATACode": 773,
+    "ModelName": "Boeing 777-300 pax"
+  },
+  {
+    "AircraftTypeIATACode": 777,
+    "ModelName": "Boeing 777 all pax models"
+  },
+  {
+    "AircraftTypeIATACode": "77F",
+    "ModelName": "Boeing 777 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "77L",
+    "ModelName": "Boeing 777-200LR pax"
+  },
+  {
+    "AircraftTypeIATACode": "77W",
+    "ModelName": "Boeing 777-300ER pax"
+  },
+  {
+    "AircraftTypeIATACode": "77X",
+    "ModelName": "Boeing 777-200 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": 781,
+    "ModelName": "Boeing 787-10 pax"
+  },
+  {
+    "AircraftTypeIATACode": 788,
+    "ModelName": "Boeing 787-8 pax"
+  },
+  {
+    "AircraftTypeIATACode": 789,
+    "ModelName": "Boeing 787-9 pax"
+  },
+  {
+    "AircraftTypeIATACode": "7M7",
+    "ModelName": "Boeing 737 MAX 7 pax"
+  },
+  {
+    "AircraftTypeIATACode": "7M8",
+    "ModelName": "Boeing 737 MAX 8 pax"
+  },
+  {
+    "AircraftTypeIATACode": "7M9",
+    "ModelName": "Boeing 737 MAX 9 pax"
+  },
+  {
+    "AircraftTypeIATACode": "7MJ",
+    "ModelName": "Boeing 737 MAX 10 pax"
+  },
+  {
+    "AircraftTypeIATACode": "A22",
+    "ModelName": "Antonov AN-22"
+  },
+  {
+    "AircraftTypeIATACode": "A26",
+    "ModelName": "Antonov AN-26"
+  },
+  {
+    "AircraftTypeIATACode": "A28",
+    "ModelName": "Antonov AN-28 / PZL Miele M-28 Skytruck"
+  },
+  {
+    "AircraftTypeIATACode": "A30",
+    "ModelName": "Antonov AN-30"
+  },
+  {
+    "AircraftTypeIATACode": "A32",
+    "ModelName": "Antonov AN-32"
+  },
+  {
+    "AircraftTypeIATACode": "A38",
+    "ModelName": "Antonov AN-38"
+  },
+  {
+    "AircraftTypeIATACode": "A40",
+    "ModelName": "Antonov AN-140"
+  },
+  {
+    "AircraftTypeIATACode": "A4F",
+    "ModelName": "Antonov AN-124 Ruslan"
+  },
+  {
+    "AircraftTypeIATACode": "A5F",
+    "ModelName": "Antonov AN-225"
+  },
+  {
+    "AircraftTypeIATACode": "A81",
+    "ModelName": "Antonov AN-148-100"
+  },
+  {
+    "AircraftTypeIATACode": "AB3",
+    "ModelName": "Airbus Industrie A300 pax"
+  },
+  {
+    "AircraftTypeIATACode": "AB4",
+    "ModelName": "Airbus Industrie A300B2/B4/C4 pax"
+  },
+  {
+    "AircraftTypeIATACode": "AB6",
+    "ModelName": "Airbus Industrie A300-600 pax"
+  },
+  {
+    "AircraftTypeIATACode": "ABB",
+    "ModelName": "Airbus Industrie A300-600ST Beluga Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "ABF",
+    "ModelName": "Airbus Industrie A300 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "ABX",
+    "ModelName": "Airbus Industrie A300C4/F4 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "ABY",
+    "ModelName": "Airbus Industrie A600-600 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "ACD",
+    "ModelName": "Gulfstream/Rockwell (Aero) Commander/Turbo Commander"
+  },
+  {
+    "AircraftTypeIATACode": "ACP",
+    "ModelName": "Gulfstream/Rockwell (Aero) Commander"
+  },
+  {
+    "AircraftTypeIATACode": "ACT",
+    "ModelName": "Gulfstream/Rockwell (Aero) Turbo Commander"
+  },
+  {
+    "AircraftTypeIATACode": "AGH",
+    "ModelName": "Agusta A109"
+  },
+  {
+    "AircraftTypeIATACode": "ALM",
+    "ModelName": "Ayres LM-200 Loadmaster"
+  },
+  {
+    "AircraftTypeIATACode": "AN4",
+    "ModelName": "Antonov AN-24"
+  },
+  {
+    "AircraftTypeIATACode": "AN6",
+    "ModelName": "Antonov AN-26 / AN-30 /AN-32"
+  },
+  {
+    "AircraftTypeIATACode": "AN7",
+    "ModelName": "Antonov AN-72 / AN-74"
+  },
+  {
+    "AircraftTypeIATACode": "ANF",
+    "ModelName": "Antonov AN-12"
+  },
+  {
+    "AircraftTypeIATACode": "APH",
+    "ModelName": "Eurocopter (Aerospatiale) SA330 Puma / AS332 Super Puma"
+  },
+  {
+    "AircraftTypeIATACode": "AR1",
+    "ModelName": "Avro RJ100 Avroliner"
+  },
+  {
+    "AircraftTypeIATACode": "AR7",
+    "ModelName": "Avro RJ70 Avroliner"
+  },
+  {
+    "AircraftTypeIATACode": "AR8",
+    "ModelName": "Avro RJ85 Avroliner"
+  },
+  {
+    "AircraftTypeIATACode": "ARJ",
+    "ModelName": "Avro RJ70 / RJ85 / RJ100 Avroliner"
+  },
+  {
+    "AircraftTypeIATACode": "ARX",
+    "ModelName": "Avro RJX85 / RJX100"
+  },
+  {
+    "AircraftTypeIATACode": "AT4",
+    "ModelName": "Aerospatiale/Alenia ATR 42-300 / 320"
+  },
+  {
+    "AircraftTypeIATACode": "AT5",
+    "ModelName": "Aerospatiale/Alenia ATR 42-500"
+  },
+  {
+    "AircraftTypeIATACode": "AT7",
+    "ModelName": "Aerospatiale/Alenia ATR 72"
+  },
+  {
+    "AircraftTypeIATACode": "ATD",
+    "ModelName": "Aerospatiale/Alenia ATR 42-400"
+  },
+  {
+    "AircraftTypeIATACode": "ATF",
+    "ModelName": "Aerospatiale/Alenia ATR 72 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "ATP",
+    "ModelName": "British Aerospace ATP"
+  },
+  {
+    "AircraftTypeIATACode": "ATR",
+    "ModelName": "Aerospatiale/Alenia ATR 42/ ATR 72"
+  },
+  {
+    "AircraftTypeIATACode": "AX1",
+    "ModelName": "Avro RJX100"
+  },
+  {
+    "AircraftTypeIATACode": "AX8",
+    "ModelName": "Avro RJX85"
+  },
+  {
+    "AircraftTypeIATACode": "B11",
+    "ModelName": "British Aerospace (BAC) One Eleven / RomBAC One Eleven"
+  },
+  {
+    "AircraftTypeIATACode": "B12",
+    "ModelName": "British Aerospace (BAC) One Eleven 200"
+  },
+  {
+    "AircraftTypeIATACode": "B13",
+    "ModelName": "British Aerospace (BAC) One Eleven 300"
+  },
+  {
+    "AircraftTypeIATACode": "B14",
+    "ModelName": "British Aerospace (BAC) One Eleven 400/475"
+  },
+  {
+    "AircraftTypeIATACode": "B15",
+    "ModelName": "British Aerospace (BAC) One Eleven 500 / RomBAC One Eleven"
+  },
+  {
+    "AircraftTypeIATACode": "B72",
+    "ModelName": "Boeing 720B pax"
+  },
+  {
+    "AircraftTypeIATACode": "BE1",
+    "ModelName": "Beechcraft 1900/1900C/1900D"
+  },
+  {
+    "AircraftTypeIATACode": "BE2",
+    "ModelName": "Beechcraft twin piston engines"
+  },
+  {
+    "AircraftTypeIATACode": "BEC",
+    "ModelName": "Beechcraft light aircraft"
+  },
+  {
+    "AircraftTypeIATACode": "BEH",
+    "ModelName": "Beechcraft 1900D"
+  },
+  {
+    "AircraftTypeIATACode": "BEP",
+    "ModelName": "Beechcraft light aircraft - single engine"
+  },
+  {
+    "AircraftTypeIATACode": "BES",
+    "ModelName": "Beechcfrat 1900/1900C"
+  },
+  {
+    "AircraftTypeIATACode": "BET",
+    "ModelName": "Beechcraft light aircraft - twin turboprop engine"
+  },
+  {
+    "AircraftTypeIATACode": "BH2",
+    "ModelName": "Bell Helicopters"
+  },
+  {
+    "AircraftTypeIATACode": "BNI",
+    "ModelName": "Pilatus Britten-Norman BN-2A/B Islander"
+  },
+  {
+    "AircraftTypeIATACode": "BNT",
+    "ModelName": "Pilatus Britten-Norman BN-2A Mk III Trislander"
+  },
+  {
+    "AircraftTypeIATACode": "BUS",
+    "ModelName": "Bus"
+  },
+  {
+    "AircraftTypeIATACode": "C27",
+    "ModelName": "COMAC ARJ21"
+  },
+  {
+    "AircraftTypeIATACode": "",
+    "ModelName": "COMAC C919"
+  },
+  {
+    "AircraftTypeIATACode": "CCJ",
+    "ModelName": "Canadair Challenger"
+  },
+  {
+    "AircraftTypeIATACode": "CCX",
+    "ModelName": "Canadair Global Express"
+  },
+  {
+    "AircraftTypeIATACode": "CD2",
+    "ModelName": "Government Aircraft Factories N22B / N24A Nomad"
+  },
+  {
+    "AircraftTypeIATACode": "CL4",
+    "ModelName": "Canadair CL-44"
+  },
+  {
+    "AircraftTypeIATACode": "CN1",
+    "ModelName": "Cessna light aircraft - single piston engine"
+  },
+  {
+    "AircraftTypeIATACode": "CN2",
+    "ModelName": "Cessna light aircraft - twin piston engines"
+  },
+  {
+    "AircraftTypeIATACode": "CN7",
+    "ModelName": "Cessna 750 Citation X"
+  },
+  {
+    "AircraftTypeIATACode": "CNA",
+    "ModelName": "Cessna light aircraft"
+  },
+  {
+    "AircraftTypeIATACode": "CNC",
+    "ModelName": "Cessna light aircraft - single turboprop engine"
+  },
+  {
+    "AircraftTypeIATACode": "CNJ",
+    "ModelName": "Cessna Citation"
+  },
+  {
+    "AircraftTypeIATACode": "CNT",
+    "ModelName": "Cessna light aircraft - twin turboprop engines"
+  },
+  {
+    "AircraftTypeIATACode": "CR1",
+    "ModelName": "Canadair Regional Jet 100"
+  },
+  {
+    "AircraftTypeIATACode": "CR2",
+    "ModelName": "Canadair Regional Jet 200"
+  },
+  {
+    "AircraftTypeIATACode": "CR7",
+    "ModelName": "Canadair Regional Jet 700"
+  },
+  {
+    "AircraftTypeIATACode": "CR9",
+    "ModelName": "Canadair Regional Jet 900"
+  },
+  {
+    "AircraftTypeIATACode": "CRA",
+    "ModelName": "Canadair Regional Jet 705"
+  },
+  {
+    "AircraftTypeIATACode": "CRF",
+    "ModelName": "Canadair Regional Jet Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "CRJ",
+    "ModelName": "Canadair Regional Jet"
+  },
+  {
+    "AircraftTypeIATACode": "CRK",
+    "ModelName": "Canadair Regional Jet 1000"
+  },
+  {
+    "AircraftTypeIATACode": "CRV",
+    "ModelName": "Aerospatiale (Sud Aviation) Se.210 Caravelle"
+  },
+  {
+    "AircraftTypeIATACode": "CS1",
+    "ModelName": "Bombardier C Series CS100"
+  },
+  {
+    "AircraftTypeIATACode": "CS2",
+    "ModelName": "CASA / IPTN 212 Aviocar"
+  },
+  {
+    "AircraftTypeIATACode": "CS3",
+    "ModelName": "Bombardier C Series CS300"
+  },
+  {
+    "AircraftTypeIATACode": "CS5",
+    "ModelName": "CASA / IPTN CN-235"
+  },
+  {
+    "AircraftTypeIATACode": "CV2",
+    "ModelName": "Convair CV-240 pax"
+  },
+  {
+    "AircraftTypeIATACode": "CV4",
+    "ModelName": "Convair CV-440 Metropolitan pax"
+  },
+  {
+    "AircraftTypeIATACode": "CV5",
+    "ModelName": "Convair CV-580 pax"
+  },
+  {
+    "AircraftTypeIATACode": "CVF",
+    "ModelName": "Convair CV-240 / 440 / 580 / 600 / 640 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "CVR",
+    "ModelName": "Convair CV-240 / 440 / 580 / 600 / 640 pax"
+  },
+  {
+    "AircraftTypeIATACode": "CVV",
+    "ModelName": "Convair CV-240 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "CVX",
+    "ModelName": "Convair CV-440 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "CVY",
+    "ModelName": "Convair CV-580 / 600 / 640 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "CWC",
+    "ModelName": "Curtiss C-46 Commando"
+  },
+  {
+    "AircraftTypeIATACode": "D10",
+    "ModelName": "Douglas DC-10 pax"
+  },
+  {
+    "AircraftTypeIATACode": "D11",
+    "ModelName": "Douglas DC-10-10/15 pax"
+  },
+  {
+    "AircraftTypeIATACode": "D1C",
+    "ModelName": "Douglas DC-10-30/40 pax"
+  },
+  {
+    "AircraftTypeIATACode": "D1F",
+    "ModelName": "Douglas DC-10 all Freighters"
+  },
+  {
+    "AircraftTypeIATACode": "D1M",
+    "ModelName": "Douglas DC-10 all Combi models"
+  },
+  {
+    "AircraftTypeIATACode": "D1X",
+    "ModelName": "Douglas DC-10-10 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "D1Y",
+    "ModelName": "Douglas DC-10-30 / 40 Freighters"
+  },
+  {
+    "AircraftTypeIATACode": "D28",
+    "ModelName": "Fairchild Dornier Do.228"
+  },
+  {
+    "AircraftTypeIATACode": "D38",
+    "ModelName": "Fairchild Dornier Do.328"
+  },
+  {
+    "AircraftTypeIATACode": "D3F",
+    "ModelName": "Douglas DC-3 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "D6F",
+    "ModelName": "Douglas DC-6A/B/C Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "D8F",
+    "ModelName": "Douglas DC-8 all Freighters"
+  },
+  {
+    "AircraftTypeIATACode": "D8L",
+    "ModelName": "Douglas DC-8-62 pax"
+  },
+  {
+    "AircraftTypeIATACode": "D8M",
+    "ModelName": "Douglas DC-8 all Combi models"
+  },
+  {
+    "AircraftTypeIATACode": "D8Q",
+    "ModelName": "Douglas DC-8-72 pax"
+  },
+  {
+    "AircraftTypeIATACode": "D8T",
+    "ModelName": "Douglas DC-8-50 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "D8X",
+    "ModelName": "Douglas DC-8-61 / 62 / 63 Freighters"
+  },
+  {
+    "AircraftTypeIATACode": "D8Y",
+    "ModelName": "Douglas DC-8-71 / 72 / 73 Freighters"
+  },
+  {
+    "AircraftTypeIATACode": "D91",
+    "ModelName": "Douglas DC-9-10 pax"
+  },
+  {
+    "AircraftTypeIATACode": "D92",
+    "ModelName": "Douglas DC-9-20 pax"
+  },
+  {
+    "AircraftTypeIATACode": "D93",
+    "ModelName": "Douglas DC-9-30 pax"
+  },
+  {
+    "AircraftTypeIATACode": "D94",
+    "ModelName": "Douglas DC-9-40 pax"
+  },
+  {
+    "AircraftTypeIATACode": "D95",
+    "ModelName": "Douglas DC-9-50 pax"
+  },
+  {
+    "AircraftTypeIATACode": "D9C",
+    "ModelName": "Douglas DC-9-30 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "D9D",
+    "ModelName": "Douglas DC-9-40 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "D9F",
+    "ModelName": "Douglas DC-9 all Freighters"
+  },
+  {
+    "AircraftTypeIATACode": "D9X",
+    "ModelName": "Douglas DC-9-10 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "DC3",
+    "ModelName": "Douglas DC-3 pax"
+  },
+  {
+    "AircraftTypeIATACode": "DC4",
+    "ModelName": "Douglas DC-4 pax"
+  },
+  {
+    "AircraftTypeIATACode": "DC6",
+    "ModelName": "Douglas DC6A/B pax"
+  },
+  {
+    "AircraftTypeIATACode": "DC8",
+    "ModelName": "Douglas DC-8 all pax models"
+  },
+  {
+    "AircraftTypeIATACode": "DC9",
+    "ModelName": "Douglas DC-9 all pax models"
+  },
+  {
+    "AircraftTypeIATACode": "DF2",
+    "ModelName": "Dassault (Breguet Mystere) Falcon 10 / 100 / 20 / 200 / 2000"
+  },
+  {
+    "AircraftTypeIATACode": "DF3",
+    "ModelName": "Dassault (Breguet Mystere) Falcon 50 / 900"
+  },
+  {
+    "AircraftTypeIATACode": "DFL",
+    "ModelName": "Dassault (Breguet Mystere) Falcon"
+  },
+  {
+    "AircraftTypeIATACode": "DH1",
+    "ModelName": "De Havilland Canada DHC-8-100 Dash 8 / 8Q"
+  },
+  {
+    "AircraftTypeIATACode": "DH2",
+    "ModelName": "De Havilland Canada DHC-8-200 Dash 8 / 8Q"
+  },
+  {
+    "AircraftTypeIATACode": "DH3",
+    "ModelName": "De Havilland Canada DHC-8-300 Dash 8 / 8Q"
+  },
+  {
+    "AircraftTypeIATACode": "DH4",
+    "ModelName": "De Havilland Canada DHC-8-400 Dash 8Q"
+  },
+  {
+    "AircraftTypeIATACode": "DH7",
+    "ModelName": "De Havilland Canada DHC-7 Dash 7"
+  },
+  {
+    "AircraftTypeIATACode": "DH8",
+    "ModelName": "De Havilland Canada DHC-8 Dash 8 all models"
+  },
+  {
+    "AircraftTypeIATACode": "DHB",
+    "ModelName": "De Havilland Canada DHC-2 Beaver / Turbo Beaver"
+  },
+  {
+    "AircraftTypeIATACode": "DHC",
+    "ModelName": "De Havilland Canada DHC-4 Caribou"
+  },
+  {
+    "AircraftTypeIATACode": "DHD",
+    "ModelName": "De Havilland DH.104 Dove"
+  },
+  {
+    "AircraftTypeIATACode": "DHH",
+    "ModelName": "De Havilland DH.114 Heron"
+  },
+  {
+    "AircraftTypeIATACode": "DHL",
+    "ModelName": "De Havilland Canada DHC-3 Turbo Otter"
+  },
+  {
+    "AircraftTypeIATACode": "DHO",
+    "ModelName": "De Havilland Canada DHC-3 Otter / Turbo Otter"
+  },
+  {
+    "AircraftTypeIATACode": "DHP",
+    "ModelName": "De Havilland Canada DHC-2 Beaver"
+  },
+  {
+    "AircraftTypeIATACode": "DHR",
+    "ModelName": "De Havilland Canada DHC-2 Turbo-Beaver"
+  },
+  {
+    "AircraftTypeIATACode": "DHS",
+    "ModelName": "De Havilland Canada DHC-3 Otter"
+  },
+  {
+    "AircraftTypeIATACode": "DHT",
+    "ModelName": "De Havilland Canada DHC-6 Twin Otter"
+  },
+  {
+    "AircraftTypeIATACode": "E70",
+    "ModelName": "Embraer 170"
+  },
+  {
+    "AircraftTypeIATACode": "E90",
+    "ModelName": "Embraer 190"
+  },
+  {
+    "AircraftTypeIATACode": "EC3",
+    "ModelName": "Eurocopter EC.130"
+  },
+  {
+    "AircraftTypeIATACode": "E70",
+    "ModelName": "Embraer 170"
+  },
+  {
+    "AircraftTypeIATACode": "E75",
+    "ModelName": "Embraer 175 (Short wing)"
+  },
+  {
+    "AircraftTypeIATACode": "E75",
+    "ModelName": "Embraer 175 (Long Wing)"
+  },
+  {
+    "AircraftTypeIATACode": "E90",
+    "ModelName": "Embraer 190"
+  },
+  {
+    "AircraftTypeIATACode": "E95",
+    "ModelName": "Embraer 195"
+  },
+  {
+    "AircraftTypeIATACode": "EM2",
+    "ModelName": "Embraer EMB.120 Brasilia"
+  },
+  {
+    "AircraftTypeIATACode": "EMB",
+    "ModelName": "Embraer EMB.110 Bandeirnate"
+  },
+  {
+    "AircraftTypeIATACode": "EMJ",
+    "ModelName": "Embraer 170/190"
+  },
+  {
+    "AircraftTypeIATACode": "ER3",
+    "ModelName": "Embraer RJ135"
+  },
+  {
+    "AircraftTypeIATACode": "ER3",
+    "ModelName": "Embraer Legacy 600 / Legacy 650"
+  },
+  {
+    "AircraftTypeIATACode": "ER4",
+    "ModelName": "Embraer RJ145 Amazon"
+  },
+  {
+    "AircraftTypeIATACode": "ERD",
+    "ModelName": "Embraer RJ140"
+  },
+  {
+    "AircraftTypeIATACode": "ERJ",
+    "ModelName": "Embraer RJ135 / RJ140 / RJ145"
+  },
+  {
+    "AircraftTypeIATACode": "F21",
+    "ModelName": "Fokker F.28 Fellowship 1000"
+  },
+  {
+    "AircraftTypeIATACode": "F22",
+    "ModelName": "Fokker F.28 Fellowship 2000"
+  },
+  {
+    "AircraftTypeIATACode": "F23",
+    "ModelName": "Fokker F.28 Fellowship 3000"
+  },
+  {
+    "AircraftTypeIATACode": "F24",
+    "ModelName": "Fokker F.28 Fellowship 4000"
+  },
+  {
+    "AircraftTypeIATACode": "F27",
+    "ModelName": "Fokker F.27 Friendship / Fairchild F.27"
+  },
+  {
+    "AircraftTypeIATACode": "F28",
+    "ModelName": "Fokker F.28 Fellowship"
+  },
+  {
+    "AircraftTypeIATACode": "F50",
+    "ModelName": "Fokker 50"
+  },
+  {
+    "AircraftTypeIATACode": "F5F",
+    "ModelName": "Fokker 50 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "F70",
+    "ModelName": "Fokker 70"
+  },
+  {
+    "AircraftTypeIATACode": "FA7",
+    "ModelName": "Fairchild Dornier 728JET"
+  },
+  {
+    "AircraftTypeIATACode": "FK7",
+    "ModelName": "Fairchild FH.227"
+  },
+  {
+    "AircraftTypeIATACode": "FRJ",
+    "ModelName": "Fairchild Dornier 328JET"
+  },
+  {
+    "AircraftTypeIATACode": "GRG",
+    "ModelName": "Grumman G.21 Goose"
+  },
+  {
+    "AircraftTypeIATACode": "GRJ",
+    "ModelName": "Gulfstream Aerospace G-1159 Gulfstream II / III / IV / V"
+  },
+  {
+    "AircraftTypeIATACode": "GRM",
+    "ModelName": "Grumman G.73 Turbo Mallard"
+  },
+  {
+    "AircraftTypeIATACode": "GRS",
+    "ModelName": "Gulfstream Aerospace G-159 Gulfstream I"
+  },
+  {
+    "AircraftTypeIATACode": "H25",
+    "ModelName": "British Aerospace (Hawker Siddeley) HS.125"
+  },
+  {
+    "AircraftTypeIATACode": "HEC",
+    "ModelName": "Helio H-250 Courier / H-295 / 385 Super Courier"
+  },
+  {
+    "AircraftTypeIATACode": "HOV",
+    "ModelName": "Hovercraft"
+  },
+  {
+    "AircraftTypeIATACode": "HS7",
+    "ModelName": "Hawker Siddeley HS.748"
+  },
+  {
+    "AircraftTypeIATACode": "I14",
+    "ModelName": "Ilyushin IL114"
+  },
+  {
+    "AircraftTypeIATACode": "I93",
+    "ModelName": "Ilyushin IL96-300 pax"
+  },
+  {
+    "AircraftTypeIATACode": "I9F",
+    "ModelName": "Ilyushin IL96 Freighters"
+  },
+  {
+    "AircraftTypeIATACode": "I9M",
+    "ModelName": "Ilyushin IL96M pax"
+  },
+  {
+    "AircraftTypeIATACode": "I9X",
+    "ModelName": "Ilyushin IL96-300 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "I9Y",
+    "ModelName": "Ilyushin IL96T Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "IL6",
+    "ModelName": "Ilyushin IL62"
+  },
+  {
+    "AircraftTypeIATACode": "IL7",
+    "ModelName": "Ilyushin IL76"
+  },
+  {
+    "AircraftTypeIATACode": "IL8",
+    "ModelName": "Ilyushin IL18"
+  },
+  {
+    "AircraftTypeIATACode": "IL9",
+    "ModelName": "Ilyushin IL96 pax"
+  },
+  {
+    "AircraftTypeIATACode": "ILW",
+    "ModelName": "Ilyushin IL86"
+  },
+  {
+    "AircraftTypeIATACode": "J31",
+    "ModelName": "British Aerospace Jetstream 31"
+  },
+  {
+    "AircraftTypeIATACode": "J32",
+    "ModelName": "British Aerospace Jetstream 32"
+  },
+  {
+    "AircraftTypeIATACode": "J41",
+    "ModelName": "British Aerospace Jetstream 41"
+  },
+  {
+    "AircraftTypeIATACode": "JST",
+    "ModelName": "British Aerospace Jetstream 31 / 32 / 41"
+  },
+  {
+    "AircraftTypeIATACode": "JU5",
+    "ModelName": "Junkers Ju52/3M"
+  },
+  {
+    "AircraftTypeIATACode": "L10",
+    "ModelName": "Lockheed L-1011 Tristar pax"
+  },
+  {
+    "AircraftTypeIATACode": "L11",
+    "ModelName": "Lockheed L-1011 1 / 50 / 100 / 150 / 200 / 250 Tristar pax"
+  },
+  {
+    "AircraftTypeIATACode": "L15",
+    "ModelName": "Lockheed L-1011 500 Tristar pax"
+  },
+  {
+    "AircraftTypeIATACode": "L1F",
+    "ModelName": "Lockheed L-1011 Tristar Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "L49",
+    "ModelName": "Lockheed L-1049 Super Constellation"
+  },
+  {
+    "AircraftTypeIATACode": "L4T",
+    "ModelName": "LET 410"
+  },
+  {
+    "AircraftTypeIATACode": "LCH",
+    "ModelName": "Launch - Boat"
+  },
+  {
+    "AircraftTypeIATACode": "LMO",
+    "ModelName": "Limousine"
+  },
+  {
+    "AircraftTypeIATACode": "LOE",
+    "ModelName": "Lockheed L-188 Electra pax"
+  },
+  {
+    "AircraftTypeIATACode": "LOF",
+    "ModelName": "Lockheed L-188 Electra Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "LOH",
+    "ModelName": "Lockheed L-182 / 282 / 382 (L-100) Hercules"
+  },
+  {
+    "AircraftTypeIATACode": "LOM",
+    "ModelName": "Lockheed L-188 Electra Mixed Configuration"
+  },
+  {
+    "AircraftTypeIATACode": "LRJ",
+    "ModelName": "Gates Learjet"
+  },
+  {
+    "AircraftTypeIATACode": "M11",
+    "ModelName": "McDonnell Douglas MD11 pax"
+  },
+  {
+    "AircraftTypeIATACode": "M1F",
+    "ModelName": "McDonnell Douglas MD11 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "M1M",
+    "ModelName": "McDonnell Douglas MD11 Mixed Configuration"
+  },
+  {
+    "AircraftTypeIATACode": "M80",
+    "ModelName": "McDonnell Douglas MD80"
+  },
+  {
+    "AircraftTypeIATACode": "M81",
+    "ModelName": "McDonnell Douglas MD81"
+  },
+  {
+    "AircraftTypeIATACode": "M82",
+    "ModelName": "McDonnell Douglas MD82"
+  },
+  {
+    "AircraftTypeIATACode": "M83",
+    "ModelName": "McDonnell Douglas MD83"
+  },
+  {
+    "AircraftTypeIATACode": "M87",
+    "ModelName": "McDonnell Douglas MD87"
+  },
+  {
+    "AircraftTypeIATACode": "M88",
+    "ModelName": "McDonnell Douglas MD88"
+  },
+  {
+    "AircraftTypeIATACode": "M90",
+    "ModelName": "McDonnell Douglas MD90"
+  },
+  {
+    "AircraftTypeIATACode": "MBH",
+    "ModelName": "Eurocopter (MBB) Bo.105"
+  },
+  {
+    "AircraftTypeIATACode": "MD9",
+    "ModelName": "MD Helicopters MD900 Explorer"
+  },
+  {
+    "AircraftTypeIATACode": "MIH",
+    "ModelName": "MIL Mi-8 / Mi-17 / Mi-171 / Mil-172"
+  },
+  {
+    "AircraftTypeIATACode": "MU2",
+    "ModelName": "Mitsubishi Mu-2"
+  },
+  {
+    "AircraftTypeIATACode": "ND2",
+    "ModelName": "Aerospatiale (Nord) 262"
+  },
+  {
+    "AircraftTypeIATACode": "NDC",
+    "ModelName": "Aerospatiale SN.601 Corvette"
+  },
+  {
+    "AircraftTypeIATACode": "NDE",
+    "ModelName": "Eurocopter (Aerospatiale) AS350 Ecureuil / AS355 Ecureuil 2"
+  },
+  {
+    "AircraftTypeIATACode": "NDH",
+    "ModelName": "Eurocopter (Aerospatiale) SA365C / SA365N Dauphin 2"
+  },
+  {
+    "AircraftTypeIATACode": "PA1",
+    "ModelName": "Piper light aircraft - single piston engine"
+  },
+  {
+    "AircraftTypeIATACode": "PA2",
+    "ModelName": "Piper light aircraft - twin piston engines"
+  },
+  {
+    "AircraftTypeIATACode": "PAG",
+    "ModelName": "Piper light aircraft"
+  },
+  {
+    "AircraftTypeIATACode": "PAT",
+    "ModelName": "Piper light aircraft - twin turboprop engines"
+  },
+  {
+    "AircraftTypeIATACode": "PL2",
+    "ModelName": "Pilatus PC-12"
+  },
+  {
+    "AircraftTypeIATACode": "PL6",
+    "ModelName": "Pilatus PC-6 Turbo Porter"
+  },
+  {
+    "AircraftTypeIATACode": "PN6",
+    "ModelName": "Partenavia P.68"
+  },
+  {
+    "AircraftTypeIATACode": "RFS",
+    "ModelName": "Road Feeder Service - Cargo Truck"
+  },
+  {
+    "AircraftTypeIATACode": "S20",
+    "ModelName": "Saab 2000"
+  },
+  {
+    "AircraftTypeIATACode": "S58",
+    "ModelName": "Sikorsky S-58T"
+  },
+  {
+    "AircraftTypeIATACode": "S61",
+    "ModelName": "Sikorsky S-61"
+  },
+  {
+    "AircraftTypeIATACode": "S76",
+    "ModelName": "Sikorsky S-76"
+  },
+  {
+    "AircraftTypeIATACode": "SF3",
+    "ModelName": "Saab SF340"
+  },
+  {
+    "AircraftTypeIATACode": "SFB",
+    "ModelName": "Saab SF340B"
+  },
+  {
+    "AircraftTypeIATACode": "SFF",
+    "ModelName": "Saab SF340 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "SH3",
+    "ModelName": "Shorts SD.330"
+  },
+  {
+    "AircraftTypeIATACode": "SH6",
+    "ModelName": "Shorts SD.360"
+  },
+  {
+    "AircraftTypeIATACode": "SHB",
+    "ModelName": "Shorts SC-5 Belfast"
+  },
+  {
+    "AircraftTypeIATACode": "SHS",
+    "ModelName": "Shorts SC-7 Skyvan"
+  },
+  {
+    "AircraftTypeIATACode": "SSC",
+    "ModelName": "Aerospatiale/BAC Concorde"
+  },
+  {
+    "AircraftTypeIATACode": "SU1",
+    "ModelName": "Sukhoi Superjet 100"
+  },
+  {
+    "AircraftTypeIATACode": "SU7",
+    "ModelName": "Sukhoi Superjet 100-75"
+  },
+  {
+    "AircraftTypeIATACode": "SU9",
+    "ModelName": "Sukhoi Superjet 100-95"
+  },
+  {
+    "AircraftTypeIATACode": "SWM",
+    "ModelName": "Fairchild (Swearingen) SA26 / SA226 / SA227 Metro / Merlin / Expediter"
+  },
+  {
+    "AircraftTypeIATACode": "T20",
+    "ModelName": "Tupolev Tu-204 / Tu-214"
+  },
+  {
+    "AircraftTypeIATACode": "T2F",
+    "ModelName": "Tupolev Tu-204 Freighter"
+  },
+  {
+    "AircraftTypeIATACode": "TRN",
+    "ModelName": "Train"
+  },
+  {
+    "AircraftTypeIATACode": "TU3",
+    "ModelName": "Tupolev Tu134"
+  },
+  {
+    "AircraftTypeIATACode": "TU5",
+    "ModelName": "Tupolev Tu154"
+  },
+  {
+    "AircraftTypeIATACode": "VCV",
+    "ModelName": "Vickers Viscount"
+  },
+  {
+    "AircraftTypeIATACode": "WWP",
+    "ModelName": "Israel Aircraft Industries 1124 Westwind"
+  },
+  {
+    "AircraftTypeIATACode": "YK2",
+    "ModelName": "Yakovlev Yak 42"
+  },
+  {
+    "AircraftTypeIATACode": "YK4",
+    "ModelName": "Yakovlev Yak 40"
+  },
+  {
+    "AircraftTypeIATACode": "YN2",
+    "ModelName": "Harbin Yunshuji Y12"
+  },
+  {
+    "AircraftTypeIATACode": "YN7",
+    "ModelName": "Xian Yunshuji Y7"
+  },
+  {
+    "AircraftTypeIATACode": "YS1",
+    "ModelName": "NAMC YS-11"
+  }
+]

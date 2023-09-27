@@ -1,0 +1,7744 @@
+[
+  {
+    "Name": "Ariana Afghan Airlines dba Ariana Afghan Airlines",
+    "CountryId": 1,
+    "AccountingCode": 255,
+    "AirlinePrefix": 255,
+    "CarrierCode": "FG"
+  },
+  {
+    "Name": "Kam Air dba Kam Air",
+    "CountryId": 1,
+    "AccountingCode": 384,
+    "AirlinePrefix": 384,
+    "CarrierCode": "RQ"
+  },
+  {
+    "Name": "Albawings",
+    "CountryId": 3,
+    "AccountingCode": 654,
+    "AirlinePrefix": "",
+    "CarrierCode": "2B"
+  },
+  {
+    "Name": "AIR ALBANIA SHPK",
+    "CountryId": 3,
+    "AccountingCode": 667,
+    "AirlinePrefix": "",
+    "CarrierCode": "ZB"
+  },
+  {
+    "Name": "Air Algerie",
+    "CountryId": 4,
+    "AccountingCode": 124,
+    "AirlinePrefix": 124,
+    "CarrierCode": "AH"
+  },
+  {
+    "Name": "Tassili Airlines",
+    "CountryId": 4,
+    "AccountingCode": 515,
+    "AirlinePrefix": "",
+    "CarrierCode": "SF"
+  },
+  {
+    "Name": "TAAG - Linhas Aereas de Angola, SA dba TAAG-Angola Airlines",
+    "CountryId": 7,
+    "AccountingCode": 118,
+    "AirlinePrefix": 118,
+    "CarrierCode": "DT"
+  },
+  {
+    "Name": "FLY AO-LINHAS AEREAS, LIMITADA dba FLY ANGOLA",
+    "CountryId": 7,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "EQ"
+  },
+  {
+    "Name": "Anguilla Air Services, Ltd",
+    "CountryId": 8,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "Q3"
+  },
+  {
+    "Name": "LIAT (1974) Ltd.",
+    "CountryId": 10,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "LI"
+  },
+  {
+    "Name": "Aerolineas Argentinas S.A.",
+    "CountryId": 11,
+    "AccountingCode": 44,
+    "AirlinePrefix": 44,
+    "CarrierCode": "AR"
+  },
+  {
+    "Name": "Tectimes Sudamericana S.A.",
+    "CountryId": 11,
+    "AccountingCode": 322,
+    "AirlinePrefix": "",
+    "CarrierCode": "C1"
+  },
+  {
+    "Name": "F.B. Lineas Aereas SA",
+    "CountryId": 11,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "FO"
+  },
+  {
+    "Name": "Jetsmart Airlines S.A.",
+    "CountryId": 11,
+    "AccountingCode": 974,
+    "AirlinePrefix": "",
+    "CarrierCode": "WJ"
+  },
+  {
+    "Name": "FLYONE ARMENIA Limited Liability Co",
+    "CountryId": 12,
+    "AccountingCode": "",
+    "AirlinePrefix": 379,
+    "CarrierCode": "3F"
+  },
+  {
+    "Name": "SHIRAK AVIA\" Limited Liability Com",
+    "CountryId": 12,
+    "AccountingCode": 740,
+    "AirlinePrefix": "",
+    "CarrierCode": "5G"
+  },
+  {
+    "Name": "Armenia Airways Air Company CJSC",
+    "CountryId": 12,
+    "AccountingCode": 616,
+    "AirlinePrefix": 616,
+    "CarrierCode": "6A"
+  },
+  {
+    "Name": "Armenian National Airlines CJSC dba FLY ARNA",
+    "CountryId": 12,
+    "AccountingCode": 253,
+    "AirlinePrefix": 253,
+    "CarrierCode": "G6"
+  },
+  {
+    "Name": "NOVAIR\" Limited Liability Company",
+    "CountryId": 12,
+    "AccountingCode": 206,
+    "AirlinePrefix": "",
+    "CarrierCode": "NG"
+  },
+  {
+    "Name": "Aircompany Armenia LLC",
+    "CountryId": 12,
+    "AccountingCode": 437,
+    "AirlinePrefix": 437,
+    "CarrierCode": "RM"
+  },
+  {
+    "Name": "Arubaanse Luchtvaart Maatschappij NV dba Aruba Airlines",
+    "CountryId": 13,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "AG"
+  },
+  {
+    "Name": "Comlux Aruba NV",
+    "CountryId": 13,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "CS"
+  },
+  {
+    "Name": "Vee H Aviation Pty Ltd. T/A Link Airways / Fly FC",
+    "CountryId": 14,
+    "AccountingCode": 441,
+    "AirlinePrefix": "",
+    "CarrierCode": "FC"
+  },
+  {
+    "Name": "Pelican Airlines Pty Ltd dba Flypelican",
+    "CountryId": 14,
+    "AccountingCode": 166,
+    "AirlinePrefix": "",
+    "CarrierCode": "FP"
+  },
+  {
+    "Name": "Aviair PTY LTD",
+    "CountryId": 14,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "GD"
+  },
+  {
+    "Name": "Tasman Cargo Airlines PTY LTD",
+    "CountryId": 14,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "HJ"
+  },
+  {
+    "Name": "Skippers Aviation Pty Ltd.",
+    "CountryId": 14,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "HK"
+  },
+  {
+    "Name": "Jetstar Airways Pty Limited",
+    "CountryId": 14,
+    "AccountingCode": 41,
+    "AirlinePrefix": "",
+    "CarrierCode": "JQ"
+  },
+  {
+    "Name": "AIR LINK PTY. LIMITED dba Altitude Aviation Australia",
+    "CountryId": 14,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "LZ"
+  },
+  {
+    "Name": "Hinterland Aviation Pty Ltd",
+    "CountryId": 14,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "OI"
+  },
+  {
+    "Name": "Nauru Air Corporation dba Nauru Airlines",
+    "CountryId": 14,
+    "AccountingCode": 123,
+    "AirlinePrefix": 123,
+    "CarrierCode": "ON"
+  },
+  {
+    "Name": "Pionair Australia Pty Ltd",
+    "CountryId": 14,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "PH"
+  },
+  {
+    "Name": "EXPRESS FREIGHTERS AUSTRALIA PTY LI",
+    "CountryId": 14,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "QE"
+  },
+  {
+    "Name": "Qantas Airways Ltd.",
+    "CountryId": 14,
+    "AccountingCode": 81,
+    "AirlinePrefix": 81,
+    "CarrierCode": "QF"
+  },
+  {
+    "Name": "Skytrans PTY Ltd. dba Skytrans",
+    "CountryId": 14,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "QN"
+  },
+  {
+    "Name": "Alliance Airlines Pty. Limited",
+    "CountryId": 14,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "QQ"
+  },
+  {
+    "Name": "Sharp Aviation Pty. Ltd t/a Sharp Airlines",
+    "CountryId": 14,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "SH"
+  },
+  {
+    "Name": "Capiteq Limited dba Airnorth",
+    "CountryId": 14,
+    "AccountingCode": 935,
+    "AirlinePrefix": 935,
+    "CarrierCode": "TL"
+  },
+  {
+    "Name": "Virgin Australia International Airlines Pty Ltd",
+    "CountryId": 14,
+    "AccountingCode": 795,
+    "AirlinePrefix": 795,
+    "CarrierCode": "VA"
+  },
+  {
+    "Name": "REGIONAL EXPRESS PTY LIMITED",
+    "CountryId": 14,
+    "AccountingCode": 899,
+    "AirlinePrefix": 899,
+    "CarrierCode": "ZL"
+  },
+  {
+    "Name": "Eurowings Europe GmbH",
+    "CountryId": 15,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "E2"
+  },
+  {
+    "Name": "easyJet Europe Airline GmbH",
+    "CountryId": 15,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "EC"
+  },
+  {
+    "Name": "Austrian Airlines AG dba Austrian",
+    "CountryId": 15,
+    "AccountingCode": 257,
+    "AirlinePrefix": 257,
+    "CarrierCode": "OS"
+  },
+  {
+    "Name": "Altenrhein Luftfahrt GmbH dba People's",
+    "CountryId": 15,
+    "AccountingCode": 335,
+    "AirlinePrefix": "",
+    "CarrierCode": "PE"
+  },
+  {
+    "Name": "DHL Air (Austria) GmbH",
+    "CountryId": 15,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "Q7"
+  },
+  {
+    "Name": "Silk Way West Airlines LLC",
+    "CountryId": 16,
+    "AccountingCode": "",
+    "AirlinePrefix": 501,
+    "CarrierCode": "7L"
+  },
+  {
+    "Name": "Azerbaijan Airlines CJSC",
+    "CountryId": 16,
+    "AccountingCode": 771,
+    "AirlinePrefix": 771,
+    "CarrierCode": "J2"
+  },
+  {
+    "Name": "Silk Way Airlines LLC",
+    "CountryId": 16,
+    "AccountingCode": "",
+    "AirlinePrefix": 463,
+    "CarrierCode": "ZP"
+  },
+  {
+    "Name": "Southern Air Charter Co., Limited",
+    "CountryId": 17,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "PL"
+  },
+  {
+    "Name": "Bahamasair Holdings, Ltd",
+    "CountryId": 17,
+    "AccountingCode": 111,
+    "AirlinePrefix": "",
+    "CarrierCode": "UP"
+  },
+  {
+    "Name": "Western Air Ltd",
+    "CountryId": 17,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "WU"
+  },
+  {
+    "Name": "DHL Aviation EEMEA B.S.C.(c)",
+    "CountryId": 18,
+    "AccountingCode": "",
+    "AirlinePrefix": 155,
+    "CarrierCode": "ES"
+  },
+  {
+    "Name": "Gulf Air B.S.C. (c)",
+    "CountryId": 18,
+    "AccountingCode": 72,
+    "AirlinePrefix": 72,
+    "CarrierCode": "GF"
+  },
+  {
+    "Name": "MAE Aircraft Management WLL",
+    "CountryId": 18,
+    "AccountingCode": "",
+    "AirlinePrefix": 723,
+    "CarrierCode": "MA"
+  },
+  {
+    "Name": "Biman Bangladesh Airlines Limited",
+    "CountryId": 19,
+    "AccountingCode": 997,
+    "AirlinePrefix": 997,
+    "CarrierCode": "BG"
+  },
+  {
+    "Name": "Bismillah Airlines Limited",
+    "CountryId": 19,
+    "AccountingCode": "",
+    "AirlinePrefix": 256,
+    "CarrierCode": "BH"
+  },
+  {
+    "Name": "US-Bangla Airlines Limited",
+    "CountryId": 19,
+    "AccountingCode": 779,
+    "AirlinePrefix": "",
+    "CarrierCode": "BS"
+  },
+  {
+    "Name": "Sky Capital Airlines Limited dba Sky Air",
+    "CountryId": 19,
+    "AccountingCode": "",
+    "AirlinePrefix": 442,
+    "CarrierCode": "S8"
+  },
+  {
+    "Name": "Novoair Limited",
+    "CountryId": 19,
+    "AccountingCode": 855,
+    "AirlinePrefix": 855,
+    "CarrierCode": "VQ"
+  },
+  {
+    "Name": "Belavia - Belarusian Airlines dba Belavia",
+    "CountryId": 21,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "B2"
+  },
+  {
+    "Name": "Thalys International",
+    "CountryId": 22,
+    "AccountingCode": 56,
+    "AirlinePrefix": "",
+    "CarrierCode": "2H"
+  },
+  {
+    "Name": "ASL Airlines Belgium",
+    "CountryId": 22,
+    "AccountingCode": 756,
+    "AirlinePrefix": 756,
+    "CarrierCode": "3V"
+  },
+  {
+    "Name": "Air Belgium SA",
+    "CountryId": 22,
+    "AccountingCode": 142,
+    "AirlinePrefix": 142,
+    "CarrierCode": "KF"
+  },
+  {
+    "Name": "Brussels Airlines",
+    "CountryId": 22,
+    "AccountingCode": 82,
+    "AirlinePrefix": 82,
+    "CarrierCode": "SN"
+  },
+  {
+    "Name": "TUI Airlines Belgium N.V dba TUI fly",
+    "CountryId": 22,
+    "AccountingCode": 612,
+    "AirlinePrefix": 612,
+    "CarrierCode": "TB"
+  },
+  {
+    "Name": "Challenge Airlines (BE) S.A.",
+    "CountryId": 22,
+    "AccountingCode": "",
+    "AirlinePrefix": 744,
+    "CarrierCode": "X7"
+  },
+  {
+    "Name": "SITA - Airlines Worldwide Telecommunications and Information",
+    "CountryId": 22,
+    "AccountingCode": 950,
+    "AirlinePrefix": 950,
+    "CarrierCode": "XS"
+  },
+  {
+    "Name": "Maya Island Air",
+    "CountryId": 23,
+    "AccountingCode": 391,
+    "AirlinePrefix": "",
+    "CarrierCode": "2M"
+  },
+  {
+    "Name": "Tropic Air Limited",
+    "CountryId": 23,
+    "AccountingCode": 789,
+    "AirlinePrefix": "",
+    "CarrierCode": "9N"
+  },
+  {
+    "Name": "Longtail Aviation International Limited",
+    "CountryId": 25,
+    "AccountingCode": "",
+    "AirlinePrefix": 388,
+    "CarrierCode": "6T"
+  },
+  {
+    "Name": "Bhutan Airlines dba Tashi Air Pvt Ltd.",
+    "CountryId": 26,
+    "AccountingCode": 786,
+    "AirlinePrefix": 786,
+    "CarrierCode": "B3"
+  },
+  {
+    "Name": "Druk Air Corporation Limited (Royal Bhutan Airlines)",
+    "CountryId": 26,
+    "AccountingCode": 787,
+    "AirlinePrefix": 787,
+    "CarrierCode": "KB"
+  },
+  {
+    "Name": "Transportes Aereos Bolivianos",
+    "CountryId": 27,
+    "AccountingCode": "",
+    "AirlinePrefix": 901,
+    "CarrierCode": "2L"
+  },
+  {
+    "Name": "Boliviana de Aviacion (BoA)",
+    "CountryId": 27,
+    "AccountingCode": 930,
+    "AirlinePrefix": 930,
+    "CarrierCode": "OB"
+  },
+  {
+    "Name": "Compania de Servicios de Transporte Aereo Amaszonas - Amaszonas S.A",
+    "CountryId": 27,
+    "AccountingCode": 464,
+    "AirlinePrefix": "",
+    "CarrierCode": "Z8"
+  },
+  {
+    "Name": "FLYBOSNIA DOO",
+    "CountryId": 29,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "6W"
+  },
+  {
+    "Name": "Air Botswana",
+    "CountryId": 30,
+    "AccountingCode": 636,
+    "AirlinePrefix": 636,
+    "CarrierCode": "BP"
+  },
+  {
+    "Name": "TWO TAXI AEREO LTDA",
+    "CountryId": 32,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "2F"
+  },
+  {
+    "Name": "Passaredo Transportes Aereos S.A.",
+    "CountryId": 32,
+    "AccountingCode": 678,
+    "AirlinePrefix": "",
+    "CarrierCode": "2Z"
+  },
+  {
+    "Name": "MAP Linhas Aereas",
+    "CountryId": 32,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "7M"
+  },
+  {
+    "Name": "Azul Linhas Aereas Brasileiras",
+    "CountryId": 32,
+    "AccountingCode": 577,
+    "AirlinePrefix": 577,
+    "CarrierCode": "AD"
+  },
+  {
+    "Name": "ATA AEROTAXI ABAETE LTDA dba ATA AEROTAXI ABAETE LTDA",
+    "CountryId": 32,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "E4"
+  },
+  {
+    "Name": "Bringer Air Cargo Taxi Aereo Ltda",
+    "CountryId": 32,
+    "AccountingCode": "",
+    "AirlinePrefix": 417,
+    "CarrierCode": "E6"
+  },
+  {
+    "Name": "GOL Linhas Aereas S.A.",
+    "CountryId": 32,
+    "AccountingCode": 127,
+    "AirlinePrefix": 127,
+    "CarrierCode": "G3"
+  },
+  {
+    "Name": "TAM Linhas Aereas S.A. dba LATAM Airlines Brasil",
+    "CountryId": 32,
+    "AccountingCode": 957,
+    "AirlinePrefix": 957,
+    "CarrierCode": "JJ"
+  },
+  {
+    "Name": "ABSA - Aerolinhas Brasileiras S.A dba LATAM Cargo Brasil",
+    "CountryId": 32,
+    "AccountingCode": "",
+    "AirlinePrefix": 549,
+    "CarrierCode": "M3"
+  },
+  {
+    "Name": "Modern Transporte Aereo de Carga SA dba Modern Logistics",
+    "CountryId": 32,
+    "AccountingCode": "",
+    "AirlinePrefix": 372,
+    "CarrierCode": "WD"
+  },
+  {
+    "Name": "Royal Brunei Airlines Sdn. Bhd. dba Royal Brunei Airlines",
+    "CountryId": 34,
+    "AccountingCode": 672,
+    "AirlinePrefix": 672,
+    "CarrierCode": "BI"
+  },
+  {
+    "Name": "CTW Consulting",
+    "CountryId": 35,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "1W"
+  },
+  {
+    "Name": "Fly2Sky Ltd.",
+    "CountryId": 35,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "F6"
+  },
+  {
+    "Name": "Bulgaria Air JSC",
+    "CountryId": 35,
+    "AccountingCode": 623,
+    "AirlinePrefix": 623,
+    "CarrierCode": "FB"
+  },
+  {
+    "Name": "Gullivair Ltd. dba Gullivair",
+    "CountryId": 35,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "G2"
+  },
+  {
+    "Name": "European Air Charter Jsc. dba NIL",
+    "CountryId": 35,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "H6"
+  },
+  {
+    "Name": "GP Aviation Ltd",
+    "CountryId": 35,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "IV"
+  },
+  {
+    "Name": "Air Burkina",
+    "CountryId": 36,
+    "AccountingCode": 226,
+    "AirlinePrefix": "",
+    "CarrierCode": "2J"
+  },
+  {
+    "Name": "Bassaka Air Limited dba Bassaka Air",
+    "CountryId": 38,
+    "AccountingCode": 590,
+    "AirlinePrefix": 590,
+    "CarrierCode": "5B"
+  },
+  {
+    "Name": "Cambodia Angkor Air t/a Cambodia Angkor Air Co., Ltd.",
+    "CountryId": 38,
+    "AccountingCode": 188,
+    "AirlinePrefix": 188,
+    "CarrierCode": "K6"
+  },
+  {
+    "Name": "Cambodia Airways dba Cambodia Airways Co., Ltd",
+    "CountryId": 38,
+    "AccountingCode": 733,
+    "AirlinePrefix": "",
+    "CarrierCode": "KR"
+  },
+  {
+    "Name": "Lanmei Airlines (Cambodia) Co.,Ltd",
+    "CountryId": 38,
+    "AccountingCode": 961,
+    "AirlinePrefix": 961,
+    "CarrierCode": "LQ"
+  },
+  {
+    "Name": "JC (Cambodia) International Airlines",
+    "CountryId": 38,
+    "AccountingCode": 9,
+    "AirlinePrefix": "",
+    "CarrierCode": "QD"
+  },
+  {
+    "Name": "Sky Angkor Airlines dba Sky Angkor Airlines Co., Ltd",
+    "CountryId": 38,
+    "AccountingCode": 969,
+    "AirlinePrefix": 969,
+    "CarrierCode": "ZA"
+  },
+  {
+    "Name": "Cameroon Airlines Corporation (Camair-Co)",
+    "CountryId": 39,
+    "AccountingCode": 40,
+    "AirlinePrefix": "",
+    "CarrierCode": "QC"
+  },
+  {
+    "Name": "InteliSys Aviation Systems (2013) I",
+    "CountryId": 40,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "1Q"
+  },
+  {
+    "Name": "Air Inuit Ltd/Ltee",
+    "CountryId": 40,
+    "AccountingCode": 466,
+    "AirlinePrefix": 466,
+    "CarrierCode": "3H"
+  },
+  {
+    "Name": "Air North Charter and Training Ltd.",
+    "CountryId": 40,
+    "AccountingCode": 287,
+    "AirlinePrefix": 287,
+    "CarrierCode": "4N"
+  },
+  {
+    "Name": "TRANSWEST AIR LIMITED",
+    "CountryId": 40,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "4T"
+  },
+  {
+    "Name": "Canadian North Inc.",
+    "CountryId": 40,
+    "AccountingCode": 518,
+    "AirlinePrefix": 518,
+    "CarrierCode": "5T"
+  },
+  {
+    "Name": "Bradley Air Services Limited t/a First Air",
+    "CountryId": 40,
+    "AccountingCode": 245,
+    "AirlinePrefix": 245,
+    "CarrierCode": "7F"
+  },
+  {
+    "Name": "Exploits Valley Air Services",
+    "CountryId": 40,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "8K"
+  },
+  {
+    "Name": "Pacific Coastal Airlines Limited",
+    "CountryId": 40,
+    "AccountingCode": 905,
+    "AirlinePrefix": "",
+    "CarrierCode": "8P"
+  },
+  {
+    "Name": "Air Tindi Ltd.",
+    "CountryId": 40,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "8T"
+  },
+  {
+    "Name": "AccesRail and Partner Railways",
+    "CountryId": 40,
+    "AccountingCode": 450,
+    "AirlinePrefix": "",
+    "CarrierCode": "9B"
+  },
+  {
+    "Name": "Central Mountain Air Ltd.",
+    "CountryId": 40,
+    "AccountingCode": 634,
+    "AirlinePrefix": 634,
+    "CarrierCode": "9M"
+  },
+  {
+    "Name": "Air Canada",
+    "CountryId": 40,
+    "AccountingCode": 14,
+    "AirlinePrefix": 14,
+    "CarrierCode": "AC"
+  },
+  {
+    "Name": "Sky Jet M.G. Inc.",
+    "CountryId": 40,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "DU"
+  },
+  {
+    "Name": "Atlantis-Air Link Ltd.",
+    "CountryId": 40,
+    "AccountingCode": "",
+    "AirlinePrefix": 827,
+    "CarrierCode": "EA"
+  },
+  {
+    "Name": "Flair Airlines Ltd.",
+    "CountryId": 40,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "F8"
+  },
+  {
+    "Name": "Kelowna Flightcraft Air Charter Ltd dba KF Cargo",
+    "CountryId": 40,
+    "AccountingCode": "",
+    "AirlinePrefix": 758,
+    "CarrierCode": "FK"
+  },
+  {
+    "Name": "North-Wright Airways Ltd.",
+    "CountryId": 40,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "HW"
+  },
+  {
+    "Name": "Northwestern Air Lease Ltd.",
+    "CountryId": 40,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "J3"
+  },
+  {
+    "Name": "Perimeter Aviation LP dba Bearskin Airlines",
+    "CountryId": 40,
+    "AccountingCode": 632,
+    "AirlinePrefix": 632,
+    "CarrierCode": "JV"
+  },
+  {
+    "Name": "Chrono Jet Inc. dba GROUPE CHRONO AVIATION",
+    "CountryId": 40,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "MB"
+  },
+  {
+    "Name": "Calm Air International Ltd.",
+    "CountryId": 40,
+    "AccountingCode": 622,
+    "AirlinePrefix": 622,
+    "CarrierCode": "MO"
+  },
+  {
+    "Name": "Les Investissements Nolinor Inc.",
+    "CountryId": 40,
+    "AccountingCode": 817,
+    "AirlinePrefix": "",
+    "CarrierCode": "N5"
+  },
+  {
+    "Name": "9736140 Canada Inc. t/a Pascan",
+    "CountryId": 40,
+    "AccountingCode": 447,
+    "AirlinePrefix": "",
+    "CarrierCode": "P6"
+  },
+  {
+    "Name": "PAL Airlines LTD. dba Provincial Airlines/PAL Airline",
+    "CountryId": 40,
+    "AccountingCode": 967,
+    "AirlinePrefix": 967,
+    "CarrierCode": "PB"
+  },
+  {
+    "Name": "Porter Airlines Inc.",
+    "CountryId": 40,
+    "AccountingCode": 451,
+    "AirlinePrefix": 451,
+    "CarrierCode": "PD"
+  },
+  {
+    "Name": "Jazz Aviation LP",
+    "CountryId": 40,
+    "AccountingCode": 983,
+    "AirlinePrefix": 983,
+    "CarrierCode": "QK"
+  },
+  {
+    "Name": "Air Canada Rouge LP dba Air Canada Rouge",
+    "CountryId": 40,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "RV"
+  },
+  {
+    "Name": "FLYGTA INC.",
+    "CountryId": 40,
+    "AccountingCode": "",
+    "AirlinePrefix": 13,
+    "CarrierCode": "SX"
+  },
+  {
+    "Name": "Air Transat",
+    "CountryId": 40,
+    "AccountingCode": 649,
+    "AirlinePrefix": 649,
+    "CarrierCode": "TS"
+  },
+  {
+    "Name": "Cargojet Airways Ltd.",
+    "CountryId": 40,
+    "AccountingCode": "",
+    "AirlinePrefix": 489,
+    "CarrierCode": "W8"
+  },
+  {
+    "Name": "Sunwing Airlines Inc.",
+    "CountryId": 40,
+    "AccountingCode": 292,
+    "AirlinePrefix": 292,
+    "CarrierCode": "WG"
+  },
+  {
+    "Name": "Swoop Inc.",
+    "CountryId": 40,
+    "AccountingCode": 995,
+    "AirlinePrefix": 995,
+    "CarrierCode": "WO"
+  },
+  {
+    "Name": "WestJet Encore Ltd.",
+    "CountryId": 40,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "WR"
+  },
+  {
+    "Name": "WestJet",
+    "CountryId": 40,
+    "AccountingCode": 838,
+    "AirlinePrefix": 838,
+    "CarrierCode": "WS"
+  },
+  {
+    "Name": "IATA Montreal",
+    "CountryId": 40,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "XB"
+  },
+  {
+    "Name": "International Air Transport Association (IATA)",
+    "CountryId": 40,
+    "AccountingCode": 726,
+    "AirlinePrefix": 726,
+    "CarrierCode": "XB"
+  },
+  {
+    "Name": "International Air Transport Association (IATA)",
+    "CountryId": 40,
+    "AccountingCode": 955,
+    "AirlinePrefix": 955,
+    "CarrierCode": "XB"
+  },
+  {
+    "Name": "International Air Transport Association (IATA)",
+    "CountryId": 40,
+    "AccountingCode": 952,
+    "AirlinePrefix": 952,
+    "CarrierCode": "XB"
+  },
+  {
+    "Name": "International Air Transport Association (IATA)",
+    "CountryId": 40,
+    "AccountingCode": 956,
+    "AirlinePrefix": 956,
+    "CarrierCode": "XB"
+  },
+  {
+    "Name": "International Air Transport Association (IATA)",
+    "CountryId": 40,
+    "AccountingCode": 719,
+    "AirlinePrefix": 719,
+    "CarrierCode": "XB"
+  },
+  {
+    "Name": "International Air Transport Association (IATA)",
+    "CountryId": 40,
+    "AccountingCode": 954,
+    "AirlinePrefix": 954,
+    "CarrierCode": "XB"
+  },
+  {
+    "Name": "International Air Transport Association (IATA)",
+    "CountryId": 40,
+    "AccountingCode": 748,
+    "AirlinePrefix": 748,
+    "CarrierCode": "XB"
+  },
+  {
+    "Name": "International Air Transport Association (IATA)",
+    "CountryId": 40,
+    "AccountingCode": 721,
+    "AirlinePrefix": 721,
+    "CarrierCode": "XB"
+  },
+  {
+    "Name": "International Air Transport Association (IATA)",
+    "CountryId": 40,
+    "AccountingCode": 736,
+    "AirlinePrefix": 736,
+    "CarrierCode": "XB"
+  },
+  {
+    "Name": "1263343 Alberta Ltd. dba Lynx Air",
+    "CountryId": 40,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "Y9"
+  },
+  {
+    "Name": "Harbour Air Ltd.",
+    "CountryId": 40,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "YB"
+  },
+  {
+    "Name": "Department of National Defence",
+    "CountryId": 40,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "YF"
+  },
+  {
+    "Name": "Air Creebec (1994) Inc.",
+    "CountryId": 40,
+    "AccountingCode": 219,
+    "AirlinePrefix": 219,
+    "CarrierCode": "YN"
+  },
+  {
+    "Name": "2746904 Ontario Inc.",
+    "CountryId": 40,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "ZX"
+  },
+  {
+    "Name": "Transportes Interilhas de Cabo Verde, Sociedade Unipessoal, SA.",
+    "CountryId": 41,
+    "AccountingCode": 383,
+    "AirlinePrefix": "",
+    "CarrierCode": "3B"
+  },
+  {
+    "Name": "Transportes Aereos de Cabo Verde dba TACV Cabo Verde Airlines",
+    "CountryId": 41,
+    "AccountingCode": 696,
+    "AirlinePrefix": 696,
+    "CarrierCode": "VR"
+  },
+  {
+    "Name": "Cayman Airways Limited",
+    "CountryId": 42,
+    "AccountingCode": 378,
+    "AirlinePrefix": 378,
+    "CarrierCode": "KX"
+  },
+  {
+    "Name": "Aerovias de Integracion Regional dba LATAM Airlines Colombia",
+    "CountryId": 49,
+    "AccountingCode": 35,
+    "AirlinePrefix": "",
+    "CarrierCode": "4C"
+  },
+  {
+    "Name": "Lineas Aereas Suramericanas SA \"LAS S.A.",
+    "CountryId": 49,
+    "AccountingCode": "",
+    "AirlinePrefix": 174,
+    "CarrierCode": "4L"
+  },
+  {
+    "Name": "Servicio Aereo a Territorios Nacion \"SATENA",
+    "CountryId": 49,
+    "AccountingCode": 19,
+    "AirlinePrefix": "",
+    "CarrierCode": "9R"
+  },
+  {
+    "Name": "Aerovias del Continente Americano S.A. AVIANCA",
+    "CountryId": 49,
+    "AccountingCode": 134,
+    "AirlinePrefix": 134,
+    "CarrierCode": "AV"
+  },
+  {
+    "Name": "Regional Express Americas SAS",
+    "CountryId": 49,
+    "AccountingCode": 39,
+    "AirlinePrefix": "",
+    "CarrierCode": "EX"
+  },
+  {
+    "Name": "Aerolinea Del Caribe S.A. dba Aercaribe S.A.",
+    "CountryId": 49,
+    "AccountingCode": "",
+    "AirlinePrefix": 543,
+    "CarrierCode": "JK"
+  },
+  {
+    "Name": "Linea Aerea Carguera De Colombia SA",
+    "CountryId": 49,
+    "AccountingCode": "",
+    "AirlinePrefix": 985,
+    "CarrierCode": "L7"
+  },
+  {
+    "Name": "Aero Republica S.A.",
+    "CountryId": 49,
+    "AccountingCode": 845,
+    "AirlinePrefix": 845,
+    "CarrierCode": "P5"
+  },
+  {
+    "Name": "Tampa Cargo S.A.S",
+    "CountryId": 49,
+    "AccountingCode": "",
+    "AirlinePrefix": 729,
+    "CarrierCode": "QT"
+  },
+  {
+    "Name": "Servicios Aereos Nacionales S.A. SANSA",
+    "CountryId": 49,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "RZ"
+  },
+  {
+    "Name": "Easyfly S.A.",
+    "CountryId": 49,
+    "AccountingCode": 246,
+    "AirlinePrefix": "",
+    "CarrierCode": "VE"
+  },
+  {
+    "Name": "Fast Colombia S.A.S dba VIVAAIR",
+    "CountryId": 49,
+    "AccountingCode": 641,
+    "AirlinePrefix": 641,
+    "CarrierCode": "VH"
+  },
+  {
+    "Name": "AB Aviation Moroni",
+    "CountryId": 50,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "Y6"
+  },
+  {
+    "Name": "Equaflight Service dba Equaflight Service",
+    "CountryId": 51,
+    "AccountingCode": 965,
+    "AirlinePrefix": "",
+    "CarrierCode": "E7"
+  },
+  {
+    "Name": "Congo Airways SA (CGA)",
+    "CountryId": 52,
+    "AccountingCode": 582,
+    "AirlinePrefix": 582,
+    "CarrierCode": "8Z"
+  },
+  {
+    "Name": "Compagnie Africaine d'Aviation",
+    "CountryId": 52,
+    "AccountingCode": 883,
+    "AirlinePrefix": "",
+    "CarrierCode": "BU"
+  },
+  {
+    "Name": "Air Rarotonga Ltd",
+    "CountryId": 53,
+    "AccountingCode": 755,
+    "AirlinePrefix": "",
+    "CarrierCode": "GZ"
+  },
+  {
+    "Name": "Costa Rica Green Airways S.R.L dba Costa Rica Green Airways S.R.L",
+    "CountryId": 54,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "GW"
+  },
+  {
+    "Name": "Avianca Costa Rica, S.A. dba Avianca Costa Rica, S.A.",
+    "CountryId": 54,
+    "AccountingCode": 133,
+    "AirlinePrefix": 133,
+    "CarrierCode": "LR"
+  },
+  {
+    "Name": "Vuela Aviacion S.A Volaris Costa Rica",
+    "CountryId": 54,
+    "AccountingCode": 621,
+    "AirlinePrefix": 621,
+    "CarrierCode": "Q6"
+  },
+  {
+    "Name": "Air Cote D'Ivoire",
+    "CountryId": 55,
+    "AccountingCode": 483,
+    "AirlinePrefix": "",
+    "CarrierCode": "HF"
+  },
+  {
+    "Name": "Trade Air Ltd.",
+    "CountryId": 56,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "C3"
+  },
+  {
+    "Name": "ETF Airways d.o.o.",
+    "CountryId": 56,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "LI"
+  },
+  {
+    "Name": "Croatia Airlines",
+    "CountryId": 56,
+    "AccountingCode": 831,
+    "AirlinePrefix": 831,
+    "CarrierCode": "OU"
+  },
+  {
+    "Name": "Cubana de Aviacion S.A.",
+    "CountryId": 57,
+    "AccountingCode": 136,
+    "AirlinePrefix": 136,
+    "CarrierCode": "CU"
+  },
+  {
+    "Name": "Divi Divi Air N.V.",
+    "CountryId": 58,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "3R"
+  },
+  {
+    "Name": "United Caribbean Airlines BV d.b.a.JetAir Caribbean",
+    "CountryId": 58,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "4J"
+  },
+  {
+    "Name": "EZ Air BV",
+    "CountryId": 58,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "7Z"
+  },
+  {
+    "Name": "Charlie Airlines Limited dba Cyprus Airways",
+    "CountryId": 59,
+    "AccountingCode": 78,
+    "AirlinePrefix": 78,
+    "CarrierCode": "CY"
+  },
+  {
+    "Name": "Avtrasoft Limited",
+    "CountryId": 59,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "T1"
+  },
+  {
+    "Name": "Tus Airways Ltd",
+    "CountryId": 59,
+    "AccountingCode": 34,
+    "AirlinePrefix": "",
+    "CarrierCode": "U8"
+  },
+  {
+    "Name": "Czech Airlines a.s,. CSA",
+    "CountryId": 60,
+    "AccountingCode": 64,
+    "AirlinePrefix": 64,
+    "CarrierCode": "OK"
+  },
+  {
+    "Name": "Smartwings, a.s.",
+    "CountryId": 60,
+    "AccountingCode": 797,
+    "AirlinePrefix": 797,
+    "CarrierCode": "QS"
+  },
+  {
+    "Name": "Van Air Europe, a.s.",
+    "CountryId": 60,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "V9"
+  },
+  {
+    "Name": "Air Alsie A/S",
+    "CountryId": 61,
+    "AccountingCode": 248,
+    "AirlinePrefix": "",
+    "CarrierCode": "6I"
+  },
+  {
+    "Name": "Star Air A/S",
+    "CountryId": 61,
+    "AccountingCode": "",
+    "AirlinePrefix": 763,
+    "CarrierCode": "DJ"
+  },
+  {
+    "Name": "Sunclass Airlines Aps",
+    "CountryId": 61,
+    "AccountingCode": "",
+    "AirlinePrefix": 630,
+    "CarrierCode": "DK"
+  },
+  {
+    "Name": "DAT A/S",
+    "CountryId": 61,
+    "AccountingCode": 243,
+    "AirlinePrefix": "",
+    "CarrierCode": "DX"
+  },
+  {
+    "Name": "Sun Air of Scandinavia A.S.",
+    "CountryId": 61,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "EZ"
+  },
+  {
+    "Name": "World Ticket Ltd",
+    "CountryId": 61,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "W1"
+  },
+  {
+    "Name": "FlexFlight ApS",
+    "CountryId": 61,
+    "AccountingCode": 365,
+    "AirlinePrefix": "",
+    "CarrierCode": "W2"
+  },
+  {
+    "Name": "Air Djibouti SAS",
+    "CountryId": 62,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "DJ"
+  },
+  {
+    "Name": "Servicios Aereos GECA S.A dba GECA",
+    "CountryId": 64,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "D6"
+  },
+  {
+    "Name": "ARAJET, SA dba Arajet",
+    "CountryId": 64,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "DM"
+  },
+  {
+    "Name": "Sky High Aviation Services",
+    "CountryId": 64,
+    "AccountingCode": 791,
+    "AirlinePrefix": "",
+    "CarrierCode": "DO"
+  },
+  {
+    "Name": "RED AIR SRL",
+    "CountryId": 64,
+    "AccountingCode": 377,
+    "AirlinePrefix": "",
+    "CarrierCode": "L5"
+  },
+  {
+    "Name": "LOGIC PAQ BTD, S.R.L dba Sky Cana",
+    "CountryId": 64,
+    "AccountingCode": 440,
+    "AirlinePrefix": "",
+    "CarrierCode": "RD"
+  },
+  {
+    "Name": "Air Century, S.A.",
+    "CountryId": 64,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "Y2"
+  },
+  {
+    "Name": "AVIANCA-Ecuador dba AVIANCA",
+    "CountryId": 65,
+    "AccountingCode": 547,
+    "AirlinePrefix": 547,
+    "CarrierCode": "2K"
+  },
+  {
+    "Name": "Aero Express del Ecuador - Trans A",
+    "CountryId": 65,
+    "AccountingCode": "",
+    "AirlinePrefix": 144,
+    "CarrierCode": "7T"
+  },
+  {
+    "Name": "EQUINOXAIR S.A.S.",
+    "CountryId": 65,
+    "AccountingCode": 249,
+    "AirlinePrefix": "",
+    "CarrierCode": "HN"
+  },
+  {
+    "Name": "Aerolane Lineas Aerea Nacional dba Latam Airlines Ecuador",
+    "CountryId": 65,
+    "AccountingCode": 462,
+    "AirlinePrefix": 462,
+    "CarrierCode": "XL"
+  },
+  {
+    "Name": "Alexandria Airlines",
+    "CountryId": 66,
+    "AccountingCode": 293,
+    "AirlinePrefix": "",
+    "CarrierCode": "DQ"
+  },
+  {
+    "Name": "Air Arabia Egypt",
+    "CountryId": 66,
+    "AccountingCode": 844,
+    "AirlinePrefix": 844,
+    "CarrierCode": "E5"
+  },
+  {
+    "Name": "FlyEgypt",
+    "CountryId": 66,
+    "AccountingCode": 171,
+    "AirlinePrefix": "",
+    "CarrierCode": "FT"
+  },
+  {
+    "Name": "Egyptair dba Egyptair Airlines",
+    "CountryId": 66,
+    "AccountingCode": 77,
+    "AirlinePrefix": 77,
+    "CarrierCode": "MS"
+  },
+  {
+    "Name": "Nesma Airlines",
+    "CountryId": 66,
+    "AccountingCode": 477,
+    "AirlinePrefix": "",
+    "CarrierCode": "NE"
+  },
+  {
+    "Name": "Nile Air",
+    "CountryId": 66,
+    "AccountingCode": 325,
+    "AirlinePrefix": 325,
+    "CarrierCode": "NP"
+  },
+  {
+    "Name": "Air Cairo",
+    "CountryId": 66,
+    "AccountingCode": 381,
+    "AirlinePrefix": 381,
+    "CarrierCode": "SM"
+  },
+  {
+    "Name": "PETROLEUM AIR SERVICES",
+    "CountryId": 66,
+    "AccountingCode": 505,
+    "AirlinePrefix": "",
+    "CarrierCode": "UF"
+  },
+  {
+    "Name": "Al Masria Universal Airlines",
+    "CountryId": 66,
+    "AccountingCode": 110,
+    "AirlinePrefix": "",
+    "CarrierCode": "UJ"
+  },
+  {
+    "Name": "Vuela El Salvador S.A. de C.V.",
+    "CountryId": 67,
+    "AccountingCode": 370,
+    "AirlinePrefix": 370,
+    "CarrierCode": "N3"
+  },
+  {
+    "Name": "TACA International Airlines S.A.",
+    "CountryId": 67,
+    "AccountingCode": 202,
+    "AirlinePrefix": 202,
+    "CarrierCode": "TA"
+  },
+  {
+    "Name": "Cronos Airlines",
+    "CountryId": 68,
+    "AccountingCode": 498,
+    "AirlinePrefix": "",
+    "CarrierCode": "C8"
+  },
+  {
+    "Name": "Eritrean Airlines s.c. dba Eritrean Airlines s.c.",
+    "CountryId": 69,
+    "AccountingCode": 637,
+    "AirlinePrefix": 637,
+    "CarrierCode": "B8"
+  },
+  {
+    "Name": "Regional Jet Ou dba Xfly",
+    "CountryId": 70,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "EE"
+  },
+  {
+    "Name": "Nordic Aviation Group AS dba Nordica",
+    "CountryId": 70,
+    "AccountingCode": 121,
+    "AirlinePrefix": "",
+    "CarrierCode": "ND"
+  },
+  {
+    "Name": "NyxAir OU",
+    "CountryId": 70,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "OJ"
+  },
+  {
+    "Name": "Ethiopian Airlines Group dba Ethiopian Airlines",
+    "CountryId": 71,
+    "AccountingCode": 71,
+    "AirlinePrefix": 71,
+    "CarrierCode": "ET"
+  },
+  {
+    "Name": "Atlantic Airways, Faroe Islands, P/F",
+    "CountryId": 73,
+    "AccountingCode": 767,
+    "AirlinePrefix": 767,
+    "CarrierCode": "RC"
+  },
+  {
+    "Name": "Air Pacific Limited t/a Fiji Airways",
+    "CountryId": 74,
+    "AccountingCode": 260,
+    "AirlinePrefix": 260,
+    "CarrierCode": "FJ"
+  },
+  {
+    "Name": "Finnair Oyj",
+    "CountryId": 75,
+    "AccountingCode": 105,
+    "AirlinePrefix": 105,
+    "CarrierCode": "AY"
+  },
+  {
+    "Name": "Nordic Regional Airlines Oy",
+    "CountryId": 75,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "N7"
+  },
+  {
+    "Name": "CitizenPlane",
+    "CountryId": 76,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "1L"
+  },
+  {
+    "Name": "SNCF",
+    "CountryId": 76,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "2C"
+  },
+  {
+    "Name": "Airbus Transport International",
+    "CountryId": 76,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "4Y"
+  },
+  {
+    "Name": "ASL AIRLINES FRANCE",
+    "CountryId": 76,
+    "AccountingCode": 558,
+    "AirlinePrefix": 558,
+    "CarrierCode": "5O"
+  },
+  {
+    "Name": "Regourd Aviation (dba AMELIA)",
+    "CountryId": 76,
+    "AccountingCode": 948,
+    "AirlinePrefix": "",
+    "CarrierCode": "8R"
+  },
+  {
+    "Name": "A.P.G. Distribution System",
+    "CountryId": 76,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "A1"
+  },
+  {
+    "Name": "HOP!",
+    "CountryId": 76,
+    "AccountingCode": 163,
+    "AirlinePrefix": "",
+    "CarrierCode": "A5"
+  },
+  {
+    "Name": "Air France",
+    "CountryId": 76,
+    "AccountingCode": 57,
+    "AirlinePrefix": 57,
+    "CarrierCode": "AF"
+  },
+  {
+    "Name": "DreamJet SAS t/a La Compagnie",
+    "CountryId": 76,
+    "AccountingCode": 2,
+    "AirlinePrefix": 2,
+    "CarrierCode": "B0"
+  },
+  {
+    "Name": "French Bee dba French Bee",
+    "CountryId": 76,
+    "AccountingCode": 396,
+    "AirlinePrefix": 396,
+    "CarrierCode": "BF"
+  },
+  {
+    "Name": "Chalair Aviation",
+    "CountryId": 76,
+    "AccountingCode": 980,
+    "AirlinePrefix": "",
+    "CarrierCode": "CE"
+  },
+  {
+    "Name": "APG Airlines",
+    "CountryId": 76,
+    "AccountingCode": 275,
+    "AirlinePrefix": 275,
+    "CarrierCode": "GP"
+  },
+  {
+    "Name": "Heli Securite Helicopter Airline",
+    "CountryId": 76,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "HS"
+  },
+  {
+    "Name": "Corsair t/a Corsair International",
+    "CountryId": 76,
+    "AccountingCode": 923,
+    "AirlinePrefix": 923,
+    "CarrierCode": "SS"
+  },
+  {
+    "Name": "Twin Jet",
+    "CountryId": 76,
+    "AccountingCode": 294,
+    "AirlinePrefix": "",
+    "CarrierCode": "T7"
+  },
+  {
+    "Name": "Transavia France",
+    "CountryId": 76,
+    "AccountingCode": 270,
+    "AirlinePrefix": "",
+    "CarrierCode": "TO"
+  },
+  {
+    "Name": "Air Austral",
+    "CountryId": 76,
+    "AccountingCode": 760,
+    "AirlinePrefix": 760,
+    "CarrierCode": "UU"
+  },
+  {
+    "Name": "Air Corsica",
+    "CountryId": 76,
+    "AccountingCode": 146,
+    "AirlinePrefix": 146,
+    "CarrierCode": "XK"
+  },
+  {
+    "Name": "Travel Technology Interactive SA",
+    "CountryId": 76,
+    "AccountingCode": 392,
+    "AirlinePrefix": "",
+    "CarrierCode": "Y1"
+  },
+  {
+    "Name": "CAIRE dba Air Antilles Express",
+    "CountryId": 77,
+    "AccountingCode": 875,
+    "AirlinePrefix": "",
+    "CarrierCode": "3S"
+  },
+  {
+    "Name": "Air Tahiti Nui",
+    "CountryId": 78,
+    "AccountingCode": 244,
+    "AirlinePrefix": 244,
+    "CarrierCode": "TN"
+  },
+  {
+    "Name": "Air Tahiti",
+    "CountryId": 78,
+    "AccountingCode": 135,
+    "AirlinePrefix": 135,
+    "CarrierCode": "VT"
+  },
+  {
+    "Name": "Afrijet Business Service dba Afrijet",
+    "CountryId": 80,
+    "AccountingCode": 277,
+    "AirlinePrefix": 277,
+    "CarrierCode": "J7"
+  },
+  {
+    "Name": "Georgian Airways",
+    "CountryId": 82,
+    "AccountingCode": 606,
+    "AirlinePrefix": 606,
+    "CarrierCode": "A9"
+  },
+  {
+    "Name": "Airline GEO SKY LLC dba Airline GEO SKY",
+    "CountryId": 82,
+    "AccountingCode": "",
+    "AirlinePrefix": 330,
+    "CarrierCode": "D4"
+  },
+  {
+    "Name": "AIR GEORGIA\" LTD dba Aircompany AIR GEORGIA",
+    "CountryId": 82,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "DC"
+  },
+  {
+    "Name": "Georgian Airlines LLC dba Aircompany Georgian Airlines",
+    "CountryId": 82,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "GH"
+  },
+  {
+    "Name": "Myway Airlines Co.,LTD",
+    "CountryId": 82,
+    "AccountingCode": 669,
+    "AirlinePrefix": 669,
+    "CarrierCode": "MJ"
+  },
+  {
+    "Name": "TCA LLC Aircompany ''TCA''",
+    "CountryId": 82,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "N6"
+  },
+  {
+    "Name": "Easy Charter",
+    "CountryId": 82,
+    "AccountingCode": "",
+    "AirlinePrefix": 311,
+    "CarrierCode": "RD"
+  },
+  {
+    "Name": "Deutsche Bahn AG",
+    "CountryId": 83,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "2A"
+  },
+  {
+    "Name": "Dokasch GmBH",
+    "CountryId": 83,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "3D"
+  },
+  {
+    "Name": "Aerologic GmbH",
+    "CountryId": 83,
+    "AccountingCode": "",
+    "AirlinePrefix": 278,
+    "CarrierCode": "3S"
+  },
+  {
+    "Name": "25only Aviation GmbH",
+    "CountryId": 83,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "4Q"
+  },
+  {
+    "Name": "EW Discover GmbH",
+    "CountryId": 83,
+    "AccountingCode": 693,
+    "AirlinePrefix": "",
+    "CarrierCode": "4Y"
+  },
+  {
+    "Name": "CargoLogic Germany GmbH",
+    "CountryId": 83,
+    "AccountingCode": "",
+    "AirlinePrefix": 342,
+    "CarrierCode": "6L"
+  },
+  {
+    "Name": "Sylt Air GmbH",
+    "CountryId": 83,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "7E"
+  },
+  {
+    "Name": "Lufthansa CityLine GmbH",
+    "CountryId": 83,
+    "AccountingCode": 683,
+    "AirlinePrefix": 683,
+    "CarrierCode": "CL"
+  },
+  {
+    "Name": "Condor Flugdienst GmbH",
+    "CountryId": 83,
+    "AccountingCode": 881,
+    "AirlinePrefix": 881,
+    "CarrierCode": "DE"
+  },
+  {
+    "Name": "Eurowings GmbH",
+    "CountryId": 83,
+    "AccountingCode": 104,
+    "AirlinePrefix": 104,
+    "CarrierCode": "EW"
+  },
+  {
+    "Name": "Hahn Air Systems",
+    "CountryId": 83,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "H1"
+  },
+  {
+    "Name": "Hahn Air Lines GmbH",
+    "CountryId": 83,
+    "AccountingCode": 169,
+    "AirlinePrefix": 169,
+    "CarrierCode": "HR"
+  },
+  {
+    "Name": "Jettainer GmbH",
+    "CountryId": 83,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "JE"
+  },
+  {
+    "Name": "LEAV Aviation GmbH",
+    "CountryId": 83,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "KK"
+  },
+  {
+    "Name": "Deutsche Lufthansa AG",
+    "CountryId": 83,
+    "AccountingCode": 220,
+    "AirlinePrefix": 220,
+    "CarrierCode": "LH"
+  },
+  {
+    "Name": "Lufthansa Cargo AG",
+    "CountryId": 83,
+    "AccountingCode": "",
+    "AirlinePrefix": 20,
+    "CarrierCode": "LH"
+  },
+  {
+    "Name": "MHS Aviation GmbH",
+    "CountryId": 83,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "M2"
+  },
+  {
+    "Name": "European Air Transport Leipzig",
+    "CountryId": 83,
+    "AccountingCode": "",
+    "AirlinePrefix": 615,
+    "CarrierCode": "QY"
+  },
+  {
+    "Name": "Lufthansa Systems GmbH & Co. KG",
+    "CountryId": 83,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "S1"
+  },
+  {
+    "Name": "Sundair GmbH",
+    "CountryId": 83,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "SR"
+  },
+  {
+    "Name": "Hahn Air Technologies GmbH",
+    "CountryId": 83,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "X1"
+  },
+  {
+    "Name": "TUIfly GmbH",
+    "CountryId": 83,
+    "AccountingCode": 617,
+    "AirlinePrefix": 617,
+    "CarrierCode": "X3"
+  },
+  {
+    "Name": "German Airways GmbH & Co.KG",
+    "CountryId": 83,
+    "AccountingCode": "",
+    "AirlinePrefix": 944,
+    "CarrierCode": "ZQ"
+  },
+  {
+    "Name": "Africa World Airlines Limited dba Africa World Airlines",
+    "CountryId": 84,
+    "AccountingCode": 394,
+    "AirlinePrefix": "",
+    "CarrierCode": "AW"
+  },
+  {
+    "Name": "Dac International Airlines Limited dba PassionAir",
+    "CountryId": 84,
+    "AccountingCode": 213,
+    "AirlinePrefix": "",
+    "CarrierCode": "OP"
+  },
+  {
+    "Name": "Aegean Airlines",
+    "CountryId": 86,
+    "AccountingCode": 390,
+    "AirlinePrefix": 390,
+    "CarrierCode": "A3"
+  },
+  {
+    "Name": "Blue Bird Airways",
+    "CountryId": 86,
+    "AccountingCode": 404,
+    "AirlinePrefix": "",
+    "CarrierCode": "BZ"
+  },
+  {
+    "Name": "Sky Express S.A.",
+    "CountryId": 86,
+    "AccountingCode": 633,
+    "AirlinePrefix": "",
+    "CarrierCode": "GQ"
+  },
+  {
+    "Name": "Lumiwings S.A dba Lumiwings",
+    "CountryId": 86,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "L9"
+  },
+  {
+    "Name": "Air Mediterranean S.A.",
+    "CountryId": 86,
+    "AccountingCode": 12,
+    "AirlinePrefix": 12,
+    "CarrierCode": "MV"
+  },
+  {
+    "Name": "Olympic Air",
+    "CountryId": 86,
+    "AccountingCode": 50,
+    "AirlinePrefix": 50,
+    "CarrierCode": "OA"
+  },
+  {
+    "Name": "Air Greenland A/S",
+    "CountryId": 87,
+    "AccountingCode": 631,
+    "AirlinePrefix": 631,
+    "CarrierCode": "GL"
+  },
+  {
+    "Name": "Saint Barth Commuter",
+    "CountryId": 89,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "PV"
+  },
+  {
+    "Name": "Air Caraibes",
+    "CountryId": 89,
+    "AccountingCode": 427,
+    "AirlinePrefix": 427,
+    "CarrierCode": "TX"
+  },
+  {
+    "Name": "Aero Micronesia Inc. dba Asia Pacific Airlines",
+    "CountryId": 90,
+    "AccountingCode": "",
+    "AirlinePrefix": 46,
+    "CarrierCode": "P9"
+  },
+  {
+    "Name": "Transportes Aereos Guatemaltecos SA",
+    "CountryId": 91,
+    "AccountingCode": 911,
+    "AirlinePrefix": 911,
+    "CarrierCode": "5U"
+  },
+  {
+    "Name": "DHL de Guatemala S.A.",
+    "CountryId": 91,
+    "AccountingCode": "",
+    "AirlinePrefix": 947,
+    "CarrierCode": "L3"
+  },
+  {
+    "Name": "CEIBA Intercontinental",
+    "CountryId": 93,
+    "AccountingCode": 304,
+    "AirlinePrefix": 304,
+    "CarrierCode": "C2"
+  },
+  {
+    "Name": "Sunrise Airways S.A. dba Sunrise Airways",
+    "CountryId": 96,
+    "AccountingCode": 660,
+    "AirlinePrefix": "",
+    "CarrierCode": "S6"
+  },
+  {
+    "Name": "CM Airlines",
+    "CountryId": 99,
+    "AccountingCode": 907,
+    "AirlinePrefix": "",
+    "CarrierCode": "CC"
+  },
+  {
+    "Name": "Aerolineas Sosa S.A de C.V.",
+    "CountryId": 99,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "S0"
+  },
+  {
+    "Name": "Chu Kong Passenger Transport Co. Ltd.",
+    "CountryId": 100,
+    "AccountingCode": 28,
+    "AirlinePrefix": "",
+    "CarrierCode": "3A"
+  },
+  {
+    "Name": "Shun Tak-China Travel Ship Mgmt. Ltd",
+    "CountryId": 100,
+    "AccountingCode": 802,
+    "AirlinePrefix": 802,
+    "CarrierCode": "8S"
+  },
+  {
+    "Name": "Cathay Pacific Airways Ltd.",
+    "CountryId": 100,
+    "AccountingCode": 160,
+    "AirlinePrefix": 160,
+    "CarrierCode": "CX"
+  },
+  {
+    "Name": "Das Nordisk Ltd.",
+    "CountryId": 100,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "DS"
+  },
+  {
+    "Name": "Greater Bay Airlines Company Limite",
+    "CountryId": 100,
+    "AccountingCode": 283,
+    "AirlinePrefix": "",
+    "CarrierCode": "HB"
+  },
+  {
+    "Name": "Hong Kong Airlines Limited",
+    "CountryId": 100,
+    "AccountingCode": 851,
+    "AirlinePrefix": 851,
+    "CarrierCode": "HX"
+  },
+  {
+    "Name": "INNOAVIATION LIMITED",
+    "CountryId": 100,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "I3"
+  },
+  {
+    "Name": "AHK Air Hong Kong Limited dba AHK Air Hong Kong Limited",
+    "CountryId": 100,
+    "AccountingCode": "",
+    "AirlinePrefix": 288,
+    "CarrierCode": "LD"
+  },
+  {
+    "Name": "China Travel Tours Transp Services Hong Kong Limited",
+    "CountryId": 100,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "NN"
+  },
+  {
+    "Name": "Hong Kong Air Cargo Carrier Limited",
+    "CountryId": 100,
+    "AccountingCode": "",
+    "AirlinePrefix": 828,
+    "CarrierCode": "RH"
+  },
+  {
+    "Name": "Hong Kong Express Airways Limited",
+    "CountryId": 100,
+    "AccountingCode": 128,
+    "AirlinePrefix": 128,
+    "CarrierCode": "UO"
+  },
+  {
+    "Name": "Vivo Air Links Holdings Ltd",
+    "CountryId": 100,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "VD"
+  },
+  {
+    "Name": "Smartwings Hungary Kft. dba Smartwings Hungary Kft.",
+    "CountryId": 101,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "7O"
+  },
+  {
+    "Name": "Budapest Aircraft Service Kft.",
+    "CountryId": 101,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "RP"
+  },
+  {
+    "Name": "Wizz Air Hungary Airlines Limited dba WIZZ Air Hungary Ltd.",
+    "CountryId": 101,
+    "AccountingCode": "",
+    "AirlinePrefix": 284,
+    "CarrierCode": "W6"
+  },
+  {
+    "Name": "Tchadia Airlines",
+    "CountryId": 44,
+    "AccountingCode": 24,
+    "AirlinePrefix": 24,
+    "CarrierCode": "OT"
+  },
+  {
+    "Name": "Sky Airline S.A.",
+    "CountryId": 45,
+    "AccountingCode": 605,
+    "AirlinePrefix": 605,
+    "CarrierCode": "H2"
+  },
+  {
+    "Name": "JETSMART SpA",
+    "CountryId": 45,
+    "AccountingCode": 973,
+    "AirlinePrefix": "",
+    "CarrierCode": "JA"
+  },
+  {
+    "Name": "LATAM Airlines Group S.A. dba LATAM Airlines Group",
+    "CountryId": 45,
+    "AccountingCode": 45,
+    "AirlinePrefix": 45,
+    "CarrierCode": "LA"
+  },
+  {
+    "Name": "Transporte Aereo S.A. dba LATAM Airlines Chile",
+    "CountryId": 45,
+    "AccountingCode": 972,
+    "AirlinePrefix": 972,
+    "CarrierCode": "LU"
+  },
+  {
+    "Name": "Lan Cargo S.A. dba LATAM Cargo Chile",
+    "CountryId": 45,
+    "AccountingCode": "",
+    "AirlinePrefix": 145,
+    "CarrierCode": "UC"
+  },
+  {
+    "Name": "Aerovias DAP S.A.",
+    "CountryId": 45,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "V5"
+  },
+  {
+    "Name": "Mandarin Airlines Ltd.",
+    "CountryId": 218,
+    "AccountingCode": 803,
+    "AirlinePrefix": 803,
+    "CarrierCode": "AE"
+  },
+  {
+    "Name": "UNI Airways Corporation",
+    "CountryId": 218,
+    "AccountingCode": 525,
+    "AirlinePrefix": 525,
+    "CarrierCode": "B7"
+  },
+  {
+    "Name": "EVA Airways Corporation",
+    "CountryId": 218,
+    "AccountingCode": 695,
+    "AirlinePrefix": 695,
+    "CarrierCode": "BR"
+  },
+  {
+    "Name": "China Airlines Ltd.",
+    "CountryId": 218,
+    "AccountingCode": 297,
+    "AirlinePrefix": 297,
+    "CarrierCode": "CI"
+  },
+  {
+    "Name": "Tigerair Taiwan Co. Ltd",
+    "CountryId": 218,
+    "AccountingCode": 608,
+    "AirlinePrefix": 608,
+    "CarrierCode": "IT"
+  },
+  {
+    "Name": "STARLUX AIRLINES CO., LTD.",
+    "CountryId": 218,
+    "AccountingCode": 189,
+    "AirlinePrefix": 189,
+    "CarrierCode": "JX"
+  },
+  {
+    "Name": "Blafugl ehf. dba Bluebird Cargo Ltd",
+    "CountryId": 102,
+    "AccountingCode": "",
+    "AirlinePrefix": 290,
+    "CarrierCode": "BO"
+  },
+  {
+    "Name": "Air Atlanta Icelandic",
+    "CountryId": 102,
+    "AccountingCode": "",
+    "AirlinePrefix": 318,
+    "CarrierCode": "CC"
+  },
+  {
+    "Name": "Icelandair ehf.",
+    "CountryId": 102,
+    "AccountingCode": 108,
+    "AirlinePrefix": 108,
+    "CarrierCode": "FI"
+  },
+  {
+    "Name": "Flugfelag Islands ehf",
+    "CountryId": 102,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "NY"
+  },
+  {
+    "Name": "Fly Play hf.",
+    "CountryId": 102,
+    "AccountingCode": "",
+    "AirlinePrefix": 224,
+    "CarrierCode": "OG"
+  },
+  {
+    "Name": "Bird Information Systems Pvt. Ltd.",
+    "CountryId": 103,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "1Z"
+  },
+  {
+    "Name": "Interglobe Aviation Ltd. dba IndiGo",
+    "CountryId": 103,
+    "AccountingCode": 312,
+    "AirlinePrefix": 312,
+    "CarrierCode": "6E"
+  },
+  {
+    "Name": "Airline Allied Services Limited dba Alliance Air",
+    "CountryId": 103,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "9I"
+  },
+  {
+    "Name": "Jet Airways (India) Limited",
+    "CountryId": 103,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "9W"
+  },
+  {
+    "Name": "Air India Limited dba Air India",
+    "CountryId": 103,
+    "AccountingCode": 98,
+    "AirlinePrefix": 98,
+    "CarrierCode": "AI"
+  },
+  {
+    "Name": "Blue Dart Aviation Ltd.",
+    "CountryId": 103,
+    "AccountingCode": "",
+    "AirlinePrefix": 620,
+    "CarrierCode": "BZ"
+  },
+  {
+    "Name": "Go Airlines (India) Limited",
+    "CountryId": 103,
+    "AccountingCode": 879,
+    "AirlinePrefix": 879,
+    "CarrierCode": "G8"
+  },
+  {
+    "Name": "AirAsia (India) Limited AIRASIA",
+    "CountryId": 103,
+    "AccountingCode": 91,
+    "AirlinePrefix": 91,
+    "CarrierCode": "I5"
+  },
+  {
+    "Name": "AIR INDIA EXPRESS LTD dba AIR INDIA EXPRESS",
+    "CountryId": 103,
+    "AccountingCode": "",
+    "AirlinePrefix": 236,
+    "CarrierCode": "IX"
+  },
+  {
+    "Name": "Ghodawat Enterprises Pvt.Ltd. dba Ghodawat Enterprises",
+    "CountryId": 103,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "S5"
+  },
+  {
+    "Name": "Big Charter Pvt Ltd dba Fly Big",
+    "CountryId": 103,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "S9"
+  },
+  {
+    "Name": "SpiceJet Ltd.",
+    "CountryId": 103,
+    "AccountingCode": 775,
+    "AirlinePrefix": 775,
+    "CarrierCode": "SG"
+  },
+  {
+    "Name": "TATA SIA AIRLINES LTD dba VISTARA",
+    "CountryId": 103,
+    "AccountingCode": 228,
+    "AirlinePrefix": 228,
+    "CarrierCode": "UK"
+  },
+  {
+    "Name": "PT. My Indo Airlines",
+    "CountryId": 104,
+    "AccountingCode": "",
+    "AirlinePrefix": 585,
+    "CarrierCode": "2Y"
+  },
+  {
+    "Name": "PT. Transnusa Aviation Mandiri",
+    "CountryId": 104,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "8B"
+  },
+  {
+    "Name": "PT. Garuda Indonesia (PERSERO) Tbk dba Garuda Indonesia",
+    "CountryId": 104,
+    "AccountingCode": 126,
+    "AirlinePrefix": 126,
+    "CarrierCode": "GA"
+  },
+  {
+    "Name": "PT.Tri-MG Intra Asia Airlines",
+    "CountryId": 104,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "GM"
+  },
+  {
+    "Name": "PT. Batik Air Indonesia dba Batik Air",
+    "CountryId": 104,
+    "AccountingCode": 938,
+    "AirlinePrefix": "",
+    "CarrierCode": "ID"
+  },
+  {
+    "Name": "PT.Trigana Air Service",
+    "CountryId": 104,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "IL"
+  },
+  {
+    "Name": "PT. Nam Air dba Nam Air",
+    "CountryId": 104,
+    "AccountingCode": 274,
+    "AirlinePrefix": "",
+    "CarrierCode": "IN"
+  },
+  {
+    "Name": "Pelita Air Service, Pt",
+    "CountryId": 104,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "IP"
+  },
+  {
+    "Name": "PT. Super Air Jet",
+    "CountryId": 104,
+    "AccountingCode": 920,
+    "AirlinePrefix": "",
+    "CarrierCode": "IU"
+  },
+  {
+    "Name": "PT. Wings Abadi dba Wings Air",
+    "CountryId": 104,
+    "AccountingCode": 513,
+    "AirlinePrefix": "",
+    "CarrierCode": "IW"
+  },
+  {
+    "Name": "PT. LION MENTARI AIRLINES dba Lion Airlines",
+    "CountryId": 104,
+    "AccountingCode": 990,
+    "AirlinePrefix": "",
+    "CarrierCode": "JT"
+  },
+  {
+    "Name": "PT. Sqiva Sistem",
+    "CountryId": 104,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "Q1"
+  },
+  {
+    "Name": "PT. Citilink Indonesia dba Citilink",
+    "CountryId": 104,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "QG"
+  },
+  {
+    "Name": "PT. Indonesia AirAsia dba AirAsia X Indonesia",
+    "CountryId": 104,
+    "AccountingCode": 975,
+    "AirlinePrefix": 975,
+    "CarrierCode": "QZ"
+  },
+  {
+    "Name": "PT Rimbun Abadi Aviasi dba RIMBUN AIR",
+    "CountryId": 104,
+    "AccountingCode": "",
+    "AirlinePrefix": 273,
+    "CarrierCode": "RI"
+  },
+  {
+    "Name": "PT. Sriwijaya Air dba Sriwijaya Air",
+    "CountryId": 104,
+    "AccountingCode": 977,
+    "AirlinePrefix": 977,
+    "CarrierCode": "SJ"
+  },
+  {
+    "Name": "Iran Airtour Airline",
+    "CountryId": 105,
+    "AccountingCode": 491,
+    "AirlinePrefix": 491,
+    "CarrierCode": "B9"
+  },
+  {
+    "Name": "Iran Aseman Airlines",
+    "CountryId": 105,
+    "AccountingCode": 815,
+    "AirlinePrefix": 815,
+    "CarrierCode": "EP"
+  },
+  {
+    "Name": "Iran Air",
+    "CountryId": 105,
+    "AccountingCode": 96,
+    "AirlinePrefix": 96,
+    "CarrierCode": "IR"
+  },
+  {
+    "Name": "Sepehran Airlines",
+    "CountryId": 105,
+    "AccountingCode": 714,
+    "AirlinePrefix": "",
+    "CarrierCode": "IS"
+  },
+  {
+    "Name": "Qeshm Air",
+    "CountryId": 105,
+    "AccountingCode": 237,
+    "AirlinePrefix": 237,
+    "CarrierCode": "QB"
+  },
+  {
+    "Name": "Mahan Air",
+    "CountryId": 105,
+    "AccountingCode": 537,
+    "AirlinePrefix": 537,
+    "CarrierCode": "W5"
+  },
+  {
+    "Name": "Al-Haya Aviation dba HYA",
+    "CountryId": 106,
+    "AccountingCode": "",
+    "AirlinePrefix": 164,
+    "CarrierCode": "HA"
+  },
+  {
+    "Name": "Iraqi Airways dba I A W",
+    "CountryId": 106,
+    "AccountingCode": 73,
+    "AirlinePrefix": "",
+    "CarrierCode": "IA"
+  },
+  {
+    "Name": "Fly Baghdad Airline dba FBA",
+    "CountryId": 106,
+    "AccountingCode": 17,
+    "AirlinePrefix": "",
+    "CarrierCode": "IF"
+  },
+  {
+    "Name": "UR AIRLINES dba UBD",
+    "CountryId": 106,
+    "AccountingCode": 541,
+    "AirlinePrefix": "",
+    "CarrierCode": "UD"
+  },
+  {
+    "Name": "JR Technologies Ireland",
+    "CountryId": 107,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "1R"
+  },
+  {
+    "Name": "Emerald Airlines Ireland Limited",
+    "CountryId": 107,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "EA"
+  },
+  {
+    "Name": "Aer Lingus Limited",
+    "CountryId": 107,
+    "AccountingCode": 53,
+    "AirlinePrefix": 53,
+    "CarrierCode": "EI"
+  },
+  {
+    "Name": "Ryanair Ltd.",
+    "CountryId": 107,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "FR"
+  },
+  {
+    "Name": "Hibernian Airlines",
+    "CountryId": 107,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "HG"
+  },
+  {
+    "Name": "Scandinavian Airlines Ireland Limited dba SAS Connect",
+    "CountryId": 107,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "SL"
+  },
+  {
+    "Name": "Cityjet",
+    "CountryId": 107,
+    "AccountingCode": 689,
+    "AirlinePrefix": 689,
+    "CarrierCode": "WX"
+  },
+  {
+    "Name": "Sun d'Or International Airlines",
+    "CountryId": 109,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "2U"
+  },
+  {
+    "Name": "C.A.L. Cargo Airlines Ltd.",
+    "CountryId": 109,
+    "AccountingCode": "",
+    "AirlinePrefix": 700,
+    "CarrierCode": "5C"
+  },
+  {
+    "Name": "Israir Airlines and Tourism Ltd. dba Israir",
+    "CountryId": 109,
+    "AccountingCode": 818,
+    "AirlinePrefix": "",
+    "CarrierCode": "6H"
+  },
+  {
+    "Name": "Arkia Israeli Airlines Ltd",
+    "CountryId": 109,
+    "AccountingCode": 238,
+    "AirlinePrefix": 238,
+    "CarrierCode": "IZ"
+  },
+  {
+    "Name": "El Al Israel Airlines Ltd. dba EL AL",
+    "CountryId": 109,
+    "AccountingCode": 114,
+    "AirlinePrefix": 114,
+    "CarrierCode": "LY"
+  },
+  {
+    "Name": "Trenitalia S.p.A.",
+    "CountryId": 110,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "7T"
+  },
+  {
+    "Name": "Italia Trasporto Aereo S.p.A. dba ITA S.p.A",
+    "CountryId": 110,
+    "AccountingCode": 55,
+    "AirlinePrefix": 55,
+    "CarrierCode": "AZ"
+  },
+  {
+    "Name": "Cargolux Italia S.p.A.",
+    "CountryId": 110,
+    "AccountingCode": "",
+    "AirlinePrefix": 356,
+    "CarrierCode": "C8"
+  },
+  {
+    "Name": "ALISCARGO AIRLINES S.P.A. dba ALISCARGO AIRLINES S.P.A.",
+    "CountryId": 110,
+    "AccountingCode": "",
+    "AirlinePrefix": 233,
+    "CarrierCode": "CP"
+  },
+  {
+    "Name": "AIR DOLOMITI S.p.A. LINEE AEREE REGIONALI EUROPEE",
+    "CountryId": 110,
+    "AccountingCode": 101,
+    "AirlinePrefix": 101,
+    "CarrierCode": "EN"
+  },
+  {
+    "Name": "Poste Air Cargo s.r.l. dba Poste Air Cargo",
+    "CountryId": 110,
+    "AccountingCode": "",
+    "AirlinePrefix": 408,
+    "CarrierCode": "M4"
+  },
+  {
+    "Name": "Neos S.P.A.",
+    "CountryId": 110,
+    "AccountingCode": 703,
+    "AirlinePrefix": 703,
+    "CarrierCode": "NO"
+  },
+  {
+    "Name": "AEROITALIA SRL dba AEROITALIA SRL",
+    "CountryId": 110,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "XZ"
+  },
+  {
+    "Name": "INFINI Travel Information, Inc.",
+    "CountryId": 112,
+    "AccountingCode": 788,
+    "AirlinePrefix": "",
+    "CarrierCode": "1F"
+  },
+  {
+    "Name": "AXESS INTERNATIONAL NETWORK INC.",
+    "CountryId": 112,
+    "AccountingCode": 835,
+    "AirlinePrefix": "",
+    "CarrierCode": "1J"
+  },
+  {
+    "Name": "Solaseed Air Inc.",
+    "CountryId": 112,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "6J"
+  },
+  {
+    "Name": "Star Flyer Inc.",
+    "CountryId": 112,
+    "AccountingCode": 922,
+    "AirlinePrefix": "",
+    "CarrierCode": "7G"
+  },
+  {
+    "Name": "Skymark Airlines Inc.",
+    "CountryId": 112,
+    "AccountingCode": 90,
+    "AirlinePrefix": "",
+    "CarrierCode": "BC"
+  },
+  {
+    "Name": "ANA Wings Co., Ltd.",
+    "CountryId": 112,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "EH"
+  },
+  {
+    "Name": "IBEX Airlines Co., Ltd.",
+    "CountryId": 112,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "FW"
+  },
+  {
+    "Name": "Jetstar Japan Co., Ltd.",
+    "CountryId": 112,
+    "AccountingCode": 798,
+    "AirlinePrefix": "",
+    "CarrierCode": "GK"
+  },
+  {
+    "Name": "Airdo Co.,Ltd.",
+    "CountryId": 112,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "HD"
+  },
+  {
+    "Name": "Spring Japan Co. Ltd.",
+    "CountryId": 112,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "IJ"
+  },
+  {
+    "Name": "Japan Air Commuter Co., Ltd.",
+    "CountryId": 112,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "JC"
+  },
+  {
+    "Name": "Fuji Dream Airlines Co. Ltd",
+    "CountryId": 112,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "JH"
+  },
+  {
+    "Name": "Japan Airlines Co., Ltd.",
+    "CountryId": 112,
+    "AccountingCode": 131,
+    "AirlinePrefix": 131,
+    "CarrierCode": "JL"
+  },
+  {
+    "Name": "Nippon Cargo Airlines",
+    "CountryId": 112,
+    "AccountingCode": "",
+    "AirlinePrefix": 933,
+    "CarrierCode": "KZ"
+  },
+  {
+    "Name": "Peach Aviation Limited",
+    "CountryId": 112,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "MM"
+  },
+  {
+    "Name": "Amakusa Airlines Co.,Ltd",
+    "CountryId": 112,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "MZ"
+  },
+  {
+    "Name": "All Nippon Airways Co. Ltd.",
+    "CountryId": 112,
+    "AccountingCode": 205,
+    "AirlinePrefix": 205,
+    "CarrierCode": "NH"
+  },
+  {
+    "Name": "Air Japan Co., Ltd.",
+    "CountryId": 112,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "NQ"
+  },
+  {
+    "Name": "Japan Transocean Air Co. Ltd.",
+    "CountryId": 112,
+    "AccountingCode": 353,
+    "AirlinePrefix": 353,
+    "CarrierCode": "NU"
+  },
+  {
+    "Name": "Oriental Air Bridge Co., Ltd.",
+    "CountryId": 112,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "OC"
+  },
+  {
+    "Name": "Topre Corporation",
+    "CountryId": 112,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "T4"
+  },
+  {
+    "Name": "Solitaire Air Ltd. Co.(dba: Fly Jor dan)",
+    "CountryId": 114,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "F0"
+  },
+  {
+    "Name": "Jordan Aviation dba Jordan Aviation Airlines",
+    "CountryId": 114,
+    "AccountingCode": 151,
+    "AirlinePrefix": 151,
+    "CarrierCode": "R5"
+  },
+  {
+    "Name": "Alia - The Royal Jordanian Airlines dba Royal Jordanian",
+    "CountryId": 114,
+    "AccountingCode": 512,
+    "AirlinePrefix": 512,
+    "CarrierCode": "RJ"
+  },
+  {
+    "Name": "JSC Aircompany SCAT",
+    "CountryId": 115,
+    "AccountingCode": 655,
+    "AirlinePrefix": 655,
+    "CarrierCode": "DV"
+  },
+  {
+    "Name": "Southern Sky Airlines JSC",
+    "CountryId": 115,
+    "AccountingCode": 824,
+    "AirlinePrefix": "",
+    "CarrierCode": "IH"
+  },
+  {
+    "Name": "LLP Air company Jupiter Jet",
+    "CountryId": 115,
+    "AccountingCode": "",
+    "AirlinePrefix": 707,
+    "CarrierCode": "IM"
+  },
+  {
+    "Name": "Qazaq Air JSC",
+    "CountryId": 115,
+    "AccountingCode": 720,
+    "AirlinePrefix": "",
+    "CarrierCode": "IQ"
+  },
+  {
+    "Name": "JSC AIR ASTANA",
+    "CountryId": 115,
+    "AccountingCode": 465,
+    "AirlinePrefix": 465,
+    "CarrierCode": "KC"
+  },
+  {
+    "Name": "Jubba Airways Limited",
+    "CountryId": 116,
+    "AccountingCode": 535,
+    "AirlinePrefix": 535,
+    "CarrierCode": "3J"
+  },
+  {
+    "Name": "FREEDOM AIRLINE EXPRESS LTD",
+    "CountryId": 116,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "4F"
+  },
+  {
+    "Name": "Astral Aviation Limited",
+    "CountryId": 116,
+    "AccountingCode": "",
+    "AirlinePrefix": 485,
+    "CarrierCode": "8V"
+  },
+  {
+    "Name": "Safarilink Aviation LTD",
+    "CountryId": 116,
+    "AccountingCode": 705,
+    "AirlinePrefix": "",
+    "CarrierCode": "F2"
+  },
+  {
+    "Name": "Seven Four Eight Air Services(K)Ltd",
+    "CountryId": 116,
+    "AccountingCode": 874,
+    "AirlinePrefix": 874,
+    "CarrierCode": "FE"
+  },
+  {
+    "Name": "Jambojet Limited",
+    "CountryId": 116,
+    "AccountingCode": 702,
+    "AirlinePrefix": 702,
+    "CarrierCode": "JM"
+  },
+  {
+    "Name": "SAC (K) Limited",
+    "CountryId": 116,
+    "AccountingCode": 645,
+    "AirlinePrefix": 645,
+    "CarrierCode": "K3"
+  },
+  {
+    "Name": "Kenya Airways PLC",
+    "CountryId": 116,
+    "AccountingCode": 706,
+    "AirlinePrefix": 706,
+    "CarrierCode": "KQ"
+  },
+  {
+    "Name": "Skyward Express ltd",
+    "CountryId": 116,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "OW"
+  },
+  {
+    "Name": "AirKenya Express Ltd",
+    "CountryId": 116,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "P2"
+  },
+  {
+    "Name": "African Express Airways",
+    "CountryId": 116,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "XU"
+  },
+  {
+    "Name": "Safari Express Cargo Ltd",
+    "CountryId": 116,
+    "AccountingCode": "",
+    "AirlinePrefix": 925,
+    "CarrierCode": "ZF"
+  },
+  {
+    "Name": "Air Kiribati Limited dba Air Kiribati",
+    "CountryId": 117,
+    "AccountingCode": 69,
+    "AirlinePrefix": 69,
+    "CarrierCode": "IK"
+  },
+  {
+    "Name": "Air Koryo",
+    "CountryId": 118,
+    "AccountingCode": 120,
+    "AirlinePrefix": 120,
+    "CarrierCode": "JS"
+  },
+  {
+    "Name": "HI AIR Co., Ltd.",
+    "CountryId": 119,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "4H"
+  },
+  {
+    "Name": "Fly Gangwon Co., Ltd.",
+    "CountryId": 119,
+    "AccountingCode": 884,
+    "AirlinePrefix": "",
+    "CarrierCode": "4V"
+  },
+  {
+    "Name": "Jeju Air Co. Ltd.",
+    "CountryId": 119,
+    "AccountingCode": 806,
+    "AirlinePrefix": "",
+    "CarrierCode": "7C"
+  },
+  {
+    "Name": "Air Busan",
+    "CountryId": 119,
+    "AccountingCode": 982,
+    "AirlinePrefix": 982,
+    "CarrierCode": "BX"
+  },
+  {
+    "Name": "Korean Air Lines Co. Ltd.",
+    "CountryId": 119,
+    "AccountingCode": 180,
+    "AirlinePrefix": 180,
+    "CarrierCode": "KE"
+  },
+  {
+    "Name": "Air Incheon Co, Ltd",
+    "CountryId": 119,
+    "AccountingCode": "",
+    "AirlinePrefix": 994,
+    "CarrierCode": "KJ"
+  },
+  {
+    "Name": "Jin Air Co. Ltd",
+    "CountryId": 119,
+    "AccountingCode": 718,
+    "AirlinePrefix": "",
+    "CarrierCode": "LJ"
+  },
+  {
+    "Name": "Asiana Airlines Inc.",
+    "CountryId": 119,
+    "AccountingCode": 988,
+    "AirlinePrefix": 988,
+    "CarrierCode": "OZ"
+  },
+  {
+    "Name": "Aero-K Airlines Co. Ltd",
+    "CountryId": 119,
+    "AccountingCode": 711,
+    "AirlinePrefix": "",
+    "CarrierCode": "RF"
+  },
+  {
+    "Name": "Air Seoul, Inc",
+    "CountryId": 119,
+    "AccountingCode": 820,
+    "AirlinePrefix": 820,
+    "CarrierCode": "RS"
+  },
+  {
+    "Name": "T'way Air Co., Ltd.",
+    "CountryId": 119,
+    "AccountingCode": 722,
+    "AirlinePrefix": 722,
+    "CarrierCode": "TW"
+  },
+  {
+    "Name": "Air Premia Inc",
+    "CountryId": 119,
+    "AccountingCode": 350,
+    "AirlinePrefix": 350,
+    "CarrierCode": "YP"
+  },
+  {
+    "Name": "Jazeera Airways",
+    "CountryId": 120,
+    "AccountingCode": 486,
+    "AirlinePrefix": 486,
+    "CarrierCode": "J9"
+  },
+  {
+    "Name": "Kuwait Airways dba Kuwait Airways",
+    "CountryId": 120,
+    "AccountingCode": 229,
+    "AirlinePrefix": 229,
+    "CarrierCode": "KU"
+  },
+  {
+    "Name": "Moalem Aviation Aircompany Limited Liability Company",
+    "CountryId": 121,
+    "AccountingCode": "",
+    "AirlinePrefix": 385,
+    "CarrierCode": "2Y"
+  },
+  {
+    "Name": "Aero Nomad Airlines\" LLC",
+    "CountryId": 121,
+    "AccountingCode": 212,
+    "AirlinePrefix": "",
+    "CarrierCode": "KA"
+  },
+  {
+    "Name": "LLC Air company AeroStan dba LLC Air company AeroStan",
+    "CountryId": 121,
+    "AccountingCode": "",
+    "AirlinePrefix": 321,
+    "CarrierCode": "KW"
+  },
+  {
+    "Name": "Avia Traffic Company LLC dba Avia Traffic Company LLC",
+    "CountryId": 121,
+    "AccountingCode": 511,
+    "AirlinePrefix": 511,
+    "CarrierCode": "YK"
+  },
+  {
+    "Name": "Air Manas Air Company Limited Liability Company dba Air Manas Air Company LLC",
+    "CountryId": 121,
+    "AccountingCode": 887,
+    "AirlinePrefix": 887,
+    "CarrierCode": "ZM"
+  },
+  {
+    "Name": "Lao Skyway dba Commercial Air Transport and Charter",
+    "CountryId": 122,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "LK"
+  },
+  {
+    "Name": "Lao Airlines",
+    "CountryId": 122,
+    "AccountingCode": 627,
+    "AirlinePrefix": 627,
+    "CarrierCode": "QV"
+  },
+  {
+    "Name": "Smartlynx Airlines Ltd.",
+    "CountryId": 123,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "6Y"
+  },
+  {
+    "Name": "Air Baltic Corporation A/S",
+    "CountryId": 123,
+    "AccountingCode": 657,
+    "AirlinePrefix": 657,
+    "CarrierCode": "BT"
+  },
+  {
+    "Name": "RAF-AVIA A/S",
+    "CountryId": 123,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "MT"
+  },
+  {
+    "Name": "Middle East Airlines AirLiban",
+    "CountryId": 124,
+    "AccountingCode": 76,
+    "AirlinePrefix": 76,
+    "CarrierCode": "ME"
+  },
+  {
+    "Name": "Global Air Transport dba Global Air Transport",
+    "CountryId": 127,
+    "AccountingCode": 301,
+    "AirlinePrefix": 301,
+    "CarrierCode": "5S"
+  },
+  {
+    "Name": "Air Libya dba Air Libya",
+    "CountryId": 127,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "7I"
+  },
+  {
+    "Name": "Afriqiyah Airways dba Afriqiyah Airways",
+    "CountryId": 127,
+    "AccountingCode": 546,
+    "AirlinePrefix": 546,
+    "CarrierCode": "8U"
+  },
+  {
+    "Name": "Hala Air",
+    "CountryId": 127,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "HY"
+  },
+  {
+    "Name": "LIBYAN AIRLINES dba LIBYAN AIRLINES",
+    "CountryId": 127,
+    "AccountingCode": 148,
+    "AirlinePrefix": 148,
+    "CarrierCode": "LN"
+  },
+  {
+    "Name": "BERNIQ AIRWAYS dba BERNIQ AIRWAYS",
+    "CountryId": 127,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "NB"
+  },
+  {
+    "Name": "Ghadames Air Transport",
+    "CountryId": 127,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "NJ"
+  },
+  {
+    "Name": "Buraq Air dba Buraq Air",
+    "CountryId": 127,
+    "AccountingCode": 928,
+    "AirlinePrefix": 928,
+    "CarrierCode": "UZ"
+  },
+  {
+    "Name": "Fly OYA International dba FLY OYA",
+    "CountryId": 127,
+    "AccountingCode": 854,
+    "AirlinePrefix": "",
+    "CarrierCode": "YI"
+  },
+  {
+    "Name": "Libyan Wings Airline JSC",
+    "CountryId": 127,
+    "AccountingCode": 368,
+    "AirlinePrefix": "",
+    "CarrierCode": "YL"
+  },
+  {
+    "Name": "GetJet Airlines",
+    "CountryId": 129,
+    "AccountingCode": "",
+    "AirlinePrefix": 59,
+    "CarrierCode": "GW"
+  },
+  {
+    "Name": "Heston Airlines, UAB",
+    "CountryId": 129,
+    "AccountingCode": "",
+    "AirlinePrefix": 680,
+    "CarrierCode": "HN"
+  },
+  {
+    "Name": "JSC \"DAT LT\" dba DAT",
+    "CountryId": 129,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "R6"
+  },
+  {
+    "Name": "JSC \"Avion Express",
+    "CountryId": 129,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "X9"
+  },
+  {
+    "Name": "Cargolux Airlines International S.A",
+    "CountryId": 130,
+    "AccountingCode": "",
+    "AirlinePrefix": 172,
+    "CarrierCode": "CV"
+  },
+  {
+    "Name": "Luxair",
+    "CountryId": 130,
+    "AccountingCode": 149,
+    "AirlinePrefix": 149,
+    "CarrierCode": "LG"
+  },
+  {
+    "Name": "Air Macau Company Limited",
+    "CountryId": 131,
+    "AccountingCode": 675,
+    "AirlinePrefix": 675,
+    "CarrierCode": "NX"
+  },
+  {
+    "Name": "Air Madagascar dba Air Madagascar",
+    "CountryId": 133,
+    "AccountingCode": 258,
+    "AirlinePrefix": 258,
+    "CarrierCode": "MD"
+  },
+  {
+    "Name": "Tsaradia dba Tsaradia",
+    "CountryId": 133,
+    "AccountingCode": 852,
+    "AirlinePrefix": 852,
+    "CarrierCode": "TZ"
+  },
+  {
+    "Name": "Malawi Airlines",
+    "CountryId": 134,
+    "AccountingCode": 529,
+    "AirlinePrefix": 529,
+    "CarrierCode": "3W"
+  },
+  {
+    "Name": "World Cargo Airline Sdn Bhd. dba World Cargo Airlines",
+    "CountryId": 135,
+    "AccountingCode": "",
+    "AirlinePrefix": 380,
+    "CarrierCode": "3G"
+  },
+  {
+    "Name": "AirAsia Berhad dba AirAsia",
+    "CountryId": 135,
+    "AccountingCode": 807,
+    "AirlinePrefix": 807,
+    "CarrierCode": "AK"
+  },
+  {
+    "Name": "Airasia X Berhad dba Airasia X",
+    "CountryId": 135,
+    "AccountingCode": 843,
+    "AirlinePrefix": 843,
+    "CarrierCode": "D7"
+  },
+  {
+    "Name": "FlyFirefly Sdn. Bhd dba Firefly",
+    "CountryId": 135,
+    "AccountingCode": 918,
+    "AirlinePrefix": "",
+    "CarrierCode": "FY"
+  },
+  {
+    "Name": "Berjaya Air Sdn. Bhd. dba Berjaya Air",
+    "CountryId": 135,
+    "AccountingCode": 801,
+    "AirlinePrefix": "",
+    "CarrierCode": "J8"
+  },
+  {
+    "Name": "SKS Airways Sdn. Bhd.",
+    "CountryId": 135,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "KI"
+  },
+  {
+    "Name": "Malaysia Airlines Berhad dba Malaysia Airlines",
+    "CountryId": 135,
+    "AccountingCode": 232,
+    "AirlinePrefix": 232,
+    "CarrierCode": "MH"
+  },
+  {
+    "Name": "MASwings Sdn Bhd dba MASwings",
+    "CountryId": 135,
+    "AccountingCode": 819,
+    "AirlinePrefix": "",
+    "CarrierCode": "MY"
+  },
+  {
+    "Name": "My Jet Xpress Airlines Sdn.Bhd. dba My Jet Xpress Airlines",
+    "CountryId": 135,
+    "AccountingCode": "",
+    "AirlinePrefix": 264,
+    "CarrierCode": "N7"
+  },
+  {
+    "Name": "Malindo Airways Sdn Bhd dba Malindo Air",
+    "CountryId": 135,
+    "AccountingCode": 816,
+    "AirlinePrefix": "",
+    "CarrierCode": "OD"
+  },
+  {
+    "Name": "Raya Airways Sdn. Bhd. dba Raya Airways",
+    "CountryId": 135,
+    "AccountingCode": "",
+    "AirlinePrefix": 539,
+    "CarrierCode": "TH"
+  },
+  {
+    "Name": "M Jets International Sdn Bhd dba Kargo Xpress",
+    "CountryId": 135,
+    "AccountingCode": "",
+    "AirlinePrefix": 313,
+    "CarrierCode": "WW"
+  },
+  {
+    "Name": "Manta Aviation Pvt Ltd",
+    "CountryId": 136,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "NR"
+  },
+  {
+    "Name": "Island Aviation Services Ltd.",
+    "CountryId": 136,
+    "AccountingCode": 986,
+    "AirlinePrefix": 986,
+    "CarrierCode": "Q2"
+  },
+  {
+    "Name": "Villa Air Pvt. Ltd. dba Villa Air",
+    "CountryId": 136,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "VP"
+  },
+  {
+    "Name": "SKY MALI dba SKY MALI SA",
+    "CountryId": 137,
+    "AccountingCode": 332,
+    "AirlinePrefix": "",
+    "CarrierCode": "ML"
+  },
+  {
+    "Name": "Hi Fly Ltd",
+    "CountryId": 138,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "3L"
+  },
+  {
+    "Name": "Mel Air Limited",
+    "CountryId": 138,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "5M"
+  },
+  {
+    "Name": "Airhub Airlines Limited",
+    "CountryId": 138,
+    "AccountingCode": "",
+    "AirlinePrefix": 521,
+    "CarrierCode": "AH"
+  },
+  {
+    "Name": "Air X Charter Ltd",
+    "CountryId": 138,
+    "AccountingCode": "",
+    "AirlinePrefix": 247,
+    "CarrierCode": "AX"
+  },
+  {
+    "Name": "Luxwing Ltd",
+    "CountryId": 138,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "BN"
+  },
+  {
+    "Name": "Air Atlanta Europe Ltd",
+    "CountryId": 138,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "CT"
+  },
+  {
+    "Name": "MALETH-AERO AOC LIMITED",
+    "CountryId": 138,
+    "AccountingCode": "",
+    "AirlinePrefix": 94,
+    "CarrierCode": "DB"
+  },
+  {
+    "Name": "Air Horizont Ltd.",
+    "CountryId": 138,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "HT"
+  },
+  {
+    "Name": "Air Malta p.l.c.",
+    "CountryId": 138,
+    "AccountingCode": 643,
+    "AirlinePrefix": 643,
+    "CarrierCode": "KM"
+  },
+  {
+    "Name": "Lauda Europe Ltd",
+    "CountryId": 138,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "LW"
+  },
+  {
+    "Name": "Elitavia Malta Limited",
+    "CountryId": 138,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "MA"
+  },
+  {
+    "Name": "Malta Air Travel Ltd dba Malta MedAir",
+    "CountryId": 138,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "MT"
+  },
+  {
+    "Name": "Titan Airways Malta ltd",
+    "CountryId": 138,
+    "AccountingCode": "",
+    "AirlinePrefix": 183,
+    "CarrierCode": "TM"
+  },
+  {
+    "Name": "AVION EXPRESS MALTA LTD.",
+    "CountryId": 138,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "X8"
+  },
+  {
+    "Name": "Touristic Aviation Services Ltd dba Corendon Airlines Europe",
+    "CountryId": 138,
+    "AccountingCode": 187,
+    "AirlinePrefix": 187,
+    "CarrierCode": "XR"
+  },
+  {
+    "Name": "Mauritanian Airlines",
+    "CountryId": 141,
+    "AccountingCode": 495,
+    "AirlinePrefix": 495,
+    "CarrierCode": "L6"
+  },
+  {
+    "Name": "Air Mauritius Ltd",
+    "CountryId": 142,
+    "AccountingCode": 239,
+    "AirlinePrefix": 239,
+    "CarrierCode": "MK"
+  },
+  {
+    "Name": "EWA Air",
+    "CountryId": 143,
+    "AccountingCode": 732,
+    "AirlinePrefix": 732,
+    "CarrierCode": "ZD"
+  },
+  {
+    "Name": "Aerolitoral S.A. de C.V.",
+    "CountryId": 144,
+    "AccountingCode": 642,
+    "AirlinePrefix": 642,
+    "CarrierCode": "5D"
+  },
+  {
+    "Name": "Aerotransporte de Carga Union, S.A. dba Aerounion",
+    "CountryId": 144,
+    "AccountingCode": "",
+    "AirlinePrefix": 873,
+    "CarrierCode": "6R"
+  },
+  {
+    "Name": "Aeromexico",
+    "CountryId": 144,
+    "AccountingCode": 139,
+    "AirlinePrefix": 139,
+    "CarrierCode": "AM"
+  },
+  {
+    "Name": "Estafeta Carga Aerea, S.A. de C.V",
+    "CountryId": 144,
+    "AccountingCode": "",
+    "AirlinePrefix": 355,
+    "CarrierCode": "E7"
+  },
+  {
+    "Name": "Aerotransportes Mas de Carga S.A. de C.V. dba Masair",
+    "CountryId": 144,
+    "AccountingCode": "",
+    "AirlinePrefix": 865,
+    "CarrierCode": "M7"
+  },
+  {
+    "Name": "MCS Aerocarga de Mexico, S.A. de CV",
+    "CountryId": 144,
+    "AccountingCode": "",
+    "AirlinePrefix": 137,
+    "CarrierCode": "T2"
+  },
+  {
+    "Name": "Aeroenlaces Nacionales S.A. de C.V.",
+    "CountryId": 144,
+    "AccountingCode": 333,
+    "AirlinePrefix": 333,
+    "CarrierCode": "VB"
+  },
+  {
+    "Name": "Transportes Aeromar, S.A. de C.V.",
+    "CountryId": 144,
+    "AccountingCode": 942,
+    "AirlinePrefix": 942,
+    "CarrierCode": "VW"
+  },
+  {
+    "Name": "Concesionaria Vuela Compania De Aviacion SA de CV (Volaris)",
+    "CountryId": 144,
+    "AccountingCode": 36,
+    "AirlinePrefix": 36,
+    "CarrierCode": "Y4"
+  },
+  {
+    "Name": "Link Conexion Aerea S.A. de C.V",
+    "CountryId": 144,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "YQ"
+  },
+  {
+    "Name": "Fly One S.R.L.",
+    "CountryId": 146,
+    "AccountingCode": 130,
+    "AirlinePrefix": 130,
+    "CarrierCode": "5F"
+  },
+  {
+    "Name": "AIR MOLDOVA",
+    "CountryId": 146,
+    "AccountingCode": 572,
+    "AirlinePrefix": 572,
+    "CarrierCode": "9U"
+  },
+  {
+    "Name": "Aerotranscargo SRL",
+    "CountryId": 146,
+    "AccountingCode": "",
+    "AirlinePrefix": 227,
+    "CarrierCode": "F5"
+  },
+  {
+    "Name": "Fly Pro SRL",
+    "CountryId": 146,
+    "AccountingCode": "",
+    "AirlinePrefix": 315,
+    "CarrierCode": "FP"
+  },
+  {
+    "Name": "CA HiSky SRL",
+    "CountryId": 146,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "H7"
+  },
+  {
+    "Name": "CA Terra Avia SRL",
+    "CountryId": 146,
+    "AccountingCode": "",
+    "AirlinePrefix": 357,
+    "CarrierCode": "T8"
+  },
+  {
+    "Name": "Monacair",
+    "CountryId": 147,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "QM"
+  },
+  {
+    "Name": "Heli Air Monaco",
+    "CountryId": 147,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "YO"
+  },
+  {
+    "Name": "Aeromongolia LLC",
+    "CountryId": 148,
+    "AccountingCode": 970,
+    "AirlinePrefix": 970,
+    "CarrierCode": "M0"
+  },
+  {
+    "Name": "EZNIS AIRWAYS LLC",
+    "CountryId": 148,
+    "AccountingCode": 116,
+    "AirlinePrefix": 116,
+    "CarrierCode": "MG"
+  },
+  {
+    "Name": "Hunnu Air LLC",
+    "CountryId": 148,
+    "AccountingCode": 861,
+    "AirlinePrefix": 861,
+    "CarrierCode": "MR"
+  },
+  {
+    "Name": "MIAT Mongolian Airlines",
+    "CountryId": 148,
+    "AccountingCode": 289,
+    "AirlinePrefix": 289,
+    "CarrierCode": "OM"
+  },
+  {
+    "Name": "Mongolian Airways Cargo LLC",
+    "CountryId": 148,
+    "AccountingCode": 848,
+    "AirlinePrefix": 848,
+    "CarrierCode": "XF"
+  },
+  {
+    "Name": "Montserrat Airways Limited dba Fly Montserrat",
+    "CountryId": 150,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "5M"
+  },
+  {
+    "Name": "Air Arabia Maroc",
+    "CountryId": 151,
+    "AccountingCode": 452,
+    "AirlinePrefix": 452,
+    "CarrierCode": "3O"
+  },
+  {
+    "Name": "Royal Air Maroc",
+    "CountryId": 151,
+    "AccountingCode": 147,
+    "AirlinePrefix": 147,
+    "CarrierCode": "AT"
+  },
+  {
+    "Name": "Solenta Aviation Mozambique SA dba Solenta Aviation Mozambique SA",
+    "CountryId": 152,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "FW"
+  },
+  {
+    "Name": "LAM - Linhas Aereas de Mocambique SA dba LAM, SA",
+    "CountryId": 152,
+    "AccountingCode": 68,
+    "AirlinePrefix": 68,
+    "CarrierCode": "TM"
+  },
+  {
+    "Name": "Mann Yadanarpon Airlines Co. Ltd.",
+    "CountryId": 153,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "7Y"
+  },
+  {
+    "Name": "Myanmar Airways International Company Limited",
+    "CountryId": 153,
+    "AccountingCode": 599,
+    "AirlinePrefix": 599,
+    "CarrierCode": "8M"
+  },
+  {
+    "Name": "Air KBZ Company Limited dba Air KBZ Company Limited",
+    "CountryId": 153,
+    "AccountingCode": 314,
+    "AirlinePrefix": "",
+    "CarrierCode": "K7"
+  },
+  {
+    "Name": "Air Thanlwin Limited dba Air Thanlwin Limited",
+    "CountryId": 153,
+    "AccountingCode": 363,
+    "AirlinePrefix": "",
+    "CarrierCode": "ST"
+  },
+  {
+    "Name": "Myanmar National Airlines dba Myanmar National Airlines",
+    "CountryId": 153,
+    "AccountingCode": 665,
+    "AirlinePrefix": "",
+    "CarrierCode": "UB"
+  },
+  {
+    "Name": "Golden Myanmar Airlines Public Co. Ltd dbaGolden Myanmar Airlines Public Co.Ltd",
+    "CountryId": 153,
+    "AccountingCode": 509,
+    "AirlinePrefix": 509,
+    "CarrierCode": "Y5"
+  },
+  {
+    "Name": "Westair Aviation (PTY) Ltd.",
+    "CountryId": 154,
+    "AccountingCode": 614,
+    "AirlinePrefix": "",
+    "CarrierCode": "WV"
+  },
+  {
+    "Name": "Himalaya Airlines Pvt. Ltd.",
+    "CountryId": 156,
+    "AccountingCode": 769,
+    "AirlinePrefix": 769,
+    "CarrierCode": "H9"
+  },
+  {
+    "Name": "SHREE AIRLINES Pvt. Ltd.",
+    "CountryId": 156,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "N9"
+  },
+  {
+    "Name": "Nepal Airlines Corporation",
+    "CountryId": 156,
+    "AccountingCode": 285,
+    "AirlinePrefix": 285,
+    "CarrierCode": "RA"
+  },
+  {
+    "Name": "Buddha Air Ltd.",
+    "CountryId": 156,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "U4"
+  },
+  {
+    "Name": "Yeti Airlines Domestic Pvt. Ltd.",
+    "CountryId": 156,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "YT"
+  },
+  {
+    "Name": "Stabo Air Limited",
+    "CountryId": 157,
+    "AccountingCode": "",
+    "AirlinePrefix": 242,
+    "CarrierCode": "4E"
+  },
+  {
+    "Name": "Corendon Dutch Airlines B.V.",
+    "CountryId": 157,
+    "AccountingCode": "",
+    "AirlinePrefix": 503,
+    "CarrierCode": "CD"
+  },
+  {
+    "Name": "European Cargo Services BV",
+    "CountryId": 157,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "EJ"
+  },
+  {
+    "Name": "Airshop B.V.",
+    "CountryId": 157,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "FF"
+  },
+  {
+    "Name": "Transavia Airlines",
+    "CountryId": 157,
+    "AccountingCode": 979,
+    "AirlinePrefix": 979,
+    "CarrierCode": "HV"
+  },
+  {
+    "Name": "KLM",
+    "CountryId": 157,
+    "AccountingCode": 74,
+    "AirlinePrefix": 74,
+    "CarrierCode": "KL"
+  },
+  {
+    "Name": "Martinair Holland N.V.",
+    "CountryId": 157,
+    "AccountingCode": "",
+    "AirlinePrefix": 129,
+    "CarrierCode": "MP"
+  },
+  {
+    "Name": "TUI Airlines Nederland B.V.",
+    "CountryId": 157,
+    "AccountingCode": 178,
+    "AirlinePrefix": 178,
+    "CarrierCode": "OR"
+  },
+  {
+    "Name": "UNILODE AVIATION SOLUTIONS NETHERLANDS BV",
+    "CountryId": 157,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "U9"
+  },
+  {
+    "Name": "Vipper BV",
+    "CountryId": 157,
+    "AccountingCode": 48,
+    "AirlinePrefix": "",
+    "CarrierCode": "VG"
+  },
+  {
+    "Name": "KLM Cityhopper",
+    "CountryId": 157,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "WA"
+  },
+  {
+    "Name": "Air Caledonie International",
+    "CountryId": 158,
+    "AccountingCode": 63,
+    "AirlinePrefix": 63,
+    "CarrierCode": "SB"
+  },
+  {
+    "Name": "Air Caledonie",
+    "CountryId": 158,
+    "AccountingCode": 190,
+    "AirlinePrefix": 190,
+    "CarrierCode": "TY"
+  },
+  {
+    "Name": "Air Chathams Limited t/a Air Chathams",
+    "CountryId": 159,
+    "AccountingCode": 850,
+    "AirlinePrefix": "",
+    "CarrierCode": "3C"
+  },
+  {
+    "Name": "Unilode Aviation Solutions New Zealand Limited",
+    "CountryId": 159,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "C6"
+  },
+  {
+    "Name": "Air New Zealand Limited",
+    "CountryId": 159,
+    "AccountingCode": 86,
+    "AirlinePrefix": 86,
+    "CarrierCode": "NZ"
+  },
+  {
+    "Name": "Sounds Air Travel and Tourism Ltd.",
+    "CountryId": 159,
+    "AccountingCode": 346,
+    "AirlinePrefix": "",
+    "CarrierCode": "S8"
+  },
+  {
+    "Name": "Niger Airlines S.A.",
+    "CountryId": 161,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "6N"
+  },
+  {
+    "Name": "Niger Air Cargo",
+    "CountryId": 161,
+    "AccountingCode": "",
+    "AirlinePrefix": 519,
+    "CarrierCode": "NO"
+  },
+  {
+    "Name": "Allied Air Limited",
+    "CountryId": 162,
+    "AccountingCode": "",
+    "AirlinePrefix": 574,
+    "CarrierCode": "4W"
+  },
+  {
+    "Name": "Dana Airlines Limited dba Dana Airlines Limited",
+    "CountryId": 162,
+    "AccountingCode": 234,
+    "AirlinePrefix": "",
+    "CarrierCode": "9J"
+  },
+  {
+    "Name": "Aero Contractors Company Of Nigeria Limited",
+    "CountryId": 162,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "N2"
+  },
+  {
+    "Name": "OMNI-BLU AVIATION LIMITED dba OMNI-BLU",
+    "CountryId": 162,
+    "AccountingCode": 717,
+    "AirlinePrefix": "",
+    "CarrierCode": "O7"
+  },
+  {
+    "Name": "Overland Airways Limited",
+    "CountryId": 162,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "OF"
+  },
+  {
+    "Name": "Air Peace Limited",
+    "CountryId": 162,
+    "AccountingCode": 710,
+    "AirlinePrefix": 710,
+    "CarrierCode": "P4"
+  },
+  {
+    "Name": "Green Africa Airways Limited",
+    "CountryId": 162,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "Q9"
+  },
+  {
+    "Name": "Ibom Airlines Limited",
+    "CountryId": 162,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "QI"
+  },
+  {
+    "Name": "Max Air Limited",
+    "CountryId": 162,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "VM"
+  },
+  {
+    "Name": "Arik Air Limited dba Arik Air Limited",
+    "CountryId": 162,
+    "AccountingCode": 725,
+    "AirlinePrefix": "",
+    "CarrierCode": "W3"
+  },
+  {
+    "Name": "Norwegian Air Norway AS",
+    "CountryId": 166,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "DH"
+  },
+  {
+    "Name": "Norwegian Air Shuttle AOC AS",
+    "CountryId": 166,
+    "AccountingCode": 328,
+    "AirlinePrefix": 328,
+    "CarrierCode": "DY"
+  },
+  {
+    "Name": "Flyr AS, Part-OPS",
+    "CountryId": 166,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "FS"
+  },
+  {
+    "Name": "Norse Atlantic Airways AS",
+    "CountryId": 166,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "N0"
+  },
+  {
+    "Name": "Wideroe's Flyveselskap A.S.",
+    "CountryId": 166,
+    "AccountingCode": 701,
+    "AirlinePrefix": 701,
+    "CarrierCode": "WF"
+  },
+  {
+    "Name": "Salam Air (S.A.O.C)",
+    "CountryId": 167,
+    "AccountingCode": "",
+    "AirlinePrefix": 960,
+    "CarrierCode": "OV"
+  },
+  {
+    "Name": "Oman Air (S.A.O.C)",
+    "CountryId": 167,
+    "AccountingCode": 910,
+    "AirlinePrefix": 910,
+    "CarrierCode": "WY"
+  },
+  {
+    "Name": "Serene Air (PVT.) Limited",
+    "CountryId": 168,
+    "AccountingCode": 92,
+    "AirlinePrefix": "",
+    "CarrierCode": "ER"
+  },
+  {
+    "Name": "M/S Airblue Limited",
+    "CountryId": 168,
+    "AccountingCode": 84,
+    "AirlinePrefix": 84,
+    "CarrierCode": "PA"
+  },
+  {
+    "Name": "Air Sial Limited",
+    "CountryId": 168,
+    "AccountingCode": 673,
+    "AirlinePrefix": "",
+    "CarrierCode": "PF"
+  },
+  {
+    "Name": "Pakistan International Airlines Corporation Limited",
+    "CountryId": 168,
+    "AccountingCode": 214,
+    "AirlinePrefix": 214,
+    "CarrierCode": "PK"
+  },
+  {
+    "Name": "Parsa S.A",
+    "CountryId": 171,
+    "AccountingCode": 600,
+    "AirlinePrefix": "",
+    "CarrierCode": "7P"
+  },
+  {
+    "Name": "Panama Airways",
+    "CountryId": 171,
+    "AccountingCode": "",
+    "AirlinePrefix": 691,
+    "CarrierCode": "8A"
+  },
+  {
+    "Name": "Cargo Three, Inc. Cargo Tres Sociedad Anonima",
+    "CountryId": 171,
+    "AccountingCode": "",
+    "AirlinePrefix": 364,
+    "CarrierCode": "C3"
+  },
+  {
+    "Name": "Compania Panamena de Aviacion, S.A. (COPA)",
+    "CountryId": 171,
+    "AccountingCode": 230,
+    "AirlinePrefix": 230,
+    "CarrierCode": "CM"
+  },
+  {
+    "Name": "DHL Aero Expreso S.A.",
+    "CountryId": 171,
+    "AccountingCode": "",
+    "AirlinePrefix": 992,
+    "CarrierCode": "D5"
+  },
+  {
+    "Name": "Uniworld Air Cargo Corp.",
+    "CountryId": 171,
+    "AccountingCode": "",
+    "AirlinePrefix": 399,
+    "CarrierCode": "U7"
+  },
+  {
+    "Name": "PNG Air Limited",
+    "CountryId": 172,
+    "AccountingCode": 626,
+    "AirlinePrefix": 626,
+    "CarrierCode": "CG"
+  },
+  {
+    "Name": "Air Niugini Limited",
+    "CountryId": 172,
+    "AccountingCode": 656,
+    "AirlinePrefix": 656,
+    "CarrierCode": "PX"
+  },
+  {
+    "Name": "Transportes Aereos del Mercosur S.A dba LATAM Airlines Paraguay",
+    "CountryId": 173,
+    "AccountingCode": 692,
+    "AirlinePrefix": 692,
+    "CarrierCode": "PZ"
+  },
+  {
+    "Name": "Compania De Aviacion Paraguaya S.A.",
+    "CountryId": 173,
+    "AccountingCode": 445,
+    "AirlinePrefix": 445,
+    "CarrierCode": "ZP"
+  },
+  {
+    "Name": "Travelsky Technology Limited",
+    "CountryId": 46,
+    "AccountingCode": 252,
+    "AirlinePrefix": "",
+    "CarrierCode": "1E"
+  },
+  {
+    "Name": "Sichuan Airlines Co. Ltd.",
+    "CountryId": 46,
+    "AccountingCode": 876,
+    "AirlinePrefix": 876,
+    "CarrierCode": "3U"
+  },
+  {
+    "Name": "Qingdao Haier Biomedical Technology Ltd.",
+    "CountryId": 46,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "6U"
+  },
+  {
+    "Name": "Lucky Air Co. Ltd.",
+    "CountryId": 46,
+    "AccountingCode": 859,
+    "AirlinePrefix": 859,
+    "CarrierCode": "8L"
+  },
+  {
+    "Name": "Spring Airlines Limited Corporation",
+    "CountryId": 46,
+    "AccountingCode": 89,
+    "AirlinePrefix": 89,
+    "CarrierCode": "9C"
+  },
+  {
+    "Name": "Genghis Khan Airlines Co., Ltd",
+    "CountryId": 46,
+    "AccountingCode": 568,
+    "AirlinePrefix": 568,
+    "CarrierCode": "9D"
+  },
+  {
+    "Name": "Changan Airlines Limited Company",
+    "CountryId": 46,
+    "AccountingCode": 856,
+    "AirlinePrefix": 856,
+    "CarrierCode": "9H"
+  },
+  {
+    "Name": "Air Travel Co. Ltd.",
+    "CountryId": 46,
+    "AccountingCode": 389,
+    "AirlinePrefix": 389,
+    "CarrierCode": "A6"
+  },
+  {
+    "Name": "9 Air Co Ltd",
+    "CountryId": 46,
+    "AccountingCode": 902,
+    "AirlinePrefix": 902,
+    "CarrierCode": "AQ"
+  },
+  {
+    "Name": "Okay Airways Company Limited",
+    "CountryId": 46,
+    "AccountingCode": 866,
+    "AirlinePrefix": 866,
+    "CarrierCode": "BK"
+  },
+  {
+    "Name": "Air China Cargo",
+    "CountryId": 46,
+    "AccountingCode": "",
+    "AirlinePrefix": 999,
+    "CarrierCode": "CA"
+  },
+  {
+    "Name": "Air China LTD",
+    "CountryId": 46,
+    "AccountingCode": 999,
+    "AirlinePrefix": "",
+    "CarrierCode": "CA"
+  },
+  {
+    "Name": "China Postal Airlines Ltd.",
+    "CountryId": 46,
+    "AccountingCode": "",
+    "AirlinePrefix": 804,
+    "CarrierCode": "CF"
+  },
+  {
+    "Name": "China Cargo Airlines Ltd.",
+    "CountryId": 46,
+    "AccountingCode": "",
+    "AirlinePrefix": 112,
+    "CarrierCode": "CK"
+  },
+  {
+    "Name": "Grand China Air Co. , Ltd.",
+    "CountryId": 46,
+    "AccountingCode": 895,
+    "AirlinePrefix": 895,
+    "CarrierCode": "CN"
+  },
+  {
+    "Name": "North-Western Cargo International Airlines Co., Ltd.",
+    "CountryId": 46,
+    "AccountingCode": "",
+    "AirlinePrefix": 966,
+    "CarrierCode": "CO"
+  },
+  {
+    "Name": "China Southern Airlines",
+    "CountryId": 46,
+    "AccountingCode": 784,
+    "AirlinePrefix": 784,
+    "CarrierCode": "CZ"
+  },
+  {
+    "Name": "Ruili Airlines Co. Ltd.",
+    "CountryId": 46,
+    "AccountingCode": 299,
+    "AirlinePrefix": "",
+    "CarrierCode": "DR"
+  },
+  {
+    "Name": "Donghai Airlines Co., Ltd",
+    "CountryId": 46,
+    "AccountingCode": 893,
+    "AirlinePrefix": 893,
+    "CarrierCode": "DZ"
+  },
+  {
+    "Name": "Chengdu Airlines",
+    "CountryId": 46,
+    "AccountingCode": 811,
+    "AirlinePrefix": 811,
+    "CarrierCode": "EU"
+  },
+  {
+    "Name": "Shanghai Airlines Co. Ltd.",
+    "CountryId": 46,
+    "AccountingCode": 774,
+    "AirlinePrefix": 774,
+    "CarrierCode": "FM"
+  },
+  {
+    "Name": "Fuzhou Airlines Co., Ltd",
+    "CountryId": 46,
+    "AccountingCode": 666,
+    "AirlinePrefix": 666,
+    "CarrierCode": "FU"
+  },
+  {
+    "Name": "China Express Airlines",
+    "CountryId": 46,
+    "AccountingCode": 987,
+    "AirlinePrefix": 987,
+    "CarrierCode": "G5"
+  },
+  {
+    "Name": "China Central Longhao Airlines Co. Ltd",
+    "CountryId": 46,
+    "AccountingCode": "",
+    "AirlinePrefix": 908,
+    "CarrierCode": "GI"
+  },
+  {
+    "Name": "Zhejiang Loong Airlines Co., Ltd",
+    "CountryId": 46,
+    "AccountingCode": 891,
+    "AirlinePrefix": 891,
+    "CarrierCode": "GJ"
+  },
+  {
+    "Name": "TianJin Airlines Co. Ltd",
+    "CountryId": 46,
+    "AccountingCode": 826,
+    "AirlinePrefix": 826,
+    "CarrierCode": "GS"
+  },
+  {
+    "Name": "Air Guilin Co. Ltd.",
+    "CountryId": 46,
+    "AccountingCode": 730,
+    "AirlinePrefix": 730,
+    "CarrierCode": "GT"
+  },
+  {
+    "Name": "Guangxi Beibu Gulf Airlines Co.,Ltd",
+    "CountryId": 46,
+    "AccountingCode": 872,
+    "AirlinePrefix": 872,
+    "CarrierCode": "GX"
+  },
+  {
+    "Name": "Colorful GuiZhou Airlines Co., Ltd",
+    "CountryId": 46,
+    "AccountingCode": 661,
+    "AirlinePrefix": 661,
+    "CarrierCode": "GY"
+  },
+  {
+    "Name": "Juneyao Airlines Co,. Ltd.",
+    "CountryId": 46,
+    "AccountingCode": 18,
+    "AirlinePrefix": 18,
+    "CarrierCode": "HO"
+  },
+  {
+    "Name": "Tianjin Air Cargo Co., Ltd.",
+    "CountryId": 46,
+    "AccountingCode": "",
+    "AirlinePrefix": 877,
+    "CarrierCode": "HT"
+  },
+  {
+    "Name": "Hainan Airlines Holding Company Limited",
+    "CountryId": 46,
+    "AccountingCode": 880,
+    "AirlinePrefix": 880,
+    "CarrierCode": "HU"
+  },
+  {
+    "Name": "China Central Airlines Co., Ltd.",
+    "CountryId": 46,
+    "AccountingCode": "",
+    "AirlinePrefix": 959,
+    "CarrierCode": "I9"
+  },
+  {
+    "Name": "Beijing Capital Airlines Co. Ltd.",
+    "CountryId": 46,
+    "AccountingCode": 898,
+    "AirlinePrefix": 898,
+    "CarrierCode": "JD"
+  },
+  {
+    "Name": "OTT AIRLINES CO., LTD",
+    "CountryId": 46,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "JF"
+  },
+  {
+    "Name": "Joy Air",
+    "CountryId": 46,
+    "AccountingCode": 929,
+    "AirlinePrefix": 929,
+    "CarrierCode": "JR"
+  },
+  {
+    "Name": "China United Airlines",
+    "CountryId": 46,
+    "AccountingCode": 822,
+    "AirlinePrefix": 822,
+    "CarrierCode": "KN"
+  },
+  {
+    "Name": "Kunming Airlines Co., Ltd.",
+    "CountryId": 46,
+    "AccountingCode": 833,
+    "AirlinePrefix": 833,
+    "CarrierCode": "KY"
+  },
+  {
+    "Name": "CHINA GENERAL AVIATION LTD",
+    "CountryId": 46,
+    "AccountingCode": 939,
+    "AirlinePrefix": "",
+    "CarrierCode": "LL"
+  },
+  {
+    "Name": "LongJiang Airlines Co.,Ltd.",
+    "CountryId": 46,
+    "AccountingCode": 867,
+    "AirlinePrefix": 867,
+    "CarrierCode": "LT"
+  },
+  {
+    "Name": "Xiamen Airlines",
+    "CountryId": 46,
+    "AccountingCode": 731,
+    "AirlinePrefix": 731,
+    "CarrierCode": "MF"
+  },
+  {
+    "Name": "China Eastern Airlines",
+    "CountryId": 46,
+    "AccountingCode": 781,
+    "AirlinePrefix": 781,
+    "CarrierCode": "MU"
+  },
+  {
+    "Name": "Hebei Airlines Co., Ltd.",
+    "CountryId": 46,
+    "AccountingCode": 836,
+    "AirlinePrefix": 836,
+    "CarrierCode": "NS"
+  },
+  {
+    "Name": "SF Airlines Company Limited",
+    "CountryId": 46,
+    "AccountingCode": "",
+    "AirlinePrefix": 921,
+    "CarrierCode": "O3"
+  },
+  {
+    "Name": "Chongqing Airlines Co. Ltd",
+    "CountryId": 46,
+    "AccountingCode": 878,
+    "AirlinePrefix": 878,
+    "CarrierCode": "OQ"
+  },
+  {
+    "Name": "West Air Co., Ltd.",
+    "CountryId": 46,
+    "AccountingCode": 847,
+    "AirlinePrefix": 847,
+    "CarrierCode": "PN"
+  },
+  {
+    "Name": "Qingdao Airlines Co., Ltd",
+    "CountryId": 46,
+    "AccountingCode": 912,
+    "AirlinePrefix": 912,
+    "CarrierCode": "QW"
+  },
+  {
+    "Name": "Jiangxi Air Company Limited dba Jiangxi Air",
+    "CountryId": 46,
+    "AccountingCode": 989,
+    "AirlinePrefix": 989,
+    "CarrierCode": "RY"
+  },
+  {
+    "Name": "Shandong Airlines",
+    "CountryId": 46,
+    "AccountingCode": 324,
+    "AirlinePrefix": 324,
+    "CarrierCode": "SC"
+  },
+  {
+    "Name": "Tibet Airlines Corporation Limited",
+    "CountryId": 46,
+    "AccountingCode": 88,
+    "AirlinePrefix": "",
+    "CarrierCode": "TV"
+  },
+  {
+    "Name": "Urumqi Airlines Co. Ltd.",
+    "CountryId": 46,
+    "AccountingCode": 886,
+    "AirlinePrefix": 886,
+    "CarrierCode": "UQ"
+  },
+  {
+    "Name": "Suparna Airlines Co., Ltd.",
+    "CountryId": 46,
+    "AccountingCode": 871,
+    "AirlinePrefix": 871,
+    "CarrierCode": "Y8"
+  },
+  {
+    "Name": "YTO Cargo Airlines Co. Ltd.",
+    "CountryId": 46,
+    "AccountingCode": "",
+    "AirlinePrefix": 860,
+    "CarrierCode": "YG"
+  },
+  {
+    "Name": "Asian Express General Aviation Wuxi Ltd",
+    "CountryId": 46,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "YJ"
+  },
+  {
+    "Name": "Shenzhen Airlines",
+    "CountryId": 46,
+    "AccountingCode": 479,
+    "AirlinePrefix": 479,
+    "CarrierCode": "ZH"
+  },
+  {
+    "Name": "Star Up S.A. dba Star Peru",
+    "CountryId": 174,
+    "AccountingCode": 156,
+    "AirlinePrefix": 156,
+    "CarrierCode": "2I"
+  },
+  {
+    "Name": "Aero Transporte S.A.",
+    "CountryId": 174,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "4A"
+  },
+  {
+    "Name": "Aerolinea del Caribe Peru S.A.C.",
+    "CountryId": 174,
+    "AccountingCode": "",
+    "AirlinePrefix": 497,
+    "CarrierCode": "EF"
+  },
+  {
+    "Name": "Fly Airline Peru S.A.C",
+    "CountryId": 174,
+    "AccountingCode": 609,
+    "AirlinePrefix": "",
+    "CarrierCode": "H8"
+  },
+  {
+    "Name": "Sky Bus S.A.C.",
+    "CountryId": 174,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "HV"
+  },
+  {
+    "Name": "JetSMART Airlines Peru S.A.C.",
+    "CountryId": 174,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "JZ"
+  },
+  {
+    "Name": "LATAM Airlines Peru S.A.",
+    "CountryId": 174,
+    "AccountingCode": 544,
+    "AirlinePrefix": 544,
+    "CarrierCode": "LP"
+  },
+  {
+    "Name": "Viva Airlines Peru S.A.C",
+    "CountryId": 174,
+    "AccountingCode": 343,
+    "AirlinePrefix": "",
+    "CarrierCode": "VV"
+  },
+  {
+    "Name": "Airmax S.A.",
+    "CountryId": 174,
+    "AccountingCode": "",
+    "AirlinePrefix": 658,
+    "CarrierCode": "X8"
+  },
+  {
+    "Name": "Air Philippines Corporation dba PAL Express and Airphil Express",
+    "CountryId": 175,
+    "AccountingCode": 211,
+    "AirlinePrefix": 211,
+    "CarrierCode": "2P"
+  },
+  {
+    "Name": "Cebu Air, Inc dba Cebu Pacific Air",
+    "CountryId": 175,
+    "AccountingCode": 203,
+    "AirlinePrefix": 203,
+    "CarrierCode": "5J"
+  },
+  {
+    "Name": "Astro Air International Inc. dba PAN PACIFIC AIRLINES",
+    "CountryId": 175,
+    "AccountingCode": 639,
+    "AirlinePrefix": 639,
+    "CarrierCode": "8Y"
+  },
+  {
+    "Name": "Air Juan Aviation, Inc.",
+    "CountryId": 175,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "AO"
+  },
+  {
+    "Name": "PSI AIR 2007, INC.",
+    "CountryId": 175,
+    "AccountingCode": "",
+    "AirlinePrefix": 520,
+    "CarrierCode": "CM"
+  },
+  {
+    "Name": "Cebgo, Inc dba Cebgo",
+    "CountryId": 175,
+    "AccountingCode": 931,
+    "AirlinePrefix": "",
+    "CarrierCode": "DG"
+  },
+  {
+    "Name": "Magnum. Air, Inc dba Skyjet",
+    "CountryId": 175,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "M8"
+  },
+  {
+    "Name": "Philippine Airlines, Inc.",
+    "CountryId": 175,
+    "AccountingCode": 79,
+    "AirlinePrefix": 79,
+    "CarrierCode": "PR"
+  },
+  {
+    "Name": "Royal Air Charter Service Inc. dba Royal Air",
+    "CountryId": 175,
+    "AccountingCode": 869,
+    "AirlinePrefix": "",
+    "CarrierCode": "RW"
+  },
+  {
+    "Name": "Airswift Transport, INC.",
+    "CountryId": 175,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "T6"
+  },
+  {
+    "Name": "South East Asian Airlines (SEAIR) International, Inc.",
+    "CountryId": 175,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "XO"
+  },
+  {
+    "Name": "Philippines AirAsia, INC. dba AirAsia",
+    "CountryId": 175,
+    "AccountingCode": 457,
+    "AirlinePrefix": 457,
+    "CarrierCode": "Z2"
+  },
+  {
+    "Name": "Smartwings Poland Sp. z o.o. dba Smartwings Poland",
+    "CountryId": 177,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "3Z"
+  },
+  {
+    "Name": "Enter Air Spolka z.o.o.",
+    "CountryId": 177,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "E4"
+  },
+  {
+    "Name": "LOT Polish Airlines",
+    "CountryId": 177,
+    "AccountingCode": 80,
+    "AirlinePrefix": 80,
+    "CarrierCode": "LO"
+  },
+  {
+    "Name": "Sprintair SA",
+    "CountryId": 177,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "P8"
+  },
+  {
+    "Name": "Ryanair Sun S.A.",
+    "CountryId": 177,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "RR"
+  },
+  {
+    "Name": "Sky Taxi sp. z.o.o",
+    "CountryId": 177,
+    "AccountingCode": "",
+    "AirlinePrefix": 22,
+    "CarrierCode": "TE"
+  },
+  {
+    "Name": "World 2 Fly Portugal, S.A.",
+    "CountryId": 178,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "3P"
+  },
+  {
+    "Name": "Hi Fly Transportes Aereos, S.A.",
+    "CountryId": 178,
+    "AccountingCode": "",
+    "AirlinePrefix": 26,
+    "CarrierCode": "5K"
+  },
+  {
+    "Name": "Orbest S.A.",
+    "CountryId": 178,
+    "AccountingCode": 182,
+    "AirlinePrefix": "",
+    "CarrierCode": "6O"
+  },
+  {
+    "Name": "Portugalia - Companhia Portuguesa de Transportes Aereos SA",
+    "CountryId": 178,
+    "AccountingCode": 685,
+    "AirlinePrefix": 685,
+    "CarrierCode": "NI"
+  },
+  {
+    "Name": "SATA Internacional - Azores Airlines, S.A.",
+    "CountryId": 178,
+    "AccountingCode": 331,
+    "AirlinePrefix": 331,
+    "CarrierCode": "S4"
+  },
+  {
+    "Name": "SATA (Air Acores)",
+    "CountryId": 178,
+    "AccountingCode": 737,
+    "AirlinePrefix": 737,
+    "CarrierCode": "SP"
+  },
+  {
+    "Name": "TAP Portugal",
+    "CountryId": 178,
+    "AccountingCode": 47,
+    "AirlinePrefix": 47,
+    "CarrierCode": "TP"
+  },
+  {
+    "Name": "White Airways S.A.",
+    "CountryId": 178,
+    "AccountingCode": 97,
+    "AirlinePrefix": "",
+    "CarrierCode": "WI"
+  },
+  {
+    "Name": "EuroAtlantic Airways",
+    "CountryId": 178,
+    "AccountingCode": 551,
+    "AirlinePrefix": 551,
+    "CarrierCode": "YU"
+  },
+  {
+    "Name": "Seaborne Airlines",
+    "CountryId": 179,
+    "AccountingCode": 376,
+    "AirlinePrefix": "",
+    "CarrierCode": "BB"
+  },
+  {
+    "Name": "Air Charter, Inc. dba Air Flamenco",
+    "CountryId": 179,
+    "AccountingCode": "",
+    "AirlinePrefix": 401,
+    "CarrierCode": "F4"
+  },
+  {
+    "Name": "Qatar Airways (Q.C.S.C.)",
+    "CountryId": 180,
+    "AccountingCode": 157,
+    "AirlinePrefix": 157,
+    "CarrierCode": "QR"
+  },
+  {
+    "Name": "Blue Air Aviation S.A.",
+    "CountryId": 182,
+    "AccountingCode": 475,
+    "AirlinePrefix": 475,
+    "CarrierCode": "0B"
+  },
+  {
+    "Name": "Aerro Direkt S.R.L.",
+    "CountryId": 182,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "4D"
+  },
+  {
+    "Name": "Anima Wings Aviation S.A.",
+    "CountryId": 182,
+    "AccountingCode": 393,
+    "AirlinePrefix": "",
+    "CarrierCode": "A2"
+  },
+  {
+    "Name": "HiSky Europe SRL",
+    "CountryId": 182,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "H4"
+  },
+  {
+    "Name": "Romcargo Airlines S.R.L",
+    "CountryId": 182,
+    "AccountingCode": "",
+    "AirlinePrefix": 690,
+    "CarrierCode": "NJ"
+  },
+  {
+    "Name": "COMPANIA NATIONALA DE TRANSPORTURI AERIENE ROMANE TAROM S.A.",
+    "CountryId": 182,
+    "AccountingCode": 281,
+    "AirlinePrefix": 281,
+    "CarrierCode": "RO"
+  },
+  {
+    "Name": "Carpatair S.A.",
+    "CountryId": 182,
+    "AccountingCode": 21,
+    "AirlinePrefix": "",
+    "CarrierCode": "V3"
+  },
+  {
+    "Name": "AIRCOMPANY NORTH-WEST LIMITED LIABILITY COMPANY",
+    "CountryId": 183,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "0E"
+  },
+  {
+    "Name": "JSC \"Sirena-Travel",
+    "CountryId": 183,
+    "AccountingCode": 446,
+    "AirlinePrefix": "",
+    "CarrierCode": "1H"
+  },
+  {
+    "Name": "Online Reservation System JSC",
+    "CountryId": 183,
+    "AccountingCode": 538,
+    "AirlinePrefix": "",
+    "CarrierCode": "1M"
+  },
+  {
+    "Name": "Open Joint Stock Company \"Angara Airlines",
+    "CountryId": 183,
+    "AccountingCode": 735,
+    "AirlinePrefix": "",
+    "CarrierCode": "2G"
+  },
+  {
+    "Name": "Aviastar-TU Co. Aviacompany",
+    "CountryId": 183,
+    "AccountingCode": "",
+    "AirlinePrefix": 210,
+    "CarrierCode": "4B"
+  },
+  {
+    "Name": "Gazpromavia Aviation Company Ltd.",
+    "CountryId": 183,
+    "AccountingCode": 579,
+    "AirlinePrefix": "",
+    "CarrierCode": "4G"
+  },
+  {
+    "Name": "Joint Stock Company Smartavia Airlines",
+    "CountryId": 183,
+    "AccountingCode": 316,
+    "AirlinePrefix": 316,
+    "CarrierCode": "5N"
+  },
+  {
+    "Name": "Open Joint Stock Company \"ALROSA\" (Mirny Air Enterprise)",
+    "CountryId": 183,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "6R"
+  },
+  {
+    "Name": "Joint Stock Aviation Company \"RusLine",
+    "CountryId": 183,
+    "AccountingCode": 362,
+    "AirlinePrefix": "",
+    "CarrierCode": "7R"
+  },
+  {
+    "Name": "Joint-Stock Company \"Azimuth Airlines",
+    "CountryId": 183,
+    "AccountingCode": 222,
+    "AirlinePrefix": "",
+    "CarrierCode": "A4"
+  },
+  {
+    "Name": "Severstal Aircompany Ltd",
+    "CountryId": 183,
+    "AccountingCode": 103,
+    "AirlinePrefix": "",
+    "CarrierCode": "D2"
+  },
+  {
+    "Name": "Aviakompaniya Pobeda, OOO",
+    "CountryId": 183,
+    "AccountingCode": 425,
+    "AirlinePrefix": "",
+    "CarrierCode": "DP"
+  },
+  {
+    "Name": "LLC \"Aircompany \"Ikar\" dba Pegas Fly",
+    "CountryId": 183,
+    "AccountingCode": 770,
+    "AirlinePrefix": 770,
+    "CarrierCode": "EO"
+  },
+  {
+    "Name": "LTD I Fly",
+    "CountryId": 183,
+    "AccountingCode": 757,
+    "AirlinePrefix": 757,
+    "CarrierCode": "F7"
+  },
+  {
+    "Name": "Rossiya Airlines JSC",
+    "CountryId": 183,
+    "AccountingCode": 195,
+    "AirlinePrefix": 195,
+    "CarrierCode": "FV"
+  },
+  {
+    "Name": "Joint-Stock Company Aurora Airlines",
+    "CountryId": 183,
+    "AccountingCode": 598,
+    "AirlinePrefix": 598,
+    "CarrierCode": "HZ"
+  },
+  {
+    "Name": "Izhavia Public Stock Company",
+    "CountryId": 183,
+    "AccountingCode": 25,
+    "AirlinePrefix": "",
+    "CarrierCode": "I8"
+  },
+  {
+    "Name": "Closed Joint Stock Company \"IrAero",
+    "CountryId": 183,
+    "AccountingCode": 154,
+    "AirlinePrefix": "",
+    "CarrierCode": "IO"
+  },
+  {
+    "Name": "OJSC \"Komiaviatrans",
+    "CountryId": 183,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "KO"
+  },
+  {
+    "Name": "LLC \"Nord Wind",
+    "CountryId": 183,
+    "AccountingCode": 216,
+    "AirlinePrefix": 216,
+    "CarrierCode": "N4"
+  },
+  {
+    "Name": "Polar Airlines OJSC",
+    "CountryId": 183,
+    "AccountingCode": 545,
+    "AirlinePrefix": "",
+    "CarrierCode": "PI"
+  },
+  {
+    "Name": "Joint Stock Company Aircompany \"Yakutia",
+    "CountryId": 183,
+    "AccountingCode": 849,
+    "AirlinePrefix": 849,
+    "CarrierCode": "R3"
+  },
+  {
+    "Name": "Erofey Limited Liability Company",
+    "CountryId": 183,
+    "AccountingCode": "",
+    "AirlinePrefix": 358,
+    "CarrierCode": "RF"
+  },
+  {
+    "Name": "JSC Royal Flight Airlines",
+    "CountryId": 183,
+    "AccountingCode": 750,
+    "AirlinePrefix": 750,
+    "CarrierCode": "RL"
+  },
+  {
+    "Name": "JSC UVT AERO",
+    "CountryId": 183,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "RT"
+  },
+  {
+    "Name": "AirBridgeCargo Airlines LLC",
+    "CountryId": 183,
+    "AccountingCode": "",
+    "AirlinePrefix": 580,
+    "CarrierCode": "RU"
+  },
+  {
+    "Name": "Limited Liability Company \"Abakan Air\" d ba \"Abakan Air",
+    "CountryId": 183,
+    "AccountingCode": "",
+    "AirlinePrefix": 917,
+    "CarrierCode": "S5"
+  },
+  {
+    "Name": "JSC Siberia Airlines dba S7 airlines",
+    "CountryId": 183,
+    "AccountingCode": 421,
+    "AirlinePrefix": 421,
+    "CarrierCode": "S7"
+  },
+  {
+    "Name": "Air Company Sirius-Aero Ltd",
+    "CountryId": 183,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "SA"
+  },
+  {
+    "Name": "PJSC Aeroflot",
+    "CountryId": 183,
+    "AccountingCode": 555,
+    "AirlinePrefix": 555,
+    "CarrierCode": "SU"
+  },
+  {
+    "Name": "Air Company \"Sky Gates Airlines\" Limited Liability Company",
+    "CountryId": 183,
+    "AccountingCode": "",
+    "AirlinePrefix": 728,
+    "CarrierCode": "U3"
+  },
+  {
+    "Name": "Joint Stock Company \"Ural Airlines",
+    "CountryId": 183,
+    "AccountingCode": 262,
+    "AirlinePrefix": 262,
+    "CarrierCode": "U6"
+  },
+  {
+    "Name": "UTair Aviation",
+    "CountryId": 183,
+    "AccountingCode": 298,
+    "AirlinePrefix": 298,
+    "CarrierCode": "UT"
+  },
+  {
+    "Name": "OOO \"Atran ",
+    "CountryId": 183,
+    "AccountingCode": 868,
+    "AirlinePrefix": 868,
+    "CarrierCode": "V8"
+  },
+  {
+    "Name": "Volga-Dnepr Airline Joint Stock",
+    "CountryId": 183,
+    "AccountingCode": "",
+    "AirlinePrefix": 412,
+    "CarrierCode": "VI"
+  },
+  {
+    "Name": "Airline \"Weltall-avia",
+    "CountryId": 183,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "W7"
+  },
+  {
+    "Name": "Joint Stock Company Red Wings",
+    "CountryId": 183,
+    "AccountingCode": 309,
+    "AirlinePrefix": "",
+    "CarrierCode": "WZ"
+  },
+  {
+    "Name": "Limited Liability Company ''GloBus'",
+    "CountryId": 183,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "XT"
+  },
+  {
+    "Name": "Joint-stock company NordStar Airlines dba NORDSTAR",
+    "CountryId": 183,
+    "AccountingCode": 476,
+    "AirlinePrefix": 476,
+    "CarrierCode": "Y7"
+  },
+  {
+    "Name": "Joint-Stock Company \"Yamal Airlines",
+    "CountryId": 183,
+    "AccountingCode": 664,
+    "AirlinePrefix": 664,
+    "CarrierCode": "YC"
+  },
+  {
+    "Name": "AZUR air Limited Liability Company",
+    "CountryId": 183,
+    "AccountingCode": 37,
+    "AirlinePrefix": 37,
+    "CarrierCode": "ZF"
+  },
+  {
+    "Name": "Aviacon Zitotrans Air Company JSC",
+    "CountryId": 183,
+    "AccountingCode": "",
+    "AirlinePrefix": 410,
+    "CarrierCode": "ZR"
+  },
+  {
+    "Name": "RwandAir Limited",
+    "CountryId": 184,
+    "AccountingCode": 459,
+    "AirlinePrefix": 459,
+    "CarrierCode": "WB"
+  },
+  {
+    "Name": "Polynesian Limited dba Samoa Airways",
+    "CountryId": 192,
+    "AccountingCode": 162,
+    "AirlinePrefix": 162,
+    "CarrierCode": "OL"
+  },
+  {
+    "Name": "STP Airways - Transportes Aereos de S. Tome e Principe",
+    "CountryId": 194,
+    "AccountingCode": 470,
+    "AirlinePrefix": "",
+    "CarrierCode": "8F"
+  },
+  {
+    "Name": "flyadeal",
+    "CountryId": 195,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "F3"
+  },
+  {
+    "Name": "Nesma Airlines Company Ltd. dba Nesma Airlines",
+    "CountryId": 195,
+    "AccountingCode": 646,
+    "AirlinePrefix": "",
+    "CarrierCode": "NA"
+  },
+  {
+    "Name": "Saudi Arabian Airlines Corporation",
+    "CountryId": 195,
+    "AccountingCode": 65,
+    "AirlinePrefix": 65,
+    "CarrierCode": "SV"
+  },
+  {
+    "Name": "Sky Prime Charter",
+    "CountryId": 195,
+    "AccountingCode": 532,
+    "AirlinePrefix": "",
+    "CarrierCode": "UY"
+  },
+  {
+    "Name": "Flynas Company Closed Joint Stock owned by (NAS Holding) JSC",
+    "CountryId": 195,
+    "AccountingCode": 593,
+    "AirlinePrefix": 593,
+    "CarrierCode": "XY"
+  },
+  {
+    "Name": "Aviation Horizons Ltd",
+    "CountryId": 195,
+    "AccountingCode": "",
+    "AirlinePrefix": 266,
+    "CarrierCode": "ZS"
+  },
+  {
+    "Name": "Air Senegal S.A.",
+    "CountryId": 196,
+    "AccountingCode": 490,
+    "AirlinePrefix": "",
+    "CarrierCode": "HC"
+  },
+  {
+    "Name": "Groupe Transair S.A",
+    "CountryId": 196,
+    "AccountingCode": 812,
+    "AirlinePrefix": "",
+    "CarrierCode": "R2"
+  },
+  {
+    "Name": "JSC for Air Traffic-Air Serbia Belgrade t/a Air Serbia a.d Beograd",
+    "CountryId": 197,
+    "AccountingCode": 115,
+    "AirlinePrefix": 115,
+    "CarrierCode": "JU"
+  },
+  {
+    "Name": "Air Seychelles Limited",
+    "CountryId": 198,
+    "AccountingCode": 61,
+    "AirlinePrefix": 61,
+    "CarrierCode": "HM"
+  },
+  {
+    "Name": "Sabre Asia Pacific Pte. Ltd.",
+    "CountryId": 200,
+    "AccountingCode": 776,
+    "AirlinePrefix": "",
+    "CarrierCode": "1B"
+  },
+  {
+    "Name": "Jetstar Asia Airways Pte Ltd",
+    "CountryId": 200,
+    "AccountingCode": "",
+    "AirlinePrefix": 375,
+    "CarrierCode": "3K"
+  },
+  {
+    "Name": "Bravo Passenger Solutions Pte. Ltd.",
+    "CountryId": 200,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "B1"
+  },
+  {
+    "Name": "Singapore Airlines Limited",
+    "CountryId": 200,
+    "AccountingCode": 618,
+    "AirlinePrefix": 618,
+    "CarrierCode": "SQ"
+  },
+  {
+    "Name": "Scoot Pte. Ltd dba Scoot",
+    "CountryId": 200,
+    "AccountingCode": 668,
+    "AirlinePrefix": 668,
+    "CarrierCode": "TR"
+  },
+  {
+    "Name": "Windward Islands Airways Int'l N.V. dba WINAIR",
+    "CountryId": 201,
+    "AccountingCode": 295,
+    "AirlinePrefix": 295,
+    "CarrierCode": "WM"
+  },
+  {
+    "Name": "Smartwings Slovakia, s.r.o",
+    "CountryId": 202,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "6D"
+  },
+  {
+    "Name": "Go2Sky, spol s r.o.",
+    "CountryId": 202,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "6G"
+  },
+  {
+    "Name": "AirExplore, s.r.o.",
+    "CountryId": 202,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "ED"
+  },
+  {
+    "Name": "Aero4M d.o.o dba Amelia International",
+    "CountryId": 203,
+    "AccountingCode": 152,
+    "AirlinePrefix": "",
+    "CarrierCode": "NL"
+  },
+  {
+    "Name": "SOLINAIR Latelsko Podjetje d.o.o.",
+    "CountryId": 203,
+    "AccountingCode": "",
+    "AirlinePrefix": 265,
+    "CarrierCode": "SP"
+  },
+  {
+    "Name": "Solomon Airlines Limited",
+    "CountryId": 204,
+    "AccountingCode": 193,
+    "AirlinePrefix": 193,
+    "CarrierCode": "IE"
+  },
+  {
+    "Name": "Daallo Airlines(Somalia)",
+    "CountryId": 205,
+    "AccountingCode": 201,
+    "AirlinePrefix": "",
+    "CarrierCode": "D9"
+  },
+  {
+    "Name": "Cobra Aviation (Pty) Ltd",
+    "CountryId": 206,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "0C"
+  },
+  {
+    "Name": "Airlink (PTY) LTD dba Airlink",
+    "CountryId": 206,
+    "AccountingCode": 749,
+    "AirlinePrefix": 749,
+    "CarrierCode": "4Z"
+  },
+  {
+    "Name": "Cemair (Pty) Ltd. t/a Cemair",
+    "CountryId": 206,
+    "AccountingCode": 225,
+    "AirlinePrefix": "",
+    "CarrierCode": "5Z"
+  },
+  {
+    "Name": "Federal Airlines (Pty) Ltd",
+    "CountryId": 206,
+    "AccountingCode": 739,
+    "AirlinePrefix": "",
+    "CarrierCode": "7V"
+  },
+  {
+    "Name": "Safair Operations (Proprietary) Ltd dba Safair",
+    "CountryId": 206,
+    "AccountingCode": 640,
+    "AirlinePrefix": 640,
+    "CarrierCode": "FA"
+  },
+  {
+    "Name": "Global Aviation Operations (PTY)Ltd",
+    "CountryId": 206,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "GE"
+  },
+  {
+    "Name": "Comair Ltd. dba Kulula.com",
+    "CountryId": 206,
+    "AccountingCode": 161,
+    "AirlinePrefix": 161,
+    "CarrierCode": "MN"
+  },
+  {
+    "Name": "South African Airways SOC LTD dba South African Airways",
+    "CountryId": 206,
+    "AccountingCode": 83,
+    "AirlinePrefix": 83,
+    "CarrierCode": "SA"
+  },
+  {
+    "Name": "Amadeus IT Group SA",
+    "CountryId": 209,
+    "AccountingCode": 790,
+    "AirlinePrefix": "",
+    "CarrierCode": "1A"
+  },
+  {
+    "Name": "World 2 Fly, S.L. dba W2FLY",
+    "CountryId": 209,
+    "AccountingCode": 825,
+    "AirlinePrefix": "",
+    "CarrierCode": "2W"
+  },
+  {
+    "Name": "Renfe Viajeros Sociedad Mercantil Estatal SA",
+    "CountryId": 209,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "4R"
+  },
+  {
+    "Name": "Alsa Grupo SLU",
+    "CountryId": 209,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "5I"
+  },
+  {
+    "Name": "Alba Star,S.A. dba Alba Star",
+    "CountryId": 209,
+    "AccountingCode": 374,
+    "AirlinePrefix": 374,
+    "CarrierCode": "AP"
+  },
+  {
+    "Name": "Evelop Airlines S.L. dba Iberojet Airlines",
+    "CountryId": 209,
+    "AccountingCode": 783,
+    "AirlinePrefix": 783,
+    "CarrierCode": "E9"
+  },
+  {
+    "Name": "WAMOS AIR, S.A.",
+    "CountryId": 209,
+    "AccountingCode": 460,
+    "AirlinePrefix": 460,
+    "CarrierCode": "EB"
+  },
+  {
+    "Name": "Compania Operadora de Corto y Medio Radio Iberia Express, S.A.U",
+    "CountryId": 209,
+    "AccountingCode": 60,
+    "AirlinePrefix": 60,
+    "CarrierCode": "I2"
+  },
+  {
+    "Name": "Intermodalidad de Levante S.A.",
+    "CountryId": 209,
+    "AccountingCode": 185,
+    "AirlinePrefix": "",
+    "CarrierCode": "I6"
+  },
+  {
+    "Name": "Iberia Lineas Aereas de Espana S.A. Operadora",
+    "CountryId": 209,
+    "AccountingCode": 75,
+    "AirlinePrefix": 75,
+    "CarrierCode": "IB"
+  },
+  {
+    "Name": "Binter Canarias",
+    "CountryId": 209,
+    "AccountingCode": 474,
+    "AirlinePrefix": "",
+    "CarrierCode": "NT"
+  },
+  {
+    "Name": "One Airways, S.A.U. dba One Airways",
+    "CountryId": 209,
+    "AccountingCode": 167,
+    "AirlinePrefix": "",
+    "CarrierCode": "OX"
+  },
+  {
+    "Name": "Privilege Style S.A.",
+    "CountryId": 209,
+    "AccountingCode": 433,
+    "AirlinePrefix": 433,
+    "CarrierCode": "P6"
+  },
+  {
+    "Name": "Canary Fly, S.A.",
+    "CountryId": 209,
+    "AccountingCode": 496,
+    "AirlinePrefix": "",
+    "CarrierCode": "PM"
+  },
+  {
+    "Name": "Plus Ultra Lineas Aereas, S. A.",
+    "CountryId": 209,
+    "AccountingCode": 663,
+    "AirlinePrefix": 663,
+    "CarrierCode": "PU"
+  },
+  {
+    "Name": "Euroairlines, S.L.",
+    "CountryId": 209,
+    "AccountingCode": 291,
+    "AirlinePrefix": 291,
+    "CarrierCode": "Q4"
+  },
+  {
+    "Name": "Aura Airlines, S.L.",
+    "CountryId": 209,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "U5"
+  },
+  {
+    "Name": "Air Europa Lineas Aereas, S.A.",
+    "CountryId": 209,
+    "AccountingCode": 996,
+    "AirlinePrefix": 996,
+    "CarrierCode": "UX"
+  },
+  {
+    "Name": "Volotea, S.L.",
+    "CountryId": 209,
+    "AccountingCode": 712,
+    "AirlinePrefix": "",
+    "CarrierCode": "V7"
+  },
+  {
+    "Name": "Vueling Airlines S.A.",
+    "CountryId": 209,
+    "AccountingCode": 30,
+    "AirlinePrefix": 30,
+    "CarrierCode": "VY"
+  },
+  {
+    "Name": "Swiftair, S.A.",
+    "CountryId": 209,
+    "AccountingCode": 221,
+    "AirlinePrefix": 221,
+    "CarrierCode": "WT"
+  },
+  {
+    "Name": "Aeronova S.L. dba Air Europa Express",
+    "CountryId": 209,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "X5"
+  },
+  {
+    "Name": "Air Nostrum",
+    "CountryId": 209,
+    "AccountingCode": 694,
+    "AirlinePrefix": 694,
+    "CarrierCode": "YW"
+  },
+  {
+    "Name": "FITS Aviation (Pvt) Ltd",
+    "CountryId": 210,
+    "AccountingCode": "",
+    "AirlinePrefix": 319,
+    "CarrierCode": "8D"
+  },
+  {
+    "Name": "Saffron Aviation (Pvt) Ltd dba Cinnamon Air",
+    "CountryId": 210,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "C7"
+  },
+  {
+    "Name": "SriLankan Airlines Limited",
+    "CountryId": 210,
+    "AccountingCode": 603,
+    "AirlinePrefix": 603,
+    "CarrierCode": "UL"
+  },
+  {
+    "Name": "Air Saint Pierre",
+    "CountryId": 250,
+    "AccountingCode": 638,
+    "AirlinePrefix": 638,
+    "CarrierCode": "PJ"
+  },
+  {
+    "Name": "Tarco Aviation Co.LTD",
+    "CountryId": 211,
+    "AccountingCode": 524,
+    "AirlinePrefix": "",
+    "CarrierCode": "3T"
+  },
+  {
+    "Name": "Alfa Airlines SD Co.Ltd. dba Alfa Airlines SD Co.Ltd.",
+    "CountryId": 211,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "5E"
+  },
+  {
+    "Name": "Badr Airlines dba Badr Airlines",
+    "CountryId": 211,
+    "AccountingCode": 367,
+    "AirlinePrefix": 367,
+    "CarrierCode": "J4"
+  },
+  {
+    "Name": "Sudan Airways Co. Ltd.",
+    "CountryId": 211,
+    "AccountingCode": 200,
+    "AirlinePrefix": 200,
+    "CarrierCode": "SD"
+  },
+  {
+    "Name": "Sun Air Aviation",
+    "CountryId": 211,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "SO"
+  },
+  {
+    "Name": "Fly Always N.V. dba Fly Always",
+    "CountryId": 212,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "8W"
+  },
+  {
+    "Name": "Surinaamse Luchtvaart Maatschappij N.V dba Surinam Airways",
+    "CountryId": 212,
+    "AccountingCode": 192,
+    "AirlinePrefix": 192,
+    "CarrierCode": "PY"
+  },
+  {
+    "Name": "TUIfly Nordic AB",
+    "CountryId": 215,
+    "AccountingCode": 951,
+    "AirlinePrefix": 951,
+    "CarrierCode": "6B"
+  },
+  {
+    "Name": "Norwegian Air Sweden AOC AB",
+    "CountryId": 215,
+    "AccountingCode": 329,
+    "AirlinePrefix": "",
+    "CarrierCode": "D8"
+  },
+  {
+    "Name": "Amapola Flyg AB",
+    "CountryId": 215,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "HP"
+  },
+  {
+    "Name": "Norwegian Air Sweden AB",
+    "CountryId": 215,
+    "AccountingCode": 348,
+    "AirlinePrefix": 348,
+    "CarrierCode": "LE"
+  },
+  {
+    "Name": "Nova Airlines AB",
+    "CountryId": 215,
+    "AccountingCode": "",
+    "AirlinePrefix": 326,
+    "CarrierCode": "N9"
+  },
+  {
+    "Name": "Envirotainer AB",
+    "CountryId": 215,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "PC"
+  },
+  {
+    "Name": "Scandinavian Airlines System (SAS)",
+    "CountryId": 215,
+    "AccountingCode": 117,
+    "AirlinePrefix": 117,
+    "CarrierCode": "SK"
+  },
+  {
+    "Name": "Braathens Regional Airways AB",
+    "CountryId": 215,
+    "AccountingCode": 276,
+    "AirlinePrefix": "",
+    "CarrierCode": "TF"
+  },
+  {
+    "Name": "Premium Jet AG",
+    "CountryId": 216,
+    "AccountingCode": "",
+    "AirlinePrefix": 254,
+    "CarrierCode": "0J"
+  },
+  {
+    "Name": "Helvetic Airways AG",
+    "CountryId": 216,
+    "AccountingCode": 102,
+    "AirlinePrefix": "",
+    "CarrierCode": "2L"
+  },
+  {
+    "Name": "Easyjet Switzerland S.A",
+    "CountryId": 216,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "DS"
+  },
+  {
+    "Name": "Chair Airlines AG",
+    "CountryId": 216,
+    "AccountingCode": 581,
+    "AirlinePrefix": "",
+    "CarrierCode": "GM"
+  },
+  {
+    "Name": "SWISS International Air Lines Ltd dba SWISS",
+    "CountryId": 216,
+    "AccountingCode": 724,
+    "AirlinePrefix": 724,
+    "CarrierCode": "LX"
+  },
+  {
+    "Name": "Jet Aviation Business Jets AG",
+    "CountryId": 216,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "PP"
+  },
+  {
+    "Name": "Unilode Aviation Solutions Switzerland Ltd.",
+    "CountryId": 216,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "R7"
+  },
+  {
+    "Name": "Swiss Airtainer SA",
+    "CountryId": 216,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "SW"
+  },
+  {
+    "Name": "Edelweiss Air AG",
+    "CountryId": 216,
+    "AccountingCode": "",
+    "AirlinePrefix": 945,
+    "CarrierCode": "WK"
+  },
+  {
+    "Name": "Cham Wings Airlines",
+    "CountryId": 217,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "6Q"
+  },
+  {
+    "Name": "Syrian Arab Airlines",
+    "CountryId": 217,
+    "AccountingCode": 70,
+    "AirlinePrefix": 70,
+    "CarrierCode": "RB"
+  },
+  {
+    "Name": "OJSC \"Tajik Air",
+    "CountryId": 219,
+    "AccountingCode": 502,
+    "AirlinePrefix": "",
+    "CarrierCode": "7J"
+  },
+  {
+    "Name": "Aircompany Somon Air LLC dba Somon Air",
+    "CountryId": 219,
+    "AccountingCode": 413,
+    "AirlinePrefix": 413,
+    "CarrierCode": "SZ"
+  },
+  {
+    "Name": "Regional Air Services Limited",
+    "CountryId": 220,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "8N"
+  },
+  {
+    "Name": "Coastal Travels Ltd.",
+    "CountryId": 220,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "CQ"
+  },
+  {
+    "Name": "Precision Air Services Plc",
+    "CountryId": 220,
+    "AccountingCode": 31,
+    "AirlinePrefix": "",
+    "CarrierCode": "PW"
+  },
+  {
+    "Name": "Air Tanzania Company Limited",
+    "CountryId": 220,
+    "AccountingCode": 197,
+    "AirlinePrefix": 197,
+    "CarrierCode": "TC"
+  },
+  {
+    "Name": "Auric Air Services Limited",
+    "CountryId": 220,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "UI"
+  },
+  {
+    "Name": "Flightlink Limited",
+    "CountryId": 220,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "YS"
+  },
+  {
+    "Name": "K-Mile Air Co. Ltd dba K-Mile Air",
+    "CountryId": 221,
+    "AccountingCode": "",
+    "AirlinePrefix": 119,
+    "CarrierCode": "8K"
+  },
+  {
+    "Name": "The Cargo Flights Co.,LTD.",
+    "CountryId": 221,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "9O"
+  },
+  {
+    "Name": "Thai Summer Airways Company Limited",
+    "CountryId": 221,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "9T"
+  },
+  {
+    "Name": "Air Inter Transport Company Limited dba Budget Lines",
+    "CountryId": 221,
+    "AccountingCode": "",
+    "AirlinePrefix": 765,
+    "CarrierCode": "BD"
+  },
+  {
+    "Name": "Nok Airlines Public Company Limited dba Nok Air",
+    "CountryId": 221,
+    "AccountingCode": 596,
+    "AirlinePrefix": 596,
+    "CarrierCode": "DD"
+  },
+  {
+    "Name": "Thai AirAsia Co., Ltd.",
+    "CountryId": 221,
+    "AccountingCode": 900,
+    "AirlinePrefix": 900,
+    "CarrierCode": "FD"
+  },
+  {
+    "Name": "Asia Atlantic Airlines Company Limi dba Asia Atlantic",
+    "CountryId": 221,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "KD"
+  },
+  {
+    "Name": "Bangkok Airways Public Co., Ltd.",
+    "CountryId": 221,
+    "AccountingCode": 829,
+    "AirlinePrefix": 829,
+    "CarrierCode": "PG"
+  },
+  {
+    "Name": "Thai Lion Mentari Company Limited dba Thai Lion Air",
+    "CountryId": 221,
+    "AccountingCode": 310,
+    "AirlinePrefix": "",
+    "CarrierCode": "SL"
+  },
+  {
+    "Name": "Thai Airways International Public Company Ltd. dba Thai",
+    "CountryId": 221,
+    "AccountingCode": 217,
+    "AirlinePrefix": 217,
+    "CarrierCode": "TG"
+  },
+  {
+    "Name": "Thai Vietjet Air",
+    "CountryId": 221,
+    "AccountingCode": 863,
+    "AirlinePrefix": 863,
+    "CarrierCode": "VZ"
+  },
+  {
+    "Name": "Thai Smile Airways Company Limited",
+    "CountryId": 221,
+    "AccountingCode": 909,
+    "AirlinePrefix": 909,
+    "CarrierCode": "WE"
+  },
+  {
+    "Name": "Thai Airasia X Company Limited",
+    "CountryId": 221,
+    "AccountingCode": 940,
+    "AirlinePrefix": 940,
+    "CarrierCode": "XJ"
+  },
+  {
+    "Name": "Aero Dili Transport Services, S.A. dba AERO DILI",
+    "CountryId": 222,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "8G"
+  },
+  {
+    "Name": "Compagnie Aerienne ASKY dba ASKY",
+    "CountryId": 223,
+    "AccountingCode": 32,
+    "AirlinePrefix": 32,
+    "CarrierCode": "KP"
+  },
+  {
+    "Name": "Lulutai Airlines Limited dba Lulutai Airlines",
+    "CountryId": 225,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "L8"
+  },
+  {
+    "Name": "Caribbean Airlines Limited dba Caribbean Airlines Ltd.",
+    "CountryId": 226,
+    "AccountingCode": 106,
+    "AirlinePrefix": 106,
+    "CarrierCode": "BW"
+  },
+  {
+    "Name": "Express Air Cargo",
+    "CountryId": 227,
+    "AccountingCode": "",
+    "AirlinePrefix": 336,
+    "CarrierCode": "7A"
+  },
+  {
+    "Name": "Nouvelair Tunisie",
+    "CountryId": 227,
+    "AccountingCode": 796,
+    "AirlinePrefix": 796,
+    "CarrierCode": "BJ"
+  },
+  {
+    "Name": "Syphax Airlines S A",
+    "CountryId": 227,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "SO"
+  },
+  {
+    "Name": "Tunisair",
+    "CountryId": 227,
+    "AccountingCode": 199,
+    "AirlinePrefix": 199,
+    "CarrierCode": "TU"
+  },
+  {
+    "Name": "Tunisair Express",
+    "CountryId": 227,
+    "AccountingCode": 150,
+    "AirlinePrefix": 150,
+    "CarrierCode": "UG"
+  },
+  {
+    "Name": "Hitit Bilgisayar Hizmetleri A.S.",
+    "CountryId": 228,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "1T"
+  },
+  {
+    "Name": "ACT Havayollari A.S.",
+    "CountryId": 228,
+    "AccountingCode": "",
+    "AirlinePrefix": 556,
+    "CarrierCode": "9T"
+  },
+  {
+    "Name": "Freebird Airlines",
+    "CountryId": 228,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "FH"
+  },
+  {
+    "Name": "ULS Airlines Cargo",
+    "CountryId": 228,
+    "AccountingCode": "",
+    "AirlinePrefix": 444,
+    "CarrierCode": "GO"
+  },
+  {
+    "Name": "MNG Havayollari Tasimacilik A.S.",
+    "CountryId": 228,
+    "AccountingCode": "",
+    "AirlinePrefix": 716,
+    "CarrierCode": "MB"
+  },
+  {
+    "Name": "Pegasus Hava Tasimaciligi A.S.",
+    "CountryId": 228,
+    "AccountingCode": 624,
+    "AirlinePrefix": 624,
+    "CarrierCode": "PC"
+  },
+  {
+    "Name": "Tailwind Hava Yollari A.S.",
+    "CountryId": 228,
+    "AccountingCode": "",
+    "AirlinePrefix": 768,
+    "CarrierCode": "TI"
+  },
+  {
+    "Name": "Turkish Airlines Inc.",
+    "CountryId": 228,
+    "AccountingCode": 235,
+    "AirlinePrefix": 235,
+    "CarrierCode": "TK"
+  },
+  {
+    "Name": "Turistik Hava Tasimacilik A.S. (Corendon Airlines)",
+    "CountryId": 228,
+    "AccountingCode": "",
+    "AirlinePrefix": 395,
+    "CarrierCode": "XC"
+  },
+  {
+    "Name": "SunExpress",
+    "CountryId": 228,
+    "AccountingCode": 564,
+    "AirlinePrefix": 564,
+    "CarrierCode": "XQ"
+  },
+  {
+    "Name": "Turkmenistan Airlines dba Turkmenistan Airlines",
+    "CountryId": 229,
+    "AccountingCode": 542,
+    "AirlinePrefix": 542,
+    "CarrierCode": "T5"
+  },
+  {
+    "Name": "Caicos Express Airways",
+    "CountryId": 230,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "9Q"
+  },
+  {
+    "Name": "interCaribbean Airways, Ltd.",
+    "CountryId": 230,
+    "AccountingCode": 653,
+    "AirlinePrefix": "",
+    "CarrierCode": "JY"
+  },
+  {
+    "Name": "Aerolink Uganda Limited",
+    "CountryId": 232,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "A8"
+  },
+  {
+    "Name": "KAMPALA AEROCLUB AND FLIGHT TRAINING CENTER dba BAR AVIATION LIMITED",
+    "CountryId": 232,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "HE"
+  },
+  {
+    "Name": "Uganda National Airlines Company Limited dba Uganda Airlines",
+    "CountryId": 232,
+    "AccountingCode": 109,
+    "AirlinePrefix": "",
+    "CarrierCode": "UR"
+  },
+  {
+    "Name": "PRIVATE CORPORATION INTERNATIONAL JOINT-STOCK AVIATION COMPANY 'URGA'",
+    "CountryId": 233,
+    "AccountingCode": 746,
+    "AirlinePrefix": 746,
+    "CarrierCode": "3N"
+  },
+  {
+    "Name": "Maximus Airlines Limited Liability Company",
+    "CountryId": 233,
+    "AccountingCode": "",
+    "AirlinePrefix": 387,
+    "CarrierCode": "6M"
+  },
+  {
+    "Name": "Limited Liability Company Bees Airline",
+    "CountryId": 233,
+    "AccountingCode": "",
+    "AirlinePrefix": 517,
+    "CarrierCode": "7B"
+  },
+  {
+    "Name": "Wind Rose Aviation Company",
+    "CountryId": 233,
+    "AccountingCode": 461,
+    "AirlinePrefix": 461,
+    "CarrierCode": "7W"
+  },
+  {
+    "Name": "Aircompany JONIKA Limited Liability Company dba \"AC \"Jonica\" LLC",
+    "CountryId": 233,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "JO"
+  },
+  {
+    "Name": "Motor-Sich JSC",
+    "CountryId": 233,
+    "AccountingCode": 11,
+    "AirlinePrefix": 11,
+    "CarrierCode": "M9"
+  },
+  {
+    "Name": "LLC \"SKYUP AIRLINES",
+    "CountryId": 233,
+    "AccountingCode": "",
+    "AirlinePrefix": 10,
+    "CarrierCode": "PQ"
+  },
+  {
+    "Name": "Private Stock Company \"Ukraine International Airlines\" dba UIA",
+    "CountryId": 233,
+    "AccountingCode": 566,
+    "AirlinePrefix": 566,
+    "CarrierCode": "PS"
+  },
+  {
+    "Name": "Azur Air Ukraine Airlines Limited Liability Company",
+    "CountryId": 233,
+    "AccountingCode": 761,
+    "AirlinePrefix": 761,
+    "CarrierCode": "QU"
+  },
+  {
+    "Name": "Limited Liability Company Aviation Company Eleron",
+    "CountryId": 233,
+    "AccountingCode": "",
+    "AirlinePrefix": 352,
+    "CarrierCode": "WD"
+  },
+  {
+    "Name": "Yan Air Ltd",
+    "CountryId": 233,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "YE"
+  },
+  {
+    "Name": "Limited Liability Company \"Aircompa ZetAvia\" dba \"Aircompany ZetAvia",
+    "CountryId": 233,
+    "AccountingCode": "",
+    "AirlinePrefix": 686,
+    "CarrierCode": "ZK"
+  },
+  {
+    "Name": "Air Arabia Abu Dhabi dba Air Arabia Abu Dhabi",
+    "CountryId": 234,
+    "AccountingCode": 49,
+    "AirlinePrefix": 49,
+    "CarrierCode": "3L"
+  },
+  {
+    "Name": "Wizz Air Abu Dhabi LLC dba Wizz Air",
+    "CountryId": 234,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "5W"
+  },
+  {
+    "Name": "Daallo Airlines",
+    "CountryId": 234,
+    "AccountingCode": 991,
+    "AirlinePrefix": 991,
+    "CarrierCode": "D3"
+  },
+  {
+    "Name": "Emirates",
+    "CountryId": 234,
+    "AccountingCode": 176,
+    "AirlinePrefix": 176,
+    "CarrierCode": "EK"
+  },
+  {
+    "Name": "Etihad Airways dba Etihad",
+    "CountryId": 234,
+    "AccountingCode": 607,
+    "AirlinePrefix": 607,
+    "CarrierCode": "EY"
+  },
+  {
+    "Name": "Flydubai dba Dubai Aviation Corporation \"FLYDUBAI",
+    "CountryId": 234,
+    "AccountingCode": 141,
+    "AirlinePrefix": 141,
+    "CarrierCode": "FZ"
+  },
+  {
+    "Name": "Air Arabia dba Air Arabia PJSC",
+    "CountryId": 234,
+    "AccountingCode": 514,
+    "AirlinePrefix": 514,
+    "CarrierCode": "G9"
+  },
+  {
+    "Name": "Jet Ops dba Jet Ops",
+    "CountryId": 234,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "J6"
+  },
+  {
+    "Name": "Rotana Jet Aviation dba Rotana Jet",
+    "CountryId": 234,
+    "AccountingCode": 482,
+    "AirlinePrefix": "",
+    "CarrierCode": "RG"
+  },
+  {
+    "Name": "Travelport dba Worldspan",
+    "CountryId": 235,
+    "AccountingCode": 773,
+    "AirlinePrefix": "",
+    "CarrierCode": "1G"
+  },
+  {
+    "Name": "Coyne Airways Ltd",
+    "CountryId": 235,
+    "AccountingCode": "",
+    "AirlinePrefix": 575,
+    "CarrierCode": "7C"
+  },
+  {
+    "Name": "CSafe Global",
+    "CountryId": 235,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "7K"
+  },
+  {
+    "Name": "Eurostar International Limited",
+    "CountryId": 235,
+    "AccountingCode": 814,
+    "AirlinePrefix": "",
+    "CarrierCode": "9F"
+  },
+  {
+    "Name": "AirTanker Services Limited",
+    "CountryId": 235,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "9L"
+  },
+  {
+    "Name": "British Airways p.l.c.",
+    "CountryId": 235,
+    "AccountingCode": 125,
+    "AirlinePrefix": 125,
+    "CarrierCode": "BA"
+  },
+  {
+    "Name": "Flybe Limited dba Flybe",
+    "CountryId": 235,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "BE"
+  },
+  {
+    "Name": "TUI Airways Limited dba TUI",
+    "CountryId": 235,
+    "AccountingCode": "",
+    "AirlinePrefix": 754,
+    "CarrierCode": "BY"
+  },
+  {
+    "Name": "BA Cityflyer Limited",
+    "CountryId": 235,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "CJ"
+  },
+  {
+    "Name": "UBM Aviation - OAG",
+    "CountryId": 235,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "CR"
+  },
+  {
+    "Name": "DHL Air Limited",
+    "CountryId": 235,
+    "AccountingCode": "",
+    "AirlinePrefix": 936,
+    "CarrierCode": "D0"
+  },
+  {
+    "Name": "Aer Lingus UK Limited",
+    "CountryId": 235,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "EG"
+  },
+  {
+    "Name": "Aero FlightOps UK Limited",
+    "CountryId": 235,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "FO"
+  },
+  {
+    "Name": "Aurigny Air Services Limited",
+    "CountryId": 235,
+    "AccountingCode": 924,
+    "AirlinePrefix": 924,
+    "CarrierCode": "GR"
+  },
+  {
+    "Name": "Loganair Limited",
+    "CountryId": 235,
+    "AccountingCode": 682,
+    "AirlinePrefix": 682,
+    "CarrierCode": "LM"
+  },
+  {
+    "Name": "Jet2.com Limited",
+    "CountryId": 235,
+    "AccountingCode": 949,
+    "AirlinePrefix": 949,
+    "CarrierCode": "LS"
+  },
+  {
+    "Name": "Cargologicair Ltd",
+    "CountryId": 235,
+    "AccountingCode": "",
+    "AirlinePrefix": 560,
+    "CarrierCode": "P3"
+  },
+  {
+    "Name": "Unilode Aviation Solutions UK Limit",
+    "CountryId": 235,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "R9"
+  },
+  {
+    "Name": "Ryanair UK Ltd",
+    "CountryId": 235,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "RK"
+  },
+  {
+    "Name": "European Cargo Limited",
+    "CountryId": 235,
+    "AccountingCode": "",
+    "AirlinePrefix": 436,
+    "CarrierCode": "SE"
+  },
+  {
+    "Name": "Blue Islands Limited",
+    "CountryId": 235,
+    "AccountingCode": 821,
+    "AirlinePrefix": "",
+    "CarrierCode": "SI"
+  },
+  {
+    "Name": "Air Kilroe Limited t/a Eastern Airways",
+    "CountryId": 235,
+    "AccountingCode": 467,
+    "AirlinePrefix": "",
+    "CarrierCode": "T3"
+  },
+  {
+    "Name": "Videcom International Limited",
+    "CountryId": 235,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "U1"
+  },
+  {
+    "Name": "EASYJET UK LIMITED",
+    "CountryId": 235,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "U2"
+  },
+  {
+    "Name": "JET EXCHANGE",
+    "CountryId": 235,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "UH"
+  },
+  {
+    "Name": "Virgin Atlantic Airways Limited",
+    "CountryId": 235,
+    "AccountingCode": 932,
+    "AirlinePrefix": 932,
+    "CarrierCode": "VS"
+  },
+  {
+    "Name": "Wizz Air UK Limited dba Wizz Air UK",
+    "CountryId": 235,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "W9"
+  },
+  {
+    "Name": "Synergy Aviation Ltd",
+    "CountryId": 235,
+    "AccountingCode": "",
+    "AirlinePrefix": 259,
+    "CarrierCode": "YD"
+  },
+  {
+    "Name": "Titan Airways Limited",
+    "CountryId": 235,
+    "AccountingCode": "",
+    "AirlinePrefix": 858,
+    "CarrierCode": "ZT"
+  },
+  {
+    "Name": "Radixx Solutions International, Inc",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "1D"
+  },
+  {
+    "Name": "NetJets Aviation, Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "1I"
+  },
+  {
+    "Name": "Navitaire",
+    "CountryId": 236,
+    "AccountingCode": 892,
+    "AirlinePrefix": "",
+    "CarrierCode": "1N"
+  },
+  {
+    "Name": "Travelport dba Worldspan",
+    "CountryId": 236,
+    "AccountingCode": 523,
+    "AirlinePrefix": "",
+    "CarrierCode": "1P"
+  },
+  {
+    "Name": "Sabre Inc.",
+    "CountryId": 236,
+    "AccountingCode": 153,
+    "AirlinePrefix": "",
+    "CarrierCode": "1S"
+  },
+  {
+    "Name": "ITA Software Inc.",
+    "CountryId": 236,
+    "AccountingCode": 968,
+    "AirlinePrefix": "",
+    "CarrierCode": "1U"
+  },
+  {
+    "Name": "Travelport / dba Galileo International",
+    "CountryId": 236,
+    "AccountingCode": 588,
+    "AirlinePrefix": "",
+    "CarrierCode": "1V"
+  },
+  {
+    "Name": "Fly Branson Travel dba Branson Air Express",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "1X"
+  },
+  {
+    "Name": "DXC TECHNOLOGY SERVICES LLC",
+    "CountryId": 236,
+    "AccountingCode": 95,
+    "AirlinePrefix": "",
+    "CarrierCode": "1Y"
+  },
+  {
+    "Name": "Eastern Airlines, LLC",
+    "CountryId": 236,
+    "AccountingCode": 54,
+    "AirlinePrefix": 54,
+    "CarrierCode": "2D"
+  },
+  {
+    "Name": "Smokey Bay Air, Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "2E"
+  },
+  {
+    "Name": "21 Air LLC",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 681,
+    "CarrierCode": "2I"
+  },
+  {
+    "Name": "Redemption Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "2O"
+  },
+  {
+    "Name": "Air Cargo Carriers, LLC.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "2Q"
+  },
+  {
+    "Name": "Amtrak",
+    "CountryId": 236,
+    "AccountingCode": 554,
+    "AirlinePrefix": "",
+    "CarrierCode": "2V"
+  },
+  {
+    "Name": "Multi-Aero, Inc. dba Air Choice One",
+    "CountryId": 236,
+    "AccountingCode": 122,
+    "AirlinePrefix": "",
+    "CarrierCode": "3E"
+  },
+  {
+    "Name": "Silver Airways Corp",
+    "CountryId": 236,
+    "AccountingCode": 449,
+    "AirlinePrefix": 449,
+    "CarrierCode": "3M"
+  },
+  {
+    "Name": "Premier Trans Aire Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 435,
+    "CarrierCode": "3X"
+  },
+  {
+    "Name": "Boutique Air, Inc.",
+    "CountryId": 236,
+    "AccountingCode": 184,
+    "AirlinePrefix": "",
+    "CarrierCode": "4B"
+  },
+  {
+    "Name": "Public Charters, Inc. dba Regional Sky",
+    "CountryId": 236,
+    "AccountingCode": 351,
+    "AirlinePrefix": "",
+    "CarrierCode": "4P"
+  },
+  {
+    "Name": "Warbelow's Air Ventures, Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "4W"
+  },
+  {
+    "Name": "Mercury Air Cargo, Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 805,
+    "CarrierCode": "4X"
+  },
+  {
+    "Name": "Alpine Aviation Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "5A"
+  },
+  {
+    "Name": "Tatonduk Outfitters Limited dba Eve Air Alaska dba Everts Air Cargo",
+    "CountryId": 236,
+    "AccountingCode": 840,
+    "AirlinePrefix": 840,
+    "CarrierCode": "5V"
+  },
+  {
+    "Name": "UPS",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 406,
+    "CarrierCode": "5X"
+  },
+  {
+    "Name": "Atlas Air, Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 369,
+    "CarrierCode": "5Y"
+  },
+  {
+    "Name": "Northern Pacific Airways dba Ravn Alaska",
+    "CountryId": 236,
+    "AccountingCode": 808,
+    "AirlinePrefix": 808,
+    "CarrierCode": "7H"
+  },
+  {
+    "Name": "MetroJets, LLC",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 7,
+    "CarrierCode": "7N"
+  },
+  {
+    "Name": "Elite Airways LLC",
+    "CountryId": 236,
+    "AccountingCode": 87,
+    "AirlinePrefix": "",
+    "CarrierCode": "7Q"
+  },
+  {
+    "Name": "Arctic Transportation Services, Inc Ryan Air",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "7S"
+  },
+  {
+    "Name": "Alpha Air Transport dba Commercial Aviation Services",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 428,
+    "CarrierCode": "7U"
+  },
+  {
+    "Name": "Ameristar Air Cargo, Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "7Z"
+  },
+  {
+    "Name": "Air Transport International Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 813,
+    "CarrierCode": "8C"
+  },
+  {
+    "Name": "Bering Air Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "8E"
+  },
+  {
+    "Name": "Wright Air Service Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "8V"
+  },
+  {
+    "Name": "Endeavor Air",
+    "CountryId": 236,
+    "AccountingCode": 430,
+    "AirlinePrefix": 430,
+    "CarrierCode": "9E"
+  },
+  {
+    "Name": "Hyannis Air Service, Inc. d/b/a Cape Air",
+    "CountryId": 236,
+    "AccountingCode": 306,
+    "AirlinePrefix": "",
+    "CarrierCode": "9K"
+  },
+  {
+    "Name": "Southern Airways Express, LLC",
+    "CountryId": 236,
+    "AccountingCode": 504,
+    "AirlinePrefix": "",
+    "CarrierCode": "9X"
+  },
+  {
+    "Name": "American Airlines Inc.",
+    "CountryId": 236,
+    "AccountingCode": 1,
+    "AirlinePrefix": 1,
+    "CarrierCode": "AA"
+  },
+  {
+    "Name": "Aztec Worldwide Airlines Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 179,
+    "CarrierCode": "AJ"
+  },
+  {
+    "Name": "Advanced Air, LLC",
+    "CountryId": 236,
+    "AccountingCode": 360,
+    "AirlinePrefix": "",
+    "CarrierCode": "AN"
+  },
+  {
+    "Name": "Alaska Airlines Inc.",
+    "CountryId": 236,
+    "AccountingCode": 27,
+    "AirlinePrefix": 27,
+    "CarrierCode": "AS"
+  },
+  {
+    "Name": "Jetblue Airways Corporation",
+    "CountryId": 236,
+    "AccountingCode": 279,
+    "AirlinePrefix": "",
+    "CarrierCode": "B6"
+  },
+  {
+    "Name": "Bond Air Cargo, LLC",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 29,
+    "CarrierCode": "B7"
+  },
+  {
+    "Name": "Conquest Air, Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 340,
+    "CarrierCode": "C4"
+  },
+  {
+    "Name": "Champlain Enterprises Inc. dba Commutair",
+    "CountryId": 236,
+    "AccountingCode": 841,
+    "AirlinePrefix": 841,
+    "CarrierCode": "C5"
+  },
+  {
+    "Name": "Trans Caribbean Air Export Import, Inc",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 456,
+    "CarrierCode": "CB"
+  },
+  {
+    "Name": "Charterlines, Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 976,
+    "CarrierCode": "CQ"
+  },
+  {
+    "Name": "AIR4 Passenger Service Systems, LLC",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "D1"
+  },
+  {
+    "Name": "Delta Air Lines, Inc.",
+    "CountryId": 236,
+    "AccountingCode": 6,
+    "AirlinePrefix": 6,
+    "CarrierCode": "DL"
+  },
+  {
+    "Name": "Empire Airlines",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "EM"
+  },
+  {
+    "Name": "ExpressJet Airlines, Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "EV"
+  },
+  {
+    "Name": "Farelogix Inc.",
+    "CountryId": 236,
+    "AccountingCode": 941,
+    "AirlinePrefix": "",
+    "CarrierCode": "F1"
+  },
+  {
+    "Name": "Frontier Airlines, Inc.",
+    "CountryId": 236,
+    "AccountingCode": 422,
+    "AirlinePrefix": 422,
+    "CarrierCode": "F9"
+  },
+  {
+    "Name": "FedEx",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 23,
+    "CarrierCode": "FX"
+  },
+  {
+    "Name": "Allegiant Air LLC",
+    "CountryId": 236,
+    "AccountingCode": 268,
+    "AirlinePrefix": "",
+    "CarrierCode": "G4"
+  },
+  {
+    "Name": "Global Crossing Airlines, Inc",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 402,
+    "CarrierCode": "G6"
+  },
+  {
+    "Name": "GoJet Airlines LLC",
+    "CountryId": 236,
+    "AccountingCode": 573,
+    "AirlinePrefix": 573,
+    "CarrierCode": "G7"
+  },
+  {
+    "Name": "ABX Air, Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 832,
+    "CarrierCode": "GB"
+  },
+  {
+    "Name": "Global Feeder Services, LLC",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 282,
+    "CarrierCode": "GC"
+  },
+  {
+    "Name": "Sky Lease I, Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 576,
+    "CarrierCode": "GG"
+  },
+  {
+    "Name": "Grant Aviation, Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "GV"
+  },
+  {
+    "Name": "Hawaiian Airlines, Inc.",
+    "CountryId": 236,
+    "AccountingCode": 173,
+    "AirlinePrefix": 173,
+    "CarrierCode": "HA"
+  },
+  {
+    "Name": "Papillon Airways, Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "HI"
+  },
+  {
+    "Name": "Bemidji Aviation Services, Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "CH"
+  },
+  {
+    "Name": "Scott Air, LLC dba Island Air Express",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "I4"
+  },
+  {
+    "Name": "Gulf & Caribbean Cargo, Inc",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 611,
+    "CarrierCode": "IF"
+  },
+  {
+    "Name": "IBC Airways, Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 175,
+    "CarrierCode": "II"
+  },
+  {
+    "Name": "Kalinin Aviation, L.L.C. Alaska Seaplane Service, L.L.C.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "J5"
+  },
+  {
+    "Name": "Airline Container Leasing Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "JG"
+  },
+  {
+    "Name": "Jet Linx Aviation, LLC.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "JL"
+  },
+  {
+    "Name": "J AND M Alaska Air Tours Inc. dba Alaska Air Transit",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "JN"
+  },
+  {
+    "Name": "JET UP AVIATION LLC",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "JU"
+  },
+  {
+    "Name": "National Air Charters, Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 420,
+    "CarrierCode": "JY"
+  },
+  {
+    "Name": "PAKLOOK AIR INC.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "K2"
+  },
+  {
+    "Name": "Venture Travel, LLC dba Taquan Air",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "K3"
+  },
+  {
+    "Name": "Kalitta Air, LLC",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 272,
+    "CarrierCode": "K4"
+  },
+  {
+    "Name": "Kalitta Charters II LLC",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "K5"
+  },
+  {
+    "Name": "InterJet West, Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "K8"
+  },
+  {
+    "Name": "Kalitta Charters, L.L.C.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "K9"
+  },
+  {
+    "Name": "Western Global Airlines, Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 904,
+    "CarrierCode": "KD"
+  },
+  {
+    "Name": "Key Lime Air Corporation",
+    "CountryId": 236,
+    "AccountingCode": 494,
+    "AirlinePrefix": "",
+    "CarrierCode": "KG"
+  },
+  {
+    "Name": "Aeko Kula, LLC dba Aloha Air Cargo",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 687,
+    "CarrierCode": "KH"
+  },
+  {
+    "Name": "Alaska Central Express",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 341,
+    "CarrierCode": "KO"
+  },
+  {
+    "Name": "Lynden Air Cargo, LLC",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 344,
+    "CarrierCode": "L2"
+  },
+  {
+    "Name": "The Landline Company",
+    "CountryId": 236,
+    "AccountingCode": 727,
+    "AirlinePrefix": "",
+    "CarrierCode": "L4"
+  },
+  {
+    "Name": "Corporate Flight Management Inc dba Contour Airlines",
+    "CountryId": 236,
+    "AccountingCode": 522,
+    "AirlinePrefix": "",
+    "CarrierCode": "LF"
+  },
+  {
+    "Name": "Miami Air International",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "LL"
+  },
+  {
+    "Name": "Sunrise Airlines Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 592,
+    "CarrierCode": "M2"
+  },
+  {
+    "Name": "Kenmore Air",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "M5"
+  },
+  {
+    "Name": "Amerijet International Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 810,
+    "CarrierCode": "M6"
+  },
+  {
+    "Name": "Air Mobility Command",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "MC"
+  },
+  {
+    "Name": "Envoy Air Inc.",
+    "CountryId": 236,
+    "AccountingCode": 93,
+    "AirlinePrefix": 93,
+    "CarrierCode": "MQ"
+  },
+  {
+    "Name": "Waltzing Matilda Aviation, LLC",
+    "CountryId": 236,
+    "AccountingCode": 58,
+    "AirlinePrefix": "",
+    "CarrierCode": "MW"
+  },
+  {
+    "Name": "Breeze Airways",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "MX"
+  },
+  {
+    "Name": "Darwin Travel Technology, Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "N1"
+  },
+  {
+    "Name": "National Air Cargo Group, Inc. dba National Airlines",
+    "CountryId": 236,
+    "AccountingCode": 416,
+    "AirlinePrefix": 416,
+    "CarrierCode": "N8"
+  },
+  {
+    "Name": "Northern Air Cargo, LLC.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 345,
+    "CarrierCode": "NC"
+  },
+  {
+    "Name": "Spirit Airlines",
+    "CountryId": 236,
+    "AccountingCode": 487,
+    "AirlinePrefix": 487,
+    "CarrierCode": "NK"
+  },
+  {
+    "Name": "Hopscotch Air, Inc",
+    "CountryId": 236,
+    "AccountingCode": 764,
+    "AirlinePrefix": "",
+    "CarrierCode": "O2"
+  },
+  {
+    "Name": "PSA Airlines, Inc. (US Airways Express)",
+    "CountryId": 236,
+    "AccountingCode": 320,
+    "AirlinePrefix": "",
+    "CarrierCode": "OH"
+  },
+  {
+    "Name": "SkyWest Airlines",
+    "CountryId": 236,
+    "AccountingCode": 302,
+    "AirlinePrefix": "",
+    "CarrierCode": "OO"
+  },
+  {
+    "Name": "Omni Air International, Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "OY"
+  },
+  {
+    "Name": "Aviation Technologies Inc. dba Publiccharters.com",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "P1"
+  },
+  {
+    "Name": "PHOENIX AIR GROUP, INC.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "PH"
+  },
+  {
+    "Name": "Prescott Support Company",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "PM"
+  },
+  {
+    "Name": "Polar Air Cargo Worldwide, Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 403,
+    "CarrierCode": "PO"
+  },
+  {
+    "Name": "Piedmont Airlines, Inc. (U S Airways Express)",
+    "CountryId": 236,
+    "AccountingCode": 531,
+    "AirlinePrefix": "",
+    "CarrierCode": "PT"
+  },
+  {
+    "Name": "40-Mile Air, Ltd.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "Q5"
+  },
+  {
+    "Name": "Jet Airways Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 508,
+    "CarrierCode": "QJ"
+  },
+  {
+    "Name": "Horizon Air Industries, Inc.",
+    "CountryId": 236,
+    "AccountingCode": 481,
+    "AirlinePrefix": 481,
+    "CarrierCode": "QX"
+  },
+  {
+    "Name": "Zapways, Inc.",
+    "CountryId": 236,
+    "AccountingCode": 407,
+    "AirlinePrefix": "",
+    "CarrierCode": "R1"
+  },
+  {
+    "Name": "Trans Executive Airlines of Hawaii",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "R9"
+  },
+  {
+    "Name": "SATCO, INC.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "S3"
+  },
+  {
+    "Name": "Sierra Pacific Airlines, Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "SI"
+  },
+  {
+    "Name": "Western Aircraft, Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "ST"
+  },
+  {
+    "Name": "Skywagon Corporation",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 906,
+    "CarrierCode": "SX"
+  },
+  {
+    "Name": "MN Airlines LLC dba Sun Country Airlines",
+    "CountryId": 236,
+    "AccountingCode": 337,
+    "AirlinePrefix": 337,
+    "CarrierCode": "SY"
+  },
+  {
+    "Name": "Rhoades Aviation Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "T4"
+  },
+  {
+    "Name": "USAC Airways 695 LLC",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "TD"
+  },
+  {
+    "Name": "TROPIC OCEAN AIRWAYS, LLC.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "TI"
+  },
+  {
+    "Name": "Tradewind Aviation, LLC",
+    "CountryId": 236,
+    "AccountingCode": 492,
+    "AirlinePrefix": "",
+    "CarrierCode": "TJ"
+  },
+  {
+    "Name": "Tailwind Air LLC",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "TQ"
+  },
+  {
+    "Name": "United Airlines, Inc.",
+    "CountryId": 236,
+    "AccountingCode": 16,
+    "AirlinePrefix": 16,
+    "CarrierCode": "UA"
+  },
+  {
+    "Name": "Ultimate Jetcharters LLC dba Ultimate Air Shuttle",
+    "CountryId": 236,
+    "AccountingCode": 327,
+    "AirlinePrefix": "",
+    "CarrierCode": "UE"
+  },
+  {
+    "Name": "USA Jet Airlines, Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "UJ"
+  },
+  {
+    "Name": "Universal Airways, Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "UV"
+  },
+  {
+    "Name": "IBS Software Services Americas, Inc",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "V1"
+  },
+  {
+    "Name": "Vieques Air Link, Inc",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "V4"
+  },
+  {
+    "Name": "Iliamna Air Taxi Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "V8"
+  },
+  {
+    "Name": "Via Airlines, Inc.",
+    "CountryId": 236,
+    "AccountingCode": 359,
+    "AirlinePrefix": "",
+    "CarrierCode": "VC"
+  },
+  {
+    "Name": "Meregrass, Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "WC"
+  },
+  {
+    "Name": "Caribbean Sun Airlines, Inc. dba World Atlantic Airlines",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "WL"
+  },
+  {
+    "Name": "Southwest Airlines Co.",
+    "CountryId": 236,
+    "AccountingCode": 526,
+    "AirlinePrefix": 526,
+    "CarrierCode": "WN"
+  },
+  {
+    "Name": "Air Excursion, LLC",
+    "CountryId": 236,
+    "AccountingCode": 42,
+    "AirlinePrefix": "",
+    "CarrierCode": "X4"
+  },
+  {
+    "Name": "ARINC (Aeronautical Radio, Inc.)",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "XA"
+  },
+  {
+    "Name": "Air Transport Association of Americ d\\b\\a Airlines for America",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "XD"
+  },
+  {
+    "Name": "Airlines Clearing House Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "XD"
+  },
+  {
+    "Name": "Airlines Reporting Corporation Area Settlement Plan",
+    "CountryId": 236,
+    "AccountingCode": 889,
+    "AirlinePrefix": "",
+    "CarrierCode": "XD"
+  },
+  {
+    "Name": "Airlines Reporting Corporation. Area Settlement Plan",
+    "CountryId": 236,
+    "AccountingCode": 890,
+    "AirlinePrefix": "",
+    "CarrierCode": "XD"
+  },
+  {
+    "Name": "OAG Worldwide.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "XD"
+  },
+  {
+    "Name": "Universal Air Travel Plan (UATP-Marketing)",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "XD"
+  },
+  {
+    "Name": "Universal Air Travel Plan (UATP) (Annual Dues)",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "XD"
+  },
+  {
+    "Name": "Delux Public Charter LLC dba JSX Air",
+    "CountryId": 236,
+    "AccountingCode": 569,
+    "AirlinePrefix": "",
+    "CarrierCode": "XE"
+  },
+  {
+    "Name": "Avelo Airlines, Inc.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "XP"
+  },
+  {
+    "Name": "Sunsplash Aviation, LLC.",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": 361,
+    "CarrierCode": "YH"
+  },
+  {
+    "Name": "Grand Canyon Airlines, Inc. dba Scenic Airlines",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "YR"
+  },
+  {
+    "Name": "Mesa Airlines, Inc.",
+    "CountryId": 236,
+    "AccountingCode": 533,
+    "AirlinePrefix": 533,
+    "CarrierCode": "YV"
+  },
+  {
+    "Name": "Republic Airways Inc",
+    "CountryId": 236,
+    "AccountingCode": 453,
+    "AirlinePrefix": 453,
+    "CarrierCode": "YX"
+  },
+  {
+    "Name": "SONOCO THERMOSAFE",
+    "CountryId": 236,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "YZ"
+  },
+  {
+    "Name": "Air Wisconsin Airlines Corporation (AWAC)",
+    "CountryId": 236,
+    "AccountingCode": 303,
+    "AirlinePrefix": 303,
+    "CarrierCode": "ZW"
+  },
+  {
+    "Name": "Air Express S.A. dba Airclass Lineas Aereas",
+    "CountryId": 238,
+    "AccountingCode": "",
+    "AirlinePrefix": 510,
+    "CarrierCode": "VZ"
+  },
+  {
+    "Name": "QANOT SHARQ",
+    "CountryId": 239,
+    "AccountingCode": 595,
+    "AirlinePrefix": "",
+    "CarrierCode": "HH"
+  },
+  {
+    "Name": "Uzbekistan Airways Joint Stock Company",
+    "CountryId": 239,
+    "AccountingCode": 250,
+    "AirlinePrefix": 250,
+    "CarrierCode": "HY"
+  },
+  {
+    "Name": "Avialeasing Aviation Company",
+    "CountryId": 239,
+    "AccountingCode": "",
+    "AirlinePrefix": 552,
+    "CarrierCode": "V2"
+  },
+  {
+    "Name": "Air Vanuatu (Operations) Limited dba Air Vanuatu",
+    "CountryId": 240,
+    "AccountingCode": 218,
+    "AirlinePrefix": 218,
+    "CarrierCode": "NF"
+  },
+  {
+    "Name": "Solar Cargo, C.A.",
+    "CountryId": 241,
+    "AccountingCode": "",
+    "AirlinePrefix": 644,
+    "CarrierCode": "4S"
+  },
+  {
+    "Name": "Rutas Aereas, C.A. dba RUTACA",
+    "CountryId": 241,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "5R"
+  },
+  {
+    "Name": "Avior Airlines, C.A. dba Avior Airlines",
+    "CountryId": 241,
+    "AccountingCode": 742,
+    "AirlinePrefix": 742,
+    "CarrierCode": "9V"
+  },
+  {
+    "Name": "Estelar Latinoamerica C.A. dba Estelar",
+    "CountryId": 241,
+    "AccountingCode": 52,
+    "AirlinePrefix": "",
+    "CarrierCode": "ES"
+  },
+  {
+    "Name": "Linea Aerea De Servicio Ejecutivo Regional, C.A. dba Laser",
+    "CountryId": 241,
+    "AccountingCode": 782,
+    "AirlinePrefix": 782,
+    "CarrierCode": "QL"
+  },
+  {
+    "Name": "Transcarga Int'l Airways, C.A.",
+    "CountryId": 241,
+    "AccountingCode": "",
+    "AirlinePrefix": 382,
+    "CarrierCode": "T7"
+  },
+  {
+    "Name": "Turpial Airlines, C.A.",
+    "CountryId": 241,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "T9"
+  },
+  {
+    "Name": "CONVIASA",
+    "CountryId": 241,
+    "AccountingCode": 308,
+    "AirlinePrefix": 308,
+    "CarrierCode": "V0"
+  },
+  {
+    "Name": "Vensecar Internacional C.A. DBA Vensecar, CA",
+    "CountryId": 241,
+    "AccountingCode": "",
+    "AirlinePrefix": 946,
+    "CarrierCode": "V4"
+  },
+  {
+    "Name": "Vietnam Air Service Company (VASCO)",
+    "CountryId": 242,
+    "AccountingCode": 338,
+    "AirlinePrefix": 338,
+    "CarrierCode": "0V"
+  },
+  {
+    "Name": "Pacific Airlines / Pacific Airlines Aviation JSC",
+    "CountryId": 242,
+    "AccountingCode": 550,
+    "AirlinePrefix": 550,
+    "CarrierCode": "BL"
+  },
+  {
+    "Name": "Bamboo Airways Joint Stock Company dba Bamboo Airways Joint Stock Comp",
+    "CountryId": 242,
+    "AccountingCode": 926,
+    "AirlinePrefix": 926,
+    "CarrierCode": "QH"
+  },
+  {
+    "Name": "Vietjet Aviation Joint Stock Company dba Vietjet Aviation JSC",
+    "CountryId": 242,
+    "AccountingCode": 978,
+    "AirlinePrefix": 978,
+    "CarrierCode": "VJ"
+  },
+  {
+    "Name": "Vietnam Airlines JSC dba Vietnam Airlines JSC",
+    "CountryId": 242,
+    "AccountingCode": 738,
+    "AirlinePrefix": 738,
+    "CarrierCode": "VN"
+  },
+  {
+    "Name": "Vietravel Airlines Co., Ltd.",
+    "CountryId": 242,
+    "AccountingCode": 759,
+    "AirlinePrefix": 759,
+    "CarrierCode": "VU"
+  },
+  {
+    "Name": "Yemenia - Yemen Airways",
+    "CountryId": 247,
+    "AccountingCode": 635,
+    "AirlinePrefix": 635,
+    "CarrierCode": "IY"
+  },
+  {
+    "Name": "Royal Air Charters",
+    "CountryId": 248,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "3Q"
+  },
+  {
+    "Name": "Proflight Commuter Services Limited dba Proflight Zambia",
+    "CountryId": 248,
+    "AccountingCode": 659,
+    "AirlinePrefix": "",
+    "CarrierCode": "P0"
+  },
+  {
+    "Name": "Zambia Airways (2014) Limited",
+    "CountryId": 248,
+    "AccountingCode": 138,
+    "AirlinePrefix": 138,
+    "CarrierCode": "ZN"
+  },
+  {
+    "Name": "Fastjet Zimbabwe",
+    "CountryId": 249,
+    "AccountingCode": 334,
+    "AirlinePrefix": "",
+    "CarrierCode": "FN"
+  },
+  {
+    "Name": "Air Zimbabwe (Pvt) Ltd.",
+    "CountryId": 249,
+    "AccountingCode": 168,
+    "AirlinePrefix": 168,
+    "CarrierCode": "UM"
+  },
+  {
+    "Name": "Flyafrica Zimbabwe (PVT) Ltd",
+    "CountryId": 249,
+    "AccountingCode": "",
+    "AirlinePrefix": "",
+    "CarrierCode": "ZC"
+  }
+]
