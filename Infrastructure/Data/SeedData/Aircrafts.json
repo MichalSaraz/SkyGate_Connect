@@ -1,0 +1,938 @@
+[
+  {
+    "Id": 1,
+    "CountryId": 209,
+    "RegistrationCode": "JAZ",
+    "AircraftTypeId": 18,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 2,
+    "CountryId": 209,
+    "RegistrationCode": "JDL",
+    "AircraftTypeId": 18,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 3,
+    "CountryId": 209,
+    "RegistrationCode": "JEI",
+    "AircraftTypeId": 18,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 4,
+    "CountryId": 209,
+    "RegistrationCode": "KHM",
+    "AircraftTypeId": 18,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 5,
+    "CountryId": 209,
+    "RegistrationCode": "KOY",
+    "AircraftTypeId": 18,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 6,
+    "CountryId": 209,
+    "RegistrationCode": "KUB",
+    "AircraftTypeId": 18,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 7,
+    "CountryId": 209,
+    "RegistrationCode": "LEI",
+    "AircraftTypeId": 18,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 8,
+    "CountryId": 209,
+    "RegistrationCode": "IEF",
+    "AircraftTypeId": 23,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 9,
+    "CountryId": 209,
+    "RegistrationCode": "IEG",
+    "AircraftTypeId": 23,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 10,
+    "CountryId": 209,
+    "RegistrationCode": "ILQ",
+    "AircraftTypeId": 23,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 11,
+    "CountryId": 209,
+    "RegistrationCode": "ILR",
+    "AircraftTypeId": 23,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 12,
+    "CountryId": 209,
+    "RegistrationCode": "ILS",
+    "AircraftTypeId": 23,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 13,
+    "CountryId": 209,
+    "RegistrationCode": "IZH",
+    "AircraftTypeId": 23,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 14,
+    "CountryId": 209,
+    "RegistrationCode": "IZR",
+    "AircraftTypeId": 23,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 15,
+    "CountryId": 209,
+    "RegistrationCode": "JFG",
+    "AircraftTypeId": 23,
+    "AirlineId": 787,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 16,
+    "CountryId": 209,
+    "RegistrationCode": "JFH",
+    "AircraftTypeId": 23,
+    "AirlineId": 787,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 17,
+    "CountryId": 209,
+    "RegistrationCode": "JFN",
+    "AircraftTypeId": 23,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 18,
+    "CountryId": 209,
+    "RegistrationCode": "KOH",
+    "AircraftTypeId": 23,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 19,
+    "CountryId": 209,
+    "RegistrationCode": "LLE",
+    "AircraftTypeId": 23,
+    "AirlineId": 787,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 20,
+    "CountryId": 209,
+    "RegistrationCode": "LRG",
+    "AircraftTypeId": 23,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 21,
+    "CountryId": 209,
+    "RegistrationCode": "LUL",
+    "AircraftTypeId": 23,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 22,
+    "CountryId": 209,
+    "RegistrationCode": "LUS",
+    "AircraftTypeId": 23,
+    "AirlineId": 787,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 23,
+    "CountryId": 209,
+    "RegistrationCode": "LVD",
+    "AircraftTypeId": 23,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 24,
+    "CountryId": 209,
+    "RegistrationCode": "LXQ",
+    "AircraftTypeId": 23,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 25,
+    "CountryId": 209,
+    "RegistrationCode": "LYE",
+    "AircraftTypeId": 23,
+    "AirlineId": 787,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 26,
+    "CountryId": 209,
+    "RegistrationCode": "LYM",
+    "AircraftTypeId": 23,
+    "AirlineId": 787,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 27,
+    "CountryId": 209,
+    "RegistrationCode": "MCS",
+    "AircraftTypeId": 23,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 28,
+    "CountryId": 209,
+    "RegistrationCode": "MDK",
+    "AircraftTypeId": 23,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 29,
+    "CountryId": 209,
+    "RegistrationCode": "MEG",
+    "AircraftTypeId": 23,
+    "AirlineId": 787,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 30,
+    "CountryId": 209,
+    "RegistrationCode": "MEH",
+    "AircraftTypeId": 23,
+    "AirlineId": 787,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 31,
+    "CountryId": 209,
+    "RegistrationCode": "MUF",
+    "AircraftTypeId": 23,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 32,
+    "CountryId": 209,
+    "RegistrationCode": "MUK",
+    "AircraftTypeId": 23,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 33,
+    "CountryId": 209,
+    "RegistrationCode": "HUH",
+    "AircraftTypeId": 24,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 34,
+    "CountryId": 209,
+    "RegistrationCode": "HUI",
+    "AircraftTypeId": 24,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 35,
+    "CountryId": 209,
+    "RegistrationCode": "IGK",
+    "AircraftTypeId": 24,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 36,
+    "CountryId": 209,
+    "RegistrationCode": "IJN",
+    "AircraftTypeId": 24,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 37,
+    "CountryId": 209,
+    "RegistrationCode": "ILO",
+    "AircraftTypeId": 24,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 38,
+    "CountryId": 209,
+    "RegistrationCode": "ILP",
+    "AircraftTypeId": 24,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 39,
+    "CountryId": 209,
+    "RegistrationCode": "IXD",
+    "AircraftTypeId": 24,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 40,
+    "CountryId": 209,
+    "RegistrationCode": "JDM",
+    "AircraftTypeId": 24,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 41,
+    "CountryId": 209,
+    "RegistrationCode": "JDR",
+    "AircraftTypeId": 24,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 42,
+    "CountryId": 209,
+    "RegistrationCode": "JEJ",
+    "AircraftTypeId": 24,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 43,
+    "CountryId": 209,
+    "RegistrationCode": "JGS",
+    "AircraftTypeId": 24,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 44,
+    "CountryId": 209,
+    "RegistrationCode": "JLI",
+    "AircraftTypeId": 24,
+    "AirlineId": 787,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 45,
+    "CountryId": 209,
+    "RegistrationCode": "JQZ",
+    "AircraftTypeId": 24,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 46,
+    "CountryId": 209,
+    "RegistrationCode": "JRE",
+    "AircraftTypeId": 24,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 47,
+    "CountryId": 209,
+    "RegistrationCode": "JZM",
+    "AircraftTypeId": 24,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 48,
+    "CountryId": 209,
+    "RegistrationCode": "MXU",
+    "AircraftTypeId": 28,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 49,
+    "CountryId": 209,
+    "RegistrationCode": "MXY",
+    "AircraftTypeId": 28,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 50,
+    "CountryId": 209,
+    "RegistrationCode": "NCM",
+    "AircraftTypeId": 28,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 51,
+    "CountryId": 209,
+    "RegistrationCode": "NDN",
+    "AircraftTypeId": 28,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 52,
+    "CountryId": 209,
+    "RegistrationCode": "NER",
+    "AircraftTypeId": 28,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 53,
+    "CountryId": 209,
+    "RegistrationCode": "NFZ",
+    "AircraftTypeId": 28,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 54,
+    "CountryId": 209,
+    "RegistrationCode": "NJU",
+    "AircraftTypeId": 28,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 55,
+    "CountryId": 209,
+    "RegistrationCode": "NJY",
+    "AircraftTypeId": 28,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 56,
+    "CountryId": 209,
+    "RegistrationCode": "NTA",
+    "AircraftTypeId": 28,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 57,
+    "CountryId": 209,
+    "RegistrationCode": "NTI",
+    "AircraftTypeId": 28,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 58,
+    "CountryId": 209,
+    "RegistrationCode": "NTO",
+    "AircraftTypeId": 28,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 59,
+    "CountryId": 209,
+    "RegistrationCode": "NTP",
+    "AircraftTypeId": 28,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 60,
+    "CountryId": 209,
+    "RegistrationCode": "NTQ",
+    "AircraftTypeId": 28,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 61,
+    "CountryId": 209,
+    "RegistrationCode": "NVS",
+    "AircraftTypeId": 28,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 62,
+    "CountryId": 209,
+    "RegistrationCode": "NZP",
+    "AircraftTypeId": 28,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 63,
+    "CountryId": 209,
+    "RegistrationCode": "NZQ",
+    "AircraftTypeId": 28,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 64,
+    "CountryId": 209,
+    "RegistrationCode": "NGP",
+    "AircraftTypeId": 29,
+    "AirlineId": 787,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 65,
+    "CountryId": 209,
+    "RegistrationCode": "NIA",
+    "AircraftTypeId": 29,
+    "AirlineId": 787,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 66,
+    "CountryId": 209,
+    "RegistrationCode": "NIF",
+    "AircraftTypeId": 29,
+    "AirlineId": 787,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 67,
+    "CountryId": 209,
+    "RegistrationCode": "NJI",
+    "AircraftTypeId": 29,
+    "AirlineId": 787,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 68,
+    "CountryId": 209,
+    "RegistrationCode": "NST",
+    "AircraftTypeId": 29,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 69,
+    "CountryId": 209,
+    "RegistrationCode": "NUD",
+    "AircraftTypeId": 29,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 70,
+    "CountryId": 209,
+    "RegistrationCode": "OAS",
+    "AircraftTypeId": 29,
+    "AirlineId": 787,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 71,
+    "CountryId": 209,
+    "RegistrationCode": "OAU",
+    "AircraftTypeId": 29,
+    "AirlineId": 787,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 72,
+    "CountryId": 209,
+    "RegistrationCode": "MIL",
+    "AircraftTypeId": 32,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 73,
+    "CountryId": 209,
+    "RegistrationCode": "MJA",
+    "AircraftTypeId": 32,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 74,
+    "CountryId": 209,
+    "RegistrationCode": "MJT",
+    "AircraftTypeId": 32,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 75,
+    "CountryId": 209,
+    "RegistrationCode": "MKI",
+    "AircraftTypeId": 32,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 76,
+    "CountryId": 209,
+    "RegistrationCode": "MKJ",
+    "AircraftTypeId": 32,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 77,
+    "CountryId": 209,
+    "RegistrationCode": "MLB",
+    "AircraftTypeId": 32,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 78,
+    "CountryId": 209,
+    "RegistrationCode": "MLP",
+    "AircraftTypeId": 32,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 79,
+    "CountryId": 209,
+    "RegistrationCode": "MMG",
+    "AircraftTypeId": 32,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 80,
+    "CountryId": 209,
+    "RegistrationCode": "MNK",
+    "AircraftTypeId": 32,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 81,
+    "CountryId": 209,
+    "RegistrationCode": "MNL",
+    "AircraftTypeId": 32,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 82,
+    "CountryId": 209,
+    "RegistrationCode": "MOU",
+    "AircraftTypeId": 32,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 83,
+    "CountryId": 209,
+    "RegistrationCode": "MSY",
+    "AircraftTypeId": 32,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 84,
+    "CountryId": 209,
+    "RegistrationCode": "MUD",
+    "AircraftTypeId": 32,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 85,
+    "CountryId": 209,
+    "RegistrationCode": "MYA",
+    "AircraftTypeId": 32,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 86,
+    "CountryId": 209,
+    "RegistrationCode": "NCRF",
+    "AircraftTypeId": 32,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 87,
+    "CountryId": 209,
+    "RegistrationCode": "NEN",
+    "AircraftTypeId": 32,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 88,
+    "CountryId": 209,
+    "RegistrationCode": "NNH",
+    "AircraftTypeId": 32,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 89,
+    "CountryId": 209,
+    "RegistrationCode": "NRG",
+    "AircraftTypeId": 32,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 90,
+    "CountryId": 209,
+    "RegistrationCode": "NRH",
+    "AircraftTypeId": 32,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 91,
+    "CountryId": 209,
+    "RegistrationCode": "LUB",
+    "AircraftTypeId": 33,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 92,
+    "CountryId": 209,
+    "RegistrationCode": "LUK",
+    "AircraftTypeId": 33,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 93,
+    "CountryId": 209,
+    "RegistrationCode": "LUX",
+    "AircraftTypeId": 33,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 94,
+    "CountryId": 209,
+    "RegistrationCode": "LXK",
+    "AircraftTypeId": 33,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 95,
+    "CountryId": 209,
+    "RegistrationCode": "LYF",
+    "AircraftTypeId": 33,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 96,
+    "CountryId": 209,
+    "RegistrationCode": "LZJ",
+    "AircraftTypeId": 33,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 97,
+    "CountryId": 209,
+    "RegistrationCode": "LZX",
+    "AircraftTypeId": 33,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 98,
+    "CountryId": 209,
+    "RegistrationCode": "MAA",
+    "AircraftTypeId": 33,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 102,
+    "CountryId": 209,
+    "RegistrationCode": "MXV",
+    "AircraftTypeId": 43,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 103,
+    "CountryId": 209,
+    "RegistrationCode": "MYX",
+    "AircraftTypeId": 43,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 104,
+    "CountryId": 209,
+    "RegistrationCode": "NBE",
+    "AircraftTypeId": 43,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 105,
+    "CountryId": 209,
+    "RegistrationCode": "NCX",
+    "AircraftTypeId": 43,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 106,
+    "CountryId": 209,
+    "RegistrationCode": "NDR",
+    "AircraftTypeId": 43,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 107,
+    "CountryId": 209,
+    "RegistrationCode": "NGT",
+    "AircraftTypeId": 43,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 108,
+    "CountryId": 209,
+    "RegistrationCode": "NIG",
+    "AircraftTypeId": 43,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 109,
+    "CountryId": 209,
+    "RegistrationCode": "NIS",
+    "AircraftTypeId": 43,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 110,
+    "CountryId": 209,
+    "RegistrationCode": "NJM",
+    "AircraftTypeId": 43,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 111,
+    "CountryId": 209,
+    "RegistrationCode": "NLP",
+    "AircraftTypeId": 43,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 112,
+    "CountryId": 209,
+    "RegistrationCode": "NMZ",
+    "AircraftTypeId": 43,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 113,
+    "CountryId": 209,
+    "RegistrationCode": "NSC",
+    "AircraftTypeId": 43,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 114,
+    "CountryId": 209,
+    "RegistrationCode": "NVR",
+    "AircraftTypeId": 43,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 115,
+    "CountryId": 209,
+    "RegistrationCode": "NXC",
+    "AircraftTypeId": 43,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 116,
+    "CountryId": 209,
+    "RegistrationCode": "NXD",
+    "AircraftTypeId": 43,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 117,
+    "CountryId": 209,
+    "RegistrationCode": "NXE",
+    "AircraftTypeId": 43,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 118,
+    "CountryId": 209,
+    "RegistrationCode": "OAV",
+    "AircraftTypeId": 43,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 119,
+    "CountryId": 209,
+    "RegistrationCode": "OAX",
+    "AircraftTypeId": 43,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  },
+  {
+    "Id": 120,
+    "CountryId": 209,
+    "RegistrationCode": "OAY",
+    "AircraftTypeId": 43,
+    "AirlineId": 789,
+    "JumpSeatsAvailable": 0
+  }
+]

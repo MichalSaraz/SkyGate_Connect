@@ -26,9 +26,7 @@ namespace Infrastructure.Data
         public DbSet<Flight> Flights { get; set; }
         public DbSet<Passenger> Passengers { get; set; }
         public DbSet<Baggage> Baggage { get; set; }
-        public DbSet<SpecialBag> SpecialBags { get; set; }
         public DbSet<BaggageTag> TagNumbers { get; set; }
-        public DbSet<Boarding> Boarding { get; set; }
         public DbSet<Aircraft> Aircrafts { get; set; }
         public DbSet<AircraftType> AircraftTypes { get; set; }
         public DbSet<Airline> Airlines { get; set; }
@@ -37,12 +35,12 @@ namespace Infrastructure.Data
         public DbSet<BookingReference> BookingReferences { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<FrequentFlyer> FrequentFlyers { get; set; }
-        public DbSet<SpecialServiceRequest> SpecialServiceRequests { get; set; }
         public DbSet<SSRCode> SSRCodes { get; set; }
-        public DbSet<Core.PassengerContext.Regulatory.APISData> APISData { get; set; }
+        public DbSet<APISData> APISData { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<DocumentType> DocumentTypes { get; set; }
-        public DbSet<Seat> Seats { get; set; }
+        public DbSet<SeatMap> SeatMaps { get; set; }
+        public DbSet<FlightClassSpecification> FlightClassSpecifications { get; set; }
 
 
 

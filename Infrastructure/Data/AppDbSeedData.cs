@@ -17,6 +17,7 @@ namespace Infrastructure.Data
             await SeedAsync<Destination>(context, "../Infrastructure/Data/SeedData/Destination.json");
             await SeedAsync<Airline>(context, "../Infrastructure/Data/SeedData/Airlines.json");
             await SeedAsync<AircraftType>(context, "../Infrastructure/Data/SeedData/AircraftType.json");
+            await SeedAsync<Aircraft>(context, "../Infrastructure/Data/SeedData/Aircrafts.json");
         }
 
         public static async Task SeedAsync<TEntity>(AppDbContext context, string jsonFilePath) where TEntity : class
