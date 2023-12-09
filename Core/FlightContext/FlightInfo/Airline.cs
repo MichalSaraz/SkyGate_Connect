@@ -9,16 +9,11 @@ using System.Threading.Tasks;
 namespace Core.FlightContext.FlightInfo
 {
     public class Airline
-    {
-        public int Id { get; private set; }
-
-        [Required]
-        [MinLength(2)]
-        [MaxLength(2)]
+    {   
         public string CarrierCode { get; private set; }
 
         public Country Country { get; private set; }
-        public int CountryId { get; private set; }
+        public string CountryId { get; private set; }
                 
 
         [Required]

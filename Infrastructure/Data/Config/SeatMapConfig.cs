@@ -14,13 +14,7 @@ namespace Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<SeatMap> builder)
         {
-            builder.HasKey(s => s.Id);
-            builder.HasOne(a => a.AircraftType)
-                .WithMany()
-                .HasForeignKey(a => a.AircraftTypeId);
-            builder.HasOne(a => a.Airline)
-                .WithMany()
-                .HasForeignKey(a => a.AirlineId);
+            builder.HasKey(s => s.Id);            
             builder.Property(sm => sm.FlightClassesSpecification)
                 .HasColumnName("FlightClassesSpecification")
                 .HasJsonConversion()

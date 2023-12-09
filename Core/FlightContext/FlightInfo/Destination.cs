@@ -9,14 +9,14 @@ namespace Core.FlightContext.FlightInfo
 {
     public class Destination
     {
-        public int Id { get; private set; }
-
         public string IATAAirportCode { get; private set; }
         public string AirportName { get; private set; }
 
         public Country Country { get; private set; }
-        public int CountryId { get; private set; }
+        public string CountryId { get; private set; }
 
-        public List<Flight> DepartingFlights { get; private set; }
+        public List<ScheduledFlight> Departures { get; private set; }
+
+        public List<ScheduledFlight> Arrivals { get; private set; }
     }
 }

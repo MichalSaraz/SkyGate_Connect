@@ -10,8 +10,7 @@ namespace Core.FlightContext.FlightInfo
 {
     public class AircraftType
     {
-        public int Id { get; private set; }
-
+        [Key]
         public string AircraftTypeIATACode { get; private set; }
 
         public string ModelName { get; private set; }

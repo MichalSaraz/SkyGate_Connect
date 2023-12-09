@@ -1,11 +1,16 @@
+using Core.FlightContext;
+using Core.SeatingContext;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using System.Security.Cryptography.X509Certificates;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options =>
-options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+.LogTo(Console.WriteLine, LogLevel.Information));
 builder.Services.AddSingleton<QueryExecutionService>();
 
 builder.Services.AddControllers();
@@ -36,7 +41,7 @@ var logger = services.GetRequiredService<ILogger<Program>>();
 try
 {
     await context.Database.MigrateAsync();
-    await AppDbSeedData.SeedAll(context);
+    await AppDbSeedData.SeedAll(context);    
 }
 catch (Exception ex)
 {

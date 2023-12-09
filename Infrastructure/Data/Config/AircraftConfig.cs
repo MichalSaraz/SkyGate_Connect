@@ -16,7 +16,7 @@ namespace Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<Aircraft> builder)
         {
-            builder.HasKey(a => a.Id);
+            builder.HasKey(a => a.RegistrationCode);
             builder.HasOne(a => a.Country)
                 .WithMany()
                 .HasForeignKey(a => a.CountryId);            

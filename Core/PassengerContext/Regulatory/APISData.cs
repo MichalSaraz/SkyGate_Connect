@@ -22,14 +22,13 @@ namespace Core.PassengerContext.Regulatory
         public int PassengerId { get; private set; }
 
         public Country Nationality { get; private set; }
-        public int NationalityId { get; private set; }
+        public string NationalityId { get; private set; }
 
         public Country IssueCountry { get; private set; }
-        public int IssueCountryId { get; private set; }
+        public string IssueCountryId { get; private set; }
 
-        public DocumentType DocumentType { get; private set; }
-        public int DocumentTypeId { get; private set; }
-
+        [Required]
+        public DocumentTypeEnum DocumentType { get; private set; }
 
         [Required]
         public PaxGenderEnum Gender { get; private set; }

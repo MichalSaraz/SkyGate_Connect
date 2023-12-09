@@ -9,14 +9,13 @@ namespace Core.PassengerContext.Regulatory
 {
     public class Country
     {
-        public int Id { get; private set; }
-
-        public string Country3LetterCode { get; private set; }
-
+        [Key]
         public string Country2LetterCode { get; private set; }
+
+        public string Country3LetterCode { get; private set; }        
 
         public string CountryName { get; private set; }   
         
-        public string AircraftRegistrationPrefix { get; set; }
+        public string[] AircraftRegistrationPrefix { get; private set; }
     }
 }

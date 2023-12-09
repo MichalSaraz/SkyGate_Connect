@@ -13,12 +13,15 @@ namespace Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<SpecialServiceRequest> builder)
         {
-            builder.HasKey(s => s.Id);
-            builder.OwnsOne(s => s.SSRCode, ad =>
-            {
-                ad.Property(s => s.Code).HasColumnName("Code");
-                ad.Property(s => s.Description).HasColumnName("Description");
-            });
+            builder.HasKey(a => a.Id);
+
+            builder.HasOne(s => s.SSRCode)
+                .WithMany()
+                .HasForeignKey(s => s.SSRCodeId);
+
+            builder.HasOne(s => s.Flight)
+                .WithMany()
+                .HasForeignKey(s => s.FlightId);
         }
     }
 }

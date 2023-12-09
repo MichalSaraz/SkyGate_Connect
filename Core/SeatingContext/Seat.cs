@@ -1,20 +1,25 @@
 ﻿using Core.FlightContext;
 using Core.FlightContext.FlightInfo;
 using Core.PassengerContext;
+using Core.PassengerContext.Booking;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Core.SeatingContext
 {
+    [NotMapped]
     public class Seat
-    {
+    {        
         public int Id { get; private set; }
-
-        public Passenger Passenger { get; private set; }
+        public Passenger Passenger  { get; private set; }
         public int PassengerId { get; private set; }
+
+        public Flight Flight { get; private set; }
+        public int FlightId { get; private set; }
         
 
         public string SeatNumber
@@ -45,11 +50,14 @@ namespace Core.SeatingContext
         // public bool IsChargeable { get; private set; }
 
 
-        public Seat(string seatNumber,
+        public Seat(
+            int flightId,
+            string seatNumber,
             SeatTypeEnum seatType,
             FlightClassEnum flightClass 
             )
         {
+            FlightId = flightId;
             SeatNumber = seatNumber;
             SeatType = seatType;
             FlightClass = flightClass;

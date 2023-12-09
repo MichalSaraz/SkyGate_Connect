@@ -23,14 +23,15 @@ namespace Infrastructure.Data
 {
     public class AppDbContext : DbContext
     {
+        public DbSet<ScheduledFlight> ScheduledFlights { get; set; }
         public DbSet<Flight> Flights { get; set; }
         public DbSet<Passenger> Passengers { get; set; }
+        public DbSet<PassengerInfo> PassengerInfos { get; set; }
         public DbSet<Baggage> Baggage { get; set; }
         public DbSet<BaggageTag> TagNumbers { get; set; }
         public DbSet<Aircraft> Aircrafts { get; set; }
         public DbSet<AircraftType> AircraftTypes { get; set; }
         public DbSet<Airline> Airlines { get; set; }
-        public DbSet<Codeshare> Codeshares { get; set; }
         public DbSet<Destination> Destinations { get; set; }
         public DbSet<BookingReference> BookingReferences { get; set; }
         public DbSet<Comment> Comments { get; set; }
@@ -38,9 +39,7 @@ namespace Infrastructure.Data
         public DbSet<SSRCode> SSRCodes { get; set; }
         public DbSet<APISData> APISData { get; set; }
         public DbSet<Country> Countries { get; set; }
-        public DbSet<DocumentType> DocumentTypes { get; set; }
         public DbSet<SeatMap> SeatMaps { get; set; }
-        public DbSet<FlightClassSpecification> FlightClassSpecifications { get; set; }
 
 
 
@@ -63,9 +62,7 @@ namespace Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());          
-
-
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly()); 
         }
     }    
 }

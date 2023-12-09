@@ -1,4 +1,5 @@
-﻿using Core.SeatingContext;
+﻿using Core.PassengerContext.Booking;
+using Core.SeatingContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -15,8 +16,11 @@ namespace Infrastructure.Data.Config
         {
             builder.HasKey(s => s.Id);
             builder.HasOne(s => s.Passenger)
-                .WithMany(p => p.SeatAssignments)
+                .WithMany(p => p.AssignedSeats)
                 .HasForeignKey(s => s.PassengerId);
+            builder.HasOne(s => s.Flight)
+                .WithMany(p => p.Seats)
+                .HasForeignKey(s => s.FlightId);
             builder.Property(s => s.Position)
                 .HasEnumConversion();
             builder.Property(s => s.SeatType)

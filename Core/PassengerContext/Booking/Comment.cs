@@ -12,7 +12,9 @@ namespace Core.PassengerContext.Booking
     {
         public int Id { get; private set; }
 
-        public List<PassengerComment> PaxWithComments { get; private set; } = new List<PassengerComment>();
+        public Passenger Passenger { get; private set; }
+        public int PassengerId { get; private set; }
+
 
         [Required]
         public CommentTypeEnum CommentType { get; private set; }

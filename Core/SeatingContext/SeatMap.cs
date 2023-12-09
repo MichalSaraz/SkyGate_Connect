@@ -11,84 +11,45 @@ namespace Core.SeatingContext
 {
     public class SeatMap
     {
-        public int Id { get; private set; }
+        public string Id { get; private set; }
 
-        public string SeatMapId
-        {
-            get
-            {
-                var classCounts = Seats
-                    .GroupBy(s => s.FlightClass)
-                    .Select(group => new
-                    {
-                        ClassName = group.Key,
-                        SeatCount = group.Count()
-                    })
-                    .Where(cls => cls.SeatCount > 0)
-                    .Select(cls => $"{cls.SeatCount}");
+        //public string SeatMapId
+        //{
+        //    get
+        //    {
+        //        var classCounts = Seats
+        //            .GroupBy(s => s.FlightClass)
+        //            .Select(group => new
+        //            {
+        //                ClassName = group.Key,
+        //                SeatCount = group.Count()
+        //            })
+        //            .Where(cls => cls.SeatCount > 0)
+        //            .Select(cls => $"{cls.SeatCount}");
 
-                return $"{Airline.CarrierCode}-" +
-                       $"{AircraftType.AircraftTypeIATACode}-" +
-                       $"{string.Join("/", classCounts)}";
-            }
-            private set { }
-        }
-
-
-        public Airline Airline { get; private set; }
-        public int AirlineId { get; private set; }
-
-        public AircraftType AircraftType { get; private set; }
-        public int AircraftTypeId { get; private set; }
-
+        //        return $"{Airline.CarrierCode}-" +
+        //               $"{AircraftType.AircraftTypeIATACode}-" +
+        //               $"{string.Join("/", classCounts)}";
+        //    }
+        //    private set { }
+        //}
 
         //public int[] RowsChargeable { get; private set; } = null;
 
 
         public List<FlightClassSpecification> FlightClassesSpecification { get; private set; } = new List<FlightClassSpecification>();
 
-        public List<Seat> Seats { get; private set; } = new List<Seat>();        
-
-
-        public SeatMap()            
+        public SeatMap(string id, List<FlightClassSpecification> flightClassesSpecification)
         {
-            InitializeSeats();
+            Id = id;
+            FlightClassesSpecification = flightClassesSpecification;
         }
 
-        private void InitializeSeats()
-        {
-            foreach (var specialSeats in FlightClassesSpecification)
-            {
-                foreach (var seatIdentifier in specialSeats.ExitRowSeats)
-                {                    
-                    Seats.Add(new Seat(seatIdentifier, SeatTypeEnum.EmergencyExit, specialSeats.FlightClass));
-                }
 
-                foreach (var seatIdentifier in specialSeats.BassinetSeats)
-                {
-                    Seats.Add(new Seat(seatIdentifier, SeatTypeEnum.BassinetSeat, specialSeats.FlightClass));
-                }
-            }
 
-            foreach (var otherSeats in FlightClassesSpecification)
-            {
-                for (int row = otherSeats.RowRange[0]; row <= otherSeats.RowRange[1]; row++)
-                {
-                    foreach (var position in otherSeats.SeatPositionsAvailable)
-                    {
-                        string seatIdentifier = $"{row}{position}";
 
-                        if (!otherSeats.NotExistingSeats.Contains(seatIdentifier))
-                        {
-                            if (!Seats.Any(s => s.SeatNumber == seatIdentifier))
-                            {
-                                Seats.Add(new Seat(seatIdentifier, SeatTypeEnum.Standard, otherSeats.FlightClass));
-                            }
-                        }
-                    }
-                }
-            }
-        }
+
+
 
         //private void InitializeSeats()
         //{

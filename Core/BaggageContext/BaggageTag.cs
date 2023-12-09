@@ -23,7 +23,7 @@ namespace Core.BaggageContext
         }
 
         public Airline Airline { get; private set; }
-        public int AirlineId { get; private set; }
+        public string AirlineId { get; private set; }
 
 
         public int LeadingDigit { get; private set; } = 0;   

@@ -16,6 +16,9 @@ namespace Infrastructure.Data.Config
             builder.HasKey(c => c.Id);
             builder.Property(c => c.CommentType)
                 .HasEnumConversion();
+            builder.HasOne(p => p.Passenger)
+                .WithMany(c => c.Comments)
+                .HasForeignKey(c => c.PassengerId);
         }
     }
 }

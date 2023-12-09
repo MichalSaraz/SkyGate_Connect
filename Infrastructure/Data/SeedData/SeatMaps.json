@@ -1,0 +1,337 @@
+[
+  {
+    "Id": 1,
+    "AirlineId": 789,
+    "AircraftTypeId": 43,
+    "FlightClassesSpecification": [
+      {
+        "RowRange": "{1,8}",
+        "FlightClass": "J",
+        "ExitRowSeats": "null",
+        "BassinetSeats": "null",
+        "NotExistingSeats": "{1A,3A,5A,7A,2C,4C,6C,8C,1D,3D,5D,7D,2E,4E,6E,8E,2G,4G,6G,8G,1H,3H,5H,7H,2L,4L,6L,8L,3J,5J,7J}",
+        "SeatPositionsAvailable": "{A,C,D,E,G,H,J,L}"
+      },
+      {
+        "RowRange": "{11,15}",
+        "FlightClass": "W",
+        "ExitRowSeats": "{11A,11C,11J,11L}",
+        "BassinetSeats": "{12E,12G}",
+        "NotExistingSeats": "{11D,11E,11G,11H,13A,13C,13D,13E,13G,13H,13J,13L,15D,15E,15G,15H}",
+        "SeatPositionsAvailable": "{A,C,D,E,G,H,J,L}"
+      },
+      {
+        "RowRange": "{21,54}",
+        "FlightClass": "Y",
+        "ExitRowSeats": "{38B,38C,38J,38K,39A,39L}",
+        "BassinetSeats": "{21D,21H,37D,37H}",
+        "NotExistingSeats": "{37A,37B,37C,37J,37K,37L,38A,38L,54A,54D,54E,54H,54L}",
+        "SeatPositionsAvailable": "{A,B,C,D,E,H,J,K,L}"
+      }
+    ]
+  },
+  {
+    "Id": 2,
+    "AirlineId": 789,
+    "AircraftTypeId": 43,
+    "FlightClassesSpecification": [
+      {
+        "RowRange": "{1,8}",
+        "FlightClass": "J",
+        "ExitRowSeats": "null",
+        "BassinetSeats": "null",
+        "NotExistingSeats": "{1A,3A,5A,7A,2C,4C,6C,8C,1D,3D,5D,7D,2E,4E,6E,8E,2G,4G,6G,8G,1H,3H,5H,7H,2L,4L,6L,8L,3J,5J,7J}",
+        "SeatPositionsAvailable": "{A,C,D,E,G,H,J,L}"
+      },
+      {
+        "RowRange": "{11,15}",
+        "FlightClass": "W",
+        "ExitRowSeats": "{11A,11C,11J,11L}",
+        "BassinetSeats": "{11E,11G}",
+        "NotExistingSeats": "{13A,13C,13D,13E,13G,13H,13J,13L,15D,15E,15G,15H}",
+        "SeatPositionsAvailable": "{A,C,D,E,G,H,J,L}"
+      },
+      {
+        "RowRange": "{21,54}",
+        "FlightClass": "Y",
+        "ExitRowSeats": "{38B,38C,38J,38K,39A,39L}",
+        "BassinetSeats": "{21D,21H,37D,37H}",
+        "NotExistingSeats": "{37A,37B,37C,37J,37K,37L,38A,38L,54A,54D,54E,54H,54L}",
+        "SeatPositionsAvailable": "{A,B,C,D,E,H,J,K,L}"
+      }
+    ]
+  },
+  {
+    "Id": 3,
+    "AirlineId": 789,
+    "AircraftTypeId": 43,
+    "FlightClassesSpecification": [
+      {
+        "RowRange": "{1,9}",
+        "FlightClass": "J",
+        "ExitRowSeats": "null",
+        "BassinetSeats": "null",
+        "NotExistingSeats": "{1A,1D,1H,1J,1L,2C,2E,2G,2J,4C,4E,4G,4J,6C,6E,6G,6J,8C,8E,8G,8J,3A,3D,3H,3L,5A,5D,5H,5L,7A,7D,7H,7L,9A,9C,9D,9H,9J,9L}",
+        "SeatPositionsAvailable": "{A,C,D,E,G,H,J,L}"
+      },
+      {
+        "RowRange": "{21,55}",
+        "FlightClass": "Y",
+        "ExitRowSeats": "{41A,40B,40C,41L,40J,40K}",
+        "BassinetSeats": "{21K,22B,22D,22H,40D,40H}",
+        "NotExistingSeats": "{21A,21B,21C,21D,21E,21H,40A,40L,55A,55B,55C,55J,55K,55L}",
+        "SeatPositionsAvailable": "{A,B,C,D,E,H,J,K,L}"
+      }
+    ]
+  },
+  {
+    "Id": 4,
+    "AirlineId": 789,
+    "AircraftTypeId": 32,
+    "FlightClassesSpecification": [
+      {
+        "RowRange": "{1,5}",
+        "FlightClass": "J",
+        "ExitRowSeats": "null",
+        "BassinetSeats": "null",
+        "NotExistingSeats": "{1A,3A,5A,2C,4C,1D,3D,5D,2E,4E,2G,4G,1H,3H,5H,2J,4J,5J,1L,3L,5L}",
+        "SeatPositionsAvailable": "{A,C,D,E,G,H,J,L}"
+      },
+      {
+        "RowRange": "{21,58}",
+        "FlightClass": "Y",
+        "ExitRowSeats": "{21A,21C,21J,21L,43A,43C,43J,43L}",
+        "BassinetSeats": "{23D,23H,43D,43H}",
+        "NotExistingSeats": "{21D,21E,21G,21H,22D,22E,22G,22H,40J,40L,41A,41C,41D,41E,41G,41H,41J,41L,42A,42C,42D,42E,42G,42H,42J,42L,54G,55G,56G,57G,58G,58A,58C,58J,58L}",
+        "SeatPositionsAvailable": "{A,C,D,E,G,H,J,L}"
+      }
+    ]
+  },
+  {
+    "Id": 5,
+    "AirlineId": 789,
+    "AircraftTypeId": 32,
+    "FlightClassesSpecification": [
+      {
+        "RowRange": "{1,3}",
+        "FlightClass": "W",
+        "ExitRowSeats": "null",
+        "BassinetSeats": "null",
+        "NotExistingSeats": "null",
+        "SeatPositionsAvailable": "{A,C,D,E,H,J,L}"
+      },
+      {
+        "RowRange": "{4,43}",
+        "FlightClass": "Y",
+        "ExitRowSeats": "{7A,7C,7J,7L,28A,28C,28J,28L}",
+        "BassinetSeats": "{4D,4H,9D,9H,28D,28H}",
+        "NotExistingSeats": "{7D,7E,7G,7H,8D,8E,8G,8H,13A,13C,13D,13E,13G,13H,13J,13L,27J,27L,39G,40G,41G,42G,43G,43A,43C,43J,43L}",
+        "SeatPositionsAvailable": "{A,C,D,E,G,H,J,L}"
+      }
+    ]
+  },
+  {
+    "Id": 6,
+    "AirlineId": 789,
+    "AircraftTypeId": 33,
+    "FlightClassesSpecification": [
+      {
+        "RowRange": "{1,7}",
+        "FlightClass": "J",
+        "ExitRowSeats": "null",
+        "BassinetSeats": "null",
+        "NotExistingSeats": "{1A,3A,5A,7A,8A,2C,4C,6C,8C,1D,3D,5D,7D,8D,2E,4E,6E,8E,2G,4G,6G,8G,1H,3H,5H,7H,8H,2J,4J,6J,8J,1L,3L,5L,7L}",
+        "SeatPositionsAvailable": "{A,C,D,E,G,H,J,L}"
+      },
+      {
+        "RowRange": "{11,14}",
+        "FlightClass": "W",
+        "ExitRowSeats": "null",
+        "BassinetSeats": "{11D,11H}",
+        "NotExistingSeats": "{13A,13C,13D,13E,13H,13J,13L}",
+        "SeatPositionsAvailable": "{A,C,D,E,H,J,L}"
+      },
+      {
+        "RowRange": "{21,52}",
+        "FlightClass": "Y",
+        "ExitRowSeats": "{36A,36C,36J,36L}",
+        "BassinetSeats": "{36D,36H}",
+        "NotExistingSeats": "{21D,21E,21G,21H,21J,21L,49G,50G,51G,52G,52A,52C,52J,52L}",
+        "SeatPositionsAvailable": "{A,C,D,E,G,H,J,L}"
+      }
+    ]
+  },
+  {
+    "Id": 7,
+    "AirlineId": 789,
+    "AircraftTypeId": 24,
+    "FlightClassesSpecification": [
+      {
+        "RowRange": "{1,38}",
+        "FlightClass": "Y",
+        "ExitRowSeats": "{11A,11B,11C,11D,11E,11F,26A,26B,26C,26D,26E,26F}",
+        "BassinetSeats": "null",
+        "NotExistingSeats": "{10A,10F,13A,13B,13C,13D,13E,13F}",
+        "SeatPositionsAvailable": "{A,B,C,D,E,F}"
+      }
+    ]
+  },
+  {
+    "Id": 10,
+    "AirlineId": 789,
+    "AircraftTypeId": 23,
+    "FlightClassesSpecification": [
+      {
+        "RowRange": "{1,31}",
+        "FlightClass": "Y",
+        "ExitRowSeats": "{12A,12B,12C,12D,12E,12F,14A,14B,14C,14D,14E,14F}",
+        "BassinetSeats": "null",
+        "NotExistingSeats": "{13A,13B,13C,13D,13E,13F}",
+        "SeatPositionsAvailable": "{A,B,C,D,E,F}"
+      }
+    ]
+  },
+  {
+    "Id": 12,
+    "AirlineId": 789,
+    "AircraftTypeId": 28,
+    "FlightClassesSpecification": [
+      {
+        "RowRange": "{1,32}",
+        "FlightClass": "Y",
+        "ExitRowSeats": "{12A,12B,12C,12D,12E,12F,14A,14B,14C,14D,14E,14F}",
+        "BassinetSeats": "null",
+        "NotExistingSeats": "{13A,13B,13C,13D,13E,13F}",
+        "SeatPositionsAvailable": "{A,B,C,D,E,F}"
+      }
+    ]
+  },
+  {
+    "Id": 13,
+    "AirlineId": 789,
+    "AircraftTypeId": 18,
+    "FlightClassesSpecification": [
+      {
+        "RowRange": "{1,25}",
+        "FlightClass": "Y",
+        "ExitRowSeats": "{10A,10B,10C,10D,10E,10F}",
+        "BassinetSeats": "null",
+        "NotExistingSeats": "{1D,1E,1F,13A,13B,13C,13D,13E,13F}",
+        "SeatPositionsAvailable": "{A,B,C,D,E,F}"
+      }
+    ]
+  },
+  {
+    "Id": 15,
+    "AirlineId": 789,
+    "AircraftTypeId": 18,
+    "FlightClassesSpecification": [
+      {
+        "RowRange": "{1,4}",
+        "FlightClass": "J",
+        "ExitRowSeats": "null",
+        "BassinetSeats": "null",
+        "NotExistingSeats": "{1D,1F}",
+        "SeatPositionsAvailable": "{A,C,D,F}"
+      },
+      {
+        "RowRange": "{7,25}",
+        "FlightClass": "Y",
+        "ExitRowSeats": "{10A,10B,10C,10D,10E,10F}",
+        "BassinetSeats": "null",
+        "NotExistingSeats": "{13A,13B,13C,13D,13E,13F}",
+        "SeatPositionsAvailable": "{A,B,C,D,E,F}"
+      }
+    ]
+  },
+  {
+    "Id": 16,
+    "AirlineId": 787,
+    "AircraftTypeId": 23,
+    "FlightClassesSpecification": [
+      {
+        "RowRange": "{1,31}",
+        "FlightClass": "Y",
+        "ExitRowSeats": "{12A,12B,12C,12D,12E,12F,14A,14B,14C,14D,14E,14F}",
+        "BassinetSeats": "null",
+        "NotExistingSeats": "{13A,13B,13C,13D,13E,13F}",
+        "SeatPositionsAvailable": "{A,B,C,D,E,F}"
+      }
+    ]
+  },
+  {
+    "Id": 17,
+    "AirlineId": 787,
+    "AircraftTypeId": 24,
+    "FlightClassesSpecification": [
+      {
+        "RowRange": "{1,38}",
+        "FlightClass": "Y",
+        "ExitRowSeats": "{11A,11B,11C,11D,11E,11F,26A,26B,26C,26D,26E,26F}",
+        "BassinetSeats": "null",
+        "NotExistingSeats": "{10A,10F,13A,13B,13C,13D,13E,13F}",
+        "SeatPositionsAvailable": "{A,B,C,D,E,F}"
+      }
+    ]
+  },
+  {
+    "Id": 18,
+    "AirlineId": 787,
+    "AircraftTypeId": 29,
+    "FlightClassesSpecification": [
+      {
+        "RowRange": "{1,40}",
+        "FlightClass": "Y",
+        "ExitRowSeats": "{18A,18B,18C,18D,18E,18F,19A,19B,19C,19D,19E,19F,29A,29B,29C,29D,29E,29F}",
+        "BassinetSeats": "null",
+        "NotExistingSeats": "{13A,13B,13C,13D,13E,13F,28A,28F}",
+        "SeatPositionsAvailable": "{A,B,C,D,E,F}"
+      }
+    ]
+  },
+  {
+    "Id": 19,
+    "AirlineId": 802,
+    "AircraftTypeId": 171,
+    "FlightClassesSpecification": [
+      {
+        "RowRange": "{1,20}",
+        "FlightClass": "Y",
+        "ExitRowSeats": "{19A,19C,19D,19F}",
+        "BassinetSeats": "null",
+        "NotExistingSeats": "{1D,1F,13A,13C,13D,13F,20A,20C}",
+        "SeatPositionsAvailable": "{A,C,D,F}"
+      }
+    ]
+  },
+  {
+    "Id": 20,
+    "AirlineId": 802,
+    "AircraftTypeId": 209,
+    "FlightClassesSpecification": [
+      {
+        "RowRange": "{1,14}",
+        "FlightClass": "Y",
+        "ExitRowSeats": "{8A,8C,8D,8F}",
+        "BassinetSeats": "null",
+        "NotExistingSeats": "{1D,1F,13A,13C,13D,13F}",
+        "SeatPositionsAvailable": "{A,C,D,F}"
+      }
+    ]
+  },
+  {
+    "Id": 21,
+    "AirlineId": 802,
+    "AircraftTypeId": 215,
+    "FlightClassesSpecification": [
+      {
+        "RowRange": "{1,27}",
+        "FlightClass": "Y",
+        "ExitRowSeats": "{17A,17C,17D,17F,18A,18C,18D,18F}",
+        "BassinetSeats": "null",
+        "NotExistingSeats": "{1A,1C,13A,13C,13D,13F,27D,27F}",
+        "SeatPositionsAvailable": "{A,C,D,F}"
+      }
+    ]
+  }
+]

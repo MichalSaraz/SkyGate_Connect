@@ -61,5 +61,18 @@ namespace Infrastructure.Data
 
             return propertyBuilder;
         }
+
+        public static PropertyBuilder<T> HasJsonConversion<T>(this PropertyBuilder<T> propertyBuilder, Func<T, object> toJson, Func<object, T> fromJson)
+        {
+            propertyBuilder.HasConversion(
+                v => JsonConvert.SerializeObject(toJson(v),
+                    new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
+                v => fromJson(JsonConvert.DeserializeObject<T>(v,
+                    new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore })));
+
+            propertyBuilder.HasColumnType("jsonb");
+
+            return propertyBuilder;
+        }
     }
 }

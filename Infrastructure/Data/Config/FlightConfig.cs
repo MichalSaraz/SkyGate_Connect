@@ -18,13 +18,9 @@ namespace Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<Flight> builder)
         {
-            builder.HasKey(f => f.Id);
-            builder.HasOne(f => f.Airline)
-                .WithMany()
-                .HasForeignKey(f => f.AirlineId)
-                .OnDelete(DeleteBehavior.Cascade);
+            builder.HasKey(f => f.Id);            
             builder.HasOne(f => f.Aircraft)
-                .WithMany()
+                .WithMany(f => f.Flights)
                 .HasForeignKey(f => f.AircraftId);
             builder.OwnsOne(a => a.Boarding, add =>
             {
@@ -33,24 +29,18 @@ namespace Infrastructure.Data.Config
                     .HasEnumConversion();
             });
             builder.Property(f => f.DepartureDateTime)
-                .HasDateTimeConversion();
+                .HasColumnType("timestamp without time zone");
             builder.Property(f => f.ArrivalDateTime)
-                .HasDateTimeConversion();
-            builder.HasOne(f => f.DepartureAirport)
-                .WithMany(f => f.DepartingFlights)
-                .HasForeignKey(f => f.DepartureAirportId);
-            builder.HasOne(f => f.ArrivalAirport)
-                .WithMany()
-                .HasForeignKey(f => f.ArrivalAirportId);
+                .HasColumnType("timestamp without time zone");
             builder.Property(f => f.FlightType)
                 .HasEnumConversion();
             builder.Property(f => f.FlightStatus)
                 .HasEnumConversion();
-            builder.OwnsMany(s => s.Codeshare, fc =>
-            {
-                fc.Property(fc => fc.CodeshareFlightNumber)
-                    .HasColumnName("CodeshareFlightNumber");                   
-            });
+            //builder.OwnsMany(s => s.Codeshare, fc =>
+            //{
+            //    fc.Property(fc => fc.CodeshareFlightNumber)
+            //        .HasColumnName("CodeshareFlightNumber");                   
+            //});
         }
     }
 }

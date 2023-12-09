@@ -8,6 +8,6 @@ namespace Core.PassengerContext.Booking
 {
     public enum PaxGenderEnum
     {
-        M, F, C, I
+        M, F, CHD, INF, UNDEFINED
     }
 }

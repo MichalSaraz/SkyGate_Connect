@@ -3,6 +3,7 @@ using Core.BoardingContext;
 using Core.FlightContext.FlightInfo;
 using Core.FlightContext.JoinClasses;
 using Core.PassengerContext.JoinClasses;
+using Core.SeatingContext;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,45 +16,23 @@ namespace Core.FlightContext
 {
     public class Flight
     {
-        public int Id { get; private set; }
-        public string FlightNumber 
-        { 
-            get
-            {
-                return $"{Airline.CarrierCode}{FlightIdentifier}";
-            }
-            private set { }        
-        }
-
-        [Required]
-        public Destination DepartureAirport { get; private set; }
-        public int DepartureAirportId { get; private set; }
-
-        [Required]
-        public Destination ArrivalAirport { get; private set; }
-        public int ArrivalAirportId { get; private set; }
-
-        [Required]
-        public Airline Airline { get; private set; }
-        public int AirlineId { get; private set; }
-
-        [Required]
+        public int Id { get; set; } 
+        
+        public ScheduledFlight ScheduledFlight { get; private set; }
+        public string ScheduledFlightId { get; set; }
+        
         public Aircraft Aircraft { get; private set; }
-        public int AircraftId { get; private set; }
-
-        [Required]
+        public string AircraftId { get; set; }
+        
         public Boarding Boarding { get; private set; }
 
+        public int? DividerPlacedBehindRow { get; private set; }
 
         [Required]
-        [Range(0001,2999)]
-        public int FlightIdentifier { get; private set; }
+        public DateTime DepartureDateTime { get; set; }
 
         [Required]
-        public DateTime DepartureDateTime { get; private set; }
-
-        [Required]
-        public DateTime ArrivalDateTime { get; private set; }        
+        public DateTime ArrivalDateTime { get; set; }        
 
         public FlightTypeEnum FlightType { get; private set; } = FlightTypeEnum.Outbound;
 
@@ -66,7 +45,7 @@ namespace Core.FlightContext
             {
                 return ListOfBookedPassengers.Count;
             }
-            private set { }
+            set { }
         }
 
         public int TotalCheckedBaggage
@@ -79,10 +58,63 @@ namespace Core.FlightContext
         }
 
 
-        public List<PassengerFlight> ListOfBookedPassengers { get; private set; } = new List<PassengerFlight>(); 
+        public List<PassengerFlight> ListOfBookedPassengers { get; set; } = new List<PassengerFlight>(); 
         
-        public List<FlightBaggage> ListOfCheckedBaggage { get; private set; } = new List<FlightBaggage>();        
+        public List<FlightBaggage> ListOfCheckedBaggage { get; private set; } = new List<FlightBaggage>(); 
+
+        public List<Seat> Seats { get; private set; } = new List<Seat>();
+
+        public Flight()
+        {
+        }
+
+        public Flight(
+        int id,
+        string scheduledFlightNumber,
+        DateTime departureDateTime,
+        DateTime arrivalDateTime)
+        {
+            Id = id;
+            ScheduledFlightId = scheduledFlightNumber;
+            DepartureDateTime = departureDateTime;
+            ArrivalDateTime = arrivalDateTime;
+        }
         
-        public List<Codeshare> Codeshare { get; private set; } = new List<Codeshare>();
+
+        private void InitializeSeats()
+        {
+            foreach (var specialSeats in Aircraft.SeatMap.FlightClassesSpecification)
+            {
+                foreach (var seatIdentifier in specialSeats.ExitRowSeats)
+                {
+                    Seats.Add(new Seat(Id, seatIdentifier, SeatTypeEnum.EmergencyExit, specialSeats.FlightClass));
+                }
+
+                foreach (var seatIdentifier in specialSeats.BassinetSeats)
+                {
+                    Seats.Add(new Seat(Id, seatIdentifier, SeatTypeEnum.BassinetSeat, specialSeats.FlightClass));
+                }
+            }
+
+            foreach (var otherSeats in Aircraft.SeatMap.FlightClassesSpecification)
+            {
+
+                for (int row = otherSeats.RowRange[0]; row <= otherSeats.RowRange[1]; row++)
+                {
+                    foreach (var position in otherSeats.SeatPositionsAvailable)
+                    {
+                        string seatIdentifier = $"{row}{position}";
+
+                        if (!otherSeats.NotExistingSeats.Contains(seatIdentifier))
+                        {
+                            if (!Seats.Any(s => s.SeatNumber == seatIdentifier))
+                            {
+                                Seats.Add(new Seat(Id, seatIdentifier, SeatTypeEnum.Standard, otherSeats.FlightClass));
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

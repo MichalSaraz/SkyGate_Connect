@@ -15,9 +15,9 @@ namespace Infrastructure.Data.Config
         public void Configure(EntityTypeBuilder<FrequentFlyer> builder)
         {
             builder.HasKey(f => f.Id);
-            builder.HasOne(f => f.Passenger)
+            builder.HasOne(f => f.PassengerInfo)
                 .WithOne(p => p.FrequentFlyer)
-                .HasForeignKey<Passenger>(p => p.FrequentFlyerId);
+                .HasForeignKey<PassengerInfo>(p => p.FrequentFlyerId);
             builder.HasOne(f => f.Airline)
                 .WithMany()
                 .HasForeignKey(f => f.AirlineId)

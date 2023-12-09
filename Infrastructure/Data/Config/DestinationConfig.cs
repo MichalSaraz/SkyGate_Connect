@@ -14,7 +14,7 @@ namespace Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<Destination> builder)
         {
-            builder.HasKey(d => d.Id);
+            builder.HasKey(d => d.IATAAirportCode);
             builder.HasOne(d => d.Country)
                 .WithMany()
                 .HasForeignKey(d => d.CountryId);

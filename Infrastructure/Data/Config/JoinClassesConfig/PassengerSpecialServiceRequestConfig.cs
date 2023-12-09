@@ -11,19 +11,19 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Data.Config.JoinClassesConfig
 {
-    public class PassengerSpecialServiceRequestConfig : IEntityTypeConfiguration<PassengerSpecialServiceRequest>
-    {
-        public void Configure(EntityTypeBuilder<PassengerSpecialServiceRequest> builder)
-        {
-            builder.HasKey(ps => new { ps.PassengerId, ps.SpecialServiceRequestId });
+    //public class PassengerSpecialServiceRequestConfig : IEntityTypeConfiguration<PassengerSpecialServiceRequest>
+    //{
+    //    public void Configure(EntityTypeBuilder<PassengerSpecialServiceRequest> builder)
+    //    {
+    //        builder.HasKey(ps => new { ps.PassengerId, ps.SpecialServiceRequestId });
 
-            builder.HasOne(ps => ps.Passenger)
-                .WithMany(p => p.SSRList)
-                .HasForeignKey(ps => ps.PassengerId);
+    //        builder.HasOne(ps => ps.Passenger)
+    //            .WithMany(p => p.SSRList)
+    //            .HasForeignKey(ps => ps.PassengerId);
 
-            builder.HasOne(ps => ps.SpecialServiceRequest)
-                .WithMany()
-                .HasForeignKey(ps => ps.SpecialServiceRequestId);
-        }
-    }
+    //        builder.HasOne(ps => ps.SpecialServiceRequest)
+    //            .WithMany()
+    //            .HasForeignKey(ps => ps.SpecialServiceRequestId);
+    //    }
+    //}
 }

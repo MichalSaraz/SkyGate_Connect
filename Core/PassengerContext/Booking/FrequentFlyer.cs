@@ -21,12 +21,12 @@ namespace Core.PassengerContext.Booking
             private set { }
         }
 
-        public Passenger Passenger { get; private set; }
-        public int PassengerId { get; private set; }
+        public PassengerInfo PassengerInfo { get; private set; }
+        public int PassengerInfoId { get; private set; }
 
         [Required]
         public Airline Airline { get; private set; }
-        public int AirlineId { get; private set; }
+        public string AirlineId { get; private set; }
                 
         [Required]
         [RegularExpression("^[A-Z0-9]{8,15}$")]

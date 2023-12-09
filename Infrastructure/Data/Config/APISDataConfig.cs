@@ -27,11 +27,8 @@ namespace Infrastructure.Data.Config
             builder.HasOne(a => a.IssueCountry)
                 .WithMany()
                 .HasForeignKey(a => a.IssueCountryId);
-            builder.OwnsOne(a => a.DocumentType, add =>
-            {
-                add.Ignore(d => d.Id);
-                add.Property(d => d.Type).HasColumnName("DocumentType");
-            });
+            builder.Property(a => a.DocumentType)
+                .HasEnumConversion();
             builder.Property(a => a.Gender)
                 .HasEnumConversion();
             builder.Property(a => a.DateOfBirth)
