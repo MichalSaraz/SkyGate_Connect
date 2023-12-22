@@ -35,32 +35,34 @@ namespace Infrastructure.Data
                 DateTime targetDate = currentDate.AddDays(i);
                 int dayOfWeek = (int)targetDate.DayOfWeek;
 
-                foreach (var scheduledFlight in scheduledFlights)
+                bool flightsExistForDay = flights.Any(f => f.DepartureDateTime.Date == targetDate.Date);
+
+                if (!flightsExistForDay)
                 {
-                    var matchingDepartureTime = scheduledFlight.DepartureTimes.FirstOrDefault(dt => (int)dt.Key == dayOfWeek);
-
-                    if (!matchingDepartureTime.Equals(default(KeyValuePair<DayOfWeek, TimeSpan>)) && scheduledFlight.DepartureTimes.Any(dt => (int)dt.Key == dayOfWeek))
+                    foreach (var scheduledFlight in scheduledFlights)
                     {
-                        maxId++; // Inkrementace Id
+                        var matchingDepartureTime = scheduledFlight.DepartureTimes.FirstOrDefault(dt => (int)dt.Key == dayOfWeek);
 
-                        var arrivalTime = scheduledFlight.ArrivalTimes.First(at => (int)at.Key == dayOfWeek);
-
-                        var flight = new Flight
+                        if (!matchingDepartureTime.Equals(default(KeyValuePair<DayOfWeek, TimeSpan>)) && scheduledFlight.DepartureTimes.Any(dt => (int)dt.Key == dayOfWeek))
                         {
-                            Id = maxId,
-                            ScheduledFlightId = scheduledFlight.FlightNumber,
-                            DepartureDateTime = targetDate.Add(matchingDepartureTime.Value),
-                            ArrivalDateTime = targetDate.Add(arrivalTime.Value)
-                        };
+                            maxId++;
 
-                        dbContext.Flights.Add(flight);
+                            var arrivalTime = scheduledFlight.ArrivalTimes.First(at => (int)at.Key == dayOfWeek);
+
+                            var flight = new Flight
+                            {
+                                Id = maxId,
+                                ScheduledFlightId = scheduledFlight.FlightNumber,
+                                DepartureDateTime = targetDate.Add(matchingDepartureTime.Value),
+                                ArrivalDateTime = targetDate.Add(arrivalTime.Value)
+                            };
+
+                            dbContext.Flights.Add(flight);
+                        }
                     }
-                }
+                }                
             }
-
             dbContext.SaveChanges();
-
-            //ToDo - Solve problem with AddDays(1), when ArrivalDateTime is after midnight
         }
     }
 }

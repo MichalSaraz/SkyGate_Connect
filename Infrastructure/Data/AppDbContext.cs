@@ -4,6 +4,7 @@ using Core.FlightContext;
 using Core.FlightContext.FlightInfo;
 using Core.PassengerContext;
 using Core.PassengerContext.Booking;
+using Core.PassengerContext.JoinClasses;
 using Core.PassengerContext.Regulatory;
 using Core.SeatingContext;
 using Microsoft.EntityFrameworkCore;
@@ -26,10 +27,13 @@ namespace Infrastructure.Data
         public DbSet<ScheduledFlight> ScheduledFlights { get; set; }
         public DbSet<Flight> Flights { get; set; }
         public DbSet<Passenger> Passengers { get; set; }
+        public DbSet<PassengerFlight> PassengerFlight { get; set; }
         public DbSet<PassengerInfo> PassengerInfos { get; set; }
         public DbSet<Baggage> Baggage { get; set; }
         public DbSet<BaggageTag> TagNumbers { get; set; }
         public DbSet<Aircraft> Aircrafts { get; set; }
+        public DbSet<Seat> Seats { get; set; }
+        public DbSet<SpecialServiceRequest> SpecialServiceRequests { get; set; }
         public DbSet<AircraftType> AircraftTypes { get; set; }
         public DbSet<Airline> Airlines { get; set; }
         public DbSet<Destination> Destinations { get; set; }
@@ -56,7 +60,10 @@ namespace Infrastructure.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseNpgsql(_configuration.GetConnectionString("DefaultConnection"));
+            options.UseNpgsql(_configuration.GetConnectionString("DefaultConnection"), options =>
+            {
+                options.CommandTimeout(1000);
+            });
         }        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

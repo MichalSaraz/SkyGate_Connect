@@ -10,7 +10,7 @@ namespace Core.PassengerContext.JoinClasses
     public class PassengerFlight
     {
         public Passenger Passenger { get; set; }
-        public int PassengerId { get; set; }
+        public Guid PassengerId { get; set; }
 
         public Flight Flight { get; set; }
         public int FlightId { get; set; }        

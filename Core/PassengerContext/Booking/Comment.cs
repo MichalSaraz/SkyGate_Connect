@@ -13,7 +13,7 @@ namespace Core.PassengerContext.Booking
         public int Id { get; private set; }
 
         public Passenger Passenger { get; private set; }
-        public int PassengerId { get; private set; }
+        public Guid PassengerId { get; private set; }
 
 
         [Required]

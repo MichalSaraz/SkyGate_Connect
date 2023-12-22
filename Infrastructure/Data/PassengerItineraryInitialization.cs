@@ -61,7 +61,7 @@ namespace Infrastructure.Data
                 foreach (var flight in selectedFlights)
                 {
                     // Přidejte cestující k letu
-                    foreach (var passengerInfo in bookingReference.LinkedPassengers)
+                    foreach (var passengerInfo in bookingReference.LinkedPassengers.ToList())
                     {
                         Passenger passenger = new Passenger();
                         passenger.MapFromPassengerInfo(passengerInfo);

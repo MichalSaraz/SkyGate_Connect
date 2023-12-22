@@ -15,9 +15,16 @@ namespace Infrastructure.Data.Config
         {
             builder.HasKey(a => a.Id);
 
+            builder.Property(a => a.Id)
+                .ValueGeneratedOnAdd();
+
             builder.HasOne(s => s.SSRCode)
                 .WithMany()
                 .HasForeignKey(s => s.SSRCodeId);
+
+            builder.HasOne(s => s.Passenger)
+                .WithMany(p => p.SpecialServiceRequests)
+                .HasForeignKey(s => s.PassengerId);
 
             builder.HasOne(s => s.Flight)
                 .WithMany()

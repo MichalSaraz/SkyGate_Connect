@@ -81,8 +81,9 @@ namespace Core.FlightContext
         }
         
 
-        private void InitializeSeats()
+        public List<Seat> InitializeSeats()
         {
+            Seats = new List<Seat>();
             foreach (var specialSeats in Aircraft.SeatMap.FlightClassesSpecification)
             {
                 foreach (var seatIdentifier in specialSeats.ExitRowSeats)
@@ -115,6 +116,7 @@ namespace Core.FlightContext
                     }
                 }
             }
+            return Seats;
         }
     }
 }

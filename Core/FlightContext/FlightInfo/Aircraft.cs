@@ -27,7 +27,7 @@ namespace Core.FlightContext.FlightInfo
         public Airline Airline { get; private set; }
         public string AirlineId { get; private set; }
 
-        public SeatMap SeatMap { get; private set; }
+        public SeatMap SeatMap { get; set; }
         public string SeatMapId { get; private set; }        
 
         public int JumpSeatsAvailable { get; private set; } = 0;

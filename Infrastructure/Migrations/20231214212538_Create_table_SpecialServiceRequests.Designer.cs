@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231214212538_Create_table_SpecialServiceRequests")]
+    partial class Create_table_SpecialServiceRequests
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -360,17 +363,12 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("character varying(150)");
 
-                    b.Property<Guid>("PassengerId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("SSRCodeId")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("FlightId");
-
-                    b.HasIndex("PassengerId");
 
                     b.HasIndex("SSRCodeId");
 
@@ -587,24 +585,12 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("AssignedSeatsToTable")
-                        .HasColumnType("text")
-                        .HasColumnName("AssignedSeats");
-
                     b.Property<int>("BoardingSequenceNumber")
                         .HasColumnType("integer");
 
                     b.Property<string>("BoardingZone")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<string>("FlightsToTable")
-                        .HasColumnType("text")
-                        .HasColumnName("Flights");
-
-                    b.Property<string>("SSRToTable")
-                        .HasColumnType("text")
-                        .HasColumnName("SpecialServiceRequests");
 
                     b.ToTable("Passengers");
                 });
@@ -838,19 +824,11 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.PassengerContext.Passenger", "Passenger")
-                        .WithMany("SpecialServiceRequests")
-                        .HasForeignKey("PassengerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Core.PassengerContext.Booking.SSRCode", "SSRCode")
                         .WithMany()
                         .HasForeignKey("SSRCodeId");
 
                     b.Navigation("Flight");
-
-                    b.Navigation("Passenger");
 
                     b.Navigation("SSRCode");
                 });

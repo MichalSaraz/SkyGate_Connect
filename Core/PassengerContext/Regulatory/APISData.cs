@@ -19,7 +19,7 @@ namespace Core.PassengerContext.Regulatory
 
 
         public Passenger Passenger { get; private set; }
-        public int PassengerId { get; private set; }
+        public Guid PassengerId { get; private set; }
 
         public Country Nationality { get; private set; }
         public string NationalityId { get; private set; }

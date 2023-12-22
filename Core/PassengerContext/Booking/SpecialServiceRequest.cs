@@ -11,19 +11,34 @@ using System.Threading.Tasks;
 
 namespace Core.PassengerContext.Booking
 {
-    [NotMapped]
     public class SpecialServiceRequest
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; private set; }
 
-        public SSRCode SSRCode { get; private set; }
-        public string SSRCodeId { get; private set; } 
+        public SSRCode SSRCode { get; set; }
+        public string SSRCodeId { get; set; }
         
-        public Flight Flight { get; private set; }
+        public Passenger Passenger { get; set; }
+        public Guid PassengerId { get; private set; }        
+        
+        public Flight Flight { get; set; }
         public int FlightId { get; private set; }
 
-
         [MaxLength(150)]
-        public string FreeText { get; private set; }
+        public string? FreeText { get; private set; }
+
+        public SpecialServiceRequest()
+        { 
+        }
+
+        public SpecialServiceRequest(SSRCode sSRCode, Flight flight, Passenger passenger, string? freeText)
+        {
+            SSRCode = sSRCode;
+            Flight = flight;
+            Passenger = passenger;
+            FreeText = freeText;
+        }
     }
 }

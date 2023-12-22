@@ -16,7 +16,7 @@ namespace Core.BaggageContext
 
         [Required]
         public Passenger Passenger { get; private set; }
-        public int PassengerId { get; private set; }
+        public Guid PassengerId { get; private set; }
 
         [Required]
         public BaggageTag BaggageTag { get; private set; }

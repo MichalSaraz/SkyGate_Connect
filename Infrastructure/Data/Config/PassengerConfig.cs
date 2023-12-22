@@ -7,13 +7,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Infrastructure.Data.Config
 {
     public class PassengerConfig : IEntityTypeConfiguration<Passenger>
     {
         public void Configure(EntityTypeBuilder<Passenger> builder)
-        {            
+        {
             builder.Property(p => p.BoardingZone)
                 .HasEnumConversion();
 
@@ -25,7 +26,8 @@ namespace Infrastructure.Data.Config
                 .HasForeignKey(s => s.PassengerId);
 
             builder.HasMany(p => p.SpecialServiceRequests)
-                .WithOne();
+                .WithOne(s => s.Passenger)
+                .HasForeignKey(s => s.PassengerId);
 
             builder.HasMany(p => p.TravelDocuments)
                 .WithOne(a => a.Passenger)
@@ -37,7 +39,7 @@ namespace Infrastructure.Data.Config
 
             builder.HasMany(c => c.Comments)
                 .WithOne(p => p.Passenger)
-                .HasForeignKey(p => p.PassengerId);
+                .HasForeignKey(p => p.PassengerId);            
         }
     }
 }

@@ -11,12 +11,11 @@ using System.Threading.Tasks;
 
 namespace Core.SeatingContext
 {
-    [NotMapped]
     public class Seat
     {        
-        public int Id { get; private set; }
-        public Passenger Passenger  { get; private set; }
-        public int PassengerId { get; private set; }
+        public Guid Id { get; private set; }
+        public Passenger Passenger  { get; set; }
+        public Guid? PassengerId { get; private set; }
 
         public Flight Flight { get; private set; }
         public int FlightId { get; private set; }
@@ -57,6 +56,7 @@ namespace Core.SeatingContext
             FlightClassEnum flightClass 
             )
         {
+            Id = Guid.NewGuid();
             FlightId = flightId;
             SeatNumber = seatNumber;
             SeatType = seatType;

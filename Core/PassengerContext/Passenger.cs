@@ -7,6 +7,7 @@ using Core.SeatingContext;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,13 +15,12 @@ using System.Threading.Tasks;
 namespace Core.PassengerContext
 {
     public class Passenger : PassengerInfo
-    {      
-
+    {
         public int BoardingSequenceNumber { get; private set; }
 
         public BoardingZoneEnum BoardingZone { get; private set; }
 
-        public AcceptanceStatusEnum AcceptanceStatus { get; private set; } = AcceptanceStatusEnum.NotAccepted;               
+        public AcceptanceStatusEnum AcceptanceStatus { get; private set; } = AcceptanceStatusEnum.NotAccepted;
 
         public List<APISData> TravelDocuments { get; private set; } = new List<APISData>();
 
@@ -32,18 +32,18 @@ namespace Core.PassengerContext
 
         public List<Seat> AssignedSeats { get; private set; } = new List<Seat>();
 
-        public List<SpecialServiceRequest> SpecialServiceRequests { get; private set; } = new List<SpecialServiceRequest>();
+        public List<SpecialServiceRequest> SpecialServiceRequests { get; set; } = new List<SpecialServiceRequest>();
 
         public Passenger()
         {
-            // Mapování vlastností z PassengerInfo do Passenger
+            
         }
 
         // přidat letenku
 
         public void MapFromPassengerInfo(PassengerInfo passengerInfo)
         {
-            Id = passengerInfo.Id;
+            Id = new Guid();
             FirstName = passengerInfo.FirstName;
             LastName = passengerInfo.LastName;
             Gender = passengerInfo.Gender;
@@ -52,8 +52,7 @@ namespace Core.PassengerContext
             Age = passengerInfo.Age;
             BaggageAllowance = passengerInfo.BaggageAllowance;
             PriorityBoarding = passengerInfo.PriorityBoarding;
-            FrequentFlyer = passengerInfo.FrequentFlyer;
-            FrequentFlyerId = passengerInfo.FrequentFlyerId;      
+            FrequentFlyerId = passengerInfo.FrequentFlyerId;
         }
     }
 }
