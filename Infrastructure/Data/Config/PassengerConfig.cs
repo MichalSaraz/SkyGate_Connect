@@ -15,12 +15,6 @@ namespace Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<Passenger> builder)
         {
-            builder.Property(p => p.BoardingZone)
-                .HasEnumConversion();
-
-            builder.Property(p => p.AcceptanceStatus)
-                .HasEnumConversion();
-
             builder.HasMany(p => p.AssignedSeats)
                 .WithOne(s => s.Passenger)
                 .HasForeignKey(s => s.PassengerId);

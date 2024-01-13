@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240109102512_New_Comments_structure")]
+    partial class New_Comments_structure
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -403,16 +406,6 @@ namespace Infrastructure.Migrations
                     b.Property<int>("FlightId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("AcceptanceStatus")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int?>("BoardingSequenceNumber")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("BoardingZone")
-                        .HasColumnType("text");
-
                     b.HasKey("PassengerId", "FlightId");
 
                     b.HasIndex("FlightId");
@@ -545,9 +538,6 @@ namespace Infrastructure.Migrations
                     b.Property<string>("CountryName")
                         .HasColumnType("text");
 
-                    b.Property<bool>("IsEUCountry")
-                        .HasColumnType("boolean");
-
                     b.HasKey("Country2LetterCode");
 
                     b.ToTable("Countries");
@@ -613,6 +603,17 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.PassengerContext.Passenger", b =>
                 {
                     b.HasBaseType("Core.PassengerContext.PassengerInfo");
+
+                    b.Property<string>("AcceptanceStatus")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("BoardingSequenceNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("BoardingZone")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.ToTable("Passengers");
                 });

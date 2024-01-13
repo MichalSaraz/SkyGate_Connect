@@ -39,6 +39,7 @@ namespace Infrastructure.Data
         public DbSet<Destination> Destinations { get; set; }
         public DbSet<BookingReference> BookingReferences { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<PredefinedComment> PredefinedComments { get; set; }
         public DbSet<FrequentFlyer> FrequentFlyers { get; set; }
         public DbSet<SSRCode> SSRCodes { get; set; }
         public DbSet<APISData> APISData { get; set; }
@@ -64,6 +65,7 @@ namespace Infrastructure.Data
             {
                 options.CommandTimeout(1000);
             });
+            options.EnableSensitiveDataLogging();
         }        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

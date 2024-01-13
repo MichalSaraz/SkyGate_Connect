@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.FlightContext;
+using Core.PassengerContext.Booking;
 using Core.PassengerContext.JoinClasses;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -23,6 +24,12 @@ namespace Infrastructure.Data.Config.JoinClassesConfig
             builder.HasOne(pf => pf.Flight)
                 .WithMany(f => f.ListOfBookedPassengers)
                 .HasForeignKey(pf => pf.FlightId);
+
+            builder.Property(p => p.BoardingZone)
+                .HasEnumConversion();
+
+            builder.Property(p => p.AcceptanceStatus)
+                .HasEnumConversion<AcceptanceStatusEnum>();
         }
     }
 }

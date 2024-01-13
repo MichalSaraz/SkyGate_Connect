@@ -1,5 +1,4 @@
-﻿using Core.PassengerContext.JoinClasses;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -15,14 +14,36 @@ namespace Core.PassengerContext.Booking
         public Passenger Passenger { get; private set; }
         public Guid PassengerId { get; private set; }
 
-
-        [Required]
         public CommentTypeEnum CommentType { get; private set; }
 
         [Required]
         [MaxLength(150)]
         public string Text { get; private set; }
+        public bool? IsMarkedAsRead { get; private set; }
 
-        public bool IsMarkedAsRead { get; private set; } = false;
+
+        public string? PredefinedCommentId { get; private set; } 
+        public PredefinedComment? PredefinedComment { get; private set; }
+
+        // Constructor for adding custom comment
+        public Comment(Guid passengerId, CommentTypeEnum commentType, string text, bool? isMarkedAsRead)
+        {
+            PassengerId = passengerId;
+            CommentType = commentType;
+            Text = text;
+            IsMarkedAsRead = isMarkedAsRead;
+            PredefinedCommentId = null; // By default, no predefined comment is associated
+        }
+
+        // Constructor for adding predefined comment
+        public Comment(Guid passengerId, CommentTypeEnum commentType, bool? isMarkedAsRead, PredefinedComment predefinedComment)
+        {
+            PassengerId = passengerId;
+            CommentType = commentType;
+            Text = predefinedComment.Text; // Use predefined comment's text
+            IsMarkedAsRead = isMarkedAsRead;
+            PredefinedCommentId = predefinedComment.Id;
+            PredefinedComment = predefinedComment;
+        }
     }
 }

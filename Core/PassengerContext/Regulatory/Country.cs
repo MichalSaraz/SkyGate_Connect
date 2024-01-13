@@ -17,5 +17,7 @@ namespace Core.PassengerContext.Regulatory
         public string CountryName { get; private set; }   
         
         public string[] AircraftRegistrationPrefix { get; private set; }
+
+        public bool IsEUCountry { get; private set; }
     }
 }

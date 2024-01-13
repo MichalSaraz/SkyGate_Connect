@@ -41,9 +41,9 @@ namespace Core.SeatingContext
 
         public SeatTypeEnum SeatType { get; private set; }
 
-        public FlightClassEnum FlightClass { get; private set; }    
+        public FlightClassEnum FlightClass { get; set; }    
         
-        public SeatStatusEnum SeatStatus { get; private set; } = SeatStatusEnum.Empty; 
+        public SeatStatusEnum SeatStatus { get; set; } = SeatStatusEnum.Empty; 
         
 
         // public bool IsChargeable { get; private set; }

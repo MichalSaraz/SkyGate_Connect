@@ -19,6 +19,9 @@ namespace Infrastructure.Data.Config
             builder.HasOne(p => p.Passenger)
                 .WithMany(c => c.Comments)
                 .HasForeignKey(c => c.PassengerId);
+            builder.HasOne(p => p.PredefinedComment)
+                .WithMany()
+                .HasForeignKey(p => p.PredefinedCommentId);
         }
     }
 }

@@ -16,21 +16,15 @@ namespace Core.PassengerContext
 {
     public class Passenger : PassengerInfo
     {
-        public int BoardingSequenceNumber { get; private set; }
+        public List<APISData> TravelDocuments { get; set; } = new List<APISData>();
 
-        public BoardingZoneEnum BoardingZone { get; private set; }
+        public List<Baggage> PassengerCheckedBags { get; set; } = new List<Baggage>();
 
-        public AcceptanceStatusEnum AcceptanceStatus { get; private set; } = AcceptanceStatusEnum.NotAccepted;
+        public List<PassengerFlight> Flights { get; set; } = new List<PassengerFlight>();
 
-        public List<APISData> TravelDocuments { get; private set; } = new List<APISData>();
+        public List<Comment> Comments { get; set; } = new List<Comment>();
 
-        public List<Baggage> PassengerCheckedBags { get; private set; } = new List<Baggage>();
-
-        public List<PassengerFlight> Flights { get; private set; } = new List<PassengerFlight>();
-
-        public List<Comment> Comments { get; private set; } = new List<Comment>();
-
-        public List<Seat> AssignedSeats { get; private set; } = new List<Seat>();
+        public List<Seat> AssignedSeats { get; set; } = new List<Seat>();
 
         public List<SpecialServiceRequest> SpecialServiceRequests { get; set; } = new List<SpecialServiceRequest>();
 

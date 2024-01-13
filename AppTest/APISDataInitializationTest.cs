@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace TestProject
 {
-    public class PassengersInitializationTest
+    public class APISDataInitializationTest
     {
         [Fact]
-        public void GeneratePassengers()
+        public void InitializeAPISData()
         {
             // Načtení connection string z appsettings.json
             var config = new ConfigurationBuilder()
@@ -28,13 +28,10 @@ namespace TestProject
             using (var dbContext = new AppDbContext(options, config))
             {
                 // Vytvoření instance vaší služby s testovacím `testTimeProvider` a `dbContext`
-                var service = new PassengersInitialization(dbContext);
+                var service = new APISDataInitialization(dbContext);
 
                 // Spuštění metody pro vytvoření letů pro příštích 7 dní
-                //service.InitializePassengers();
-
-                //
-                service.AcceptingRandomCustomers();
+                service.GenerateAPIS();
             }
         }
     }
