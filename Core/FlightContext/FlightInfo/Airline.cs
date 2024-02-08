@@ -21,7 +21,7 @@ namespace Core.FlightContext.FlightInfo
 
         public int? AccountingCode { get; private set; }
 
-        public int? AirlinePrefix { get; private set; }        
+        public string AirlinePrefix { get; private set; } = "000";  
         
 
         public List<Aircraft> Fleet { get; private set; } = new List<Aircraft>();

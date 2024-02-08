@@ -24,22 +24,6 @@ namespace Infrastructure.Data.Config
                     c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
                     c => c.ToList()
                 ));
-
-
-            //builder.Property(s => s.FlightClass)
-            //    .HasConversion(
-            //        v => v.ToString(),
-            //        v => (FlightClassEnum)Enum.Parse(typeof(FlightClassEnum), v)
-            //    );
-            //builder.Property(s => s.SeatPositionsAvailable)
-            //    .HasConversion(
-            //        v => v.ToString(),
-            //        v => (SeatPositionEnum)Enum.Parse(typeof(SeatPositionEnum), v)
-            //    );
-            //builder.HasMany(a => a.Seats)
-            //    .WithOne()
-            //    .OnDelete(DeleteBehavior.Cascade);
         }
-
     }
 }

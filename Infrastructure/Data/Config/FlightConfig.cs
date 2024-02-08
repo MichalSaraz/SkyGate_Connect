@@ -32,15 +32,11 @@ namespace Infrastructure.Data.Config
                 .HasColumnType("timestamp without time zone");
             builder.Property(f => f.ArrivalDateTime)
                 .HasColumnType("timestamp without time zone");
-            builder.Property(f => f.FlightType)
-                .HasEnumConversion();
+            //ToDelete
+            //builder.Property(f => f.FlightType)
+            //    .HasEnumConversion();
             builder.Property(f => f.FlightStatus)
                 .HasEnumConversion();
-            //builder.OwnsMany(s => s.Codeshare, fc =>
-            //{
-            //    fc.Property(fc => fc.CodeshareFlightNumber)
-            //        .HasColumnName("CodeshareFlightNumber");                   
-            //});
         }
     }
 }

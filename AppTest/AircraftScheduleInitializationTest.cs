@@ -1,5 +1,6 @@
 ﻿using Core.Time;
 using Infrastructure.Data;
+using Infrastructure.Data.TestDataInitializationClasses;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

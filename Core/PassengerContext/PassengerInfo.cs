@@ -1,4 +1,5 @@
 ﻿using Core.PassengerContext.Booking;
+using Core.PassengerContext.Booking.Enums;
 using Core.PassengerContext.JoinClasses;
 using Core.SeatingContext;
 using System;

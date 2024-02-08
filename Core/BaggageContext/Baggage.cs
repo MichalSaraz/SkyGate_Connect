@@ -1,4 +1,6 @@
-﻿using Core.FlightContext;
+﻿using Core.BaggageContext.Enums;
+using Core.FlightContext;
+using Core.FlightContext.FlightInfo;
 using Core.FlightContext.JoinClasses;
 using Core.PassengerContext;
 using System;
@@ -12,28 +14,26 @@ namespace Core.BaggageContext
 {
     public class Baggage
     {
-        public int Id { get; private set; }
+        public Guid Id { get; private set; }
 
         [Required]
-        public Passenger Passenger { get; private set; }
-        public Guid PassengerId { get; private set; }
+        public Passenger Passenger { get; set; }
+        public Guid PassengerId { get; set; }
 
-        [Required]
-        public BaggageTag BaggageTag { get; private set; }
+        public BaggageTag? BaggageTag { get; set; }
 
-        public SpecialBag SpecialBag { get; private set; }
+        public SpecialBag? SpecialBag { get; set; }
 
+        public Destination FinalDestination { get; set; }
+        public string DestinationId { get; set; }
 
-        [Range(1, 32)] //upravit pro americkou soustavu
+        [Range(1, 32)]
         public int Weight { get; set; }
 
-        public bool IsSpecialBag { get; private set; } = false;
+        //public bool IsSpecialBag { get; private set; } = false;
 
-        public bool IsActive { get; private set; } = false;
+        //public bool IsActive { get; private set; } = false;               
 
-
-        public BaggageTypeEnum BaggageType { get; private set; } = BaggageTypeEnum.Local;
-
-        public List<FlightBaggage> Flights { get; private set; } = new List<FlightBaggage>();       
+        public List<FlightBaggage> Flights { get; set; } = new List<FlightBaggage>();       
     }
 }

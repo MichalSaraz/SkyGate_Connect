@@ -2,6 +2,7 @@
 using Core.FlightContext.FlightInfo;
 using Core.PassengerContext;
 using Core.PassengerContext.Booking;
+using Core.SeatingContext.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;

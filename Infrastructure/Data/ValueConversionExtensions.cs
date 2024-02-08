@@ -25,6 +25,15 @@ namespace Infrastructure.Data
             return propertyBuilder;
         }
 
+        public static PropertyBuilder<T?> HasNullableEnumConversion<T>(this PropertyBuilder<T?> propertyBuilder) where T : struct
+        {
+            propertyBuilder.HasConversion(
+                v => v.HasValue ? v.Value.ToString() : null,
+                v => (T)Enum.Parse(typeof(T), v));
+
+            return propertyBuilder;
+        }
+
         public static PropertyBuilder<DateTime> HasDateTimeConversion(this PropertyBuilder<DateTime> propertyBuilder)
         {
             propertyBuilder.HasConversion(

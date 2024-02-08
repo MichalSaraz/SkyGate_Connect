@@ -26,10 +26,10 @@ namespace Infrastructure.Data.Config.JoinClassesConfig
                 .HasForeignKey(pf => pf.FlightId);
 
             builder.Property(p => p.BoardingZone)
-                .HasEnumConversion();
+                .HasNullableEnumConversion();
 
             builder.Property(p => p.AcceptanceStatus)
-                .HasEnumConversion<AcceptanceStatusEnum>();
+                .HasEnumConversion();
         }
     }
 }

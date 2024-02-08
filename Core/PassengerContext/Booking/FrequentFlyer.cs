@@ -1,4 +1,5 @@
 ﻿using Core.FlightContext.FlightInfo;
+using Core.PassengerContext.Booking.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

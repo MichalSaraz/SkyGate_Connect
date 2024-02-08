@@ -1,6 +1,6 @@
 ﻿using Core.FlightContext;
-using Core.PassengerContext.Booking;
-using Core.SeatingContext;
+using Core.PassengerContext.Booking.Enums;
+using Core.SeatingContext.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +21,6 @@ namespace Core.PassengerContext.JoinClasses
 
         public BoardingZoneEnum? BoardingZone { get; set; }
 
-        public AcceptanceStatusEnum AcceptanceStatus { get; set; } = AcceptanceStatusEnum.NotAccepted;        
+        public AcceptanceStatusEnum AcceptanceStatus { get; set; } = AcceptanceStatusEnum.NotAccepted;
     }
 }

@@ -1,4 +1,5 @@
-﻿using Core.FlightContext;
+﻿using Core.BoardingContext.Enums;
+using Core.FlightContext;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

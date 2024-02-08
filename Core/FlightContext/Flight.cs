@@ -1,9 +1,11 @@
 ﻿using Core.BaggageContext;
 using Core.BoardingContext;
 using Core.FlightContext.FlightInfo;
+using Core.FlightContext.FlightInfo.Enums;
 using Core.FlightContext.JoinClasses;
 using Core.PassengerContext.JoinClasses;
 using Core.SeatingContext;
+using Core.SeatingContext.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -34,7 +36,8 @@ namespace Core.FlightContext
         [Required]
         public DateTime ArrivalDateTime { get; set; }        
 
-        public FlightTypeEnum FlightType { get; private set; } = FlightTypeEnum.Outbound;
+        //ToDelete
+        //public FlightTypeEnum FlightType { get; private set; } = FlightTypeEnum.Outbound;
 
         public FlightStatusEnum FlightStatus { get; private set; } = FlightStatusEnum.Closed;
 

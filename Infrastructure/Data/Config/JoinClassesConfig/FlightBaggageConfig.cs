@@ -22,6 +22,8 @@ namespace Infrastructure.Data.Config.JoinClassesConfig
             builder.HasOne(fb => fb.Baggage)
                 .WithMany(b => b.Flights)
                 .HasForeignKey(fb => fb.BaggageId);
+            builder.Property(b => b.BaggageType)
+                .HasEnumConversion();
         }
     }
 }

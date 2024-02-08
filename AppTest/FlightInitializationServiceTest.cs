@@ -1,5 +1,6 @@
 using Core.Time;
 using Infrastructure.Data;
+using Infrastructure.Data.TestDataInitializationClasses;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -24,10 +25,10 @@ namespace AppTest
 
             using (var dbContext = new AppDbContext(options, config))
             {
-                var testTimeProvider = new TestTimeProvider(new DateTime(2023, 10, 1)); // Simulovaný èas pro test
+                var testTimeProvider = new TestTimeProvider(/*new DateTime(2023, 10, 1)*/); // Simulovaný èas pro test
 
                 // Nastavení simulovaného èasu na jiný èas
-                testTimeProvider.SetSimulatedTime(new DateTime(2023, 10, 15));
+                //testTimeProvider.SetSimulatedTime(new DateTime(2023, 10, 15));
 
                 // Vytvoøení instance vaší služby s testovacím `testTimeProvider` a `dbContext`
                 var service = new FlightInitializationService(dbContext, testTimeProvider);

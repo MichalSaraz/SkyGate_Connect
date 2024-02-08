@@ -22,23 +22,18 @@ namespace Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.HasSequence<int>("BaggageTagsSequence")
+                .HasMax(999999L)
+                .IsCyclic();
+
             modelBuilder.Entity("Core.BaggageContext.Baggage", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("BaggageType")
-                        .IsRequired()
+                    b.Property<string>("DestinationId")
                         .HasColumnType("text");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsSpecialBag")
-                        .HasColumnType("boolean");
 
                     b.Property<Guid>("PassengerId")
                         .HasColumnType("uuid");
@@ -47,6 +42,8 @@ namespace Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DestinationId");
 
                     b.HasIndex("PassengerId");
 
@@ -74,10 +71,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("FlightStatus")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("FlightType")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -153,8 +146,8 @@ namespace Infrastructure.Migrations
                     b.Property<int?>("AccountingCode")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("AirlinePrefix")
-                        .HasColumnType("integer");
+                    b.Property<string>("AirlinePrefix")
+                        .HasColumnType("text");
 
                     b.Property<string>("CountryId")
                         .HasColumnType("text");
@@ -193,8 +186,12 @@ namespace Infrastructure.Migrations
                     b.Property<int>("FlightId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("BaggageId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("BaggageId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("BaggageType")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("FlightId", "BaggageId");
 
@@ -466,7 +463,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("PNRId");
 
-                    b.ToTable("PassengerInfos");
+                    b.ToTable("PassengerInfo");
 
                     b.UseTptMappingStrategy();
                 });
@@ -619,6 +616,10 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.BaggageContext.Baggage", b =>
                 {
+                    b.HasOne("Core.FlightContext.FlightInfo.Destination", "FinalDestination")
+                        .WithMany()
+                        .HasForeignKey("DestinationId");
+
                     b.HasOne("Core.PassengerContext.Passenger", "Passenger")
                         .WithMany("PassengerCheckedBags")
                         .HasForeignKey("PassengerId")
@@ -627,39 +628,30 @@ namespace Infrastructure.Migrations
 
                     b.OwnsOne("Core.BaggageContext.BaggageTag", "BaggageTag", b1 =>
                         {
-                            b1.Property<int>("BaggageId")
-                                .HasColumnType("integer");
-
-                            b1.Property<string>("AirlineId")
-                                .HasColumnType("text");
-
-                            b1.Property<int>("Id")
-                                .HasColumnType("integer");
+                            b1.Property<Guid>("BaggageId")
+                                .HasColumnType("uuid");
 
                             b1.Property<string>("TagNumber")
                                 .HasColumnType("text")
                                 .HasColumnName("TagNumber");
 
+                            b1.Property<string>("TagType")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("TagType");
+
                             b1.HasKey("BaggageId");
 
-                            b1.HasIndex("AirlineId");
-
-                            b1.ToTable("TagNumbers");
-
-                            b1.HasOne("Core.FlightContext.FlightInfo.Airline", "Airline")
-                                .WithMany()
-                                .HasForeignKey("AirlineId");
+                            b1.ToTable("Baggage");
 
                             b1.WithOwner()
                                 .HasForeignKey("BaggageId");
-
-                            b1.Navigation("Airline");
                         });
 
                     b.OwnsOne("Core.BaggageContext.SpecialBag", "SpecialBag", b1 =>
                         {
-                            b1.Property<int>("BaggageId")
-                                .HasColumnType("integer");
+                            b1.Property<Guid>("BaggageId")
+                                .HasColumnType("uuid");
 
                             b1.Property<string>("SpecialBagDescription")
                                 .HasMaxLength(150)
@@ -679,8 +671,9 @@ namespace Infrastructure.Migrations
                                 .HasForeignKey("BaggageId");
                         });
 
-                    b.Navigation("BaggageTag")
-                        .IsRequired();
+                    b.Navigation("BaggageTag");
+
+                    b.Navigation("FinalDestination");
 
                     b.Navigation("Passenger");
 

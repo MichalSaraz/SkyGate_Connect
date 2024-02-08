@@ -28,9 +28,8 @@ namespace Infrastructure.Data
         public DbSet<Flight> Flights { get; set; }
         public DbSet<Passenger> Passengers { get; set; }
         public DbSet<PassengerFlight> PassengerFlight { get; set; }
-        public DbSet<PassengerInfo> PassengerInfos { get; set; }
+        public DbSet<PassengerInfo> PassengerInfo { get; set; }
         public DbSet<Baggage> Baggage { get; set; }
-        public DbSet<BaggageTag> TagNumbers { get; set; }
         public DbSet<Aircraft> Aircrafts { get; set; }
         public DbSet<Seat> Seats { get; set; }
         public DbSet<SpecialServiceRequest> SpecialServiceRequests { get; set; }
@@ -71,7 +70,13 @@ namespace Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly()); 
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            modelBuilder.HasSequence<int>("BaggageTagsSequence")
+                .StartsAt(1)
+                .IncrementsBy(1)
+                .HasMax(999999)
+                .IsCyclic();
         }
     }    
 }

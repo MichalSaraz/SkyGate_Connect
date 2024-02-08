@@ -20,25 +20,34 @@ namespace Infrastructure.Data.Config
                 .WithMany(p => p.PassengerCheckedBags)
                 .HasForeignKey(b => b.PassengerId)
                 .OnDelete(DeleteBehavior.Cascade);
-            builder.OwnsOne(a => a.BaggageTag, add =>
+            builder.OwnsOne(b => b.BaggageTag, baggageTag =>
             {
-                add.Ignore(d => d.LeadingDigit);
-                add.Ignore(d => d.Number);
-                add.Property(d => d.TagNumber)
+                baggageTag.WithOwner();
+                baggageTag.Ignore(d => d.Airline);
+                baggageTag.Ignore(d => d.AirlineId);
+                baggageTag.Ignore(d => d.LeadingDigit);
+                baggageTag.Property(d => d.Number)
+                    .HasDefaultValueSql("nextval('\"BaggageTagsSequence\"')");
+                baggageTag.Ignore(d => d.Number);
+                baggageTag.Property(d => d.TagNumber)
                     .HasColumnName("TagNumber");
-            });            
-            builder.OwnsOne(a => a.SpecialBag, add =>
+                baggageTag.Property(d => d.TagType)
+                    .HasColumnName("TagType")
+                    .HasEnumConversion();
+            });
+            builder.OwnsOne(b => b.SpecialBag, specialBag =>
             {
-                add.Ignore(d => d.Id);
-                add.Ignore(d => d.IsDescriptionRequired);
-                add.Property(d => d.SpecialBagType)
+                specialBag.WithOwner();
+                specialBag.Ignore(d => d.Id);
+                specialBag.Property(d => d.SpecialBagType)
                     .HasColumnName("SpecialBagType")
                     .HasEnumConversion();
-                add.Property(d => d.SpecialBagDescription)
+                specialBag.Property(d => d.SpecialBagDescription)
                     .HasColumnName("SpecialBagDescription");
             });
-            builder.Property(b => b.BaggageType)
-                .HasEnumConversion();
+            builder.HasOne(b => b.FinalDestination)
+                .WithMany()
+                .HasForeignKey(b => b.DestinationId);            
         }
     }
 }
