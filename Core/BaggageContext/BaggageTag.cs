@@ -1,13 +1,5 @@
 ﻿using Core.BaggageContext.Enums;
 using Core.FlightContext.FlightInfo;
-using Core.PassengerContext.Regulatory;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.BaggageContext
 {

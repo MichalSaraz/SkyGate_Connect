@@ -1,10 +1,7 @@
 using API.Extensions;
 using API.Middleware;
-using Core.BaggageContext;
-using Core.PassengerContext.Booking;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);

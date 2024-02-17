@@ -1,66 +1,101 @@
 ﻿using Core.FlightContext;
-using Core.FlightContext.FlightInfo;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.Extensions.Caching.Memory;
+using System.Diagnostics;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
     public class FlightRepository : IFlightRepository
     {
         private readonly AppDbContext _context;
+        private readonly IMemoryCache _cache;
 
-        public FlightRepository(AppDbContext context)
+        public FlightRepository(AppDbContext context, IMemoryCache cache)
         {
             _context = context;
+            _cache = cache;
         }
 
-        public async Task<Flight> GetFlightByCriteriaAsync(Expression<Func<Flight, bool>> criteria)
+        public async Task<Flight> GetFlightByCriteriaAsync(
+            Expression<Func<Flight, bool>> criteria, bool tracked = false)
         {
-            return await _context.Flights
-                .Include(_ => _.ScheduledFlight)
-                    .ThenInclude(_ => _.DestinationFrom)
-                .Include(_ => _.ScheduledFlight)
-                    .ThenInclude(_ => _.DestinationTo)
-                .Include(_ => _.ScheduledFlight)
-                    .ThenInclude(_ => _.Airline)
-                .Include(_ => _.Aircraft)
-                    .ThenInclude(_ => _.AircraftType)
-                .Include(_ => _.Boarding)
-                .Include(_ => _.ListOfBookedPassengers)
-                    .ThenInclude(_ => _.Passenger)
-                .Include(_ => _.ListOfCheckedBaggage)
-                    .ThenInclude(_ => _.Baggage)
-                .Include(_ => _.Seats)
-                .Where(criteria)
-                .FirstOrDefaultAsync();
+            var CACHE_KEY = $"Flight_{criteria}";
+
+            var flightCache = _cache.Get<Flight>(CACHE_KEY);
+            if (!tracked && flightCache != null)
+            {
+                return flightCache;
+            }
+
+            var flightQuery = _context.Flights.AsQueryable()
+            .Include(_ => _.ScheduledFlight)
+            .Where(criteria);
+
+            if (!tracked)
+            {
+                flightQuery = flightQuery.AsNoTracking();
+            }
+
+            var flight = await flightQuery.FirstOrDefaultAsync();
+
+            _cache.Set(CACHE_KEY, flight, new MemoryCacheEntryOptions
+            {
+                SlidingExpiration = TimeSpan.FromMinutes(5)
+            });
+
+            return flight;
         }
 
-        public async Task<IReadOnlyList<Flight>> GetFlightsByCriteriaAsync(Expression<Func<Flight, bool>> criteria)
+        public async Task<IReadOnlyList<Flight>> GetFlightsByCriteriaAsync(
+            Expression<Func<Flight, bool>> criteria, bool tracked = false)
         {
-            return await _context.Flights
+            var flightsQuery = _context.Flights.AsQueryable()
                 .Include(_ => _.ScheduledFlight)
-                    .ThenInclude(_ => _.DestinationFrom)
-                .Include(_ => _.ScheduledFlight)
-                    .ThenInclude(_ => _.DestinationTo)
-                .Include(_ => _.ScheduledFlight)
-                    .ThenInclude(_ => _.Airline)
-                .Include(_ => _.Aircraft)
-                    .ThenInclude(_ => _.AircraftType)
-                .Include(_ => _.Boarding)
                 .Include(_ => _.ListOfBookedPassengers)
-                    .ThenInclude(_ => _.Passenger)
-                .Include(_ => _.ListOfCheckedBaggage)
-                    .ThenInclude(_ => _.Baggage)
-                .Include(_ => _.Seats)
-                .Where(criteria)
-                .ToListAsync();
+                .Where(criteria);
+
+            if (!tracked)
+            {
+                flightsQuery = flightsQuery.AsNoTracking();
+            }
+
+            var flights = await flightsQuery.ToListAsync();
+
+            return flights;
+        }
+
+        public async Task<Flight> GetFlightByIdAsync(int id, bool tracked = true)
+        {
+            var CACHE_KEY = $"Flight_{id}";
+
+            var flightCache = _cache.Get<Flight>(CACHE_KEY);
+            if (!tracked && flightCache != null)
+            {
+                return flightCache;
+            }
+
+            var flightQuery = _context.Flights.AsQueryable()
+            .Include(_ => _.ScheduledFlight)
+                .ThenInclude(_ => _.Airline)
+            .Include(_ => _.ListOfBookedPassengers)
+            .Where(_ => _.Id == id);
+
+            if (!tracked)
+            {
+                flightQuery = flightQuery.AsNoTracking();
+            }
+
+            var flight = await flightQuery.SingleOrDefaultAsync();
+
+            _cache.Set(CACHE_KEY, flight, new MemoryCacheEntryOptions
+            {
+                SlidingExpiration = TimeSpan.FromMinutes(5)
+            });
+
+            return flight;
         }
     }
 }

@@ -18,5 +18,6 @@ namespace Core.Dtos
         public List<SpecialServiceRequestDto> SpecialServiceRequests { get; set; } = new List<SpecialServiceRequestDto>();
         public List<PassengerFlightDto> ConnectingFlights { get; set; }
         public List<PassengerFlightDto> InboundFlights { get; set; }
+        public List<SeatDto> OtherFlightsSeats { get; set; }
     }
 }

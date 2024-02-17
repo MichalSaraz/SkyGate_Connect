@@ -1,18 +1,11 @@
-﻿using Core.BaggageContext;
-using Core.BoardingContext;
+﻿using Core.BoardingContext;
 using Core.FlightContext.FlightInfo;
 using Core.FlightContext.FlightInfo.Enums;
 using Core.FlightContext.JoinClasses;
 using Core.PassengerContext.JoinClasses;
 using Core.SeatingContext;
 using Core.SeatingContext.Enums;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.FlightContext
 {
@@ -41,7 +34,6 @@ namespace Core.FlightContext
 
         public FlightStatusEnum FlightStatus { get; private set; } = FlightStatusEnum.Closed;
 
-
         public int TotalBookedPassengers
         {
             get
@@ -59,7 +51,6 @@ namespace Core.FlightContext
             }
             private set { }
         }
-
 
         public List<PassengerFlight> ListOfBookedPassengers { get; set; } = new List<PassengerFlight>(); 
         
@@ -81,8 +72,7 @@ namespace Core.FlightContext
             ScheduledFlightId = scheduledFlightNumber;
             DepartureDateTime = departureDateTime;
             ArrivalDateTime = arrivalDateTime;
-        }
-        
+        }        
 
         public List<Seat> InitializeSeats()
         {

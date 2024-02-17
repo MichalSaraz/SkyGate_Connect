@@ -5,14 +5,12 @@ using Core.BaggageContext;
 using Core.FlightContext.JoinClasses;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using API.Api.FlightContext.Models;
 using Core.Dtos;
-using Core.FlightContext;
 using Newtonsoft.Json.Linq;
 using System.Linq.Expressions;
 using Core.PassengerContext;
 using API.Api.PassengerContext.Models;
-using System.Diagnostics;
+using Core.FlightContext;
 
 namespace API.Api.PassengerContext.Controllers
 {
@@ -26,7 +24,6 @@ namespace API.Api.PassengerContext.Controllers
         private readonly IDestinationRepository _destinationRepository;
         private readonly ITimeProvider _timeProvider;
         private readonly IMapper _mapper;
-        private readonly ILogger<PassengerController> _logger;
 
         public PassengerController(
             IFlightRepository flightRepository,
@@ -34,8 +31,7 @@ namespace API.Api.PassengerContext.Controllers
             IPassengerRepository passengerRepository,
             IBaggageRepository baggageRepository,
             IMapper mapper,
-            IDestinationRepository destinationRepository,
-            ILogger<PassengerController> logger)
+            IDestinationRepository destinationRepository)
         {
             _flightRepository = flightRepository;
             _timeProvider = timeProvider;
@@ -43,7 +39,6 @@ namespace API.Api.PassengerContext.Controllers
             _baggageRepository = baggageRepository;
             _mapper = mapper;
             _destinationRepository = destinationRepository;
-            _logger = logger;
         }
 
         [HttpPost("search")]
@@ -104,25 +99,18 @@ namespace API.Api.PassengerContext.Controllers
                     f.PNRId == model.PNR ||
                     string.IsNullOrEmpty(model.PNR));
 
+            var passengers = await _passengerRepository.GetPassengersByCriteriaAsync(criteria);            
+
             var selectedFlight = await _flightRepository.GetFlightByCriteriaAsync(f =>
                 f.ScheduledFlightId.Substring(2) == model.FlightNumber &&
                 f.ScheduledFlight.AirlineId == model.AirlineId &&
                 f.DepartureDateTime.Date == model.DepartureDate.Value.Date);
 
-            var passengers = await _passengerRepository.GetPassengersByCriteriaAsync(criteria);
-
-            var passengersDto = _mapper.Map<List<PassengerOverviewDto>>(passengers);
-
-            foreach (var passengerDto in passengersDto)
+            var passengersDto = _mapper.Map<List<PassengerOverviewDto>>(passengers, opt =>
             {
-                passengerDto.Flights = passengerDto.Flights
-                    .Where(flt => flt.FlightId == selectedFlight.Id)
-                    .ToList();
-
-                passengerDto.AssignedSeats = passengerDto.AssignedSeats
-                    .Where(seat => seat.FlightId == selectedFlight.Id)
-                    .ToList();
-            }
+                opt.Items["DepartureDateTime"] = selectedFlight.DepartureDateTime;
+                opt.Items["FlightId"] = selectedFlight.Id;
+            });
 
             return Ok(passengersDto);
         }
@@ -130,84 +118,29 @@ namespace API.Api.PassengerContext.Controllers
         [HttpGet("{id}/flight/{flightId}/details")]
         public async Task<ActionResult<Passenger>> GetPassengerDetails(Guid id, int flightId)
         {
-            var passenger = await _passengerRepository.GetPassengerByCriteriaAsync(f => f.Id == id);
-            var selectedFlight = await _flightRepository.GetFlightByCriteriaAsync(f => f.Id == flightId);
+            var passenger = await _passengerRepository.GetPassengerByIdAsync(id, false, true);
+            var selectedFlight = await _flightRepository.GetFlightByIdAsync(flightId, false);
 
-            var passengerDto = _mapper.Map<PassengerDetailsDto>(passenger); 
+            var passengerDto = _mapper.Map<PassengerDetailsDto>(passenger, opt =>
+            {
+                opt.Items["DepartureDateTime"] = selectedFlight.DepartureDateTime;
+                opt.Items["FlightId"] = flightId;
+            });
 
             if (passengerDto == null)
             {
                 return NotFound(new ApiResponse(404, $"Passenger {id} not found"));
             }
 
-            var connectingFlights = passenger.Flights
-                .Where(f => f.Flight.DepartureDateTime > selectedFlight.DepartureDateTime)
-                .ToList();
-
-            var inboundFlights = passenger.Flights
-                .Where(f => f.Flight.DepartureDateTime < selectedFlight.DepartureDateTime)
-                .ToList();
-
-            passengerDto.ConnectingFlights = _mapper.Map<List<PassengerFlightDto>>(connectingFlights);
-            passengerDto.InboundFlights = _mapper.Map<List<PassengerFlightDto>>(inboundFlights);
-
             return Ok(passengerDto);
         }
 
-        [HttpPut("{id}/flight/{flightId}/edit-baggage")]
-        public async Task<ActionResult<Baggage>> EditBaggage(Guid id, int flightId,
-            [FromBody] List<EditBaggageModel> editBaggageModels)
-        {
-            var passenger = await _passengerRepository.GetPassengerByCriteriaAsync(f =>
-                f.Id == id);
-
-            var baggage = await _baggageRepository.GetBaggageByCriteriaAsync(f =>
-                    f.Id == editBaggageModels.FirstOrDefault().BaggageId);
-
-            if (passenger == null)
-            {
-                return NotFound($"Passenger with Id {id} was not found.");
-            }
-
-            var changesToSave = new List<Baggage>();
-
-            foreach (var editBaggageModel in editBaggageModels)
-            {
-                if (baggage != null)
-                {
-                    baggage.Weight = editBaggageModel.Weight;
-
-                    if (editBaggageModel.SpecialBagType.HasValue)
-                    {
-                        if (baggage.SpecialBag == null)
-                        {
-                            baggage.SpecialBag = new SpecialBag(editBaggageModel.SpecialBagType.Value,
-                                editBaggageModel.Description);
-                        }
-                        else
-                        {
-                            baggage.SpecialBag.SpecialBagType = editBaggageModel.SpecialBagType.Value;
-                            baggage.SpecialBag.SpecialBagDescription = editBaggageModel.Description;
-                        }
-                    }
-                    else if (!editBaggageModel.SpecialBagType.HasValue && baggage.SpecialBag != null)
-                    {
-                        baggage.SpecialBag = null;
-                    }
-                }
-                changesToSave.Add(baggage);
-            }
-            await _baggageRepository.UpdateAsync(changesToSave.ToArray());
-
-            return Ok();
-        }
-        
         [HttpPost("{id}/flight/{flightId}/add-baggage")]
         public async Task<ActionResult<Baggage>> AddBaggage(Guid id, int flightId,
             [FromBody] List<AddBaggageModel> addBaggageModels)
         {
-            var passenger = await _passengerRepository.GetPassengerByCriteriaAsync(f => f.Id == id);
-            var selectedFlight = await _flightRepository.GetFlightByCriteriaAsync(f => f.Id == flightId);
+            var passenger = await _passengerRepository.GetPassengerByIdAsync(id);
+            var selectedFlight = await _flightRepository.GetFlightByIdAsync(flightId);
             var destination = await _destinationRepository.GetDestinationByCriteriaAsync(f =>
                 f.IATAAirportCode == addBaggageModels.FirstOrDefault().FinalDestination);
 
@@ -222,9 +155,9 @@ namespace API.Api.PassengerContext.Controllers
             {
                 var newBaggage = new Baggage
                 {
-                    Passenger = passenger,
+                    PassengerId = passenger.Id,
                     Weight = baggageModel.Weight,
-                    FinalDestination = destination
+                    DestinationId = destination.IATAAirportCode
                 };
 
                 if (baggageModel.SpecialBagType.HasValue)
@@ -233,7 +166,7 @@ namespace API.Api.PassengerContext.Controllers
                 }
 
                 //ToDo: Add validation for tag number correct format
-                if ((baggageModel.TagType == TagTypeEnum.System && baggageModel.BaggageType == BaggageTypeEnum.Transfer) || 
+                if ((baggageModel.TagType == TagTypeEnum.System && baggageModel.BaggageType == BaggageTypeEnum.Transfer) ||
                      baggageModel.TagType == TagTypeEnum.Manual && !string.IsNullOrEmpty(baggageModel.TagNumber))
                 {
                     newBaggage.BaggageTag = new BaggageTag(baggageModel.TagNumber);
@@ -241,11 +174,12 @@ namespace API.Api.PassengerContext.Controllers
                 else if (baggageModel.TagType == TagTypeEnum.System)
                 {
                     var number = _baggageRepository.GetNextSequenceValue("BaggageTagsSequence");
-                    var baggageTag = new BaggageTag(passenger.Flights.FirstOrDefault()?.Flight.ScheduledFlight.Airline, number);
+                    var baggageTag = new BaggageTag(selectedFlight.ScheduledFlight.Airline, number);
                     newBaggage.BaggageTag = baggageTag;
                 }
 
-                await _baggageRepository.AddAsync(newBaggage);
+                await _baggageRepository.AddAsync(newBaggage);                
+                
                 baggageList.Add(newBaggage);
 
                 var orderedFlights = passenger.Flights
@@ -284,18 +218,61 @@ namespace API.Api.PassengerContext.Controllers
             return Ok();
         }
 
+        [HttpPut("{id}/edit-baggage")]
+        public async Task<ActionResult<Baggage>> EditBaggage(Guid id,
+            [FromBody] List<EditBaggageModel> editBaggageModels)
+        {
+            var changesToSave = new List<Baggage>();
+
+            foreach (var editBaggageModel in editBaggageModels)
+            {
+                var selectedBaggage = await _baggageRepository
+                    .GetBaggageByIdAsync(editBaggageModel.BaggageId);
+
+                if (selectedBaggage != null)
+                {
+                    selectedBaggage.Weight = editBaggageModel.Weight;
+
+                    if (editBaggageModel.SpecialBagType.HasValue)
+                    {
+                        if (selectedBaggage.SpecialBag == null)
+                        {
+                            selectedBaggage.SpecialBag = new SpecialBag(editBaggageModel.SpecialBagType.Value,
+                                editBaggageModel.Description);
+                        }
+                        else
+                        {
+                            selectedBaggage.SpecialBag.SpecialBagType = editBaggageModel.SpecialBagType.Value;
+                            selectedBaggage.SpecialBag.SpecialBagDescription = editBaggageModel.Description;
+                        }
+                    }
+                    else if (!editBaggageModel.SpecialBagType.HasValue && selectedBaggage.SpecialBag != null)
+                    {
+                        selectedBaggage.SpecialBag = null;
+                    }
+                }
+                changesToSave.Add(selectedBaggage);
+            }
+            await _baggageRepository.UpdateAsync(changesToSave.ToArray());
+
+            return Ok();
+        }      
+        
         [HttpDelete("{id}/delete-baggage")]
-        public async Task<ActionResult> DeleteSelectedBaggage(Guid id, int flightId,
+        public async Task<ActionResult> DeleteSelectedBaggage(Guid id,
             [FromBody] List<Guid> baggageIds)
         {
-            var passenger = await _passengerRepository.GetPassengerByCriteriaAsync(f => f.Id == id);
+            var selectedBaggage = new List<Baggage>();
 
-            if (passenger == null)
+            foreach (var baggageId in baggageIds)
             {
-                return NotFound(new ApiResponse(404, $"Passenger with Id {id} was not found."));
-            }
+                var baggage = await _baggageRepository.GetBaggageByIdAsync(baggageId);
 
-            var selectedBaggage = passenger.PassengerCheckedBags.Where(b => baggageIds.Contains(b.Id)).ToList();
+                if (baggage != null)
+                {
+                    selectedBaggage.Add(baggage);
+                }
+            }
 
             if (selectedBaggage.Count != baggageIds.Count)
             {
@@ -305,6 +282,17 @@ namespace API.Api.PassengerContext.Controllers
             await _baggageRepository.DeleteAsync(selectedBaggage.ToArray());
 
             return NoContent();
+        }
+
+        // Get all bags of a passenger
+        [HttpGet("{id}/all-bags")]
+        public async Task<ActionResult<List<Baggage>>> GetAllPassengersBags(Guid id)
+        {
+            var passenger = await _passengerRepository.GetPassengerByIdAsync(id, false, true);
+
+            var passengerDto = _mapper.Map<List<BaggageDetailsDto>>(passenger.PassengerCheckedBags);
+
+            return Ok(passengerDto);
         }
     }    
 }

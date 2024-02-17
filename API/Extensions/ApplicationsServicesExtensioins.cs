@@ -15,6 +15,7 @@ namespace API.Extensions
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
 
+            services.AddMemoryCache();
             //services.AddSingleton<ITimeProvider, SystemTimeProvider>();
             services.AddSingleton<ITimeProvider, TestTimeProvider>();
 

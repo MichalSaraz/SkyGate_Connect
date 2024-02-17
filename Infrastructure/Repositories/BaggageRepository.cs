@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Infrastructure.Repositories
 {
@@ -23,28 +24,50 @@ namespace Infrastructure.Repositories
         {
         }
 
-        public async Task<Baggage> GetBaggageByCriteriaAsync(Expression<Func<Baggage, bool>> criteria)
+        public async Task<Baggage> GetBaggageByTagNumber(string tagNumber)
         {
-            return await _context.Baggage
+            return await _context.Baggage.AsNoTracking()
                 .Include(_ => _.Passenger)
                 .Include(_ => _.BaggageTag)
                 .Include(_ => _.SpecialBag)
                 .Include(_ => _.FinalDestination)
                 .Include(_ => _.Flights)
-                .Where(criteria)
-                .FirstOrDefaultAsync();
+                    .ThenInclude(_ => _.Flight)
+                        .ThenInclude(_ => _.ScheduledFlight)
+                .FirstOrDefaultAsync(_ => _.BaggageTag.TagNumber == tagNumber);
         }
 
         public async Task<IReadOnlyList<Baggage>> GetAllBaggageByCriteriaAsync(Expression<Func<Baggage, bool>> criteria)
         {
-            return await _context.Baggage
+            return await _context.Baggage.AsNoTracking()
                 .Include(_ => _.Passenger)
                 .Include(_ => _.BaggageTag)
                 .Include(_ => _.SpecialBag)
                 .Include(_ => _.FinalDestination)
                 .Include(_ => _.Flights)
+                    .ThenInclude(_ => _.Flight)
+                        .ThenInclude(_ => _.ScheduledFlight)
                 .Where(criteria)
                 .ToListAsync();
+        }
+
+        public async Task<Baggage> GetBaggageByIdAsync(Guid id, bool tracked = true)
+        {
+            var baggageQuery = _context.Baggage.AsQueryable()
+                .Include(_ => _.Passenger)
+                .Include(_ => _.BaggageTag)
+                .Include(_ => _.SpecialBag)
+                .Include(_ => _.FinalDestination)
+                .Where(_ => _.Id == id);
+
+            if (!tracked)
+            {
+                baggageQuery = baggageQuery.AsNoTracking();
+            }
+
+            var baggage = await baggageQuery.SingleOrDefaultAsync();
+
+            return baggage;
         }
 
         public int GetNextSequenceValue(string sequenceName)

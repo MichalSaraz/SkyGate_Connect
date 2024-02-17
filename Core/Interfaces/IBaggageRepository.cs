@@ -1,18 +1,13 @@
 ﻿using Core.BaggageContext;
-using Core.FlightContext;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.Interfaces
 {
     public interface IBaggageRepository : IGenericRepository<Baggage>
     {
-        Task<Baggage> GetBaggageByCriteriaAsync(Expression<Func<Baggage, bool>> criteria);
+        Task<Baggage> GetBaggageByTagNumber(string tagNumber);
         Task<IReadOnlyList<Baggage>> GetAllBaggageByCriteriaAsync(Expression<Func<Baggage, bool>> criteria);
+        Task<Baggage> GetBaggageByIdAsync(Guid id, bool tracked = true);
         int GetNextSequenceValue(string sequenceName);
     }
 }

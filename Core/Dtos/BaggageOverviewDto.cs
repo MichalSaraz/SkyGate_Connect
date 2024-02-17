@@ -1,10 +1,7 @@
 ﻿namespace Core.Dtos
 {
-    public class BaggageOverviewDto
+    public class BaggageOverviewDto : BaggageBaseDto
     {
-        public Guid Id { get; set; }
-        public string TagNumber { get; set; }
-        public int Weight { get; set; }
-        public string FinalDestination { get; set; }
+        public string BaggageType { get; set; }
     }
 }

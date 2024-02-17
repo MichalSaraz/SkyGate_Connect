@@ -27,8 +27,13 @@ namespace Core.Dtos
         [JsonProperty(Order = -2)]
         public string PNR { get; set; }
 
-        public List<PassengerFlightDto> Flights { get; set; } = new List<PassengerFlightDto>();
+        [JsonProperty(Order = -2)]
+        public int NumberOfCheckedBags { get; set; }
 
-        public List<SeatDto> AssignedSeats { get; set; } = new List<SeatDto>();
+        [JsonProperty(Order = -2)]
+        public PassengerFlightDto CurrentFlight { get; set; }
+
+        [JsonProperty(Order = -2)]
+        public SeatDto SeatOnCurrentFlight { get; set; }
     }
 }

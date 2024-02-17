@@ -11,7 +11,8 @@ namespace Core.Interfaces
 {
     public interface IFlightRepository
     {
-        Task<Flight> GetFlightByCriteriaAsync(Expression<Func<Flight, bool>> criteria);
-        Task<IReadOnlyList<Flight>> GetFlightsByCriteriaAsync(Expression<Func<Flight, bool>> criteria);
+        Task<Flight> GetFlightByCriteriaAsync(Expression<Func<Flight, bool>> criteria, bool tracked = false);
+        Task<IReadOnlyList<Flight>> GetFlightsByCriteriaAsync(Expression<Func<Flight, bool>> criteria, bool tracked = false);
+        Task<Flight> GetFlightByIdAsync(int id, bool tracked = true);
     }
 }

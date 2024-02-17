@@ -11,6 +11,5 @@ namespace Core.Dtos
         public string[] CodeShare { get; set; }        
         public string Airline { get; set; }
         public int TotalBookedPassengers { get; set; }
-        public int? Count { get; set; }
     }
 }

@@ -1,14 +1,7 @@
-﻿using Core.BaggageContext.Enums;
-using Core.FlightContext;
-using Core.FlightContext.FlightInfo;
+﻿using Core.FlightContext.FlightInfo;
 using Core.FlightContext.JoinClasses;
 using Core.PassengerContext;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.BaggageContext
 {
@@ -28,11 +21,7 @@ namespace Core.BaggageContext
         public string DestinationId { get; set; }
 
         [Range(1, 32)]
-        public int Weight { get; set; }
-
-        //public bool IsSpecialBag { get; private set; } = false;
-
-        //public bool IsActive { get; private set; } = false;               
+        public int Weight { get; set; }               
 
         public List<FlightBaggage> Flights { get; set; } = new List<FlightBaggage>();       
     }

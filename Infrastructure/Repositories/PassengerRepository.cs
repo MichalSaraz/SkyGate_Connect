@@ -1,69 +1,136 @@
-﻿using Core.Interfaces;
+﻿using Core.FlightContext;
+using Core.Interfaces;
 using Core.PassengerContext;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.Extensions.Caching.Memory;
+using System.Diagnostics;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
     public class PassengerRepository : IPassengerRepository
     {
         private readonly AppDbContext _context;
+        private readonly IMemoryCache _cache;
 
-        public PassengerRepository(AppDbContext context)
+        public PassengerRepository(AppDbContext context, IMemoryCache cache)
         {
             _context = context;
+            _cache = cache;
         }
 
-        public async Task<Passenger> GetPassengerByCriteriaAsync(Expression<Func<Passenger, bool>> criteria)
+        public async Task<IReadOnlyList<Passenger>> GetPassengersByCriteriaAsync(
+            Expression<Func<Passenger, bool>> criteria, bool tracked = false)
         {
-            return await _context.Passengers
+            var CACHE_KEY = $"Passengers_{criteria}";
+
+            var passengersCache = _cache.Get<IReadOnlyList<Passenger>>(CACHE_KEY);
+            if (!tracked && passengersCache != null)
+            {
+                return passengersCache;
+            }
+
+            var passengersQuery = _context.Passengers.AsQueryable()
                 .Include(_ => _.PNR)
-                .Include(_ => _.FrequentFlyer)
                 .Include(_ => _.TravelDocuments)
+                .Include(_ => _.Flights)
+                    .ThenInclude(_ => _.Flight)
+                        .ThenInclude(_ => _.ScheduledFlight)
+                .Include(_ => _.AssignedSeats)
+                .Where(criteria);
+
+            if (!tracked)
+            {
+                passengersQuery = passengersQuery.AsNoTracking();
+            }
+
+            var passengers = await passengersQuery.ToListAsync();
+
+            _cache.Set(CACHE_KEY, passengers, new MemoryCacheEntryOptions
+            {
+                SlidingExpiration = TimeSpan.FromMinutes(5)
+            });
+
+            return passengers;
+        }
+
+        public async Task<Passenger> GetPassengerByIdAsync(Guid id, bool tracked = true,
+            bool displayDetails = false)
+        {
+            var CACHE_KEY = $"Passenger_{id}_{displayDetails}";
+
+            var passengerCache = _cache.Get<Passenger>(CACHE_KEY);
+            if (!tracked && passengerCache != null)
+            {
+                return passengerCache;
+            }
+
+            var passengerQuery = _context.Passengers.AsQueryable()
+                .Include(_ => _.Flights)
+                    .ThenInclude(_ => _.Flight)
+                        .ThenInclude(_ => _.ScheduledFlight)
+                .Where(_ => _.Id == id);
+
+            if (displayDetails)
+            {
+                passengerQuery = passengerQuery
                 .Include(_ => _.PassengerCheckedBags)
                     .ThenInclude(_ => _.BaggageTag)
                 .Include(_ => _.PassengerCheckedBags)
                     .ThenInclude(_ => _.SpecialBag)
-                .Include(_ => _.Flights)
-                    .ThenInclude(_ => _.Flight)
-                        .ThenInclude(_ => _.ScheduledFlight)
-                            .ThenInclude(_ => _.Airline)
-                .Include(_ => _.Comments)
-                    .ThenInclude(_ => _.PredefinedComment)
+                .Include(_ => _.PassengerCheckedBags)
+                    .ThenInclude(_ => _.FinalDestination)
+                .Include(_ => _.PassengerCheckedBags)
+                    .ThenInclude(_ => _.Flights)
+                        .ThenInclude(_ => _.Flight)
+                            .ThenInclude(_ => _.ScheduledFlight)
                 .Include(_ => _.AssignedSeats)
-                .Include(_ => _.SpecialServiceRequests)
-                    .ThenInclude(_ => _.SSRCode)
-                .Where(criteria)
-                .FirstOrDefaultAsync();
+                .Include(_ => _.SpecialServiceRequests);
+            }
+
+            if (!tracked)
+            {
+                passengerQuery = passengerQuery.AsNoTracking();
+            }
+
+            var passenger = await passengerQuery.SingleOrDefaultAsync();
+
+            _cache.Set(CACHE_KEY, passenger, new MemoryCacheEntryOptions
+            {
+                SlidingExpiration = TimeSpan.FromMinutes(5)
+            });
+
+            return passenger;
         }
 
-        public async Task<IReadOnlyList<Passenger>> GetPassengersByCriteriaAsync(Expression<Func<Passenger, bool>> criteria)
+        public async Task<IReadOnlyList<Passenger>> GetPassengersWithFlightConnectionsAsync(int flightId, bool isOnwardFlight)
         {
-            return await _context.Passengers
-                .Include(_ => _.PNR)
-                .Include(_ => _.FrequentFlyer)
-                .Include(_ => _.TravelDocuments)
-                .Include(_ => _.PassengerCheckedBags)
-                    .ThenInclude(_ => _.BaggageTag)
-                .Include(_ => _.PassengerCheckedBags)
-                    .ThenInclude(_ => _.SpecialBag)
+            var passengerQuery = _context.Passengers.AsQueryable().AsNoTracking()
                 .Include(_ => _.Flights)
                     .ThenInclude(_ => _.Flight)
                         .ThenInclude(_ => _.ScheduledFlight)
-                            .ThenInclude(_ => _.Airline)
-                .Include(_ => _.Comments)
-                    .ThenInclude(_ => _.PredefinedComment)
+                .Include(_ => _.PassengerCheckedBags)
                 .Include(_ => _.AssignedSeats)
-                .Include(_ => _.SpecialServiceRequests)
-                    .ThenInclude(_ => _.SSRCode)
-                .Where(criteria)
-                .ToListAsync();
+                .Where(p => p.Flights
+                    .Any(_ => _.FlightId == flightId));
+
+            if (isOnwardFlight)
+            {
+                passengerQuery = passengerQuery
+                    .Where(p => p.Flights
+                        .Any(_ => _.Flight.DepartureDateTime > p.Flights
+                            .FirstOrDefault(_ => _.FlightId == flightId).Flight.DepartureDateTime));
+            }
+            else
+            {
+                passengerQuery = passengerQuery
+                    .Where(p => p.Flights
+                        .Any(_ => _.Flight.DepartureDateTime < p.Flights
+                            .FirstOrDefault(_ => _.FlightId == flightId).Flight.DepartureDateTime));
+            }
+
+            return await passengerQuery.ToListAsync();
         }
     }
 }

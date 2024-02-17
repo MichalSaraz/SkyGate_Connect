@@ -1,5 +1,4 @@
 ﻿using Core.BaggageContext;
-using Core.BoardingContext;
 using Core.FlightContext;
 using Core.FlightContext.FlightInfo;
 using Core.PassengerContext;
@@ -8,17 +7,8 @@ using Core.PassengerContext.JoinClasses;
 using Core.PassengerContext.Regulatory;
 using Core.SeatingContext;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
@@ -44,7 +34,6 @@ namespace Infrastructure.Data
         public DbSet<APISData> APISData { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<SeatMap> SeatMaps { get; set; }
-
 
 
         protected readonly IConfiguration _configuration;

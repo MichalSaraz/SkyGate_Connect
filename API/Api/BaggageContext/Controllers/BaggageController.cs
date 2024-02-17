@@ -1,14 +1,10 @@
-﻿using API.Errors;
+﻿using AutoMapper;
 using Core.BaggageContext;
 using Core.BaggageContext.Enums;
-using Core.FlightContext;
-using Core.FlightContext.FlightInfo;
-using Core.FlightContext.JoinClasses;
+using Core.Dtos;
 using Core.Interfaces;
-using Core.PassengerContext;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace API.Api.BaggageContext.Controllers
 {
@@ -17,27 +13,26 @@ namespace API.Api.BaggageContext.Controllers
     public class BaggageController : ControllerBase
     {
         private readonly IBaggageRepository _baggageRepository;
-        private readonly IPassengerRepository _passengerRepository;
-        private readonly IFlightRepository _flightRepository;
+        private readonly IMapper _mapper;
 
         public BaggageController(
             IBaggageRepository baggageRepository,
-            IPassengerRepository passengerRepository,
-            IFlightRepository flightRepository
-            )
+            IMapper mapper)
         {
             _baggageRepository = baggageRepository;
-            _passengerRepository = passengerRepository;
-            _flightRepository = flightRepository;           
+            _mapper = mapper;
         }
+
         // Get details of a bag
         [HttpGet("{tagNumber}/details")]
         public async Task<ActionResult<Baggage>> GetBaggageDetails(string tagNumber)
         {
-            var baggage = await _baggageRepository.GetBaggageByCriteriaAsync(f =>
-                f.BaggageTag.TagNumber == tagNumber);
+            //ToDo: Add validation for tagNumber
+            var baggage = await _baggageRepository.GetBaggageByTagNumber(tagNumber);
 
-            return Ok(baggage);
+            var baggageDto = _mapper.Map<Baggage, BaggageDetailsDto>(baggage);
+
+            return Ok(baggageDto);
         }
 
         // Get all bags for a flight
@@ -47,11 +42,14 @@ namespace API.Api.BaggageContext.Controllers
             var bagList = await _baggageRepository.GetAllBaggageByCriteriaAsync(f =>
                 f.Flights.Any(_ => _.FlightId == flightId));
 
-            return Ok(bagList);
+            var bagListDto = _mapper.Map<List<BaggageOverviewDto>>(bagList, opt => 
+                opt.Items["FlightId"] = flightId);
+
+            return Ok(bagListDto);
         }
 
         // Get all bags for a flight by special bag type
-        [HttpGet("{flightId}/{specialBagType}")]
+        [HttpGet("{flightId}/special-bag-type/{specialBagType}")]
         public async Task<ActionResult<List<Baggage>>> GetAllBagsBySpecialBagType(int flightId,
             SpecialBagEnum specialBagType)
         {
@@ -61,11 +59,14 @@ namespace API.Api.BaggageContext.Controllers
 
             var bagList = await _baggageRepository.GetAllBaggageByCriteriaAsync(criteria);
 
-            return Ok(bagList);
+            var bagListDto = _mapper.Map<List<BaggageOverviewDto>>(bagList, opt => 
+                opt.Items["FlightId"] = flightId);
+
+            return Ok(bagListDto);
         }
 
         // Get all bags for a flight by baggage type
-        [HttpGet("{flightId}/{baggageType}")]
+        [HttpGet("{flightId}/baggage-type/{baggageType}")]
         public async Task<ActionResult<List<Baggage>>> GetAllBagsByBaggageType(int flightId,
             BaggageTypeEnum baggageType)
         {
@@ -74,7 +75,10 @@ namespace API.Api.BaggageContext.Controllers
 
             var bagList = await _baggageRepository.GetAllBaggageByCriteriaAsync(criteria);
 
-            return Ok(bagList);
+            var bagListDto = _mapper.Map<List<BaggageOverviewDto>>(bagList, opt => 
+                opt.Items["FlightId"] = flightId);
+
+            return Ok(bagListDto);
         }
 
         // Get all bags for a flight with no baggage tag
@@ -82,12 +86,14 @@ namespace API.Api.BaggageContext.Controllers
         public async Task<ActionResult<List<Baggage>>> GetAllInactiveBags(int flightId)
         {
             Expression<Func<Baggage, bool>> criteria = f =>
-                f.Flights.Any(_ => _.FlightId == flightId) &&
-                f.BaggageTag == null;
+                f.Flights.Any(_ => _.FlightId == flightId) && string.IsNullOrEmpty(f.BaggageTag.TagNumber);
 
             var bagList = await _baggageRepository.GetAllBaggageByCriteriaAsync(criteria);
 
-            return Ok(bagList);
+            var bagListDto = _mapper.Map<List<BaggageOverviewDto>>(bagList, opt => 
+                opt.Items["FlightId"] = flightId);
+
+            return Ok(bagListDto);
         }
 
         // Get all bags for a flight with connection
@@ -101,18 +107,10 @@ namespace API.Api.BaggageContext.Controllers
 
             var bagList = await _baggageRepository.GetAllBaggageByCriteriaAsync(criteria);
 
-            return Ok(bagList);
-        }
+            var bagListDto = _mapper.Map<List<BaggageDetailsDto>>(bagList);
 
-        // Get all bags of a passenger
-        [HttpGet("passenger/{passengerId}")]
-        public async Task<ActionResult<List<Baggage>>> GetAllPassengersBags(Guid passengerId)
-        {
-            var passenger = await _passengerRepository.GetPassengerByCriteriaAsync(f =>
-                f.Id == passengerId);
-
-            return Ok(passenger.PassengerCheckedBags);
-        }        
+            return Ok(bagListDto);
+        }       
     }
 }
 
