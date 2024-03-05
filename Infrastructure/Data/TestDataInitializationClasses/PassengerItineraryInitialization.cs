@@ -23,7 +23,7 @@ namespace Infrastructure.Data.TestDataInitializationClasses
 
         public void InitializePassengerItinerary()
         {
-            var flights = dbContext.Flights.ToList();
+            var flights = dbContext.Flights.OfType<Flight>().ToList();
             var paxInfo = dbContext.PassengerInfo.ToList();
             var bookingReferences = dbContext.BookingReferences.ToList();
             List<KeyValuePair<string, DateTime>> notLoadedFlights = new List<KeyValuePair<string, DateTime>>();
@@ -143,8 +143,8 @@ namespace Infrastructure.Data.TestDataInitializationClasses
                 selectedFlights.Add(selectedFlight);
 
                 // Nastavení nového času pro další let
-                departureDateTime = selectedFlight.ArrivalDateTime;
-                arrivalAirport = scheduledFlights.SingleOrDefault(f => f.FlightNumber == selectedFlight.ScheduledFlightId).DestinationToId;
+                departureDateTime = selectedFlight.ArrivalDateTime ?? DateTime.MinValue;
+                arrivalAirport = scheduledFlights.SingleOrDefault(f => f.FlightNumber == selectedFlight.ScheduledFlightId).DestinationTo;
             }
 
             return selectedFlights;
@@ -169,7 +169,7 @@ namespace Infrastructure.Data.TestDataInitializationClasses
             {
                 return flights
                     .Where(f => f.DepartureDateTime > departureDateTime.AddHours(1) && f.DepartureDateTime < departureDateTime.AddHours(12))
-                    .Where(f => dbContext.ScheduledFlights.Where(s => s.DestinationFromId == arrivalAirport).Select(s => s.FlightNumber).Contains(f.ScheduledFlightId))
+                    .Where(f => dbContext.ScheduledFlights.Where(s => s.DestinationFrom == arrivalAirport).Select(s => s.FlightNumber).Contains(f.ScheduledFlightId))
                     .Where(f => totalBookedPassengers[f.Id] + linkedPassengers <= passengerCountPerFlight.SingleOrDefault(p => p.Key == f.Id).Value)
                     .OrderBy(f => f.DepartureDateTime)
                     .ToList();

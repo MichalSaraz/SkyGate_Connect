@@ -33,7 +33,7 @@ namespace Infrastructure.Repositories
                 .Include(_ => _.FinalDestination)
                 .Include(_ => _.Flights)
                     .ThenInclude(_ => _.Flight)
-                        .ThenInclude(_ => _.ScheduledFlight)
+                        //.ThenInclude(_ => _.ScheduledFlight)
                 .FirstOrDefaultAsync(_ => _.BaggageTag.TagNumber == tagNumber);
         }
 
@@ -46,7 +46,7 @@ namespace Infrastructure.Repositories
                 .Include(_ => _.FinalDestination)
                 .Include(_ => _.Flights)
                     .ThenInclude(_ => _.Flight)
-                        .ThenInclude(_ => _.ScheduledFlight)
+                        //.ThenInclude(_ => _.ScheduledFlight)
                 .Where(criteria)
                 .ToListAsync();
         }

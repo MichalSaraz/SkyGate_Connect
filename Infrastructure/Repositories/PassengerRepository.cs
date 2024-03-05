@@ -9,14 +9,12 @@ using System.Linq.Expressions;
 
 namespace Infrastructure.Repositories
 {
-    public class PassengerRepository : IPassengerRepository
+    public class PassengerRepository : GenericRepository<Passenger>, IPassengerRepository
     {
-        private readonly AppDbContext _context;
         private readonly IMemoryCache _cache;
 
-        public PassengerRepository(AppDbContext context, IMemoryCache cache)
+        public PassengerRepository(AppDbContext context, IMemoryCache cache) : base(context)
         {
-            _context = context;
             _cache = cache;
         }
 
@@ -36,7 +34,7 @@ namespace Infrastructure.Repositories
                 .Include(_ => _.TravelDocuments)
                 .Include(_ => _.Flights)
                     .ThenInclude(_ => _.Flight)
-                        .ThenInclude(_ => _.ScheduledFlight)
+                        //.ThenInclude(_ => _.ScheduledFlight)
                 .Include(_ => _.AssignedSeats)
                 .Where(criteria);
 
@@ -67,9 +65,9 @@ namespace Infrastructure.Repositories
             }
 
             var passengerQuery = _context.Passengers.AsQueryable()
+                .Include(_ => _.PNR)
                 .Include(_ => _.Flights)
-                    .ThenInclude(_ => _.Flight)
-                        .ThenInclude(_ => _.ScheduledFlight)
+                    .ThenInclude(_ => _.Flight)                        
                 .Where(_ => _.Id == id);
 
             if (displayDetails)
@@ -84,7 +82,6 @@ namespace Infrastructure.Repositories
                 .Include(_ => _.PassengerCheckedBags)
                     .ThenInclude(_ => _.Flights)
                         .ThenInclude(_ => _.Flight)
-                            .ThenInclude(_ => _.ScheduledFlight)
                 .Include(_ => _.AssignedSeats)
                 .Include(_ => _.SpecialServiceRequests);
             }
@@ -109,7 +106,7 @@ namespace Infrastructure.Repositories
             var passengerQuery = _context.Passengers.AsQueryable().AsNoTracking()
                 .Include(_ => _.Flights)
                     .ThenInclude(_ => _.Flight)
-                        .ThenInclude(_ => _.ScheduledFlight)
+                        //.ThenInclude(_ => _.ScheduledFlight)
                 .Include(_ => _.PassengerCheckedBags)
                 .Include(_ => _.AssignedSeats)
                 .Where(p => p.Flights

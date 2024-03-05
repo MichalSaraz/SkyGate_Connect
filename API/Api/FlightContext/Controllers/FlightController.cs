@@ -16,21 +16,25 @@ namespace API.Api.FlightContext.Controllers
     [Route("flight")]
     public class FlightController : ControllerBase
     {
-        private readonly IFlightRepository _flightRepository;
+        private readonly IFlightRepository<BaseFlight> _flightRepository;
         private readonly IPassengerRepository _passengerRepository;
+        private readonly IScheduledFlightRepository _scheduledFlightRepository;
         private readonly ITimeProvider _timeProvider;
         private readonly IMapper _mapper;
 
         public FlightController(
-            IFlightRepository flightRepository,
-            ITimeProvider timeProvider,
+            IFlightRepository<BaseFlight> flightRepository,
             IPassengerRepository passengerRepository,
-            IMapper mapper)
+            IScheduledFlightRepository scheduledFlightRepository,
+            ITimeProvider timeProvider,
+            IMapper mapper
+            )
         {
             _flightRepository = flightRepository;
-            _timeProvider = timeProvider;
             _passengerRepository = passengerRepository;
-            _mapper = mapper;
+            _scheduledFlightRepository = scheduledFlightRepository;
+            _timeProvider = timeProvider;            
+            _mapper = mapper;            
         }
 
         [HttpPost("search")]
@@ -64,11 +68,11 @@ namespace API.Api.FlightContext.Controllers
                 (!model.DepartureDate.HasValue ||
                     f.DepartureDateTime.Date == model.DepartureDate.Value.Date) &&
                 (string.IsNullOrEmpty(model.AirlineId) ||
-                    f.ScheduledFlight.AirlineId == model.AirlineId) &&
+                    f.AirlineId == model.AirlineId) &&
                 (string.IsNullOrEmpty(model.DestinationFrom) ||
-                    f.ScheduledFlight.DestinationFromId == model.DestinationFrom) &&
+                    f.DestinationFromId == model.DestinationFrom) &&
                 (string.IsNullOrEmpty(model.DestinationTo) ||
-                    f.ScheduledFlight.DestinationToId == model.DestinationTo) &&
+                    f.DestinationToId == model.DestinationTo) &&
                 (string.IsNullOrEmpty(model.FlightNumber) ||
                     f.ScheduledFlightId.Substring(2) == model.FlightNumber);
 
@@ -87,7 +91,7 @@ namespace API.Api.FlightContext.Controllers
         [HttpGet("{id}/details")]
         public async Task<ActionResult<Flight>> GetFlightDetails(int id)
         {
-            var flight = await _flightRepository.GetFlightByIdAsync(id, false);
+            var flight = await _flightRepository.GetFlightByIdAsync<Flight>(id, false);
 
             var flightDto = _mapper.Map<FlightDetailsDto>(flight);
 
@@ -100,45 +104,49 @@ namespace API.Api.FlightContext.Controllers
         }
 
         [HttpGet("{id}/onward-flights")]
-        public async Task<ActionResult<List<Flight>>> GetOnwardFlights(int id)
+        public async Task<ActionResult<List<BaseFlight>>> GetOnwardFlights(int id)
         {
-            return await GetConnectedFlights(id, f =>
+            return await _GetConnectedFlights(id, f =>
                 f.IteratedFlight.DepartureDateTime > f.CurrentFlight.DepartureDateTime);
+                //|| f.IteratedFlight.DepartureDateTime.TimeOfDay == TimeSpan.Zero);
+                //add condition that scheduleflight == null);
         }
 
         [HttpGet("{id}/inbound-flights")]
-        public async Task<ActionResult<List<Flight>>> GetInboundFlights(int id)
+        public async Task<ActionResult<List<BaseFlight>>> GetInboundFlights(int id)
         {
-            return await GetConnectedFlights(id, f =>
+            return await _GetConnectedFlights(id, f =>
                 f.IteratedFlight.DepartureDateTime < f.CurrentFlight.DepartureDateTime);
+                //|| f.IteratedFlight.DepartureDateTime.TimeOfDay == TimeSpan.Zero);
+                //add condition that scheduleflight == null);
         }
 
-        private async Task<ActionResult<List<Flight>>> GetConnectedFlights(int id,
-            Func<(int FlightId, Flight IteratedFlight, Flight CurrentFlight), bool> condition)
+        private async Task<ActionResult<List<BaseFlight>>> _GetConnectedFlights(int id,
+            Func<(int FlightId, BaseFlight IteratedFlight, BaseFlight CurrentFlight), bool> condition)
         {
-            var currentFlight = await _flightRepository.GetFlightByIdAsync(id, false);
+            var currentFlight = await _flightRepository.GetFlightByIdAsync<Flight>(id, false);
 
             if (currentFlight == null)
             {
                 return NotFound(new ApiResponse(404, $"Flight {id} not found"));
             }
 
-            var connectedFlights = new List<Flight>();
+            var connectedFlights = new List<BaseFlight>();
 
             foreach (var passengerFlight in currentFlight.ListOfBookedPassengers)
             {
                 var passenger = await _passengerRepository
                     .GetPassengerByIdAsync(passengerFlight.PassengerId);
 
-                var matchingFlights = passenger.Flights
+                var matchingFlightsId = passenger.Flights
                     .Where(f =>
                         f.FlightId != currentFlight.Id &&
                         condition((f.FlightId, f.Flight, currentFlight)))
                     .Select(f => f.FlightId);
 
-                foreach (var otherFlightId in matchingFlights)
+                foreach (var otherFlightId in matchingFlightsId)
                 {
-                    var otherFlight = await _flightRepository.GetFlightByIdAsync(otherFlightId, false);
+                    var otherFlight = await _flightRepository.GetFlightByIdAsync<BaseFlight>(otherFlightId, false);
 
                     if (otherFlight != null)
                     {

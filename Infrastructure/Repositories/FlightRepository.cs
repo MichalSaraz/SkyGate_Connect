@@ -4,35 +4,34 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using System.Diagnostics;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Repositories
 {
-    public class FlightRepository : IFlightRepository
+    public class FlightRepository<T> : BaseFlightRepository<T>, IFlightRepository<T> where T : BaseFlight
     {
-        private readonly AppDbContext _context;
         private readonly IMemoryCache _cache;
 
-        public FlightRepository(AppDbContext context, IMemoryCache cache)
+        public FlightRepository(AppDbContext context, IMemoryCache cache) : base(context)
         {
-            _context = context;
             _cache = cache;
         }
 
-        public async Task<Flight> GetFlightByCriteriaAsync(
-            Expression<Func<Flight, bool>> criteria, bool tracked = false)
+        public async Task<TFlight> GetFlightByCriteriaAsync<TFlight>(
+            Expression<Func<TFlight, bool>> criteria, bool tracked = false) where TFlight : BaseFlight
         {
             var CACHE_KEY = $"Flight_{criteria}";
 
-            var flightCache = _cache.Get<Flight>(CACHE_KEY);
+            var flightCache = _cache.Get<TFlight>(CACHE_KEY);
             if (!tracked && flightCache != null)
             {
                 return flightCache;
             }
 
-            var flightQuery = _context.Flights.AsQueryable()
-            .Include(_ => _.ScheduledFlight)
-            .Where(criteria);
+            var flightQuery = _context.Set<TFlight>().AsQueryable()
+                .Include(f => f.ListOfBookedPassengers)
+                .Where(criteria);
 
             if (!tracked)
             {
@@ -52,8 +51,7 @@ namespace Infrastructure.Repositories
         public async Task<IReadOnlyList<Flight>> GetFlightsByCriteriaAsync(
             Expression<Func<Flight, bool>> criteria, bool tracked = false)
         {
-            var flightsQuery = _context.Flights.AsQueryable()
-                .Include(_ => _.ScheduledFlight)
+            var flightsQuery = _context.Flights.OfType<Flight>().AsQueryable()
                 .Include(_ => _.ListOfBookedPassengers)
                 .Where(criteria);
 
@@ -67,21 +65,20 @@ namespace Infrastructure.Repositories
             return flights;
         }
 
-        public async Task<Flight> GetFlightByIdAsync(int id, bool tracked = true)
+        public async Task<TFlight> GetFlightByIdAsync<TFlight>(int id, bool tracked = true) where TFlight : BaseFlight
         {
             var CACHE_KEY = $"Flight_{id}";
 
-            var flightCache = _cache.Get<Flight>(CACHE_KEY);
+            var flightCache = _cache.Get<TFlight>(CACHE_KEY);
             if (!tracked && flightCache != null)
             {
                 return flightCache;
             }
 
-            var flightQuery = _context.Flights.AsQueryable()
-            .Include(_ => _.ScheduledFlight)
-                .ThenInclude(_ => _.Airline)
-            .Include(_ => _.ListOfBookedPassengers)
-            .Where(_ => _.Id == id);
+            var flightQuery = _context.Set<TFlight>().AsQueryable()
+                .Include(_ => _.Airline)
+                .Include(_ => _.ListOfBookedPassengers)
+                .Where(_ => _.Id == id);
 
             if (!tracked)
             {

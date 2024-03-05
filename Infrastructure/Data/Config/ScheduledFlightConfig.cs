@@ -29,17 +29,7 @@ namespace Infrastructure.Data.Config
             builder.Property(f => f.FlightDuration)
                .HasJsonConversion()
                .Metadata
-               .SetValueComparer(CreateListValueComparer<KeyValuePair<DayOfWeek, TimeSpan>>());
-            builder.HasOne(f => f.DestinationFrom)
-               .WithMany(f => f.Departures)
-               .HasForeignKey(f => f.DestinationFromId);
-            builder.HasOne(f => f.DestinationTo)
-                .WithMany(f => f.Arrivals)
-                .HasForeignKey(f => f.DestinationToId);
-            builder.HasOne(f => f.Airline)
-                .WithMany()
-                .HasForeignKey(f => f.AirlineId)
-                .OnDelete(DeleteBehavior.Cascade);
+               .SetValueComparer(CreateListValueComparer<KeyValuePair<DayOfWeek, TimeSpan>>());            
         }
 
         private ValueComparer<List<TItem>> CreateListValueComparer<TItem>()

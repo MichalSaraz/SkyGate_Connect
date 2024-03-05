@@ -2,6 +2,7 @@
 using Core.PassengerContext.Booking.Enums;
 using Core.PassengerContext.JoinClasses;
 using Core.SeatingContext;
+using Core.SeatingContext.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -32,7 +33,7 @@ namespace Core.PassengerContext
 
         public int BaggageAllowance { get; set; } = 0;
 
-        public bool PriorityBoarding { get; set; } = false;
+        public bool PriorityBoarding { get; set; } = false;             
 
         public FrequentFlyer? FrequentFlyer { get; set; }
         public int? FrequentFlyerId { get; set; }

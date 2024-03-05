@@ -17,13 +17,13 @@ namespace API.Helpers
         {
             CreateMap<Flight, FlightOverviewDto>()
                 .ForMember(d => d.ScheduledFlight, o => o.MapFrom(s => s.ScheduledFlight.FlightNumber))
-                .ForMember(d => d.DestinationFrom, o => o.MapFrom(s => s.ScheduledFlight.DestinationFromId))
-                .ForMember(d => d.DestinationTo, o => o.MapFrom(s => s.ScheduledFlight.DestinationToId));
+                .ForMember(d => d.DestinationFrom, o => o.MapFrom(s => s.DestinationFromId))
+                .ForMember(d => d.DestinationTo, o => o.MapFrom(s => s.DestinationToId));
 
             CreateMap<Flight, FlightDetailsDto>()
                 .IncludeBase<Flight, FlightOverviewDto>()
                 .ForMember(d => d.CodeShare, o => o.MapFrom(s => s.ScheduledFlight.Codeshare))
-                .ForMember(d => d.Airline, o => o.MapFrom(s => s.ScheduledFlight.AirlineId));
+                .ForMember(d => d.Airline, o => o.MapFrom(s => s.AirlineId));
 
             CreateMap<Flight, FlightConnectionsDto>()
                 .IncludeBase<Flight, FlightDetailsDto>();
@@ -41,17 +41,22 @@ namespace API.Helpers
                 .IncludeBase<Passenger, PassengerOverviewDto>()
                 .ForMember(dest => dest.FrequentFlyer, opt => opt.MapFrom(src => src.FrequentFlyer.FrequentFlyerNumber))
                 .ForMember(dest => dest.ConnectingFlights, o => o.MapFrom((s, d, _, context) => s.Flights
-                    .Where(f => f.Flight.DepartureDateTime > (DateTime)context.Items["DepartureDateTime"])))
+                    .Where(f => f.Flight.DepartureDateTime > (DateTime)context.Items["DepartureDateTime"])
+                    .OrderBy(o => o.Flight.DepartureDateTime)))
                 .ForMember(dest => dest.InboundFlights, o => o.MapFrom((s, d, _, context) => s.Flights
-                    .Where(f => f.Flight.DepartureDateTime < (DateTime)context.Items["DepartureDateTime"])))
+                    .Where(f => f.Flight.DepartureDateTime < (DateTime)context.Items["DepartureDateTime"])
+                    .OrderBy(o => o.Flight.DepartureDateTime)))
                 .ForMember(dest => dest.OtherFlightsSeats, o => o.MapFrom((s, d, _, context) => s.AssignedSeats
                     .Where(a => a.FlightId != (int)context.Items["FlightId"])));
 
             CreateMap<PassengerFlight, PassengerFlightDto>()
-                .ForMember(d => d.FlightNumber, o => o.MapFrom(s => s.Flight.ScheduledFlight.FlightNumber))
-                .ForMember(d => d.DestinationFrom, o => o.MapFrom(s => s.Flight.ScheduledFlight.DestinationFromId))
-                .ForMember(d => d.DestinationTo, o => o.MapFrom(s => s.Flight.ScheduledFlight.DestinationToId))
-                .ForMember(d => d.DepartureDateTime, o => o.MapFrom(s => s.Flight.DepartureDateTime));
+                .ForMember(d => d.FlightNumber, o => o.MapFrom(s => s.Flight is Flight
+                    ? (s.Flight as Flight).ScheduledFlightId
+                    : (s.Flight as OtherFlight).FlightNumber))
+                .ForMember(d => d.DestinationFrom, o => o.MapFrom(s => s.Flight.DestinationFromId))
+                .ForMember(d => d.DestinationTo, o => o.MapFrom(s => s.Flight.DestinationToId))
+                .ForMember(d => d.DepartureDateTime, o => o.MapFrom(s => s.Flight.DepartureDateTime))
+                .ForMember(d => d.ArrivalDateTime, o => o.MapFrom(s => s.Flight.ArrivalDateTime));
                 
             CreateMap<Seat, SeatDto>()
                 .ForMember(d => d.PassengerFirstName, o => o.MapFrom(s => s.Passenger.FirstName))

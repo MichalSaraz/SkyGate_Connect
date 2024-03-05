@@ -11,6 +11,9 @@ using System.Linq.Expressions;
 using Core.PassengerContext;
 using API.Api.PassengerContext.Models;
 using Core.FlightContext;
+using Core.PassengerContext.JoinClasses;
+using Core.SeatingContext.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Api.PassengerContext.Controllers
 {
@@ -18,7 +21,7 @@ namespace API.Api.PassengerContext.Controllers
     [Route("passenger")]
     public class PassengerController : ControllerBase
     {
-        private readonly IFlightRepository _flightRepository;
+        private readonly IFlightRepository<BaseFlight> _flightRepository;
         private readonly IPassengerRepository _passengerRepository;
         private readonly IBaggageRepository _baggageRepository;
         private readonly IDestinationRepository _destinationRepository;
@@ -26,12 +29,13 @@ namespace API.Api.PassengerContext.Controllers
         private readonly IMapper _mapper;
 
         public PassengerController(
-            IFlightRepository flightRepository,
+            IFlightRepository<BaseFlight> flightRepository,
             ITimeProvider timeProvider,
             IPassengerRepository passengerRepository,
             IBaggageRepository baggageRepository,
             IMapper mapper,
-            IDestinationRepository destinationRepository)
+            IDestinationRepository destinationRepository
+            )
         {
             _flightRepository = flightRepository;
             _timeProvider = timeProvider;
@@ -39,6 +43,7 @@ namespace API.Api.PassengerContext.Controllers
             _baggageRepository = baggageRepository;
             _mapper = mapper;
             _destinationRepository = destinationRepository;
+
         }
 
         [HttpPost("search")]
@@ -74,20 +79,20 @@ namespace API.Api.PassengerContext.Controllers
             }
 
             Expression<Func<Passenger, bool>> criteria = f =>
-                f.Flights.Any(g =>
-                    g.Flight.ScheduledFlightId.Substring(2) == model.FlightNumber) &&
-                f.Flights.Any(g =>
-                    g.Flight.ScheduledFlight.AirlineId == model.AirlineId) &&
-                f.Flights.Any(g =>
-                    g.Flight.DepartureDateTime.Date == model.DepartureDate.Value.Date) &&
+                f.Flights.OfType<Flight>().Any(g =>
+                    g.ScheduledFlightId.Substring(2) == model.FlightNumber) &&
+                f.Flights.OfType<Flight>().Any(g =>
+                    g.AirlineId == model.AirlineId) &&
+                f.Flights.OfType<Flight>().Any(g =>
+                    g.DepartureDateTime.Date == model.DepartureDate.Value.Date) &&
                 (
                     f.TravelDocuments.Any(g => g.DocumentNumber == model.DocumentNumber) ||
                     string.IsNullOrEmpty(model.DocumentNumber)) &&
                 (
-                    f.Flights.Any(g => g.Flight.ScheduledFlight.DestinationFromId == model.DestinationFrom) ||
+                    f.Flights.Any(g => g.Flight.DestinationFromId == model.DestinationFrom) ||
                     string.IsNullOrEmpty(model.DestinationFrom)) &&
                 (
-                    f.Flights.Any(g => g.Flight.ScheduledFlight.DestinationToId == model.DestinationTo) ||
+                    f.Flights.Any(g => g.Flight.DestinationToId == model.DestinationTo) ||
                     string.IsNullOrEmpty(model.DestinationTo)) &&
                 (
                     f.AssignedSeats.Any(g => g.SeatNumber == model.SeatNumber) ||
@@ -99,11 +104,11 @@ namespace API.Api.PassengerContext.Controllers
                     f.PNRId == model.PNR ||
                     string.IsNullOrEmpty(model.PNR));
 
-            var passengers = await _passengerRepository.GetPassengersByCriteriaAsync(criteria);            
+            var passengers = await _passengerRepository.GetPassengersByCriteriaAsync(criteria);
 
-            var selectedFlight = await _flightRepository.GetFlightByCriteriaAsync(f =>
+            var selectedFlight = await _flightRepository.GetFlightByCriteriaAsync<Flight>(f =>
                 f.ScheduledFlightId.Substring(2) == model.FlightNumber &&
-                f.ScheduledFlight.AirlineId == model.AirlineId &&
+                f.AirlineId == model.AirlineId &&
                 f.DepartureDateTime.Date == model.DepartureDate.Value.Date);
 
             var passengersDto = _mapper.Map<List<PassengerOverviewDto>>(passengers, opt =>
@@ -119,7 +124,7 @@ namespace API.Api.PassengerContext.Controllers
         public async Task<ActionResult<Passenger>> GetPassengerDetails(Guid id, int flightId)
         {
             var passenger = await _passengerRepository.GetPassengerByIdAsync(id, false, true);
-            var selectedFlight = await _flightRepository.GetFlightByIdAsync(flightId, false);
+            var selectedFlight = await _flightRepository.GetFlightByIdAsync<Flight>(flightId, false);
 
             var passengerDto = _mapper.Map<PassengerDetailsDto>(passenger, opt =>
             {
@@ -140,13 +145,13 @@ namespace API.Api.PassengerContext.Controllers
             [FromBody] List<AddBaggageModel> addBaggageModels)
         {
             var passenger = await _passengerRepository.GetPassengerByIdAsync(id);
-            var selectedFlight = await _flightRepository.GetFlightByIdAsync(flightId);
+            var selectedFlight = await _flightRepository.GetFlightByIdAsync<Flight>(flightId);
             var destination = await _destinationRepository.GetDestinationByCriteriaAsync(f =>
                 f.IATAAirportCode == addBaggageModels.FirstOrDefault().FinalDestination);
 
             if (passenger == null)
             {
-                return NotFound($"Passenger with Id {id} was not found.");
+                return NotFound(new ApiResponse(404, $"Passenger with Id {id} was not found."));
             }
 
             var baggageList = new List<Baggage>();
@@ -174,12 +179,12 @@ namespace API.Api.PassengerContext.Controllers
                 else if (baggageModel.TagType == TagTypeEnum.System)
                 {
                     var number = _baggageRepository.GetNextSequenceValue("BaggageTagsSequence");
-                    var baggageTag = new BaggageTag(selectedFlight.ScheduledFlight.Airline, number);
+                    var baggageTag = new BaggageTag(selectedFlight.Airline, number);
                     newBaggage.BaggageTag = baggageTag;
                 }
 
-                await _baggageRepository.AddAsync(newBaggage);                
-                
+                await _baggageRepository.AddAsync(newBaggage);
+
                 baggageList.Add(newBaggage);
 
                 var orderedFlights = passenger.Flights
@@ -204,7 +209,7 @@ namespace API.Api.PassengerContext.Controllers
 
                     newBaggage.Flights.Add(flightBaggage);
 
-                    if (connectingFlight.Flight.ScheduledFlight.DestinationToId == baggageModel.FinalDestination)
+                    if (connectingFlight.Flight.DestinationToId == baggageModel.FinalDestination)
                     {
                         break;
                     }
@@ -256,8 +261,8 @@ namespace API.Api.PassengerContext.Controllers
             await _baggageRepository.UpdateAsync(changesToSave.ToArray());
 
             return Ok();
-        }      
-        
+        }
+
         [HttpDelete("{id}/delete-baggage")]
         public async Task<ActionResult> DeleteSelectedBaggage(Guid id,
             [FromBody] List<Guid> baggageIds)
@@ -294,5 +299,152 @@ namespace API.Api.PassengerContext.Controllers
 
             return Ok(passengerDto);
         }
-    }    
+
+        [HttpPost("{id}/flight/{flightId}/add-connecting-flight")]
+        public async Task<ActionResult<BaseFlight>> AddConnectingFlight(Guid id, int flightId, 
+            bool isInbound, [FromBody] List<AddConnectingFlightModel> addConnectingFlightModels)
+        {
+            var passenger = await _passengerRepository.GetPassengerByIdAsync(id, true);
+            var currentPassengerFlights = passenger.Flights.Select(f => f.Flight).ToList();
+            var currentFlight = await _flightRepository.GetFlightByIdAsync<Flight>(flightId, false);
+
+            if (passenger == null)
+            {
+                return NotFound(new ApiResponse(404, $"Passenger with Id {id} was not found."));
+            }
+
+            foreach (var connectingFlightModel in addConnectingFlightModels)
+            {
+                var parsedDepartureDateTime = _timeProvider
+                    .ParseDate(connectingFlightModel.DepartureDate.ToString()).Value;
+
+                var lastFlight = currentPassengerFlights[currentPassengerFlights.Count - 1];                
+
+                var connectingFlight = await _GetOrCreateFlightAsync(connectingFlightModel, 
+                    parsedDepartureDateTime);
+
+                if (!isInbound &&
+                    ((connectingFlight as Flight)?.DepartureDateTime < (lastFlight as Flight)?.DepartureDateTime ||
+                    connectingFlight.DepartureDateTime.Date < lastFlight.DepartureDateTime.Date ||
+                    connectingFlight.DepartureDateTime > lastFlight.DepartureDateTime.AddDays(2)))
+                {
+                    return BadRequest(new ApiResponse(400,
+                        "Connecting flight must be within 24 hours from last arrival."));
+                }
+                else if (isInbound && 
+                    ((connectingFlight as Flight)?.ArrivalDateTime > currentFlight.DepartureDateTime ||
+                    connectingFlight.DepartureDateTime.Date > currentFlight.DepartureDateTime.Date ||
+                    connectingFlight.DepartureDateTime < currentFlight.DepartureDateTime.AddDays(-2)))
+                {
+                    return BadRequest(new ApiResponse(400,
+                        "Inbound flight cannot be earlier than 24 hours before next departure"));
+                }
+
+                if (currentPassengerFlights.Contains(connectingFlight))
+                {
+                    return BadRequest(new ApiResponse(400, "Flight is already in passenger's itinerary."));
+                }
+
+                currentPassengerFlights.Add(connectingFlight);
+
+                var newPassengerFlight = new PassengerFlight
+                {
+                    Passenger = passenger,
+                    FlightClass = connectingFlightModel.FlightClass,
+                    Flight = currentPassengerFlights.Last()
+                };
+                
+                passenger.Flights.Add(newPassengerFlight);                
+            }
+            
+            await _passengerRepository.UpdateAsync(passenger);            
+
+            return Ok();
+        }
+
+        private async Task<BaseFlight> _GetOrCreateFlightAsync(AddConnectingFlightModel connectingFlightModel,
+            DateTime parsedDepartureDateTime)
+        {
+            var flightCriteria = _BuildFlightCriteria(connectingFlightModel, parsedDepartureDateTime);
+            var otherFlightCriteria = _BuildOtherFlightCriteria(connectingFlightModel, parsedDepartureDateTime);
+
+            var connectingFlight = await _flightRepository.GetFlightByCriteriaAsync(flightCriteria, true);
+            if (connectingFlight == null)
+            {
+                var otherFlight = await _flightRepository.GetFlightByCriteriaAsync(otherFlightCriteria, true);
+                if (otherFlight == null)
+                {
+                    otherFlight = new OtherFlight(
+                        connectingFlightModel.FlightNumber,
+                        connectingFlightModel.DestinationFrom,
+                        connectingFlightModel.DestinationTo,
+                        connectingFlightModel.AirlineId,
+                        parsedDepartureDateTime,
+                        null
+                    );
+
+                    await _flightRepository.AddAsync(otherFlight);
+                    return otherFlight;
+                }
+                else
+                {
+                    return otherFlight;
+                }
+            }
+            else
+            {
+                return connectingFlight;
+            }
+        }
+
+        private Expression<Func<Flight, bool>> _BuildFlightCriteria(
+            AddConnectingFlightModel connectingFlightModel, DateTime parsedDepartureDateTime)
+        {
+            return f =>
+                f.AirlineId == connectingFlightModel.AirlineId &&
+                f.ScheduledFlightId.Substring(2) == connectingFlightModel.FlightNumber &&
+                f.DepartureDateTime.Date == parsedDepartureDateTime.Date &&
+                f.DestinationFromId == connectingFlightModel.DestinationFrom &&
+                f.DestinationToId == connectingFlightModel.DestinationTo;
+        }
+
+        private Expression<Func<OtherFlight, bool>> _BuildOtherFlightCriteria(
+            AddConnectingFlightModel connectingFlightModel, DateTime parsedDepartureDateTime)
+        {
+            return f =>
+                f.AirlineId == connectingFlightModel.AirlineId &&
+                f.FlightNumber == connectingFlightModel.FlightNumber &&
+                f.DepartureDateTime.Date == parsedDepartureDateTime.Date &&
+                f.DestinationFromId == connectingFlightModel.DestinationFrom &&
+                f.DestinationToId == connectingFlightModel.DestinationTo;
+        }
+
+        [HttpDelete("{id}/delete-connecting-flight")]
+        public async Task<ActionResult<BaseFlight>> DeleteConnectingFlight(Guid id,
+            [FromBody] List<int> flightIds)
+        {
+            var passenger = await _passengerRepository.GetPassengerByIdAsync(id, true);
+            var selectedFlights = new List<BaseFlight>();
+
+            foreach (var flightId in flightIds)
+            {
+                var flight = passenger.Flights.FirstOrDefault(f => f.Flight.Id == flightId);
+
+                if (flight != null)
+                {
+                    passenger.Flights.Remove(flight);
+                }
+                else
+                {
+                    return BadRequest(new ApiResponse(400, "Invalid flight IDs."));
+                }
+            }
+
+            await _passengerRepository.UpdateAsync(passenger);
+
+            return NoContent();
+        }
+
+        //[HttpPost("{id}/add-special-service-request")]
+    }
 }

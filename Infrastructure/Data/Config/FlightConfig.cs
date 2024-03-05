@@ -17,8 +17,10 @@ namespace Infrastructure.Data.Config
     public class FlightConfig : IEntityTypeConfiguration<Flight>
     {
         public void Configure(EntityTypeBuilder<Flight> builder)
-        {
-            builder.HasKey(f => f.Id);            
+        {  
+            builder.HasOne(f => f.ScheduledFlight)
+                .WithMany()
+                .HasForeignKey(f => f.ScheduledFlightId);
             builder.HasOne(f => f.Aircraft)
                 .WithMany(f => f.Flights)
                 .HasForeignKey(f => f.AircraftId);
@@ -27,14 +29,9 @@ namespace Infrastructure.Data.Config
                 add.Property(d => d.BoardingStatus)
                     .HasColumnName("BoardingStatus")
                     .HasEnumConversion();
-            });
-            builder.Property(f => f.DepartureDateTime)
-                .HasColumnType("timestamp without time zone");
+            });            
             builder.Property(f => f.ArrivalDateTime)
                 .HasColumnType("timestamp without time zone");
-            //ToDelete
-            //builder.Property(f => f.FlightType)
-            //    .HasEnumConversion();
             builder.Property(f => f.FlightStatus)
                 .HasEnumConversion();
         }

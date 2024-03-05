@@ -5,7 +5,7 @@ namespace Core.FlightContext.JoinClasses
 {
     public class FlightBaggage
     {
-        public Flight Flight { get; set; }
+        public BaseFlight Flight { get; set; }
         public int FlightId { get; set; }
 
         public Baggage Baggage { get; set; }

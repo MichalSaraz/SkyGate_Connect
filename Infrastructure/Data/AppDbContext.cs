@@ -15,7 +15,7 @@ namespace Infrastructure.Data
     public class AppDbContext : DbContext
     {
         public DbSet<ScheduledFlight> ScheduledFlights { get; set; }
-        public DbSet<Flight> Flights { get; set; }
+        public DbSet<BaseFlight> Flights { get; set; }
         public DbSet<Passenger> Passengers { get; set; }
         public DbSet<PassengerFlight> PassengerFlight { get; set; }
         public DbSet<PassengerInfo> PassengerInfo { get; set; }

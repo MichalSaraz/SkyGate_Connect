@@ -22,7 +22,7 @@ namespace Infrastructure.Data
             await SeedAsync<AircraftType>(context, "../Infrastructure/Data/SeedData/AircraftTypes.json");
             await SeedAsync<Aircraft>(context, "../Infrastructure/Data/SeedData/Aircrafts.json");
             await SeedAsync<SeatMap>(context, "../Infrastructure/Data/SeedData/SeatMaps.json");
-            await SeedAsync<ScheduledFlight>(context, "../Infrastructure/Data/SeedData/ScheduledFlights.json");
+            //await SeedAsync<ScheduledFlight>(context, "../Infrastructure/Data/SeedData/ScheduledFlights.json");
         }        
 
         public static async Task SeedAsync<TEntity>(AppDbContext context, string jsonFilePath) where TEntity : class

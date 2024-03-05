@@ -1,4 +1,5 @@
 ﻿using API.Errors;
+using Core.FlightContext;
 using Core.Interfaces;
 using Core.Time;
 using Infrastructure.Repositories;
@@ -21,9 +22,11 @@ namespace API.Extensions
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IBaggageRepository, BaggageRepository>();
-            services.AddScoped<IFlightRepository, FlightRepository>();
+            services.AddScoped<IFlightRepository<BaseFlight>, FlightRepository<BaseFlight>>();
             services.AddScoped<IPassengerRepository, PassengerRepository>();
             services.AddScoped<IDestinationRepository, DestinationRepository>();
+            services.AddScoped<IScheduledFlightRepository, ScheduledFlightRepository>();
+
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

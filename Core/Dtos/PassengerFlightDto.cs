@@ -19,6 +19,7 @@ namespace Core.Dtos
         public string DestinationFrom { get; set; }
         public string DestinationTo { get; set; }
         public DateTime DepartureDateTime { get; set; }
+        public DateTime? ArrivalDateTime { get; set; }
         public int? BoardingSequenceNumber { get; set; }        
         public string BoardingZone { get; set; }        
         public string AcceptanceStatus { get; set; }

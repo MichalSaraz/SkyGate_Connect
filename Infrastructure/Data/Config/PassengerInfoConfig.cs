@@ -22,7 +22,7 @@ namespace Infrastructure.Data.Config
                 .HasEnumConversion();            
             builder.HasOne(p => p.PNR)
                 .WithMany(b => b.LinkedPassengers)
-                .HasForeignKey(p => p.PNRId);
+                .HasForeignKey(p => p.PNRId);            
             builder.HasOne(p => p.FrequentFlyer)
                 .WithOne(f => f.PassengerInfo)
                 .HasForeignKey<FrequentFlyer>(f => f.PassengerInfoId);

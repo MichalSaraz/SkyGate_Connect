@@ -41,7 +41,7 @@ namespace Infrastructure.Data.TestDataInitializationClasses
 
         private bool ShouldRemoveScheduledFlight(ScheduledFlight scheduledFlight, IQueryable<Destination> destinations)
         {
-            var destinationIds = new[] { scheduledFlight.DestinationFromId, scheduledFlight.DestinationToId };
+            var destinationIds = new[] { scheduledFlight.DestinationFrom, scheduledFlight.DestinationTo };
 
             foreach (var destinationId in destinationIds)
             {

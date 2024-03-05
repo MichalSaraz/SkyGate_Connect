@@ -15,8 +15,8 @@ namespace Core.FlightContext.FlightInfo
         public Country Country { get; private set; }
         public string CountryId { get; private set; }
 
-        public List<ScheduledFlight> Departures { get; private set; }
+        public List<BaseFlight> Departures { get; private set; }
 
-        public List<ScheduledFlight> Arrivals { get; private set; }
+        public List<BaseFlight> Arrivals { get; private set; }
     }
 }

@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace Core.Interfaces
 {
-    public interface IFlightRepository
+    public interface IFlightRepository<T> : IBaseFlightRepository<T> where T : BaseFlight
     {
-        Task<Flight> GetFlightByCriteriaAsync(Expression<Func<Flight, bool>> criteria, bool tracked = false);
+        Task<TFlight> GetFlightByCriteriaAsync<TFlight>(Expression<Func<TFlight, bool>> criteria, bool tracked = false) where TFlight : BaseFlight;
         Task<IReadOnlyList<Flight>> GetFlightsByCriteriaAsync(Expression<Func<Flight, bool>> criteria, bool tracked = false);
-        Task<Flight> GetFlightByIdAsync(int id, bool tracked = true);
+        Task<TFlight> GetFlightByIdAsync<TFlight>(int id, bool tracked = true) where TFlight : BaseFlight;
     }
 }

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core.FlightContext;
-using Core.PassengerContext.Booking;
-using Core.PassengerContext.JoinClasses;
+﻿using Core.PassengerContext.JoinClasses;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -27,6 +20,9 @@ namespace Infrastructure.Data.Config.JoinClassesConfig
 
             builder.Property(p => p.BoardingZone)
                 .HasNullableEnumConversion();
+
+            builder.Property(p => p.FlightClass)
+                .HasEnumConversion();
 
             builder.Property(p => p.AcceptanceStatus)
                 .HasEnumConversion();

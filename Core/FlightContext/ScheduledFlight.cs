@@ -16,14 +16,9 @@ namespace Core.FlightContext
         public List<KeyValuePair<DayOfWeek, TimeSpan>> DepartureTimes { get; private set; } = new List<KeyValuePair<DayOfWeek, TimeSpan>>();
         public List<KeyValuePair<DayOfWeek, TimeSpan>> ArrivalTimes { get; private set; } = new List<KeyValuePair<DayOfWeek, TimeSpan>>();
         public List<KeyValuePair<DayOfWeek, TimeSpan>> FlightDuration { get; private set; } = new List<KeyValuePair<DayOfWeek, TimeSpan>>();
-
-        public Destination DestinationFrom { get; private set; }
-        public string DestinationFromId { get; private set; }
-
-        public Destination DestinationTo { get; private set; }
-        public string DestinationToId { get; private set; }
-
-        public Airline Airline { get; private set; }         
-        public string AirlineId { get; private set; }                
+        
+        public string DestinationFrom { get; private set; }
+        public string DestinationTo { get; private set; }        
+        public string Airline { get; private set; }                
     }
 }

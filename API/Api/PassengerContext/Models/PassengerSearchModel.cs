@@ -11,6 +11,7 @@ namespace API.Api.PassengerContext.Models
         public string AirlineId { get; set; }
 
         [Required]
+        [RegularExpression(@"^([0-9]{1,2}[A-Za-z]{3})|([A-Za-z]{3}[0-9]{1,2})$", ErrorMessage = "Date must be in the format dMMM or DDMMM")]
         public DateTime? DepartureDate { get; set; }
 
         public string DocumentNumber { get; set; }

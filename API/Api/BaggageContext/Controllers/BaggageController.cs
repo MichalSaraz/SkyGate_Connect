@@ -104,6 +104,7 @@ namespace API.Api.BaggageContext.Controllers
                 f.Flights.Any(_ => _.FlightId == flightId) &&
                 f.Flights.Any(_ => _.Flight.DepartureDateTime > f.Flights
                     .FirstOrDefault(_ => _.FlightId == flightId).Flight.DepartureDateTime);
+            //|| (f.Flights.Any(_ => _.Flight.DepartureDateTime.TimeOfDay == TimeSpan.Zero));
 
             var bagList = await _baggageRepository.GetAllBaggageByCriteriaAsync(criteria);
 

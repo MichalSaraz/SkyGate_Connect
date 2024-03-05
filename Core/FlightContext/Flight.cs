@@ -9,69 +9,41 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Core.FlightContext
 {
-    public class Flight
+    public class Flight : BaseFlight
     {
-        public int Id { get; set; } 
-        
         public ScheduledFlight ScheduledFlight { get; private set; }
         public string ScheduledFlightId { get; set; }
-        
+
         public Aircraft Aircraft { get; private set; }
         public string AircraftId { get; set; }
         
         public Boarding Boarding { get; private set; }
 
-        public int? DividerPlacedBehindRow { get; private set; }
+        public int? DividerPlacedBehindRow { get; private set; }         
 
-        [Required]
-        public DateTime DepartureDateTime { get; set; }
-
-        [Required]
-        public DateTime ArrivalDateTime { get; set; }        
-
-        //ToDelete
-        //public FlightTypeEnum FlightType { get; private set; } = FlightTypeEnum.Outbound;
-
-        public FlightStatusEnum FlightStatus { get; private set; } = FlightStatusEnum.Closed;
-
-        public int TotalBookedPassengers
-        {
-            get
-            {
-                return ListOfBookedPassengers.Count;
-            }
-            set { }
-        }
-
-        public int TotalCheckedBaggage
-        {
-            get
-            {
-                return ListOfCheckedBaggage.Count;
-            }
-            private set { }
-        }
-
-        public List<PassengerFlight> ListOfBookedPassengers { get; set; } = new List<PassengerFlight>(); 
-        
-        public List<FlightBaggage> ListOfCheckedBaggage { get; private set; } = new List<FlightBaggage>(); 
+        public FlightStatusEnum FlightStatus { get; private set; } = FlightStatusEnum.Closed;         
 
         public List<Seat> Seats { get; private set; } = new List<Seat>();
 
-        public Flight()
+        public Flight() : base()
         {
         }
 
         public Flight(
-        int id,
-        string scheduledFlightNumber,
-        DateTime departureDateTime,
-        DateTime arrivalDateTime)
+            string scheduledFlightNumber,
+            DateTime departureDateTime,
+            string destinationFromId,
+            string destinationToId,
+            string airlineId,
+            DateTime? arrivalDateTime) 
+            : base(
+                  destinationFromId,
+                  destinationToId,
+                  airlineId, 
+                  departureDateTime,
+                  arrivalDateTime)
         {
-            Id = id;
             ScheduledFlightId = scheduledFlightNumber;
-            DepartureDateTime = departureDateTime;
-            ArrivalDateTime = arrivalDateTime;
         }        
 
         public List<Seat> InitializeSeats()

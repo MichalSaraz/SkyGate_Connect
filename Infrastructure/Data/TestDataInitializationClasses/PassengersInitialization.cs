@@ -32,11 +32,11 @@ namespace Infrastructure.Data.TestDataInitializationClasses
 
             var bookingReferences = dbContext.BookingReferences
                 .AsEnumerable()
-                .Where(b => b.FlightItinerary.Any(k => flights.Any(f => k.Value == f.DepartureDateTime && k.Key == f.ScheduledFlightId))).ToList();
+                .Where(b => b.FlightItinerary.Any(k => flights.OfType<Flight>().Any(f => k.Value == f.DepartureDateTime && k.Key == f.ScheduledFlightId))).ToList();
 
             foreach (var bookingReference in bookingReferences)
             {
-                var flightsInPNR = flights
+                var flightsInPNR = flights.OfType<Flight>()
                     .Where(f => bookingReference.FlightItinerary
                     .Any(g => g.Key == f.ScheduledFlightId) && bookingReference.FlightItinerary
                     .Any(g => g.Value == f.DepartureDateTime))

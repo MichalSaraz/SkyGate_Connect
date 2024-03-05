@@ -1,4 +1,5 @@
 ﻿using Core.BaggageContext;
+using Core.FlightContext;
 using Core.PassengerContext.Booking;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,7 @@ namespace Infrastructure.Data.TestDataInitializationClasses
                 unassignedBooking.LinkedPassengers = dbContext.PassengerInfo
                     .Where(p => p.PNRId == unassignedBooking.PNR).ToList();
                 var foundFlight = FindFlightInformation(notLoadedFlights, unassignedBooking.LinkedPassengers.Count, flightCounts);
-                var flightNumber = flights.SingleOrDefault(f => f.Id == foundFlight.Key).ScheduledFlightId;
+                var flightNumber = flights.OfType<Flight>().SingleOrDefault(f => f.Id == foundFlight.Key).ScheduledFlightId;
                 unassignedBooking.FlightItinerary.Add(new KeyValuePair<string, DateTime>(flightNumber, foundFlight.Value));
 
                 Trace.WriteLine($"Iteration {pocet++}");

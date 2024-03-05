@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240218205710_Move_properties_from_ScheduledFlight_to_Flight")]
+    partial class Move_properties_from_ScheduledFlight_to_Flight
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,7 +53,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Baggage");
                 });
 
-            modelBuilder.Entity("Core.FlightContext.BaseFlight", b =>
+            modelBuilder.Entity("Core.FlightContext.Flight", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -58,8 +61,14 @@ namespace Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AircraftId")
+                        .HasColumnType("text");
+
                     b.Property<string>("AirlineId")
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("ArrivalDateTime")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("DepartureDateTime")
                         .HasColumnType("timestamp without time zone");
@@ -70,8 +79,14 @@ namespace Infrastructure.Migrations
                     b.Property<string>("DestinationToId")
                         .HasColumnType("text");
 
-                    b.Property<string>("FlightType")
+                    b.Property<int?>("DividerPlacedBehindRow")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("FlightStatus")
                         .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ScheduledFlightId")
                         .HasColumnType("text");
 
                     b.Property<int>("TotalBookedPassengers")
@@ -82,17 +97,17 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AircraftId");
+
                     b.HasIndex("AirlineId");
 
                     b.HasIndex("DestinationFromId");
 
                     b.HasIndex("DestinationToId");
 
-                    b.ToTable("Flights", (string)null);
+                    b.HasIndex("ScheduledFlightId");
 
-                    b.HasDiscriminator<string>("FlightType").HasValue("BaseFlight");
-
-                    b.UseTphMappingStrategy();
+                    b.ToTable("Flights");
                 });
 
             modelBuilder.Entity("Core.FlightContext.FlightInfo.Aircraft", b =>
@@ -208,7 +223,7 @@ namespace Infrastructure.Migrations
                     b.Property<string>("FlightNumber")
                         .HasColumnType("text");
 
-                    b.Property<string>("Airline")
+                    b.Property<string>("AirlineId")
                         .HasColumnType("text");
 
                     b.Property<string>("ArrivalTimes")
@@ -220,10 +235,10 @@ namespace Infrastructure.Migrations
                     b.Property<string>("DepartureTimes")
                         .HasColumnType("jsonb");
 
-                    b.Property<string>("DestinationFrom")
+                    b.Property<string>("DestinationFromId")
                         .HasColumnType("text");
 
-                    b.Property<string>("DestinationTo")
+                    b.Property<string>("DestinationToId")
                         .HasColumnType("text");
 
                     b.Property<string>("FlightDuration")
@@ -608,44 +623,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("SeatMaps");
                 });
 
-            modelBuilder.Entity("Core.FlightContext.Flight", b =>
-                {
-                    b.HasBaseType("Core.FlightContext.BaseFlight");
-
-                    b.Property<string>("AircraftId")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("ArrivalDateTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int?>("DividerPlacedBehindRow")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("FlightStatus")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("ScheduledFlightId")
-                        .HasColumnType("text");
-
-                    b.HasIndex("AircraftId");
-
-                    b.HasIndex("ScheduledFlightId");
-
-                    b.HasDiscriminator().HasValue("Scheduled");
-                });
-
-            modelBuilder.Entity("Core.FlightContext.OtherFlight", b =>
-                {
-                    b.HasBaseType("Core.FlightContext.BaseFlight");
-
-                    b.Property<string>("FlightNumber")
-                        .HasColumnType("text")
-                        .HasColumnName("OtherFlightFltNumber");
-
-                    b.HasDiscriminator().HasValue("Other");
-                });
-
             modelBuilder.Entity("Core.PassengerContext.Passenger", b =>
                 {
                     b.HasBaseType("Core.PassengerContext.PassengerInfo");
@@ -719,8 +696,12 @@ namespace Infrastructure.Migrations
                     b.Navigation("SpecialBag");
                 });
 
-            modelBuilder.Entity("Core.FlightContext.BaseFlight", b =>
+            modelBuilder.Entity("Core.FlightContext.Flight", b =>
                 {
+                    b.HasOne("Core.FlightContext.FlightInfo.Aircraft", "Aircraft")
+                        .WithMany("Flights")
+                        .HasForeignKey("AircraftId");
+
                     b.HasOne("Core.FlightContext.FlightInfo.Airline", "Airline")
                         .WithMany()
                         .HasForeignKey("AirlineId")
@@ -734,11 +715,39 @@ namespace Infrastructure.Migrations
                         .WithMany("Arrivals")
                         .HasForeignKey("DestinationToId");
 
+                    b.HasOne("Core.FlightContext.ScheduledFlight", "ScheduledFlight")
+                        .WithMany()
+                        .HasForeignKey("ScheduledFlightId");
+
+                    b.OwnsOne("Core.BoardingContext.Boarding", "Boarding", b1 =>
+                        {
+                            b1.Property<int>("FlightId")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("BoardingStatus")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("BoardingStatus");
+
+                            b1.HasKey("FlightId");
+
+                            b1.ToTable("Flights");
+
+                            b1.WithOwner()
+                                .HasForeignKey("FlightId");
+                        });
+
+                    b.Navigation("Aircraft");
+
                     b.Navigation("Airline");
+
+                    b.Navigation("Boarding");
 
                     b.Navigation("DestinationFrom");
 
                     b.Navigation("DestinationTo");
+
+                    b.Navigation("ScheduledFlight");
                 });
 
             modelBuilder.Entity("Core.FlightContext.FlightInfo.Aircraft", b =>
@@ -794,7 +803,7 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.FlightContext.BaseFlight", "Flight")
+                    b.HasOne("Core.FlightContext.Flight", "Flight")
                         .WithMany("ListOfCheckedBaggage")
                         .HasForeignKey("FlightId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -868,7 +877,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.PassengerContext.JoinClasses.PassengerFlight", b =>
                 {
-                    b.HasOne("Core.FlightContext.BaseFlight", "Flight")
+                    b.HasOne("Core.FlightContext.Flight", "Flight")
                         .WithMany("ListOfBookedPassengers")
                         .HasForeignKey("FlightId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -936,41 +945,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Passenger");
                 });
 
-            modelBuilder.Entity("Core.FlightContext.Flight", b =>
-                {
-                    b.HasOne("Core.FlightContext.FlightInfo.Aircraft", "Aircraft")
-                        .WithMany("Flights")
-                        .HasForeignKey("AircraftId");
-
-                    b.HasOne("Core.FlightContext.ScheduledFlight", "ScheduledFlight")
-                        .WithMany()
-                        .HasForeignKey("ScheduledFlightId");
-
-                    b.OwnsOne("Core.BoardingContext.Boarding", "Boarding", b1 =>
-                        {
-                            b1.Property<int>("FlightId")
-                                .HasColumnType("integer");
-
-                            b1.Property<string>("BoardingStatus")
-                                .IsRequired()
-                                .HasColumnType("text")
-                                .HasColumnName("BoardingStatus");
-
-                            b1.HasKey("FlightId");
-
-                            b1.ToTable("Flights");
-
-                            b1.WithOwner()
-                                .HasForeignKey("FlightId");
-                        });
-
-                    b.Navigation("Aircraft");
-
-                    b.Navigation("Boarding");
-
-                    b.Navigation("ScheduledFlight");
-                });
-
             modelBuilder.Entity("Core.PassengerContext.Passenger", b =>
                 {
                     b.HasOne("Core.PassengerContext.PassengerInfo", null)
@@ -985,11 +959,13 @@ namespace Infrastructure.Migrations
                     b.Navigation("Flights");
                 });
 
-            modelBuilder.Entity("Core.FlightContext.BaseFlight", b =>
+            modelBuilder.Entity("Core.FlightContext.Flight", b =>
                 {
                     b.Navigation("ListOfBookedPassengers");
 
                     b.Navigation("ListOfCheckedBaggage");
+
+                    b.Navigation("Seats");
                 });
 
             modelBuilder.Entity("Core.FlightContext.FlightInfo.Aircraft", b =>
@@ -1017,11 +993,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.PassengerContext.PassengerInfo", b =>
                 {
                     b.Navigation("FrequentFlyer");
-                });
-
-            modelBuilder.Entity("Core.FlightContext.Flight", b =>
-                {
-                    b.Navigation("Seats");
                 });
 
             modelBuilder.Entity("Core.PassengerContext.Passenger", b =>

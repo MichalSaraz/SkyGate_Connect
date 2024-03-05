@@ -32,11 +32,11 @@ namespace Infrastructure.Data.TestDataInitializationClasses
             {
                 if (aircraft.RegistrationCode.StartsWith("SE"))
                 {
-                    availableFlights = flights.Where(a => a.ScheduledFlightId.StartsWith("D8")).ToList();
+                    availableFlights = flights.OfType<Flight>().Where(a => a.ScheduledFlightId.StartsWith("D8")).ToList();
                 }
                 else if (aircraft.RegistrationCode.StartsWith("LN"))
                 {
-                    availableFlights = flights.Where(a => a.ScheduledFlightId.StartsWith("DY") || a.ScheduledFlightId.StartsWith("DH")).ToList();
+                    availableFlights = flights.OfType<Flight>().Where(a => a.ScheduledFlightId.StartsWith("DY") || a.ScheduledFlightId.StartsWith("DH")).ToList();
                 }
                 // Najdeme a seřadíme neobsazené lety, které odpovídají kritériím, např. destinaci a času odletu
                 var unassignedFlights = availableFlights.Where(f => f.AircraftId == null)
@@ -45,26 +45,26 @@ namespace Infrastructure.Data.TestDataInitializationClasses
                                                .ToList();
 
                 var lastArrivalTime = DateTime.MinValue;
-                var lastDestination = scheduledFlights.SingleOrDefault(sf => unassignedFlights.First().ScheduledFlightId == sf.FlightNumber).DestinationFromId;
+                var lastDestination = scheduledFlights.SingleOrDefault(sf => unassignedFlights.First().ScheduledFlightId == sf.FlightNumber).DestinationFrom;
 
                 foreach (var flight in unassignedFlights)
                 {
                     if (aircraft.Flights.Count == 0 || flight.DepartureDateTime >= lastArrivalTime.AddMinutes(25) && flight.DepartureDateTime <= lastArrivalTime.AddMinutes(600)
-                        && scheduledFlights.SingleOrDefault(sf => flight.ScheduledFlightId == sf.FlightNumber).DestinationFromId == lastDestination)
+                        && scheduledFlights.SingleOrDefault(sf => flight.ScheduledFlightId == sf.FlightNumber).DestinationFrom == lastDestination)
                     {
                         // Přiřadíme letadlo k letu
                         flight.AircraftId = aircraft.RegistrationCode;
                         aircraft.Flights.Add(flight);
-                        lastArrivalTime = flight.ArrivalDateTime;
-                        lastDestination = scheduledFlights.SingleOrDefault(sf => flight.ScheduledFlightId == sf.FlightNumber).DestinationToId;
+                        lastArrivalTime = flight.ArrivalDateTime ?? DateTime.MinValue;
+                        lastDestination = scheduledFlights.SingleOrDefault(sf => flight.ScheduledFlightId == sf.FlightNumber).DestinationTo;
 
                         var returnFlight = unassignedFlights.FirstOrDefault(f => int.Parse(f.ScheduledFlightId.Substring(2)) == int.Parse(flight.ScheduledFlightId.Substring(2) + 1));
                         if (int.Parse(flight.ScheduledFlightId.Substring(2)) % 2 == 0 && returnFlight != null)
                         {
                             returnFlight.AircraftId = aircraft.RegistrationCode;
                             aircraft.Flights.Add(returnFlight);
-                            lastArrivalTime = returnFlight.ArrivalDateTime;
-                            lastDestination = scheduledFlights.SingleOrDefault(sf => returnFlight.ScheduledFlightId == sf.FlightNumber).DestinationToId;
+                            lastArrivalTime = returnFlight.ArrivalDateTime ?? DateTime.MinValue;
+                            lastDestination = scheduledFlights.SingleOrDefault(sf => returnFlight.ScheduledFlightId == sf.FlightNumber).DestinationTo;
                         }
                     }
                     else if (flight.DepartureDateTime > lastArrivalTime.AddMinutes(600))
@@ -76,8 +76,8 @@ namespace Infrastructure.Data.TestDataInitializationClasses
                         {
                             selectedFlight.AircraftId = aircraft.RegistrationCode;
                             aircraft.Flights.Add(selectedFlight);
-                            lastArrivalTime = selectedFlight.ArrivalDateTime;
-                            lastDestination = scheduledFlights.SingleOrDefault(sf => selectedFlight.ScheduledFlightId == sf.FlightNumber).DestinationToId;
+                            lastArrivalTime = selectedFlight.ArrivalDateTime ?? DateTime.MinValue;
+                            lastDestination = scheduledFlights.SingleOrDefault(sf => selectedFlight.ScheduledFlightId == sf.FlightNumber).DestinationTo;
                         }
 
                         continue;
@@ -93,7 +93,7 @@ namespace Infrastructure.Data.TestDataInitializationClasses
 
         public void PlanFlights2()
         {
-            var flights = dbContext.Flights.ToList();
+            var flights = dbContext.Flights.OfType<Flight>().ToList();
             var aircrafts = dbContext.Aircrafts.ToList();
             var scheduledFlights = dbContext.ScheduledFlights.ToList();
             int i = 0;
@@ -121,12 +121,12 @@ namespace Infrastructure.Data.TestDataInitializationClasses
                             .SingleOrDefault(sf => flight.ScheduledFlightId == sf.FlightNumber);
 
                         var flightsFromSameAirport = scheduledFlights
-                            .Where(sf => departureDestination.DestinationFromId == sf.DestinationToId)
+                            .Where(sf => departureDestination.DestinationFrom == sf.DestinationTo)
                             .ToList();
 
                         availableAircrafts = availableAircrafts
                             .Where(a => a.Flights.Count > 0 &&
-                                        a.Flights.All(af => af.ArrivalDateTime.AddMinutes(30) <= flight.DepartureDateTime) &&
+                                        a.Flights.All(af => af.ArrivalDateTime?.AddMinutes(30) <= flight.DepartureDateTime) &&
                                         a.Flights.Any(af => af.ArrivalDateTime <= flight.DepartureDateTime.AddMinutes(-30)) &&
                                         a.Flights.Any(f => flightsFromSameAirport.Select(ff => ff.FlightNumber).Contains(f.ScheduledFlightId)))
                             .ToList();
