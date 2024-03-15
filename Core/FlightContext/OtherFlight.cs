@@ -1,28 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Core.FlightContext
+﻿namespace Core.FlightContext
 {
     public class OtherFlight : BaseFlight
     {
-        public string FlightNumber { get; set; }
+        public string FlightNumber { get; private set; }
 
         public OtherFlight( 
             string flightNumber,
+            DateTime departureDateTime,
+            DateTime? arrivalDateTime, 
             string destinationFromId,
             string destinationToId,
-            string airlineId,
-            DateTime departureDateTime,
-            DateTime? arrivalDateTime) 
+            string airlineId)
             : base(
+                  departureDateTime,
+                  arrivalDateTime,
                   destinationFromId, 
                   destinationToId, 
-                  airlineId, 
-                  departureDateTime,
-                  arrivalDateTime)
+                  airlineId)
         {
             FlightNumber = flightNumber;
         }

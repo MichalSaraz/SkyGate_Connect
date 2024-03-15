@@ -3,8 +3,6 @@ using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
-using System.Diagnostics;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Repositories
@@ -30,7 +28,7 @@ namespace Infrastructure.Repositories
             }
 
             var flightQuery = _context.Set<TFlight>().AsQueryable()
-                .Include(f => f.ListOfBookedPassengers)
+                .Include(_ => _.ListOfBookedPassengers)
                 .Where(criteria);
 
             if (!tracked)

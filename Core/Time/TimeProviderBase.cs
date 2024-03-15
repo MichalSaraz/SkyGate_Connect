@@ -21,7 +21,7 @@ namespace Core.Time
 
             string[] formats = { "dMMM", "DDMMM", "ddMMM" };
 
-            bool isValid = DateTime.TryParseExact(input, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime result);
+            var isValid = DateTime.TryParseExact(input, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out var result);
 
             if (isValid)
             {

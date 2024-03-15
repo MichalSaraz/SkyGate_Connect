@@ -1,11 +1,6 @@
 ﻿using Core.PassengerContext.Booking;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Data.Config
 {
@@ -13,22 +8,22 @@ namespace Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<SpecialServiceRequest> builder)
         {
-            builder.HasKey(a => a.Id);
+            builder.HasKey(ssr => ssr.Id);
 
-            builder.Property(a => a.Id)
+            builder.Property(ssr => ssr.Id)
                 .ValueGeneratedOnAdd();
 
-            builder.HasOne(s => s.SSRCode)
+            builder.HasOne(ssr => ssr.SSRCode)
                 .WithMany()
-                .HasForeignKey(s => s.SSRCodeId);
+                .HasForeignKey(ssr => ssr.SSRCodeId);
 
-            builder.HasOne(s => s.Passenger)
+            builder.HasOne(ssr => ssr.Passenger)
                 .WithMany(p => p.SpecialServiceRequests)
-                .HasForeignKey(s => s.PassengerId);
+                .HasForeignKey(ssr => ssr.PassengerId);
 
-            builder.HasOne(s => s.Flight)
+            builder.HasOne(ssr => ssr.Flight)
                 .WithMany()
-                .HasForeignKey(s => s.FlightId);
+                .HasForeignKey(ssr => ssr.FlightId);
         }
     }
 }

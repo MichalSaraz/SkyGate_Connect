@@ -1,10 +1,8 @@
-﻿using Core.FlightContext;
-using Core.Interfaces;
+﻿using Core.Interfaces;
 using Core.PassengerContext;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
-using System.Diagnostics;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Repositories
@@ -34,7 +32,6 @@ namespace Infrastructure.Repositories
                 .Include(_ => _.TravelDocuments)
                 .Include(_ => _.Flights)
                     .ThenInclude(_ => _.Flight)
-                        //.ThenInclude(_ => _.ScheduledFlight)
                 .Include(_ => _.AssignedSeats)
                 .Where(criteria);
 
@@ -101,15 +98,15 @@ namespace Infrastructure.Repositories
             return passenger;
         }
 
-        public async Task<IReadOnlyList<Passenger>> GetPassengersWithFlightConnectionsAsync(int flightId, bool isOnwardFlight)
+        public async Task<IReadOnlyList<Passenger>> GetPassengersWithFlightConnectionsAsync(int flightId,
+            bool isOnwardFlight)
         {
             var passengerQuery = _context.Passengers.AsQueryable().AsNoTracking()
                 .Include(_ => _.Flights)
                     .ThenInclude(_ => _.Flight)
-                        //.ThenInclude(_ => _.ScheduledFlight)
                 .Include(_ => _.PassengerCheckedBags)
                 .Include(_ => _.AssignedSeats)
-                .Where(p => p.Flights
+                .Where(_ => _.Flights
                     .Any(_ => _.FlightId == flightId));
 
             if (isOnwardFlight)

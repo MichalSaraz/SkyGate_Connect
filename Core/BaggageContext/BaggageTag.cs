@@ -1,20 +1,21 @@
-﻿using Core.BaggageContext.Enums;
+﻿#nullable enable
+using Core.BaggageContext.Enums;
 using Core.FlightContext.FlightInfo;
 
 namespace Core.BaggageContext
 {
     public class BaggageTag
     {
-        public string TagNumber { get; set; }
+        public string TagNumber { get; private set; }
         
-        public Airline? Airline { get; set; }
-        public string AirlineId { get; set; }
+        public Airline? Airline { get; }
+        public string? AirlineId { get; }
 
-        public int LeadingDigit { get; set; }
+        public int LeadingDigit { get; }
         
-        public int Number { get; set; }
+        public int Number { get; }
 
-        public TagTypeEnum TagType { get; set; }
+        public TagTypeEnum TagType { get; }
 
         public BaggageTag(string tagNumber)
         {
@@ -35,10 +36,9 @@ namespace Core.BaggageContext
         {
             string airlinePrefix = Airline?.AirlinePrefix ?? "000";
             string carrierCode = Airline?.CarrierCode ?? "XY";
-            int leadingDigit = LeadingDigit;
             string number = Number.ToString("D6");
 
-            return $"{leadingDigit}{airlinePrefix}-{carrierCode}-{number}";
+            return $"{LeadingDigit}{airlinePrefix}-{carrierCode}-{number}";
         }
     }
 }

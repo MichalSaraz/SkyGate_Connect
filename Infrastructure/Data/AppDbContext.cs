@@ -4,11 +4,11 @@ using Core.FlightContext.FlightInfo;
 using Core.PassengerContext;
 using Core.PassengerContext.Booking;
 using Core.PassengerContext.JoinClasses;
-using Core.PassengerContext.Regulatory;
 using Core.SeatingContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
+using Core.PassengerContext.APIS;
 
 namespace Infrastructure.Data
 {
@@ -49,23 +49,22 @@ namespace Infrastructure.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseNpgsql(_configuration.GetConnectionString("DefaultConnection"), options =>
+            string connectionString = _configuration.GetConnectionString("DefaultConnection");
+        
+            options.UseNpgsql(connectionString, opt =>
             {
-                options.CommandTimeout(1000);
+                opt.CommandTimeout(1000);
             });
+        
             options.EnableSensitiveDataLogging();
-        }        
+        }      
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-            modelBuilder.HasSequence<int>("BaggageTagsSequence")
-                .StartsAt(1)
-                .IncrementsBy(1)
-                .HasMax(999999)
-                .IsCyclic();
+            modelBuilder.HasSequence<int>("BaggageTagsSequence").StartsAt(1).IncrementsBy(1).HasMax(999999).IsCyclic();
         }
     }    
 }

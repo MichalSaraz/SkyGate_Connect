@@ -1,13 +1,6 @@
-﻿using Core.PassengerContext.Booking;
-using Core.PassengerContext;
+﻿using Core.PassengerContext;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Infrastructure.Data.Config
 {
@@ -20,20 +13,20 @@ namespace Infrastructure.Data.Config
                 .HasForeignKey(s => s.PassengerId);
 
             builder.HasMany(p => p.SpecialServiceRequests)
-                .WithOne(s => s.Passenger)
-                .HasForeignKey(s => s.PassengerId);
+                .WithOne(ssr => ssr.Passenger)
+                .HasForeignKey(ssr => ssr.PassengerId);
 
             builder.HasMany(p => p.TravelDocuments)
-                .WithOne(a => a.Passenger)
-                .HasForeignKey(a => a.PassengerId);
+                .WithOne(ad => ad.Passenger)
+                .HasForeignKey(ad => ad.PassengerId);
 
             builder.HasMany(p => p.PassengerCheckedBags)
                 .WithOne(b => b.Passenger)
                 .HasForeignKey(b => b.PassengerId);
 
-            builder.HasMany(c => c.Comments)
-                .WithOne(p => p.Passenger)
-                .HasForeignKey(p => p.PassengerId);            
+            builder.HasMany(p => p.Comments)
+                .WithOne(c => c.Passenger)
+                .HasForeignKey(c => c.PassengerId);            
         }
     }
 }

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Core.SeatingContext.Enums
+﻿namespace Core.SeatingContext.Enums
 {
+    /// <summary>
+    /// Enumeration representing the position of a seat in a row.
+    /// </summary>
     [Flags]
     public enum SeatPositionEnum
     {

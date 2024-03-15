@@ -1,27 +1,16 @@
-﻿using Core.PassengerContext.Booking.Enums;
-using Core.SeatingContext.Enums;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
-using Newtonsoft.Json.Converters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-
-namespace Core.Dtos
+﻿namespace Core.Dtos
 {
     public class PassengerFlightDto
     {
-        public Guid PassengerId { get; set; }
-        public int FlightId { get; set; }
-        public string FlightNumber { get; set; }
-        public string DestinationFrom { get; set; }
-        public string DestinationTo { get; set; }
-        public DateTime DepartureDateTime { get; set; }
-        public DateTime? ArrivalDateTime { get; set; }
-        public int? BoardingSequenceNumber { get; set; }        
-        public string BoardingZone { get; set; }        
-        public string AcceptanceStatus { get; set; }
+        public Guid PassengerId { get; init; }
+        public int FlightId { get; init; }
+        public string FlightNumber { get; init; }
+        public string DestinationFrom { get; init; }
+        public string DestinationTo { get; init; }
+        public DateTime DepartureDateTime { get; init; }
+        public DateTime? ArrivalDateTime { get; init; }
+        public int? BoardingSequenceNumber { get; init; }        
+        public string BoardingZone { get; init; }        
+        public string AcceptanceStatus { get; init; }
     }
 }

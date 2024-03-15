@@ -1,4 +1,5 @@
 ﻿using Core.BaggageContext;
+using Infrastructure.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,35 +10,38 @@ namespace Infrastructure.Data.Config
         public void Configure(EntityTypeBuilder<Baggage> builder)
         {
             builder.HasKey(b => b.Id);
+            
             builder.HasOne(b => b.Passenger)
                 .WithMany(p => p.PassengerCheckedBags)
                 .HasForeignKey(b => b.PassengerId)
                 .OnDelete(DeleteBehavior.Cascade);
+            
             builder.OwnsOne(b => b.BaggageTag, baggageTag =>
             {
                 baggageTag.WithOwner();
-                baggageTag.Ignore(d => d.Airline);
-                baggageTag.Ignore(d => d.AirlineId);
-                baggageTag.Ignore(d => d.LeadingDigit);
-                baggageTag.Property(d => d.Number)
+                baggageTag.Ignore(bt => bt.Airline);
+                baggageTag.Ignore(bt => bt.AirlineId);
+                baggageTag.Ignore(bt => bt.LeadingDigit);
+                baggageTag.Property(bt => bt.Number)
                     .HasDefaultValueSql("nextval('\"BaggageTagsSequence\"')");
-                baggageTag.Ignore(d => d.Number);
-                baggageTag.Property(d => d.TagNumber)
+                baggageTag.Ignore(bt => bt.Number);
+                baggageTag.Property(bt => bt.TagNumber)
                     .HasColumnName("TagNumber");
-                baggageTag.Property(d => d.TagType)
+                baggageTag.Property(bt => bt.TagType)
                     .HasColumnName("TagType")
                     .HasEnumConversion();
             });
+            
             builder.OwnsOne(b => b.SpecialBag, specialBag =>
             {
                 specialBag.WithOwner();
-                specialBag.Ignore(d => d.Id);
-                specialBag.Property(d => d.SpecialBagType)
+                specialBag.Property(sb => sb.SpecialBagType)
                     .HasColumnName("SpecialBagType")
                     .HasEnumConversion();
-                specialBag.Property(d => d.SpecialBagDescription)
+                specialBag.Property(sb => sb.SpecialBagDescription)
                     .HasColumnName("SpecialBagDescription");
             });
+            
             builder.HasOne(b => b.FinalDestination)
                 .WithMany()
                 .HasForeignKey(b => b.DestinationId);            

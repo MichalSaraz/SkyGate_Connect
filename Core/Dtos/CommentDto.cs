@@ -1,17 +1,11 @@
-﻿using Core.PassengerContext.Booking.Enums;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
-using Newtonsoft.Json.Converters;
-using System.Text.Json.Serialization;
-
-namespace Core.Dtos
+﻿namespace Core.Dtos
 {
     public class CommentDto
     {
-        public int Id { get; set; }
-
-        public Guid PassengerId { get; set; }
-        public string CommentType { get; set; }
-        public string Text { get; set; }
-        public bool? IsMarkedAsRead { get; set; }
+        public int Id { get; init; }
+        public Guid PassengerId { get; init; }
+        public string CommentType { get; init; }
+        public string Text { get; init; }
+        public bool? IsMarkedAsRead { get; init; }
     }
 }

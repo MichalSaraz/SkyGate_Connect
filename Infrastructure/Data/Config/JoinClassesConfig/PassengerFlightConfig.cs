@@ -1,4 +1,5 @@
 ﻿using Core.PassengerContext.JoinClasses;
+using Infrastructure.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,22 +10,22 @@ namespace Infrastructure.Data.Config.JoinClassesConfig
         public void Configure(EntityTypeBuilder<PassengerFlight> builder)
         {
             builder.HasKey(pf => new { pf.PassengerId, pf.FlightId });
-
+            
             builder.HasOne(pf => pf.Passenger)
                 .WithMany(p => p.Flights)
-                .HasForeignKey(pf => pf.PassengerId);            
-
+                .HasForeignKey(pf => pf.PassengerId);
+            
             builder.HasOne(pf => pf.Flight)
-                .WithMany(f => f.ListOfBookedPassengers)
+                .WithMany(bf => bf.ListOfBookedPassengers)
                 .HasForeignKey(pf => pf.FlightId);
-
-            builder.Property(p => p.BoardingZone)
+            
+            builder.Property(pf => pf.BoardingZone)
                 .HasNullableEnumConversion();
-
-            builder.Property(p => p.FlightClass)
+            
+            builder.Property(pf => pf.FlightClass)
                 .HasEnumConversion();
-
-            builder.Property(p => p.AcceptanceStatus)
+            
+            builder.Property(pf => pf.AcceptanceStatus)
                 .HasEnumConversion();
         }
     }

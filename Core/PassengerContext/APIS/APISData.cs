@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 using Core.PassengerContext.APIS.Enums;
 using Core.PassengerContext.Booking.Enums;
 
-namespace Core.PassengerContext.Regulatory
+namespace Core.PassengerContext.APIS
 {
     public class APISData
     {
@@ -16,7 +10,6 @@ namespace Core.PassengerContext.Regulatory
 
         [Required]
         public string DocumentNumber { get; set; }
-
 
         public Passenger Passenger { get; set; }
         public Guid PassengerId { get; set; }

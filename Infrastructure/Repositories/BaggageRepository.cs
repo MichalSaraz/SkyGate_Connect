@@ -1,20 +1,9 @@
 ﻿using Core.BaggageContext;
-using Core.FlightContext;
-using Core.FlightContext.FlightInfo;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Query;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace Infrastructure.Repositories
 {
@@ -33,22 +22,18 @@ namespace Infrastructure.Repositories
                 .Include(_ => _.FinalDestination)
                 .Include(_ => _.Flights)
                     .ThenInclude(_ => _.Flight)
-                        //.ThenInclude(_ => _.ScheduledFlight)
                 .FirstOrDefaultAsync(_ => _.BaggageTag.TagNumber == tagNumber);
         }
 
-        public async Task<IReadOnlyList<Baggage>> GetAllBaggageByCriteriaAsync(Expression<Func<Baggage, bool>> criteria)
+        public async Task<Baggage> GetBaggageByCriteriaAsync(Expression<Func<Baggage, bool>> criteria)
         {
-            return await _context.Baggage.AsNoTracking()
+            return await _context.Baggage.AsQueryable()
                 .Include(_ => _.Passenger)
                 .Include(_ => _.BaggageTag)
                 .Include(_ => _.SpecialBag)
                 .Include(_ => _.FinalDestination)
-                .Include(_ => _.Flights)
-                    .ThenInclude(_ => _.Flight)
-                        //.ThenInclude(_ => _.ScheduledFlight)
                 .Where(criteria)
-                .ToListAsync();
+                .FirstOrDefaultAsync();
         }
 
         public async Task<Baggage> GetBaggageByIdAsync(Guid id, bool tracked = true)
@@ -69,20 +54,31 @@ namespace Infrastructure.Repositories
 
             return baggage;
         }
-
-        public int GetNextSequenceValue(string sequenceName)
+        
+        public async Task<IReadOnlyList<Baggage>> GetAllBaggageByCriteriaAsync(Expression<Func<Baggage, bool>> criteria)
         {
-            var connection = _context.Database.GetDbConnection();
+            return await _context.Baggage.AsNoTracking()
+                .Include(_ => _.Passenger)
+                .Include(_ => _.BaggageTag)
+                .Include(_ => _.SpecialBag)
+                .Include(_ => _.FinalDestination)
+                .Include(_ => _.Flights)
+                .ThenInclude(_ => _.Flight)
+                .Where(criteria)
+                .ToListAsync();
+        }
 
+        public async Task<int> GetNextSequenceValueAsync(string sequenceName)
+        {
+            using var connection = _context.Database.GetDbConnection();
             if (connection.State != ConnectionState.Open)
             {
-                connection.Open();
+                await connection.OpenAsync();
             }            
-
             using (var cmd = connection.CreateCommand())
             {
                 cmd.CommandText = $"SELECT nextval('\"{sequenceName}\"')";
-                var nextValue = cmd.ExecuteScalar();
+                var nextValue = await cmd.ExecuteScalarAsync();
                 return Convert.ToInt32(nextValue);
             }
         }

@@ -1,13 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Core.SeatingContext.Enums
+﻿namespace Core.SeatingContext.Enums
 {
     public enum FlightClassEnum
     {
-        F, J, W, Y
+        /// <summary>
+        /// F - First Class
+        /// </summary>
+        F, 
+
+        /// <summary>
+        /// J - Business Class
+        /// </summary>
+        J,
+
+        /// <summary>
+        /// W - Premium Economy Class
+        /// </summary>
+        W,
+
+        /// <summary>
+        /// Y - Economy Class
+        /// </summary>
+        Y
     }
 }

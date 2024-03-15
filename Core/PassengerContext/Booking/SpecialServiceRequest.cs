@@ -1,13 +1,7 @@
-﻿using Core.FlightContext;
-using Core.FlightContext.JoinClasses;
-using Core.PassengerContext.JoinClasses;
-using System;
-using System.Collections.Generic;
+﻿#nullable enable
+using Core.FlightContext;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.PassengerContext.Booking
 {
@@ -17,27 +11,23 @@ namespace Core.PassengerContext.Booking
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; private set; }
 
-        public SSRCode SSRCode { get; set; }
-        public string SSRCodeId { get; set; }
+        public SSRCode? SSRCode { get; private set; }
+        public string SSRCodeId { get; private set; }
         
-        public Passenger Passenger { get; set; }
+        public Passenger? Passenger { get; private set; }
         public Guid PassengerId { get; private set; }        
         
-        public Flight Flight { get; set; }
+        public Flight? Flight { get; private set; }
         public int FlightId { get; private set; }
 
-        [MaxLength(150)]
+        [MaxLength(150)] 
         public string? FreeText { get; private set; }
 
-        public SpecialServiceRequest()
-        { 
-        }
-
-        public SpecialServiceRequest(SSRCode sSRCode, Flight flight, Passenger passenger, string? freeText)
+        public SpecialServiceRequest(string sSRCodeId, int flightId, Guid passengerId, string? freeText)
         {
-            SSRCode = sSRCode;
-            Flight = flight;
-            Passenger = passenger;
+            SSRCodeId = sSRCodeId;
+            FlightId = flightId;
+            PassengerId = passengerId;
             FreeText = freeText;
         }
     }

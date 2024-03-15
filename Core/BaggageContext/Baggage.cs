@@ -7,22 +7,30 @@ namespace Core.BaggageContext
 {
     public class Baggage
     {
-        public Guid Id { get; private set; }
+        public Guid Id { get; }
 
         [Required]
-        public Passenger Passenger { get; set; }
-        public Guid PassengerId { get; set; }
+        public Passenger Passenger { get; init; }
+        public Guid PassengerId { get; private set; }
 
-        public BaggageTag? BaggageTag { get; set; }
+        public BaggageTag BaggageTag { get; set; }
 
-        public SpecialBag? SpecialBag { get; set; }
+        public SpecialBag SpecialBag { get; set; }
 
-        public Destination FinalDestination { get; set; }
-        public string DestinationId { get; set; }
+        public Destination FinalDestination { get; init; }
+        public string DestinationId { get; private set; }
 
         [Range(1, 32)]
         public int Weight { get; set; }               
 
-        public List<FlightBaggage> Flights { get; set; } = new List<FlightBaggage>();       
+        public List<FlightBaggage> Flights { get; init; } = new();  
+        
+        public Baggage(Guid passengerId, string destinationId, int weight) 
+        {
+            Id = Guid.NewGuid();
+            PassengerId = passengerId;
+            DestinationId = destinationId;
+            Weight = weight;
+        }
     }
 }

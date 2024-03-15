@@ -1,12 +1,7 @@
 ﻿using Core.PassengerContext.Booking;
+using Infrastructure.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Infrastructure.Data.Config
 {
     public class CommentConfig : IEntityTypeConfiguration<Comment>
@@ -14,14 +9,17 @@ namespace Infrastructure.Data.Config
         public void Configure(EntityTypeBuilder<Comment> builder)
         {
             builder.HasKey(c => c.Id);
+            
             builder.Property(c => c.CommentType)
                 .HasEnumConversion();
-            builder.HasOne(p => p.Passenger)
-                .WithMany(c => c.Comments)
+            
+            builder.HasOne(c => c.Passenger)
+                .WithMany(p => p.Comments)
                 .HasForeignKey(c => c.PassengerId);
-            builder.HasOne(p => p.PredefinedComment)
+            
+            builder.HasOne(c => c.PredefinedComment)
                 .WithMany()
-                .HasForeignKey(p => p.PredefinedCommentId);
+                .HasForeignKey(c => c.PredefinedCommentId);
         }
     }
 }

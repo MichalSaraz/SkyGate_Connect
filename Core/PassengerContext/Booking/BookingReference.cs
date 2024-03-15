@@ -1,11 +1,4 @@
-﻿using Core.FlightContext;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Core.PassengerContext.Booking
 {
@@ -16,8 +9,8 @@ namespace Core.PassengerContext.Booking
         public string PNR { get; private set; }
         
         [Required]
-        public List<PassengerInfo> LinkedPassengers { get; set; } = new List<PassengerInfo>();
+        public List<PassengerInfo> LinkedPassengers { get; set; } = new();
         
-        public List<KeyValuePair<string, DateTime>> FlightItinerary { get; set; } = new List<KeyValuePair<string, DateTime>>();
+        public List<KeyValuePair<string, DateTime>> FlightItinerary { get; set; } = new();
     }
 }

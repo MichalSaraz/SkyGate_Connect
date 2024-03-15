@@ -1,9 +1,4 @@
-﻿using Core.PassengerContext.Regulatory;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Core.PassengerContext.APIS;
 
 namespace Core.FlightContext.FlightInfo
 {

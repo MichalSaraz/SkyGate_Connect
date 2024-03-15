@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Core.Dtos
+﻿namespace Core.Dtos
 {
     public class FlightOverviewDto
     {
-        public int Id { get; set; }
-        public string ScheduledFlight { get; set; }
-        public DateTime DepartureDateTime { get; set; }
-        public DateTime ArrivalDateTime { get; set; }
-        public string DestinationFrom { get; set; }
-        public string DestinationTo { get; set; }
+        public int Id { get; init; }
+        public string ScheduledFlight { get; init; }
+        public DateTime DepartureDateTime { get; init; }
+        public DateTime ArrivalDateTime { get; init; }
+        public string DestinationFrom { get; init; }
+        public string DestinationTo { get; init; }
     }
 }

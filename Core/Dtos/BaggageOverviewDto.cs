@@ -2,6 +2,6 @@
 {
     public class BaggageOverviewDto : BaggageBaseDto
     {
-        public string BaggageType { get; set; }
+        public string BaggageType { get; init; }
     }
 }

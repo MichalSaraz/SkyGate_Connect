@@ -1,14 +1,7 @@
-﻿using Core.PassengerContext.Booking;
-using Core.PassengerContext.Regulatory;
+﻿using Core.PassengerContext.APIS;
+using Infrastructure.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Data.Config
 {
@@ -16,26 +9,34 @@ namespace Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<APISData> builder)
         {
-            builder.HasKey(a => a.Id);
-            builder.HasOne(a => a.Passenger)
+            builder.HasKey(ad => ad.Id);
+            
+            builder.HasOne(ad => ad.Passenger)
                 .WithMany(p => p.TravelDocuments)
-                .HasForeignKey(a => a.PassengerId)
+                .HasForeignKey(ad => ad.PassengerId)
                 .OnDelete(DeleteBehavior.Cascade);
-            builder.HasOne(a => a.Nationality)
+            
+            builder.HasOne(ad => ad.Nationality)
                 .WithMany()
-                .HasForeignKey(a => a.NationalityId);
-            builder.HasOne(a => a.IssueCountry)
+                .HasForeignKey(ad => ad.NationalityId);
+            
+            builder.HasOne(ad => ad.IssueCountry)
                 .WithMany()
-                .HasForeignKey(a => a.IssueCountryId);
-            builder.Property(a => a.DocumentType)
+                .HasForeignKey(ad => ad.IssueCountryId);
+            
+            builder.Property(ad => ad.DocumentType)
                 .HasEnumConversion();
-            builder.Property(a => a.Gender)
+            
+            builder.Property(ad => ad.Gender)
                 .HasEnumConversion();
-            builder.Property(a => a.DateOfBirth)
+            
+            builder.Property(ad => ad.DateOfBirth)
                 .HasDateTimeConversion();
-            builder.Property(a => a.DateOfIssue)
+            
+            builder.Property(ad => ad.DateOfIssue)
                 .HasDateTimeConversion();
-            builder.Property(a => a.ExpirationDate)
+            
+            builder.Property(ad => ad.ExpirationDate)
                 .HasDateTimeConversion();
         }
     }

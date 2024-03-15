@@ -1,39 +1,24 @@
 ﻿using Core.BaggageContext;
-using Core.FlightContext;
 using Core.PassengerContext.Booking;
 using Core.PassengerContext.JoinClasses;
-using Core.PassengerContext.Regulatory;
 using Core.SeatingContext;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Core.PassengerContext.APIS;
 
 namespace Core.PassengerContext
 {
     public class Passenger : PassengerInfo
     {
-        public List<APISData> TravelDocuments { get; set; } = new List<APISData>();
+        public List<APISData> TravelDocuments { get; set; } = new();
 
-        public List<Baggage> PassengerCheckedBags { get; set; } = new List<Baggage>();
+        public List<Baggage> PassengerCheckedBags { get; set; } = new();
 
-        public List<PassengerFlight> Flights { get; set; } = new List<PassengerFlight>();
+        public List<PassengerFlight> Flights { get; set; } = new();
 
-        public List<Comment> Comments { get; set; } = new List<Comment>();
+        public List<Comment> Comments { get; set; } = new();
 
-        public List<Seat> AssignedSeats { get; set; } = new List<Seat>();
+        public List<Seat> AssignedSeats { get; set; } = new();
 
-        public List<SpecialServiceRequest> SpecialServiceRequests { get; set; } = new List<SpecialServiceRequest>();
-
-        public Passenger()
-        {
-            
-        }
-
-        // přidat letenku
+        public List<SpecialServiceRequest> SpecialServiceRequests { get; set; } = new();
 
         public void MapFromPassengerInfo(PassengerInfo passengerInfo)
         {
@@ -46,6 +31,7 @@ namespace Core.PassengerContext
             Age = passengerInfo.Age;
             BaggageAllowance = passengerInfo.BaggageAllowance;
             PriorityBoarding = passengerInfo.PriorityBoarding;
+            FrequentFlyer = passengerInfo.FrequentFlyer;
             FrequentFlyerId = passengerInfo.FrequentFlyerId;
         }
     }

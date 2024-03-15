@@ -61,6 +61,9 @@ namespace Infrastructure.Migrations
                     b.Property<string>("AirlineId")
                         .HasColumnType("text");
 
+                    b.Property<DateTime?>("ArrivalDateTime")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<DateTime>("DepartureDateTime")
                         .HasColumnType("timestamp without time zone");
 
@@ -73,12 +76,6 @@ namespace Infrastructure.Migrations
                     b.Property<string>("FlightType")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<int>("TotalBookedPassengers")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TotalCheckedBaggage")
-                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -234,6 +231,88 @@ namespace Infrastructure.Migrations
                     b.ToTable("ScheduledFlights");
                 });
 
+            modelBuilder.Entity("Core.PassengerContext.APIS.APISData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("DateOfBirth")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("DateOfIssue")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("DocumentNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("DocumentType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ExpirationDate")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("IssueCountryId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("NationalityId")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("PassengerId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IssueCountryId");
+
+                    b.HasIndex("NationalityId");
+
+                    b.HasIndex("PassengerId");
+
+                    b.ToTable("APISData");
+                });
+
+            modelBuilder.Entity("Core.PassengerContext.APIS.Country", b =>
+                {
+                    b.Property<string>("Country2LetterCode")
+                        .HasColumnType("text");
+
+                    b.Property<string[]>("AircraftRegistrationPrefix")
+                        .HasColumnType("text[]");
+
+                    b.Property<string>("Country3LetterCode")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CountryName")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsEUCountry")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("Country2LetterCode");
+
+                    b.ToTable("Countries");
+                });
+
             modelBuilder.Entity("Core.PassengerContext.Booking.BookingReference", b =>
                 {
                     b.Property<string>("PNR")
@@ -376,6 +455,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("SSRCodeId")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -430,6 +510,10 @@ namespace Infrastructure.Migrations
                     b.Property<int>("BaggageAllowance")
                         .HasColumnType("integer");
 
+                    b.Property<string>("BookedClass")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("BookedClass");
+
                     b.Property<string>("BookedSSR")
                         .HasColumnType("jsonb")
                         .HasColumnName("BookedSSR");
@@ -438,7 +522,7 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("FrequentFlyerId")
+                    b.Property<int>("FrequentFlyerId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Gender")
@@ -467,88 +551,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("PassengerInfo");
 
                     b.UseTptMappingStrategy();
-                });
-
-            modelBuilder.Entity("Core.PassengerContext.Regulatory.APISData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("DateOfBirth")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("DateOfIssue")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("DocumentNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("DocumentType")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("ExpirationDate")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("IssueCountryId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("NationalityId")
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("PassengerId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IssueCountryId");
-
-                    b.HasIndex("NationalityId");
-
-                    b.HasIndex("PassengerId");
-
-                    b.ToTable("APISData");
-                });
-
-            modelBuilder.Entity("Core.PassengerContext.Regulatory.Country", b =>
-                {
-                    b.Property<string>("Country2LetterCode")
-                        .HasColumnType("text");
-
-                    b.Property<string[]>("AircraftRegistrationPrefix")
-                        .HasColumnType("text[]");
-
-                    b.Property<string>("Country3LetterCode")
-                        .HasColumnType("text");
-
-                    b.Property<string>("CountryName")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsEUCountry")
-                        .HasColumnType("boolean");
-
-                    b.HasKey("Country2LetterCode");
-
-                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("Core.SeatingContext.Seat", b =>
@@ -615,9 +617,6 @@ namespace Infrastructure.Migrations
                     b.Property<string>("AircraftId")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ArrivalDateTime")
-                        .HasColumnType("timestamp without time zone");
-
                     b.Property<int?>("DividerPlacedBehindRow")
                         .HasColumnType("integer");
 
@@ -671,6 +670,7 @@ namespace Infrastructure.Migrations
                                 .HasColumnType("uuid");
 
                             b1.Property<string>("TagNumber")
+                                .IsRequired()
                                 .HasColumnType("text")
                                 .HasColumnName("TagNumber");
 
@@ -751,7 +751,7 @@ namespace Infrastructure.Migrations
                         .WithMany("Fleet")
                         .HasForeignKey("AirlineId");
 
-                    b.HasOne("Core.PassengerContext.Regulatory.Country", "Country")
+                    b.HasOne("Core.PassengerContext.APIS.Country", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId");
 
@@ -770,7 +770,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.FlightContext.FlightInfo.Airline", b =>
                 {
-                    b.HasOne("Core.PassengerContext.Regulatory.Country", "Country")
+                    b.HasOne("Core.PassengerContext.APIS.Country", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId");
 
@@ -779,7 +779,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.FlightContext.FlightInfo.Destination", b =>
                 {
-                    b.HasOne("Core.PassengerContext.Regulatory.Country", "Country")
+                    b.HasOne("Core.PassengerContext.APIS.Country", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId");
 
@@ -803,6 +803,29 @@ namespace Infrastructure.Migrations
                     b.Navigation("Baggage");
 
                     b.Navigation("Flight");
+                });
+
+            modelBuilder.Entity("Core.PassengerContext.APIS.APISData", b =>
+                {
+                    b.HasOne("Core.PassengerContext.APIS.Country", "IssueCountry")
+                        .WithMany()
+                        .HasForeignKey("IssueCountryId");
+
+                    b.HasOne("Core.PassengerContext.APIS.Country", "Nationality")
+                        .WithMany()
+                        .HasForeignKey("NationalityId");
+
+                    b.HasOne("Core.PassengerContext.Passenger", "Passenger")
+                        .WithMany("TravelDocuments")
+                        .HasForeignKey("PassengerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("IssueCountry");
+
+                    b.Navigation("Nationality");
+
+                    b.Navigation("Passenger");
                 });
 
             modelBuilder.Entity("Core.PassengerContext.Booking.Comment", b =>
@@ -857,7 +880,9 @@ namespace Infrastructure.Migrations
 
                     b.HasOne("Core.PassengerContext.Booking.SSRCode", "SSRCode")
                         .WithMany()
-                        .HasForeignKey("SSRCodeId");
+                        .HasForeignKey("SSRCodeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Flight");
 
@@ -894,29 +919,6 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("PNR");
-                });
-
-            modelBuilder.Entity("Core.PassengerContext.Regulatory.APISData", b =>
-                {
-                    b.HasOne("Core.PassengerContext.Regulatory.Country", "IssueCountry")
-                        .WithMany()
-                        .HasForeignKey("IssueCountryId");
-
-                    b.HasOne("Core.PassengerContext.Regulatory.Country", "Nationality")
-                        .WithMany()
-                        .HasForeignKey("NationalityId");
-
-                    b.HasOne("Core.PassengerContext.Passenger", "Passenger")
-                        .WithMany("TravelDocuments")
-                        .HasForeignKey("PassengerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("IssueCountry");
-
-                    b.Navigation("Nationality");
-
-                    b.Navigation("Passenger");
                 });
 
             modelBuilder.Entity("Core.SeatingContext.Seat", b =>

@@ -1,12 +1,7 @@
 ﻿using Core.FlightContext.JoinClasses;
+using Infrastructure.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Infrastructure.Data.Config.JoinClassesConfig
 {
     public class FlightBaggageConfig : IEntityTypeConfiguration<FlightBaggage>
@@ -16,13 +11,14 @@ namespace Infrastructure.Data.Config.JoinClassesConfig
             builder.HasKey(fb => new { fb.FlightId, fb.BaggageId });
 
             builder.HasOne(fb => fb.Flight)
-                .WithMany(f => f.ListOfCheckedBaggage)
+                .WithMany(bf => bf.ListOfCheckedBaggage)
                 .HasForeignKey(fb => fb.FlightId);
 
             builder.HasOne(fb => fb.Baggage)
                 .WithMany(b => b.Flights)
                 .HasForeignKey(fb => fb.BaggageId);
-            builder.Property(b => b.BaggageType)
+            
+            builder.Property(fb => fb.BaggageType)
                 .HasEnumConversion();
         }
     }

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#nullable enable
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Core.PassengerContext.Booking.Enums;
 
 namespace Core.PassengerContext.Booking
@@ -12,7 +8,7 @@ namespace Core.PassengerContext.Booking
     {
         public int Id { get; private set; }
 
-        public Passenger Passenger { get; private set; }
+        public Passenger? Passenger { get; private set; }
         public Guid PassengerId { get; private set; }
 
         public CommentTypeEnum CommentType { get; private set; }
@@ -33,15 +29,16 @@ namespace Core.PassengerContext.Booking
             CommentType = commentType;
             Text = text;
             IsMarkedAsRead = isMarkedAsRead;
-            PredefinedCommentId = null; // By default, no predefined comment is associated
+            PredefinedCommentId = null;
         }
 
         // Constructor for adding predefined comment
-        public Comment(Guid passengerId, CommentTypeEnum commentType, bool? isMarkedAsRead, PredefinedComment predefinedComment)
+        public Comment(Guid passengerId, CommentTypeEnum commentType, bool? isMarkedAsRead, 
+            PredefinedComment predefinedComment)
         {
             PassengerId = passengerId;
             CommentType = commentType;
-            Text = predefinedComment.Text; // Use predefined comment's text
+            Text = predefinedComment.Text;
             IsMarkedAsRead = isMarkedAsRead;
             PredefinedCommentId = predefinedComment.Id;
             PredefinedComment = predefinedComment;

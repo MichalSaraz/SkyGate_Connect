@@ -1,23 +1,17 @@
-﻿using Core.PassengerContext.APIS.Enums;
-using Core.PassengerContext.Booking.Enums;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
-using Newtonsoft.Json.Converters;
-using System.Text.Json.Serialization;
-
-namespace Core.Dtos
+﻿namespace Core.Dtos
 {
     public class APISDataDto
     {
-        public int Id { get; set; }
-        public string DocumentNumber { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Nationality { get; set; }
-        public string IssueCountry { get; set; }
-        public string DocumentType { get; set; }
-        public string Gender { get; set; }
-        public DateTime DateOfBirth { get; set; }
-        public DateTime DateOfIssue { get; set; }
-        public DateTime ExpirationDate { get; set; }
+        public int Id { get; init; }
+        public string DocumentNumber { get; init; }
+        public string FirstName { get; init; }
+        public string LastName { get; init; }
+        public string Nationality { get; init; }
+        public string IssueCountry { get; init; }
+        public string DocumentType { get; init; }
+        public string Gender { get; init; }
+        public DateTime DateOfBirth { get; init; }
+        public DateTime DateOfIssue { get; init; }
+        public DateTime ExpirationDate { get; init; }
     }
 }

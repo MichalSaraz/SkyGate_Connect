@@ -1,18 +1,10 @@
 ﻿using Core.BaggageContext.Enums;
-using Core.PassengerContext.Booking;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.BaggageContext
 {
     public class SpecialBag
     {
-        public int Id { get; private set; }
-
         public SpecialBagEnum SpecialBagType { get; set; }
 
         [MaxLength(150)]
@@ -22,7 +14,7 @@ namespace Core.BaggageContext
         {
             SpecialBagType = specialBagType;
 
-            List<SpecialBagEnum> descriptionRequiredTypes = new List<SpecialBagEnum>
+            var descriptionRequiredTypes = new List<SpecialBagEnum>
             {
                 SpecialBagEnum.AVIH,
                 SpecialBagEnum.Firearm,

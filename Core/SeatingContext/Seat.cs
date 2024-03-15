@@ -1,14 +1,6 @@
 ﻿using Core.FlightContext;
-using Core.FlightContext.FlightInfo;
 using Core.PassengerContext;
-using Core.PassengerContext.Booking;
 using Core.SeatingContext.Enums;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.SeatingContext
 {
@@ -24,14 +16,14 @@ namespace Core.SeatingContext
 
         public string SeatNumber
         {
-            get { return $"{Row}{Position}"; }
+            get => $"{Row}{Position}";
 
             private set 
             {
                 if (!string.IsNullOrEmpty(value) && value.Length >= 2)
                 {
-                    Row = int.Parse(value.Substring(0, value.Length - 1));
-                    Position = (SeatPositionEnum)Enum.Parse(typeof(SeatPositionEnum), value.Substring(value.Length - 1));
+                    Row = int.Parse(value[..^1]);
+                    Position = (SeatPositionEnum)Enum.Parse(typeof(SeatPositionEnum), value[^1..]);
                 }
             }
         }
@@ -44,11 +36,7 @@ namespace Core.SeatingContext
 
         public FlightClassEnum FlightClass { get; set; }    
         
-        public SeatStatusEnum SeatStatus { get; set; } = SeatStatusEnum.Empty; 
-        
-
-        // public bool IsChargeable { get; private set; }
-
+        public SeatStatusEnum SeatStatus { get; set; } = SeatStatusEnum.Empty;
 
         public Seat(
             int flightId,

@@ -1,11 +1,6 @@
 ﻿using Core.FlightContext.FlightInfo;
 using Core.PassengerContext.Booking.Enums;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.PassengerContext.Booking
 {
@@ -13,15 +8,19 @@ namespace Core.PassengerContext.Booking
     {
         public int Id { get; private set; }
 
-        public string FrequentFlyerNumber 
+        public string FrequentFlyerNumber
         {
-            get
+            get => $"{Airline.CarrierCode}{CardNumber}";
+            set
             {
-                return $"{Airline.CarrierCode}{CardNumber}";
-            }
-            private set { }
-        }
+                if (value.Length < 2)
+                    throw new ArgumentException("Invalid FrequentFlyerNumber");
 
+                Airline.CarrierCode = value[..2];
+                CardNumber = value[2..];
+            }
+        }
+        
         public PassengerInfo PassengerInfo { get; private set; }
         public Guid PassengerInfoId { get; private set; }
 

@@ -1,28 +1,34 @@
 ﻿using Core.FlightContext;
 using Core.PassengerContext.Booking.Enums;
 using Core.SeatingContext.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.PassengerContext.JoinClasses
 {
     public class PassengerFlight
     {
-        public Passenger Passenger { get; set; }
-        public Guid PassengerId { get; set; }
+        public Passenger Passenger { get; private set; }
+        public Guid PassengerId { get; private set; }
 
-        public BaseFlight Flight { get; set; }
-        public int FlightId { get; set; }
+        public BaseFlight Flight { get; private set; }
+        public int FlightId { get; private set; }
 
         public int? BoardingSequenceNumber { get; set; }
 
         public BoardingZoneEnum? BoardingZone { get; set; }
 
-        public FlightClassEnum FlightClass { get; set; }
+        public FlightClassEnum FlightClass { get; private set; }
 
         public AcceptanceStatusEnum AcceptanceStatus { get; set; } = AcceptanceStatusEnum.NotAccepted;
+        
+        public PassengerFlight(
+            Guid passengerId,
+            int flightId,
+            FlightClassEnum flightClass)
+
+        {
+            PassengerId = passengerId;
+            FlightId = flightId;
+            FlightClass = flightClass;
+        }
     }
 }

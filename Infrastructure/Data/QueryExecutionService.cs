@@ -1,10 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Npgsql;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
@@ -17,6 +12,12 @@ namespace Infrastructure.Data
             _configuration = configuration;
         }
 
+        /// <summary>
+        /// Executes a query with parameters.
+        /// </summary>
+        /// <param name="query">The query to execute.</param>
+        /// <param name="parametersFactory">A function that returns an array of NpgsqlParameter objects representing
+        /// the query parameters.</param>
         public void ExecuteQueryWithParameters(string query, Func<NpgsqlParameter[]> parametersFactory)
         {
             string connectionString = _configuration.GetConnectionString("DefaultConnection");
@@ -31,7 +32,12 @@ namespace Infrastructure.Data
                 cmd.ExecuteNonQuery();
             }
         }
-        
+
+        /// <summary>
+        /// Creates an array of NpgsqlParameter objects based on the given parameter values.
+        /// </summary>
+        /// <param name="paramValues">An array of tuples containing the parameter name and value.</param>
+        /// <returns>An array of NpgsqlParameter objects.</returns>
         public NpgsqlParameter[] CreateParameters(params (string Name, object Value)[] paramValues)
         {
             var parameters = new List<NpgsqlParameter>();
