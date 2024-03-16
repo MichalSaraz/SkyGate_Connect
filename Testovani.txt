@@ -1,0 +1,32 @@
+{
+  "flightNumber": "1305",
+  "airlineId": "DY",
+  "departureDate": "18OCT",
+  "lastName": "Tromp"
+}
+
+
+
+005d511e-f677-4c64-ae6b-8ea7bf09474f
+2181
+
+[
+  {
+    "tagType": "System",
+    "weight": 10,
+    "specialBagType": null,
+    "baggageType": "Local",
+    "description": null,
+    "finalDestination": "KRS",
+    "tagNumber": null
+  },
+  {
+    "tagType": "System",
+    "weight": 10,
+    "specialBagType": "Buggy",
+    "baggageType": "Local",
+    "description": null,
+    "finalDestination": "KRS",
+    "tagNumber": null
+  }
+]

@@ -39,7 +39,8 @@ namespace Core.FlightContext
             ScheduledFlightId = scheduledFlightId;
         }
 
-        public List<Seat> InitializeSeats()
+        
+        public List<Seat> InitializeSeats(int a)
         {
             Seats = new List<Seat>();
             foreach (var specialSeats in Aircraft.SeatMap.FlightClassesSpecification)

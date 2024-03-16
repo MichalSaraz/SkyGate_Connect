@@ -1,17 +1,14 @@
-﻿using Core.PassengerContext.Booking;
+﻿using Core.PassengerContext.JoinClasses;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Data.Config
+namespace Infrastructure.Data.Config.JoinClassesConfig
 {
     public class SpecialServiceRequestConfig : IEntityTypeConfiguration<SpecialServiceRequest>
     {
         public void Configure(EntityTypeBuilder<SpecialServiceRequest> builder)
         {
-            builder.HasKey(ssr => ssr.Id);
-
-            builder.Property(ssr => ssr.Id)
-                .ValueGeneratedOnAdd();
+            builder.HasKey(ssr => new { ssr.PassengerId, ssr.FlightId });
 
             builder.HasOne(ssr => ssr.SSRCode)
                 .WithMany()

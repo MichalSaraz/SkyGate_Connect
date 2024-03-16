@@ -50,6 +50,24 @@ namespace Infrastructure.Repositories
             return passengers;
         }
 
+        public async Task<Passenger> GetPassengerByCriteriaAsync(Expression<Func<Passenger, bool>> criteria, bool tracked = true)
+        {
+            var passengerQuery = _context.Passengers.AsQueryable()
+                .Include(_ => _.PNR)
+                .Include(_ => _.Flights)
+                    .ThenInclude(_ => _.Flight)
+                .Where(criteria);
+
+            if (!tracked)
+            {
+                passengerQuery = passengerQuery.AsNoTracking();
+            }
+
+            var passenger = await passengerQuery.SingleOrDefaultAsync();
+
+            return passenger;
+        }
+
         public async Task<Passenger> GetPassengerByIdAsync(Guid id, bool tracked = true,
             bool displayDetails = false)
         {
@@ -125,6 +143,6 @@ namespace Infrastructure.Repositories
             }
 
             return await passengerQuery.ToListAsync();
-        }
+        }        
     }
 }

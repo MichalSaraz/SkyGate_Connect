@@ -63,22 +63,23 @@ namespace Infrastructure.Repositories
                 .Include(_ => _.SpecialBag)
                 .Include(_ => _.FinalDestination)
                 .Include(_ => _.Flights)
-                .ThenInclude(_ => _.Flight)
+                    .ThenInclude(_ => _.Flight)
                 .Where(criteria)
                 .ToListAsync();
         }
 
-        public async Task<int> GetNextSequenceValueAsync(string sequenceName)
+        public int GetNextSequenceValue(string sequenceName)
         {
-            using var connection = _context.Database.GetDbConnection();
+            var connection = _context.Database.GetDbConnection();
+
             if (connection.State != ConnectionState.Open)
             {
-                await connection.OpenAsync();
+                connection.Open();
             }            
             using (var cmd = connection.CreateCommand())
             {
                 cmd.CommandText = $"SELECT nextval('\"{sequenceName}\"')";
-                var nextValue = await cmd.ExecuteScalarAsync();
+                var nextValue = cmd.ExecuteScalar();
                 return Convert.ToInt32(nextValue);
             }
         }

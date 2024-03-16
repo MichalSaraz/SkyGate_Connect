@@ -7,27 +7,27 @@ namespace Core.FlightContext
 {
     public abstract class BaseFlight
     {
-        public int Id { get; private set; }        
+        public int Id { get; set; }        
 
-        public Destination DestinationFrom { get; private set; }
-        public string DestinationFromId { get; private set; }
+        public Destination DestinationFrom { get; protected set; }
+        public string DestinationFromId { get; protected set; }
 
-        public Destination DestinationTo { get; private set; }
-        public string DestinationToId { get; private set; }
+        public Destination DestinationTo { get; protected set; }
+        public string DestinationToId { get; protected set; }
 
-        public Airline Airline { get; private set; }
-        public string AirlineId { get; private set; }
+        public Airline Airline { get; protected set; }
+        public string AirlineId { get; protected set; }
 
         [Required]
-        public DateTime DepartureDateTime { get; private set; }
+        public DateTime DepartureDateTime { get; set; }
 
-        public DateTime? ArrivalDateTime { get; private set; }
+        public DateTime? ArrivalDateTime { get; protected set; }
 
         public List<PassengerFlight> ListOfBookedPassengers { get; set; } = new();
 
-        public List<FlightBaggage> ListOfCheckedBaggage { get; set; } = new();
+        public List<FlightBaggage> ListOfCheckedBaggage { get; set; } = new();        
 
-        protected BaseFlight(
+        public BaseFlight(
             DateTime departureDateTime,
             DateTime? arrivalDateTime,
             string destinationFromId, 

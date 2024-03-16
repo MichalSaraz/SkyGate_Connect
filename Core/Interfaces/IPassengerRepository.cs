@@ -16,16 +16,18 @@ namespace Core.Interfaces
         Task<IReadOnlyList<Passenger>> GetPassengersByCriteriaAsync(Expression<Func<Passenger, bool>> criteria,
             bool tracked = false);
 
-        /// <summary>
-        /// Retrieves a passenger by ID asynchronously.
-        /// </summary>
-        /// <param name="id">The ID of the passenger.</param>
-        /// <param name="tracked">Whether to track changes of the retrieved passenger. Default is true.</param>
-        /// <param name="displayDetails">
-        /// Whether to display additional details of the passenger. Default is false.</param>
-        /// <returns> The <see cref="Task"/> representing the asynchronous operation. The task result represents
-        /// the passenger with the given ID. </returns>
-        Task<Passenger> GetPassengerByIdAsync(Guid id, bool tracked = true, bool displayDetails = false);
+        Task<Passenger> GetPassengerByCriteriaAsync(Expression<Func<Passenger, bool>> criteria, bool tracked = true);
+
+       /// <summary>
+       /// Retrieves a passenger by ID asynchronously.
+       /// </summary>
+       /// <param name="id">The ID of the passenger.</param>
+       /// <param name="tracked">Whether to track changes of the retrieved passenger. Default is true.</param>
+       /// <param name="displayDetails">
+       /// Whether to display additional details of the passenger. Default is false.</param>
+       /// <returns> The <see cref="Task"/> representing the asynchronous operation. The task result represents
+       /// the passenger with the given ID. </returns>
+       Task<Passenger> GetPassengerByIdAsync(Guid id, bool tracked = true, bool displayDetails = false);
 
         /// <summary>
         /// Retrieves a list of passengers with flight connections based on the flight ID and connection direction.

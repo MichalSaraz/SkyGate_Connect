@@ -15,18 +15,23 @@ namespace Web.Helpers
     {
         public MappingProfiles()
         {
-            CreateMap<Flight, FlightOverviewDto>()
-                .ForMember(dest => dest.ScheduledFlight, opt => opt.MapFrom(src => src.ScheduledFlight.FlightNumber))
+            CreateMap<BaseFlight, FlightOverviewDto>()
+                .ForMember(dest => dest.ScheduledFlight, opt => opt.MapFrom(src => src is Flight
+                    ? (src as Flight).ScheduledFlightId
+                    : (src as OtherFlight).FlightNumber))
                 .ForMember(dest => dest.DestinationFrom, opt => opt.MapFrom(src => src.DestinationFromId))
                 .ForMember(dest => dest.DestinationTo, opt => opt.MapFrom(src => src.DestinationToId));
 
-            CreateMap<Flight, FlightDetailsDto>()
-                .IncludeBase<Flight, FlightOverviewDto>()
-                .ForMember(dest => dest.CodeShare, opt => opt.MapFrom(src => src.ScheduledFlight.Codeshare))
-                .ForMember(dest => dest.Airline, opt => opt.MapFrom(src => src.AirlineId));
+            CreateMap<BaseFlight, FlightDetailsDto>()
+                .IncludeBase<BaseFlight, FlightOverviewDto>()
+                .ForMember(dest => dest.CodeShare, opt => opt.MapFrom(src => src is Flight
+                    ? (src as Flight).ScheduledFlight.Codeshare
+                    : null ))
+                .ForMember(dest => dest.Airline, opt => opt.MapFrom(src => src.AirlineId))
+                .ForMember(dest => dest.TotalBookedPassengers, opt => opt.MapFrom(src => src.ListOfBookedPassengers.Count));
 
-            CreateMap<Flight, FlightConnectionsDto>()
-                .IncludeBase<Flight, FlightDetailsDto>();
+            CreateMap<BaseFlight, FlightConnectionsDto>()
+                .IncludeBase<BaseFlight, FlightDetailsDto>();
 
             CreateMap<Passenger, PassengerOverviewDto>()
                 .ForMember(dest => dest.PNR, opt => opt.MapFrom(src => src.PNR.PNR))

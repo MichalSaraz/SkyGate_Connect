@@ -7,7 +7,9 @@ using Core.FlightContext;
 using Core.FlightContext.JoinClasses;
 using Core.Interfaces;
 using Core.PassengerContext;
+using Core.PassengerContext.Booking;
 using Core.PassengerContext.JoinClasses;
+using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using Web.Api.PassengerContext.Models;
@@ -25,14 +27,18 @@ namespace Web.Api.PassengerContext.Controllers
         private readonly IPassengerRepository _passengerRepository;
         private readonly IBaggageRepository _baggageRepository;
         private readonly IDestinationRepository _destinationRepository;
+        private readonly ISSRCodeRepository _sSRCodeRepository;
+        private readonly ISpecialServiceRequestRepository _specialServiceRequestRepository;
 
         public PassengerController(
             IMapper mapper,
             ITimeProvider timeProvider,
-            IFlightRepository<BaseFlight> flightRepository, 
-            IPassengerRepository passengerRepository, 
-            IBaggageRepository baggageRepository, 
-            IDestinationRepository destinationRepository)
+            IFlightRepository<BaseFlight> flightRepository,
+            IPassengerRepository passengerRepository,
+            IBaggageRepository baggageRepository,
+            IDestinationRepository destinationRepository,
+            ISSRCodeRepository sSRCodeRepository,
+            ISpecialServiceRequestRepository specialServiceRequestRepository)
         {
             _mapper = mapper;
             _timeProvider = timeProvider;
@@ -40,6 +46,8 @@ namespace Web.Api.PassengerContext.Controllers
             _passengerRepository = passengerRepository;
             _baggageRepository = baggageRepository;
             _destinationRepository = destinationRepository;
+            _sSRCodeRepository = sSRCodeRepository;
+            _specialServiceRequestRepository = specialServiceRequestRepository;
         }
 
         //
@@ -147,9 +155,21 @@ namespace Web.Api.PassengerContext.Controllers
                     SpecialBag =
                         baggageModel.SpecialBagType.HasValue
                             ? new SpecialBag(baggageModel.SpecialBagType.Value, baggageModel.Description)
-                            : null,
-                    BaggageTag = CreateBaggageTag()
+                            : null
                 };
+
+                switch (baggageModel.TagType)
+                {
+                    //ToDo: Add validation for tag number correct format
+                    case TagTypeEnum.System when baggageModel.BaggageType == BaggageTypeEnum.Transfer:
+                    case TagTypeEnum.Manual when !string.IsNullOrEmpty(baggageModel.TagNumber):
+                        newBaggage.BaggageTag = new BaggageTag(baggageModel.TagNumber);
+                        break;
+                    case TagTypeEnum.System:
+                        var number = _baggageRepository.GetNextSequenceValue("BaggageTagsSequence");
+                        newBaggage.BaggageTag = new BaggageTag(selectedFlight.Airline, number);
+                        break;
+                }
 
                 await _baggageRepository.AddAsync(newBaggage);
 
@@ -178,24 +198,6 @@ namespace Web.Api.PassengerContext.Controllers
                     }
 
                     isFirstIteration = false;
-                }
-
-                continue;
-
-                BaggageTag CreateBaggageTag()
-                {
-                    switch (baggageModel.TagType)
-                    {
-                        //ToDo: Add validation for tag number correct format
-                        case TagTypeEnum.System when baggageModel.BaggageType == BaggageTypeEnum.Transfer:
-                        case TagTypeEnum.Manual when !string.IsNullOrEmpty(baggageModel.TagNumber):
-                            return new BaggageTag(baggageModel.TagNumber);
-                        case TagTypeEnum.System:
-                            return new BaggageTag(selectedFlight.Airline,
-                                _baggageRepository.GetNextSequenceValueAsync("BaggageTagsSequence").Result);
-                        default:
-                            return null;
-                    }
                 }
             }
 
@@ -242,14 +244,9 @@ namespace Web.Api.PassengerContext.Controllers
                 }
             }
 
-            if (!changesToSave.Any())
-            {
-                return Ok(Array.Empty<Baggage>());
-            }
+            await _baggageRepository.UpdateAsync(changesToSave.ToArray());
 
-            var updatedBaggage = await _baggageRepository.UpdateAsync(changesToSave.ToArray());
-
-            return Ok(updatedBaggage);
+            return Ok();
         }
 
         [HttpDelete("{id:guid}/delete-baggage")]
@@ -292,7 +289,9 @@ namespace Web.Api.PassengerContext.Controllers
         public async Task<ActionResult<BaseFlight>> AddConnectingFlight(Guid id, int flightId, bool isInbound,
             [FromBody] List<AddConnectingFlightModel> addConnectingFlightModels)
         {
-            var passenger = await _passengerRepository.GetPassengerByIdAsync(id);
+            Expression<Func<Passenger, bool>> criteria = p => p.Id == id && p.Flights.Any(f => f.FlightId == flightId);
+
+            var passenger = await _passengerRepository.GetPassengerByCriteriaAsync(criteria);
             var currentPassengerFlights = passenger.Flights.Select(pf => pf.Flight).ToList();
             var currentFlight = await _flightRepository.GetFlightByIdAsync<Flight>(flightId, false);
 
@@ -310,17 +309,17 @@ namespace Web.Api.PassengerContext.Controllers
                         (connectingFlight as Flight)?.DepartureDateTime < (lastFlight as Flight)?.DepartureDateTime ||
                         connectingFlight.DepartureDateTime.Date < lastFlight.DepartureDateTime.Date ||
                         connectingFlight.DepartureDateTime > lastFlight.DepartureDateTime.AddDays(2):
-                    {
-                        return BadRequest(new ApiResponse(400,
-                            "Connecting flight must be within 24 hours from last arrival."));
-                    }
+                        {
+                            return BadRequest(new ApiResponse(400,
+                                "Connecting flight must be within 24 hours from last arrival."));
+                        }
                     case true when ((connectingFlight as Flight)?.ArrivalDateTime > currentFlight.DepartureDateTime ||
                                     connectingFlight.DepartureDateTime.Date > currentFlight.DepartureDateTime.Date ||
                                     connectingFlight.DepartureDateTime < currentFlight.DepartureDateTime.AddDays(-2)):
-                    {
-                        return BadRequest(new ApiResponse(400,
-                            "Inbound flight cannot be earlier than 24 hours before next departure"));
-                    }
+                        {
+                            return BadRequest(new ApiResponse(400,
+                                "Inbound flight cannot be earlier than 24 hours before next departure"));
+                        }
                 }
 
                 if (currentPassengerFlights.Contains(connectingFlight))
@@ -381,18 +380,25 @@ namespace Web.Api.PassengerContext.Controllers
                          of.DestinationToId == connectingFlightModel.DestinationTo;
         }
 
-        [HttpDelete("{id:guid}/delete-connecting-flight")]
-        public async Task<ActionResult<BaseFlight>> DeleteConnectingFlight(Guid id, [FromBody] List<int> flightIds)
+        [HttpDelete("{id:guid}/flight/{flightId:int}/delete-connecting-flight")]
+        public async Task<ActionResult<BaseFlight>> DeleteConnectingFlight(Guid id, int flightId,
+            [FromBody] List<int> flightIds)
         {
-            var passenger = await _passengerRepository.GetPassengerByIdAsync(id);
+            Expression<Func<Passenger, bool>> criteria = p => p.Id == id && p.Flights.Any(f => f.FlightId == flightId);
 
-            foreach (var flightId in flightIds)
+            var passenger = await _passengerRepository.GetPassengerByCriteriaAsync(criteria);
+
+            foreach (var iteratedFlightId in flightIds)
             {
-                var flight = passenger.Flights.FirstOrDefault(pf => pf.Flight.Id == flightId);
+                var flight = passenger.Flights.FirstOrDefault(pf => pf.Flight.Id == iteratedFlightId);
 
                 if (flight != null)
                 {
                     passenger.Flights.Remove(flight);
+                }
+                else if (iteratedFlightId == flightId)
+                {
+                    return BadRequest(new ApiResponse(400, "Current flight cannot be removed."));
                 }
                 else
                 {
@@ -405,6 +411,46 @@ namespace Web.Api.PassengerContext.Controllers
             return NoContent();
         }
 
-        //[HttpPost("{id}/add-special-service-request")]
+        [HttpPost("{id:guid}/flight/{flightId:int}/add-special-service-request")]
+        public async Task<ActionResult<Passenger>> AddSpecialServiceRequest(Guid id, int flightId,
+            [FromBody] List<JObject> requestData)
+        {
+            Expression<Func<Passenger, bool>> criteria = p => p.Id == id && p.Flights.Any(f => f.FlightId == flightId);
+
+            var passenger = await _passengerRepository.GetPassengerByCriteriaAsync(criteria);
+
+            if (passenger == null)
+            {
+                return NotFound(new ApiResponse(404, $"Passenger with Id {id} was not found."));
+            }
+
+            foreach (var request in requestData)
+            {
+                var flightIds = request["flightIds"].ToObject<List<int>>();
+                var specialServiceRequests = new List<SpecialServiceRequest>();
+
+                var ssrData = request["specialServiceRequests"];
+                foreach (var ssrRequest in ssrData)
+                {
+                    var SSRCode = await _sSRCodeRepository.GetSSRCodeAsync(ssrRequest["SSRCode"]?.ToString());
+                    var freeText = ssrRequest["freeText"]?.ToString();
+
+                    if (SSRCode == null)
+                    {
+                        return BadRequest(new ApiResponse(400, "All fields must be filled in for the special service request."));
+                    }
+
+                    foreach (var iteratedFlightId in flightIds)
+                    {
+                        var specialServiceRequest = new SpecialServiceRequest(SSRCode.Code, iteratedFlightId, id, freeText);
+                        specialServiceRequests.Add(specialServiceRequest);
+                    }
+                }
+
+                await _specialServiceRequestRepository.AddAsync(specialServiceRequests.ToArray());
+            }
+
+            return Ok();
+        }
     }
 }

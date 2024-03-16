@@ -1,26 +1,23 @@
-﻿#nullable enable
+﻿using Core;
 using Core.FlightContext;
+using Core.PassengerContext.Booking;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Core.PassengerContext.Booking
+namespace Core.PassengerContext.JoinClasses
 {
     public class SpecialServiceRequest
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; private set; }
-
-        public SSRCode? SSRCode { get; private set; }
+        public SSRCode SSRCode { get; private set; }
         public string SSRCodeId { get; private set; }
-        
-        public Passenger? Passenger { get; private set; }
-        public Guid PassengerId { get; private set; }        
-        
-        public Flight? Flight { get; private set; }
+
+        public Passenger Passenger { get; private set; }
+        public Guid PassengerId { get; private set; }
+
+        public Flight Flight { get; private set; }
         public int FlightId { get; private set; }
 
-        [MaxLength(150)] 
+        [MaxLength(150)]
         public string? FreeText { get; private set; }
 
         public SpecialServiceRequest(string sSRCodeId, int flightId, Guid passengerId, string? freeText)

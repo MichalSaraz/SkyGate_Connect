@@ -25,6 +25,8 @@ namespace Web.Extensions
             services.AddScoped<IFlightRepository<BaseFlight>, FlightRepository<BaseFlight>>();
             services.AddScoped<IPassengerRepository, PassengerRepository>();
             services.AddScoped<IDestinationRepository, DestinationRepository>();
+            services.AddScoped<ISSRCodeRepository, SSRCodeRepository>();
+            services.AddScoped<ISpecialServiceRequestRepository, SpecialServiceRequestRepository>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

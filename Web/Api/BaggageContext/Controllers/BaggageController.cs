@@ -100,7 +100,8 @@ namespace Web.Api.BaggageContext.Controllers
         public async Task<ActionResult<List<Baggage>>> GetAllBagsWithOnwardConnection(int flightId)
         {
             Expression<Func<Baggage, bool>> criteria = c =>
-                c.Flights.Any(fb => fb.FlightId == flightId && fb.Flight.DepartureDateTime > c.Flights
+                c.Flights.Any(fb => fb.FlightId == flightId) && 
+                c.Flights.Any(fb => fb.Flight.DepartureDateTime > c.Flights
                     .FirstOrDefault(b => b.FlightId == flightId).Flight.DepartureDateTime);
 
             var bagList = await _baggageRepository.GetAllBaggageByCriteriaAsync(criteria);
