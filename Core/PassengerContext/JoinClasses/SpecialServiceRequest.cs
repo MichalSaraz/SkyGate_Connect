@@ -1,4 +1,5 @@
 ﻿using Core;
+using Core.BaggageContext.Enums;
 using Core.FlightContext;
 using Core.PassengerContext.Booking;
 using System.ComponentModel.DataAnnotations;

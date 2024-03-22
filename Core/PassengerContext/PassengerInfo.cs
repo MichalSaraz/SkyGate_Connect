@@ -7,6 +7,7 @@ namespace Core.PassengerContext
 {
     public class PassengerInfo
     {
+        [Required]
         public Guid Id { get; protected set; }
 
         [Required]

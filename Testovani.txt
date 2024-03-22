@@ -1,6 +1,14 @@
 {
   "flightNumber": "1305",
   "airlineId": "DY",
+  "departureDate": "18OCT"
+}
+
+
+
+{
+  "flightNumber": "1305",
+  "airlineId": "DY",
   "departureDate": "18OCT",
   "lastName": "Tromp"
 }
@@ -30,3 +38,234 @@
     "tagNumber": null
   }
 ]
+
+
+
+[
+  {
+    "airlineId": "BA",
+    "flightNumber": "854",
+    "departureDate": "19OCT",
+    "destinationFrom": "KRS",
+    "destinationTo": "LHR",
+    "flightClass": "Y"
+  }
+]
+
+
+add
+[
+  {
+    "flightIds": [2181, 2303],
+    "specialServiceRequests": [
+      {
+        "SSRCode": "WCHR",
+        "freeText": null
+      },
+      {
+        "SSRCode": "WCMP",
+        "freeText": "dimensions 50x50x60"
+      }
+    ]
+  }
+]
+
+delete
+{
+  "2181": ["WCHR", "WCMP"],
+  "2303": ["WCHR", "WCMP"]
+}
+
+
+{
+  "firstName": "joijj",
+  "lastName": "oioim",
+  "gender": "M",
+  "dateOfBirth": "12JUL2011",
+  "documentNumber": "16543415",
+  "documentType": "AlienPassport",
+  "countryOfIssue": "NOR",
+  "dateOfIssue": "14AUG2020",
+  "expirationDate": "14AUG2030",
+  "nationality": "NOR"
+}
+
+
+
+
+
+edit:
+[
+  {
+  "apisDataId": "c9a46b82-b1f8-4d0e-ac61-28e7debc2c03",
+  "firstName": "hkjhk",
+  "lastName": "fuj",
+  "gender": "M",
+  "dateOfBirth": "12JUL2011",
+  "documentNumber": "13531543",
+  "documentType": "AlienPassport",
+  "countryOfIssue": "NOR",
+  "dateOfIssue": "14AUG2020",
+  "expirationDate": "14AUG2030",
+  "nationality": "NOR"
+},
+{
+  "apisDataId": "98628d41-cabc-4c81-9c57-deb160f23e83",
+  "firstName": "zmena",
+  "lastName": "zmena",
+  "gender": "M",
+  "dateOfBirth": "12JUL2011",
+  "documentNumber": "45643254",
+  "documentType": "AlienPassport",
+  "countryOfIssue": "NOR",
+  "dateOfIssue": "14AUG2020",
+  "expirationDate": "14AUG2030",
+  "nationality": "NOR"
+}
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//[HttpPost("{id:guid}/add-travel-document")]
+        //public async Task<ActionResult<IEnumerable<APISData>>> AddTravelDocuments(Guid id,
+        //    [FromBody] List<JObject> dataList)
+        //{
+        //    var addedApisDataList = new List<APISData>();
+
+        //    foreach (var data in dataList)
+        //    {
+        //        var model = new AddAPISDataModel
+        //        {
+        //            FirstName = data["firstName"]?.ToString(),
+        //            LastName = data["lastName"]?.ToString(),
+        //            Gender = (PaxGenderEnum)Enum.Parse(typeof(PaxGenderEnum), data["gender"]?.ToString()),
+        //            DateOfBirth = (DateTime)_timeProvider.ParseDate(data["dateOfBirth"]?.ToString(), true),
+        //            DocumentNumber = data["documentNumber"]?.ToString(),
+        //            DocumentType = (DocumentTypeEnum)Enum.Parse(typeof(DocumentTypeEnum), data["documentType"]?.ToString()),
+        //            CountryOfIssue = data["countryOfIssue"]?.ToString(),
+        //            DateOfIssue = (DateTime)_timeProvider.ParseDate(data["dateOfIssue"]?.ToString(), true),
+        //            ExpirationDate = (DateTime)_timeProvider.ParseDate(data["expirationDate"]?.ToString(), true),
+        //            Nationality = data["nationality"]?.ToString()
+        //        };
+
+        //        var nationality = await _countryRepository.GetCountryByCriteriaAsync(d =>
+        //            d.Country3LetterCode == model.Nationality);
+        //        var countryOfIssue = await _countryRepository.GetCountryByCriteriaAsync(d =>
+        //            d.Country3LetterCode == model.CountryOfIssue);
+
+        //        if (nationality == null || countryOfIssue == null)
+        //        {
+        //            var message = (nationality == null) ? $"Nationality {model.Nationality}"
+        //                : (countryOfIssue == null) ? $"Country of Issue {model.CountryOfIssue}"
+        //                : $"Nationality {model.Nationality} and Country of Issue {model.CountryOfIssue}";
+
+        //            return NotFound(new ApiResponse(404, message + " not found."));
+        //        }
+
+        //        var apisData = new APISData(id,
+        //            nationality.Country2LetterCode,
+        //            countryOfIssue.Country2LetterCode,
+        //            model.DocumentNumber,
+        //            model.DocumentType,
+        //            model.Gender,
+        //            model.FirstName,
+        //            model.LastName,
+        //            model.DateOfBirth,
+        //            model.DateOfIssue,
+        //            model.ExpirationDate);
+
+        //        addedApisDataList.Add(apisData);
+        //    }
+
+        //    await _apisDataRepository.AddAsync(addedApisDataList.ToArray());
+
+        //    return Ok();
+        //}
+
+        //[HttpPut("{id:guid}/edit-travel-document")]
+        //public async Task<ActionResult<APISData>> EditTravelDocument(Guid id,
+        //    [FromBody] List<JObject> dataList)
+        //{
+        //    var editedApisDataList = new List<APISData>();
+
+        //    foreach (var data in dataList)
+        //    {
+        //        var model = new EditAPISDataModel
+        //        {
+        //            APISDataId = Guid.Parse(data["apisDataId"]?.ToString()),
+        //            FirstName = data["firstName"]?.ToString(),
+        //            LastName = data["lastName"]?.ToString(),
+        //            Gender = (PaxGenderEnum)Enum.Parse(typeof(PaxGenderEnum), data["gender"]?.ToString()),
+        //            DateOfBirth = (DateTime)_timeProvider.ParseDate(data["dateOfBirth"]?.ToString(), true),
+        //            DocumentNumber = data["documentNumber"]?.ToString(),
+        //            DocumentType = (DocumentTypeEnum)Enum.Parse(typeof(DocumentTypeEnum), data["documentType"]?.ToString()),
+        //            CountryOfIssue = data["countryOfIssue"]?.ToString(),
+        //            DateOfIssue = (DateTime)_timeProvider.ParseDate(data["dateOfIssue"]?.ToString(), true),
+        //            ExpirationDate = (DateTime)_timeProvider.ParseDate(data["expirationDate"]?.ToString(), true),
+        //            Nationality = data["nationality"]?.ToString()
+        //        };
+
+        //        var nationality = await _countryRepository.GetCountryByCriteriaAsync(d =>
+        //            d.Country3LetterCode == model.Nationality);
+        //        var countryOfIssue = await _countryRepository.GetCountryByCriteriaAsync(d =>
+        //            d.Country3LetterCode == model.CountryOfIssue);
+
+        //        if (nationality == null || countryOfIssue == null)
+        //        {
+        //            var message = (nationality == null) ? $"Nationality {model.Nationality}"
+        //                : (countryOfIssue == null) ? $"Country of Issue {model.CountryOfIssue}"
+        //                : $"Nationality {model.Nationality} and Country of Issue {model.CountryOfIssue}";
+
+        //            return NotFound(new ApiResponse(404, message + " not found."));
+        //        }
+
+        //        var selectedTravelDocument = await _apisDataRepository.GetAPISDataByCriteriaAsync(d =>
+        //            d.PassengerId == id && d.Id == model.APISDataId);
+
+        //        if (selectedTravelDocument != null)
+        //        {
+        //            selectedTravelDocument.FirstName = model.FirstName;
+        //            selectedTravelDocument.LastName = model.LastName;
+        //            selectedTravelDocument.Gender = model.Gender;
+        //            selectedTravelDocument.DateOfBirth = model.DateOfBirth;
+        //            selectedTravelDocument.DocumentNumber = model.DocumentNumber;
+        //            selectedTravelDocument.DocumentType = model.DocumentType;
+        //            selectedTravelDocument.CountryOfIssueId = countryOfIssue.Country2LetterCode;
+        //            selectedTravelDocument.DateOfIssue = model.DateOfIssue;
+        //            selectedTravelDocument.ExpirationDate = model.ExpirationDate;
+        //            selectedTravelDocument.NationalityId = nationality.Country2LetterCode;
+
+        //            editedApisDataList.Add(selectedTravelDocument);
+        //        }
+        //    }
+
+        //    await _apisDataRepository.UpdateAsync(editedApisDataList.ToArray());
+
+        //    return Ok();
+        //}

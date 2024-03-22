@@ -6,10 +6,7 @@ namespace Core.PassengerContext.APIS
 {
     public class APISData
     {
-        public int Id { get; set; }
-
-        [Required]
-        public string DocumentNumber { get; set; }
+        public Guid Id { get; set; }        
 
         public Passenger Passenger { get; set; }
         public Guid PassengerId { get; set; }
@@ -17,8 +14,11 @@ namespace Core.PassengerContext.APIS
         public Country Nationality { get; set; }
         public string NationalityId { get; set; }
 
-        public Country IssueCountry { get; set; }
-        public string IssueCountryId { get; set; }
+        public Country CountryOfIssue { get; set; }
+        public string CountryOfIssueId { get; set; }
+
+        [Required]
+        public string DocumentNumber { get; set; }
 
         [Required]
         public DocumentTypeEnum DocumentType { get; set; }
@@ -39,6 +39,33 @@ namespace Core.PassengerContext.APIS
         public DateTime DateOfIssue { get; set; }
 
         [Required]
-        public DateTime ExpirationDate { get; set; }                     
+        public DateTime ExpirationDate { get; set; }
+
+        public APISData(
+            Guid passengerId,
+            string nationalityId,
+            string countryOfIssueId,
+            string documentNumber, 
+            DocumentTypeEnum documentType,
+            PaxGenderEnum gender,
+            string firstName,
+            string lastName,
+            DateTime dateOfBirth,
+            DateTime dateOfIssue,
+            DateTime expirationDate)
+        {
+            Id = Guid.NewGuid();
+            PassengerId = passengerId;
+            NationalityId = nationalityId;
+            CountryOfIssueId = countryOfIssueId;
+            DocumentNumber = documentNumber;
+            DocumentType = documentType;
+            Gender = gender;
+            FirstName = firstName;
+            LastName = lastName;
+            DateOfBirth = dateOfBirth;
+            DateOfIssue = dateOfIssue;
+            ExpirationDate = expirationDate;
+        }
     }
 }

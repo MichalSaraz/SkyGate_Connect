@@ -187,34 +187,28 @@ namespace TestProject.TestDataInitializationClasses
 
                 var expirationDate = dateOfIssue.AddYears(10);
 
-                var newAPISData = new APISData
-                {
-                    Id = id,
-                    DocumentNumber = passportNumberList[id],
+                var newAPISData = new APISData(
+                    passenger.Id, 
+                    selectedCountry?.Country2LetterCode,
+                    selectedCountry?.Country2LetterCode,
+                    passportNumberList[id],
+                    DocumentTypeEnum.NormalPassport,
+                    passenger.Gender,
+                    passenger.FirstName,
+                    passenger.LastName,
+                    dateOfBirth,
+                    dateOfIssue,
+                    expirationDate)                    
+                { 
+                    Id = Guid.NewGuid(),
                     Passenger = passenger,
-                    PassengerId = passenger.Id,
                     Nationality = selectedCountry,
-                    IssueCountry = selectedCountry,
-                    IssueCountryId = selectedCountry?.Country2LetterCode,
-                    DocumentType = DocumentTypeEnum.NormalPassport,
-                    Gender = passenger.Gender,
-                    FirstName = passenger.FirstName,
-                    LastName = passenger.LastName,
-                    DateOfBirth = dateOfBirth,
-                    DateOfIssue = dateOfIssue,
-                    ExpirationDate = expirationDate,
+                    CountryOfIssue = selectedCountry,
                 };
 
-                Trace.WriteLine($"APIS created {id}");
-                var existingEntity = dbContext.APISData.Find(newAPISData.Id);
-
-                if (existingEntity != null)
-                {
-                    newAPISData.Id += 1;
-                }
+                Trace.WriteLine($"APIS created {newAPISData.Id}");
 
                 dbContext.APISData.Add(newAPISData);
-
                 id++;
             }
 

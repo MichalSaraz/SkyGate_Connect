@@ -53,6 +53,7 @@ namespace Infrastructure.Repositories
         public async Task<Passenger> GetPassengerByCriteriaAsync(Expression<Func<Passenger, bool>> criteria, bool tracked = true)
         {
             var passengerQuery = _context.Passengers.AsQueryable()
+                .Include(_ => _.SpecialServiceRequests)
                 .Include(_ => _.PNR)
                 .Include(_ => _.Flights)
                     .ThenInclude(_ => _.Flight)

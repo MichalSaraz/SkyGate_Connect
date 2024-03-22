@@ -7,10 +7,14 @@ using Core.FlightContext;
 using Core.FlightContext.JoinClasses;
 using Core.Interfaces;
 using Core.PassengerContext;
+using Core.PassengerContext.APIS;
+using Core.PassengerContext.APIS.Enums;
 using Core.PassengerContext.Booking;
+using Core.PassengerContext.Booking.Enums;
 using Core.PassengerContext.JoinClasses;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Web.Api.PassengerContext.Models;
 using Web.Errors;
@@ -29,6 +33,8 @@ namespace Web.Api.PassengerContext.Controllers
         private readonly IDestinationRepository _destinationRepository;
         private readonly ISSRCodeRepository _sSRCodeRepository;
         private readonly ISpecialServiceRequestRepository _specialServiceRequestRepository;
+        private readonly IAPISDataRepository _apisDataRepository;
+        private readonly ICountryRepository _countryRepository;
 
         public PassengerController(
             IMapper mapper,
@@ -38,7 +44,9 @@ namespace Web.Api.PassengerContext.Controllers
             IBaggageRepository baggageRepository,
             IDestinationRepository destinationRepository,
             ISSRCodeRepository sSRCodeRepository,
-            ISpecialServiceRequestRepository specialServiceRequestRepository)
+            ISpecialServiceRequestRepository specialServiceRequestRepository,
+            IAPISDataRepository apisDataRepository,
+            ICountryRepository countryRepository)
         {
             _mapper = mapper;
             _timeProvider = timeProvider;
@@ -48,6 +56,8 @@ namespace Web.Api.PassengerContext.Controllers
             _destinationRepository = destinationRepository;
             _sSRCodeRepository = sSRCodeRepository;
             _specialServiceRequestRepository = specialServiceRequestRepository;
+            _apisDataRepository = apisDataRepository;
+            _countryRepository = countryRepository;
         }
 
         //
@@ -212,30 +222,30 @@ namespace Web.Api.PassengerContext.Controllers
         {
             var changesToSave = new List<Baggage>();
 
-            foreach (var editBaggageModel in editBaggageModels)
+            foreach (var model in editBaggageModels)
             {
                 var selectedBaggage =
                     await _baggageRepository.GetBaggageByCriteriaAsync(b =>
-                        b.Id == editBaggageModel.BaggageId && b.PassengerId == id);
+                        b.Id == model.BaggageId && b.PassengerId == id);
 
                 if (selectedBaggage != null)
                 {
-                    selectedBaggage.Weight = editBaggageModel.Weight;
+                    selectedBaggage.Weight = model.Weight;
 
-                    if (editBaggageModel.SpecialBagType.HasValue)
+                    if (model.SpecialBagType.HasValue)
                     {
                         if (selectedBaggage.SpecialBag == null)
                         {
-                            selectedBaggage.SpecialBag = new SpecialBag(editBaggageModel.SpecialBagType.Value,
-                                editBaggageModel.Description);
+                            selectedBaggage.SpecialBag = new SpecialBag(model.SpecialBagType.Value,
+                                model.Description);
                         }
                         else
                         {
-                            selectedBaggage.SpecialBag.SpecialBagType = editBaggageModel.SpecialBagType.Value;
-                            selectedBaggage.SpecialBag.SpecialBagDescription = editBaggageModel.Description;
+                            selectedBaggage.SpecialBag.SpecialBagType = model.SpecialBagType.Value;
+                            selectedBaggage.SpecialBag.SpecialBagDescription = model.Description;
                         }
                     }
-                    else if (!editBaggageModel.SpecialBagType.HasValue && selectedBaggage.SpecialBag != null)
+                    else if (!model.SpecialBagType.HasValue && selectedBaggage.SpecialBag != null)
                     {
                         selectedBaggage.SpecialBag = null;
                     }
@@ -280,6 +290,11 @@ namespace Web.Api.PassengerContext.Controllers
         {
             var passenger = await _passengerRepository.GetPassengerByIdAsync(id, false, true);
 
+            if (passenger == null)
+            {
+                return NotFound(new ApiResponse(404, $"Passenger with Id {id} was not found."));
+            }
+
             var passengerDto = _mapper.Map<List<BaggageDetailsDto>>(passenger.PassengerCheckedBags);
 
             return Ok(passengerDto);
@@ -289,9 +304,15 @@ namespace Web.Api.PassengerContext.Controllers
         public async Task<ActionResult<BaseFlight>> AddConnectingFlight(Guid id, int flightId, bool isInbound,
             [FromBody] List<AddConnectingFlightModel> addConnectingFlightModels)
         {
-            Expression<Func<Passenger, bool>> criteria = p => p.Id == id && p.Flights.Any(f => f.FlightId == flightId);
+            Expression<Func<Passenger, bool>> criteria = c => c.Id == id && c.Flights.Any(pf => pf.FlightId == flightId);
 
             var passenger = await _passengerRepository.GetPassengerByCriteriaAsync(criteria);
+
+            if (passenger == null)
+            {
+                return NotFound(new ApiResponse(404, $"Passenger with Id {id} was not found."));
+            }
+
             var currentPassengerFlights = passenger.Flights.Select(pf => pf.Flight).ToList();
             var currentFlight = await _flightRepository.GetFlightByIdAsync<Flight>(flightId, false);
 
@@ -384,17 +405,24 @@ namespace Web.Api.PassengerContext.Controllers
         public async Task<ActionResult<BaseFlight>> DeleteConnectingFlight(Guid id, int flightId,
             [FromBody] List<int> flightIds)
         {
-            Expression<Func<Passenger, bool>> criteria = p => p.Id == id && p.Flights.Any(f => f.FlightId == flightId);
+            Expression<Func<Passenger, bool>> criteria = c => c.Id == id && c.Flights.Any(pf => pf.FlightId == flightId);
 
             var passenger = await _passengerRepository.GetPassengerByCriteriaAsync(criteria);
 
+            if (passenger == null)
+            {
+                return NotFound(new ApiResponse(404, $"Passenger with Id {id} was not found."));
+            }
+
+            var flightsToDelete = new List<BaseFlight>();
+
             foreach (var iteratedFlightId in flightIds)
             {
-                var flight = passenger.Flights.FirstOrDefault(pf => pf.Flight.Id == iteratedFlightId);
+                var flight = passenger.Flights.FirstOrDefault(pf => pf.Flight.Id == iteratedFlightId)?.Flight;
 
                 if (flight != null)
                 {
-                    passenger.Flights.Remove(flight);
+                    flightsToDelete.Add(flight);
                 }
                 else if (iteratedFlightId == flightId)
                 {
@@ -406,7 +434,7 @@ namespace Web.Api.PassengerContext.Controllers
                 }
             }
 
-            await _passengerRepository.UpdateAsync(passenger);
+            await _flightRepository.DeleteAsync(flightsToDelete.ToArray());
 
             return NoContent();
         }
@@ -415,7 +443,7 @@ namespace Web.Api.PassengerContext.Controllers
         public async Task<ActionResult<Passenger>> AddSpecialServiceRequest(Guid id, int flightId,
             [FromBody] List<JObject> requestData)
         {
-            Expression<Func<Passenger, bool>> criteria = p => p.Id == id && p.Flights.Any(f => f.FlightId == flightId);
+            Expression<Func<Passenger, bool>> criteria = c => c.Id == id && c.Flights.Any(pf => pf.FlightId == flightId);
 
             var passenger = await _passengerRepository.GetPassengerByCriteriaAsync(criteria);
 
@@ -437,9 +465,14 @@ namespace Web.Api.PassengerContext.Controllers
 
                     if (SSRCode == null)
                     {
-                        return BadRequest(new ApiResponse(400, "All fields must be filled in for the special service request."));
+                        return BadRequest(new ApiResponse(400, "SSR must be filled in for the special service request."));
                     }
 
+                    if (SSRCode.IsFreeTextMandatory && string.IsNullOrEmpty(freeText))
+                    {
+                        return BadRequest(new ApiResponse(400, "FreeText is required for this SSRCode."));
+                    }
+                    //ToDo: Add validation for adding INFT SSR
                     foreach (var iteratedFlightId in flightIds)
                     {
                         var specialServiceRequest = new SpecialServiceRequest(SSRCode.Code, iteratedFlightId, id, freeText);
@@ -451,6 +484,160 @@ namespace Web.Api.PassengerContext.Controllers
             }
 
             return Ok();
+        }
+
+        [HttpDelete("{id:guid}/flight/{flightId:int}/delete-special-service-request")]
+        public async Task<ActionResult<Passenger>> DeleteSpecialServiceRequest(Guid id, int flightId,
+            [FromBody] Dictionary<string, List<string>> ssrCodesToDelete)
+        {
+            Expression<Func<Passenger, bool>> criteria = c => c.Id == id && c.Flights.Any(pf => pf.FlightId == flightId);
+
+            var passenger = await _passengerRepository.GetPassengerByCriteriaAsync(criteria);
+
+            if (passenger == null)
+            {
+                return NotFound(new ApiResponse(404, $"Passenger with Id {id} was not found."));
+            }
+
+            var ssrToDeleteBatch = new List<SpecialServiceRequest>();
+
+            foreach (var flight in ssrCodesToDelete.Keys)
+            {
+                var ssrCodes = ssrCodesToDelete[flight];
+                var flightIdInt = int.Parse(flight);
+
+                var ssrToDelete = passenger.SpecialServiceRequests
+                    .Where(ssr => ssr.FlightId == flightIdInt && ssrCodes.Contains(ssr.SSRCodeId))
+                    .ToList();
+
+                if (ssrToDelete.Count != ssrCodes.Count)
+                {
+                    return BadRequest(new ApiResponse(400, "Invalid SSR codes."));
+                }
+
+                ssrToDeleteBatch.AddRange(ssrToDelete);
+            }
+
+            await _specialServiceRequestRepository.DeleteAsync(ssrToDeleteBatch.ToArray());
+
+            return NoContent();
+        }
+
+        private async Task<ActionResult<List<APISData>>> _ProcessTravelDocumentsAsync<TModel>(
+            Guid id,
+            List<JObject> dataList, 
+            Func<APISData[], Task> saveMethod,
+            Func<Guid, Task<APISData>> getByIdMethod = null) where TModel : APISDataModel
+        {
+            var processedApisDataList = new List<APISData>();
+
+            foreach (var data in dataList)
+            {
+                var model = JsonConvert.DeserializeObject<TModel>(data.ToString());
+
+                var nationality = await _countryRepository.GetCountryByCriteriaAsync(d =>
+                    d.Country3LetterCode == model.Nationality);
+                var countryOfIssue = await _countryRepository.GetCountryByCriteriaAsync(d =>
+                    d.Country3LetterCode == model.CountryOfIssue);
+
+                if (nationality == null || countryOfIssue == null)
+                {
+                    var message = (nationality == null) ? $"Nationality {model.Nationality}"
+                        : (countryOfIssue == null) ? $"Country of Issue {model.CountryOfIssue}"
+                        : $"Nationality {model.Nationality} and Country of Issue {model.CountryOfIssue}";
+
+                    return NotFound(new ApiResponse(404, message + " not found."));
+                }
+
+                APISData travelDocument;
+
+                if (getByIdMethod == null) // Add method
+                {
+                    travelDocument = new APISData(id,
+                        nationality.Country2LetterCode,
+                        countryOfIssue.Country2LetterCode,
+                        model.DocumentNumber,
+                        model.DocumentType,
+                        model.Gender,
+                        model.FirstName,
+                        model.LastName,
+                        model.DateOfBirth,
+                        model.DateOfIssue,
+                        model.ExpirationDate);
+                }
+                else // Edit method
+                {
+                    travelDocument = await getByIdMethod((model as EditAPISDataModel).APISDataId);
+
+                    if (travelDocument != null)
+                    {
+                        travelDocument.FirstName = model.FirstName;
+                        travelDocument.LastName = model.LastName;
+                        travelDocument.Gender = model.Gender;
+                        travelDocument.DateOfBirth = model.DateOfBirth;
+                        travelDocument.DocumentNumber = model.DocumentNumber;
+                        travelDocument.DocumentType = model.DocumentType;
+                        travelDocument.CountryOfIssueId = countryOfIssue.Country2LetterCode;
+                        travelDocument.DateOfIssue = model.DateOfIssue;
+                        travelDocument.ExpirationDate = model.ExpirationDate;
+                        travelDocument.NationalityId = nationality.Country2LetterCode;
+                    }
+                }
+
+                processedApisDataList.Add(travelDocument);
+            }
+
+            await saveMethod(processedApisDataList.ToArray());
+
+            return processedApisDataList;
+        }
+
+        [HttpPost("{id:guid}/add-travel-document")]
+        public async Task<ActionResult<APISData>> AddTravelDocument(Guid id, [FromBody] List<JObject> dataList)
+        {
+            Func<APISData[], Task> saveMethod = _apisDataRepository.AddAsync;
+            var addedApisDataList = await _ProcessTravelDocumentsAsync<AddAPISDataModel>(id, dataList, saveMethod);
+
+            return Ok();
+        }
+
+        [HttpPut("{id:guid}/edit-travel-document")]
+        public async Task<ActionResult<APISData>> EditTravelDocument(Guid id, [FromBody] List<JObject> dataList)
+        {
+            Func<APISData[], Task> saveMethod = _apisDataRepository.UpdateAsync;
+
+            Func<Guid, Task<APISData>> getByIdMethod = async (apisDataId) => 
+                await _apisDataRepository.GetAPISDataByCriteriaAsync(d => d.Id == apisDataId);
+
+            var editedApisDataList = 
+                await _ProcessTravelDocumentsAsync<EditAPISDataModel>(id, dataList, saveMethod, getByIdMethod);
+
+            return Ok();
+        }
+
+        [HttpDelete("{id:guid}/delete-travel-document")]
+        public async Task<ActionResult<APISData>> DeleteTravelDocument(Guid id,
+            [FromBody] List<Guid> apisDataIds)
+        {
+            var travelDocumentsToDelete = new List<APISData>();
+
+            foreach (var apisDataId in apisDataIds)
+            {
+                Expression<Func<APISData, bool>> criteria = c => c.PassengerId == id && c.Id == apisDataId;
+
+                var travelDocument = await _apisDataRepository.GetAPISDataByCriteriaAsync(criteria);
+                
+                travelDocumentsToDelete.Add(travelDocument);
+            }
+
+            if (travelDocumentsToDelete.Count != apisDataIds.Count)
+            {
+                return BadRequest(new ApiResponse(400, "Invalid travel document IDs."));
+            }
+
+            await _apisDataRepository.DeleteAsync(travelDocumentsToDelete.ToArray());
+
+            return NoContent();
         }
     }
 }

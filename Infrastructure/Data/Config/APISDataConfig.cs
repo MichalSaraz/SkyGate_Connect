@@ -20,9 +20,9 @@ namespace Infrastructure.Data.Config
                 .WithMany()
                 .HasForeignKey(ad => ad.NationalityId);
             
-            builder.HasOne(ad => ad.IssueCountry)
+            builder.HasOne(ad => ad.CountryOfIssue)
                 .WithMany()
-                .HasForeignKey(ad => ad.IssueCountryId);
+                .HasForeignKey(ad => ad.CountryOfIssueId);
             
             builder.Property(ad => ad.DocumentType)
                 .HasEnumConversion();

@@ -70,7 +70,7 @@ namespace Web.Helpers
                 .ForMember(dest => dest.PassengerLastName, opt => opt.MapFrom(src => src.Passenger.LastName));
 
             CreateMap<APISData, APISDataDto>()
-                .ForMember(dest => dest.IssueCountry, opt => opt.MapFrom(src => src.IssueCountryId))
+                .ForMember(dest => dest.IssueCountry, opt => opt.MapFrom(src => src.CountryOfIssueId))
                 .ForMember(dest => dest.Nationality, opt => opt.MapFrom(src => src.NationalityId));
 
             CreateMap<Baggage, BaggageBaseDto>()

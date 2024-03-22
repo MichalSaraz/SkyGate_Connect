@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240317145933_edit_ssr_table")]
+    partial class edit_ssr_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -233,12 +236,11 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.PassengerContext.APIS.APISData", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
 
-                    b.Property<string>("CountryOfIssueId")
-                        .HasColumnType("text");
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("DateOfBirth")
                         .IsRequired()
@@ -268,6 +270,9 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("IssueCountryId")
+                        .HasColumnType("text");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -280,7 +285,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CountryOfIssueId");
+                    b.HasIndex("IssueCountryId");
 
                     b.HasIndex("NationalityId");
 
@@ -796,9 +801,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.PassengerContext.APIS.APISData", b =>
                 {
-                    b.HasOne("Core.PassengerContext.APIS.Country", "CountryOfIssue")
+                    b.HasOne("Core.PassengerContext.APIS.Country", "IssueCountry")
                         .WithMany()
-                        .HasForeignKey("CountryOfIssueId");
+                        .HasForeignKey("IssueCountryId");
 
                     b.HasOne("Core.PassengerContext.APIS.Country", "Nationality")
                         .WithMany()
@@ -810,7 +815,7 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CountryOfIssue");
+                    b.Navigation("IssueCountry");
 
                     b.Navigation("Nationality");
 

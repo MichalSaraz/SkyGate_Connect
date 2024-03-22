@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240317173811_Change_PK_ApisData_to_Guid_step1")]
+    partial class Change_PK_ApisData_to_Guid_step1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -233,9 +236,11 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.PassengerContext.APIS.APISData", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CountryOfIssueId")
                         .HasColumnType("text");
@@ -274,6 +279,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("NationalityId")
                         .HasColumnType("text");
+
+                    b.Property<Guid>("NewId")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("PassengerId")
                         .HasColumnType("uuid");

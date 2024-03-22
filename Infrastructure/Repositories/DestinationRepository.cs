@@ -1,5 +1,4 @@
-﻿using Core.BaggageContext;
-using Core.FlightContext.FlightInfo;
+﻿using Core.FlightContext.FlightInfo;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
