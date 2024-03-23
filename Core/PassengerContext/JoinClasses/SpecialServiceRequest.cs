@@ -1,9 +1,6 @@
-﻿using Core;
-using Core.BaggageContext.Enums;
-using Core.FlightContext;
+﻿using Core.FlightContext;
 using Core.PassengerContext.Booking;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.PassengerContext.JoinClasses
 {
@@ -19,9 +16,9 @@ namespace Core.PassengerContext.JoinClasses
         public int FlightId { get; private set; }
 
         [MaxLength(150)]
-        public string? FreeText { get; private set; }
+        public string FreeText { get; private set; }
 
-        public SpecialServiceRequest(string sSRCodeId, int flightId, Guid passengerId, string? freeText)
+        public SpecialServiceRequest(string sSRCodeId, int flightId, Guid passengerId, string freeText)
         {
             SSRCodeId = sSRCodeId;
             FlightId = flightId;

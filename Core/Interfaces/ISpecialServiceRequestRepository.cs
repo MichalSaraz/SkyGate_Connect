@@ -1,10 +1,8 @@
-﻿using Core.Interfaces;
-using Core.PassengerContext.JoinClasses;
+﻿using Core.PassengerContext.JoinClasses;
 
-namespace Infrastructure.Repositories
+namespace Core.Interfaces
 {
     public interface ISpecialServiceRequestRepository : IGenericRepository<SpecialServiceRequest>
     {
-
     }
 }

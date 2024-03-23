@@ -3,6 +3,7 @@ using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+
 namespace Infrastructure.Repositories
 {
     public class DestinationRepository : IDestinationRepository
@@ -16,12 +17,11 @@ namespace Infrastructure.Repositories
 
         public async Task<Destination> GetDestinationByCriteriaAsync(Expression<Func<Destination, bool>> criteria)
         {
-            return await _context.Destinations.AsNoTracking()
-                .Where(criteria)
-                .FirstOrDefaultAsync();
+            return await _context.Destinations.AsNoTracking().Where(criteria).FirstOrDefaultAsync();
         }
 
-        public async Task<IReadOnlyList<Destination>> GetDestinationsByCriteriaAsync(Expression<Func<Destination, bool>> criteria)
+        public async Task<IReadOnlyList<Destination>> GetDestinationsByCriteriaAsync(
+            Expression<Func<Destination, bool>> criteria)
         {
             return await _context.Destinations.AsNoTracking()
                 .Include(_ => _.Country)

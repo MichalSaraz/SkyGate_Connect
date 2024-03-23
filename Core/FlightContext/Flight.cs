@@ -39,8 +39,12 @@ namespace Core.FlightContext
             ScheduledFlightId = scheduledFlightId;
         }
 
-        
-        public List<Seat> InitializeSeats(int a)
+
+        /// <summary>
+        /// Initializes the seats of the flight based on the Aircraft's seat map and flight class specifications.
+        /// </summary>
+        /// <returns>A list of Seat objects representing the seats of the flight.</returns>
+        public List<Seat> InitializeSeats()
         {
             Seats = new List<Seat>();
             foreach (var specialSeats in Aircraft.SeatMap.FlightClassesSpecification)

@@ -1,12 +1,4 @@
-﻿using Core.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Core.Time
+﻿namespace Core.Time
 {
     public class TestTimeProvider : TimeProviderBase
     {
@@ -14,10 +6,10 @@ namespace Core.Time
 
         public TestTimeProvider()
         {
-            SetSimulatedTime(2023, 10, 15);
+            _SetSimulatedTime(2023, 10, 15);
         }
 
-        public void SetSimulatedTime(int year, int month, int day)
+        private void _SetSimulatedTime(int year, int month, int day)
         {
             Now = new DateTime(year, month, day);
         }

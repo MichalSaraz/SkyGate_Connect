@@ -35,8 +35,7 @@ namespace Infrastructure.Data
         public DbSet<Country> Countries { get; set; }
         public DbSet<SeatMap> SeatMaps { get; set; }
 
-
-        protected readonly IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
         public AppDbContext()
         {
@@ -49,15 +48,8 @@ namespace Infrastructure.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            string connectionString = _configuration.GetConnectionString("DefaultConnection");
-        
-            options.UseNpgsql(connectionString, opt =>
-            {
-                opt.CommandTimeout(1000);
-            });
-        
-            options.EnableSensitiveDataLogging();
-        }      
+            options.UseNpgsql(_configuration.GetConnectionString("DefaultConnection"));
+        } 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

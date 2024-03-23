@@ -20,7 +20,7 @@ namespace TestProject.TestDataInitializationClasses
             var passengerInfos = dbContext.PassengerInfo.ToList();
             var seatsOccupied = new Dictionary<string, List<string>>();
 
-            foreach (var bookingReference in bookingReferences.Where((x, i) => (i + 1) % 5 == 0))
+            foreach (var bookingReference in bookingReferences.Where((_, i) => (i + 1) % 5 == 0))
             {
                 foreach (var flight in bookingReference.FlightItinerary)
                 {

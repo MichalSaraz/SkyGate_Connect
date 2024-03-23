@@ -22,15 +22,13 @@ namespace Infrastructure.Data
         {
             string connectionString = _configuration.GetConnectionString("DefaultConnection");
 
-            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
-            {
-                connection.Open();
+            using var connection = new NpgsqlConnection(connectionString);
+            connection.Open();
 
-                using var cmd = new NpgsqlCommand(query, connection);
-                NpgsqlParameter[] parameters = parametersFactory.Invoke();
-                cmd.Parameters.AddRange(parameters);
-                cmd.ExecuteNonQuery();
-            }
+            using var cmd = new NpgsqlCommand(query, connection);
+            var parameters = parametersFactory.Invoke();
+            cmd.Parameters.AddRange(parameters);
+            cmd.ExecuteNonQuery();
         }
 
         /// <summary>
@@ -40,14 +38,7 @@ namespace Infrastructure.Data
         /// <returns>An array of NpgsqlParameter objects.</returns>
         public NpgsqlParameter[] CreateParameters(params (string Name, object Value)[] paramValues)
         {
-            var parameters = new List<NpgsqlParameter>();
-
-            foreach (var paramValue in paramValues)
-            {
-                parameters.Add(new NpgsqlParameter(paramValue.Name, paramValue.Value));
-            }
-
-            return parameters.ToArray();
+            return paramValues.Select(paramValue => new NpgsqlParameter(paramValue.Name, paramValue.Value)).ToArray();
         }
     }
 }

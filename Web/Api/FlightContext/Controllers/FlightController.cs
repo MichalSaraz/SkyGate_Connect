@@ -33,6 +33,11 @@ namespace Web.Api.FlightContext.Controllers
             _mapper = mapper;            
         }
 
+        /// <summary>
+        /// Searches for flights based on the provided search criteria.
+        /// </summary>
+        /// <param name="data">The search criteria for the flight search.</param>
+        /// <returns>A list of flights that match the search criteria.</returns>
         [HttpPost("search")]
         public async Task<ActionResult<List<Flight>>> SearchFlights([FromBody] JObject data)
         {
@@ -85,6 +90,11 @@ namespace Web.Api.FlightContext.Controllers
             return Ok(flightDtos);
         }
 
+        /// <summary>
+        /// Retrieves the details of a flight.
+        /// </summary>
+        /// <param name="id">The ID of the flight.</param>
+        /// <returns>The flight details.</returns>
         [HttpGet("{id:int}/details")]
         public async Task<ActionResult<Flight>> GetFlightDetails(int id)
         {
@@ -100,6 +110,11 @@ namespace Web.Api.FlightContext.Controllers
             return Ok(flightDto);
         }
 
+        /// <summary>
+        /// Get the onward flights for a specific flight.
+        /// </summary>
+        /// <param name="id">The ID of the flight.</param>
+        /// <returns>The list of onward flights as a <see cref="List{T}"/> of <see cref="BaseFlight"/>.</returns>
         [HttpGet("{id:int}/onward-flights")]
         public async Task<ActionResult<List<BaseFlight>>> GetOnwardFlights(int id)
         {
@@ -107,6 +122,11 @@ namespace Web.Api.FlightContext.Controllers
                 bf.IteratedFlight.DepartureDateTime > bf.CurrentFlight.DepartureDateTime);
         }
 
+        /// <summary>
+        /// Retrieves a list of inbound flights related to a specific flight.
+        /// </summary>
+        /// <param name="id">The ID of the flight to retrieve inbound flights for.</param>
+        /// <returns>A list of <see cref="BaseFlight"/> objects representing the inbound flights.</returns>
         [HttpGet("{id:int}/inbound-flights")]
         public async Task<ActionResult<List<BaseFlight>>> GetInboundFlights(int id)
         {
@@ -155,7 +175,7 @@ namespace Web.Api.FlightContext.Controllers
             var flightDtos = _mapper.Map<List<FlightConnectionsDto>>(connectedFlights)
                 .Select(f =>
                 {
-                    f.Count = flightCounts.TryGetValue(f.Id, out var value) ? value : 0;
+                    f.Count = flightCounts.GetValueOrDefault(f.Id, 0);
                     return f;
                 })
                 .DistinctBy(f => f.Id)
@@ -169,12 +189,22 @@ namespace Web.Api.FlightContext.Controllers
             return Ok(flightDtos);
         }
 
+        /// <summary>
+        /// Gets the list of passengers with onward flight for a given flight ID.
+        /// </summary>
+        /// <param name="id">The ID of the flight.</param>
+        /// <returns>The list of passengers with onward flight.</returns>
         [HttpGet("{id:int}/passengers-with-onward-flight")]
         public async Task<ActionResult<List<Passenger>>> GetPassengersWithOnwardFlight(int id)
         {
             return await _GetPassengersWithFlightConnection(id, true);
         }
 
+        /// <summary>
+        /// Retrieves a list of passengers with an inbound flight for the specified flight ID.
+        /// </summary>
+        /// <param name="id">The ID of the flight.</param>
+        /// <returns>A list of passengers with an inbound flight.</returns>
         [HttpGet("{id:int}/passengers-with-inbound-flight")]
         public async Task<ActionResult<List<Passenger>>> GetPassengersWithInboundFlight(int id)
         {

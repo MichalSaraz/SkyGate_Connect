@@ -8,11 +8,7 @@ using Core.FlightContext.JoinClasses;
 using Core.Interfaces;
 using Core.PassengerContext;
 using Core.PassengerContext.APIS;
-using Core.PassengerContext.APIS.Enums;
-using Core.PassengerContext.Booking;
-using Core.PassengerContext.Booking.Enums;
 using Core.PassengerContext.JoinClasses;
-using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -60,7 +56,11 @@ namespace Web.Api.PassengerContext.Controllers
             _countryRepository = countryRepository;
         }
 
-        //
+        /// <summary>
+        /// Searches for passengers based on the given search criteria.
+        /// </summary>
+        /// <param name="data">The search criteria as a JObject.</param>
+        /// <returns>Returns a list of Passenger objects that match the search criteria.</returns>
         [HttpPost("search")]
         public async Task<ActionResult<List<Passenger>>> SearchPassengers([FromBody] JObject data)
         {
@@ -122,6 +122,14 @@ namespace Web.Api.PassengerContext.Controllers
             return Ok(passengersDto);
         }
 
+        /// <summary>
+        /// Retrieves details of a passenger for a specific flight.
+        /// </summary>
+        /// <param name="id">The unique identifier of the passenger.</param>
+        /// <param name="flightId">The unique identifier of the flight.</param>
+        /// <returns>An ActionResult object containing the details of the passenger for the specified flight.
+        /// If the passenger is not found, returns a NotFound status with an error message. If the passenger details
+        /// are retrieved successfully, returns an Ok status with the passenger details.</returns>
         [HttpGet("{id:guid}/flight/{flightId:int}/details")]
         public async Task<ActionResult<Passenger>> GetPassengerDetails(Guid id, int flightId)
         {
@@ -142,6 +150,13 @@ namespace Web.Api.PassengerContext.Controllers
             return Ok(passengerDto);
         }
 
+        /// <summary>
+        /// Adds baggage for a passenger on a specific flight.
+        /// </summary>
+        /// <param name="id">The ID of the passenger.</param>
+        /// <param name="flightId">The ID of the flight.</param>
+        /// <param name="addBaggageModels">The list of baggage models to add.</param>
+        /// <returns>An ActionResult with the added baggage.</returns>
         [HttpPost("{id:guid}/flight/{flightId:int}/add-baggage")]
         public async Task<ActionResult<Baggage>> AddBaggage(Guid id, int flightId,
             [FromBody] List<AddBaggageModel> addBaggageModels)
@@ -216,6 +231,12 @@ namespace Web.Api.PassengerContext.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Edit baggage information for a passenger.
+        /// </summary>
+        /// <param name="id">The unique identifier of the passenger.</param>
+        /// <param name="editBaggageModels">The list of baggage models containing the changes to apply.</param>
+        /// <returns>The updated baggage information.</returns>
         [HttpPut("{id:guid}/edit-baggage")]
         public async Task<ActionResult<Baggage>> EditBaggage(Guid id,
             [FromBody] List<EditBaggageModel> editBaggageModels)
@@ -259,6 +280,12 @@ namespace Web.Api.PassengerContext.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Deletes the selected baggage for a passenger.
+        /// </summary>
+        /// <param name="id">The ID of the passenger.</param>
+        /// <param name="baggageIds">The list of baggage IDs to delete.</param>
+        /// <returns>Returns an ActionResult representing the HTTP response.</returns>
         [HttpDelete("{id:guid}/delete-baggage")]
         public async Task<ActionResult> DeleteSelectedBaggage(Guid id, [FromBody] List<Guid> baggageIds)
         {
@@ -285,6 +312,11 @@ namespace Web.Api.PassengerContext.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Retrieves all the bags of a passenger based on the provided id.
+        /// </summary>
+        /// <param name="id">The id of the passenger.</param>
+        /// <returns>A list of BaggageDetailsDto objects representing the bags of the passenger.</returns>
         [HttpGet("{id:guid}/all-bags")]
         public async Task<ActionResult<List<Baggage>>> GetAllPassengersBags(Guid id)
         {
@@ -300,13 +332,19 @@ namespace Web.Api.PassengerContext.Controllers
             return Ok(passengerDto);
         }
 
+        /// <summary>
+        /// Adds a connecting flight to a passenger.
+        /// </summary>
+        /// <param name="id">The ID of the passenger.</param>
+        /// <param name="flightId">The ID of the flight.</param>
+        /// <param name="isInbound">Specifies if the connecting flight is inbound.</param>
+        /// <param name="addConnectingFlightModels">The list of connecting flights to add.</param>
+        /// <returns>An ActionResult of type BaseFlight.</returns>
         [HttpPost("{id:guid}/flight/{flightId:int}/add-connecting-flight")]
         public async Task<ActionResult<BaseFlight>> AddConnectingFlight(Guid id, int flightId, bool isInbound,
             [FromBody] List<AddConnectingFlightModel> addConnectingFlightModels)
         {
-            Expression<Func<Passenger, bool>> criteria = c => c.Id == id && c.Flights.Any(pf => pf.FlightId == flightId);
-
-            var passenger = await _passengerRepository.GetPassengerByCriteriaAsync(criteria);
+            var passenger = await _passengerRepository.GetPassengerByIdAsync(id);
 
             if (passenger == null)
             {
@@ -330,17 +368,17 @@ namespace Web.Api.PassengerContext.Controllers
                         (connectingFlight as Flight)?.DepartureDateTime < (lastFlight as Flight)?.DepartureDateTime ||
                         connectingFlight.DepartureDateTime.Date < lastFlight.DepartureDateTime.Date ||
                         connectingFlight.DepartureDateTime > lastFlight.DepartureDateTime.AddDays(2):
-                        {
-                            return BadRequest(new ApiResponse(400,
-                                "Connecting flight must be within 24 hours from last arrival."));
-                        }
+                    {
+                        return BadRequest(new ApiResponse(400,
+                            "Connecting flight must be within 24 hours from last arrival."));
+                    }
                     case true when ((connectingFlight as Flight)?.ArrivalDateTime > currentFlight.DepartureDateTime ||
                                     connectingFlight.DepartureDateTime.Date > currentFlight.DepartureDateTime.Date ||
                                     connectingFlight.DepartureDateTime < currentFlight.DepartureDateTime.AddDays(-2)):
-                        {
-                            return BadRequest(new ApiResponse(400,
-                                "Inbound flight cannot be earlier than 24 hours before next departure"));
-                        }
+                    {
+                        return BadRequest(new ApiResponse(400,
+                            "Inbound flight cannot be earlier than 24 hours before next departure"));
+                    }
                 }
 
                 if (currentPassengerFlights.Contains(connectingFlight))
@@ -350,7 +388,7 @@ namespace Web.Api.PassengerContext.Controllers
 
                 currentPassengerFlights.Add(connectingFlight);
 
-                var newPassengerFlight = new PassengerFlight(passenger.Id, currentPassengerFlights.Last().Id,
+                var newPassengerFlight = new PassengerFlight(id, currentPassengerFlights.Last().Id,
                     connectingFlightModel.FlightClass);
 
                 passenger.Flights.Add(newPassengerFlight);
@@ -381,7 +419,7 @@ namespace Web.Api.PassengerContext.Controllers
             return otherFlight;
         }
 
-        private Expression<Func<Flight, bool>> _BuildFlightCriteria(AddConnectingFlightModel connectingFlightModel,
+        private static Expression<Func<Flight, bool>> _BuildFlightCriteria(AddConnectingFlightModel connectingFlightModel,
             DateTime parsedDepartureDateTime)
         {
             return f => f.AirlineId == connectingFlightModel.AirlineId &&
@@ -391,7 +429,7 @@ namespace Web.Api.PassengerContext.Controllers
                         f.DestinationToId == connectingFlightModel.DestinationTo;
         }
 
-        private Expression<Func<OtherFlight, bool>> _BuildOtherFlightCriteria(
+        private static Expression<Func<OtherFlight, bool>> _BuildOtherFlightCriteria(
             AddConnectingFlightModel connectingFlightModel, DateTime parsedDepartureDateTime)
         {
             return of => of.AirlineId == connectingFlightModel.AirlineId &&
@@ -401,13 +439,18 @@ namespace Web.Api.PassengerContext.Controllers
                          of.DestinationToId == connectingFlightModel.DestinationTo;
         }
 
+        /// <summary>
+        /// Deletes the connecting flight for a passenger.
+        /// </summary>
+        /// <param name="id">The id of the passenger.</param>
+        /// <param name="flightId">The id of the current flight.</param>
+        /// <param name="flightIds">The list of flight ids to delete.</param>
+        /// <returns>Returns an ActionResult of type BaseFlight.</returns>
         [HttpDelete("{id:guid}/flight/{flightId:int}/delete-connecting-flight")]
         public async Task<ActionResult<BaseFlight>> DeleteConnectingFlight(Guid id, int flightId,
             [FromBody] List<int> flightIds)
         {
-            Expression<Func<Passenger, bool>> criteria = c => c.Id == id && c.Flights.Any(pf => pf.FlightId == flightId);
-
-            var passenger = await _passengerRepository.GetPassengerByCriteriaAsync(criteria);
+            var passenger = await _passengerRepository.GetPassengerByIdAsync(id);
 
             if (passenger == null)
             {
@@ -439,44 +482,51 @@ namespace Web.Api.PassengerContext.Controllers
             return NoContent();
         }
 
-        [HttpPost("{id:guid}/flight/{flightId:int}/add-special-service-request")]
-        public async Task<ActionResult<Passenger>> AddSpecialServiceRequest(Guid id, int flightId,
+        /// <summary>
+        /// Adds special service requests for a passenger on a specific flight.
+        /// </summary>
+        /// <param name="id">The ID of the passenger.</param>
+        /// <param name="requestData">The special service request data.</param>
+        /// <returns>An ActionResult representing the HTTP status code and result of the operation.</returns>
+        [HttpPost("{id:guid}/add-special-service-request")]
+        public async Task<ActionResult<Passenger>> AddSpecialServiceRequest(Guid id,
             [FromBody] List<JObject> requestData)
         {
-            Expression<Func<Passenger, bool>> criteria = c => c.Id == id && c.Flights.Any(pf => pf.FlightId == flightId);
-
-            var passenger = await _passengerRepository.GetPassengerByCriteriaAsync(criteria);
-
-            if (passenger == null)
-            {
-                return NotFound(new ApiResponse(404, $"Passenger with Id {id} was not found."));
-            }
-
             foreach (var request in requestData)
             {
-                var flightIds = request["flightIds"].ToObject<List<int>>();
+                var flightIds = request["flightIds"]?.ToObject<List<int>>();
                 var specialServiceRequests = new List<SpecialServiceRequest>();
 
                 var ssrData = request["specialServiceRequests"];
-                foreach (var ssrRequest in ssrData)
+                
+                if (ssrData != null)
                 {
-                    var SSRCode = await _sSRCodeRepository.GetSSRCodeAsync(ssrRequest["SSRCode"]?.ToString());
-                    var freeText = ssrRequest["freeText"]?.ToString();
+                    foreach (var ssrRequest in ssrData)
+                    {
+                        var SSRCode = await _sSRCodeRepository.GetSSRCodeAsync(ssrRequest["SSRCode"]?.ToString());
+                        var freeText = ssrRequest["freeText"]?.ToString();
 
-                    if (SSRCode == null)
-                    {
-                        return BadRequest(new ApiResponse(400, "SSR must be filled in for the special service request."));
-                    }
+                        if (SSRCode == null)
+                        {
+                            return BadRequest(new ApiResponse(400,
+                                "SSR must be filled in for the special service request."));
+                        }
 
-                    if (SSRCode.IsFreeTextMandatory && string.IsNullOrEmpty(freeText))
-                    {
-                        return BadRequest(new ApiResponse(400, "FreeText is required for this SSRCode."));
-                    }
-                    //ToDo: Add validation for adding INFT SSR
-                    foreach (var iteratedFlightId in flightIds)
-                    {
-                        var specialServiceRequest = new SpecialServiceRequest(SSRCode.Code, iteratedFlightId, id, freeText);
-                        specialServiceRequests.Add(specialServiceRequest);
+                        if (SSRCode.IsFreeTextMandatory && string.IsNullOrEmpty(freeText))
+                        {
+                            return BadRequest(new ApiResponse(400, "FreeText is required for this SSRCode."));
+                        }
+
+                        //ToDo: Add validation for adding INFT SSR
+                        if (flightIds != null)
+                        {
+                            foreach (var iteratedFlightId in flightIds)
+                            {
+                                var specialServiceRequest =
+                                    new SpecialServiceRequest(SSRCode.Code, iteratedFlightId, id, freeText);
+                                specialServiceRequests.Add(specialServiceRequest);
+                            }
+                        }
                     }
                 }
 
@@ -486,13 +536,18 @@ namespace Web.Api.PassengerContext.Controllers
             return Ok();
         }
 
-        [HttpDelete("{id:guid}/flight/{flightId:int}/delete-special-service-request")]
-        public async Task<ActionResult<Passenger>> DeleteSpecialServiceRequest(Guid id, int flightId,
+        /// <summary>
+        /// Deletes the special service requests for a passenger.
+        /// </summary>
+        /// <param name="id">The ID of the passenger.</param>
+        /// <param name="ssrCodesToDelete">A dictionary where the key is the flight ID and the value is
+        /// a list of SSR codes to delete.</param>
+        /// <returns>The result of the deletion operation.</returns>
+        [HttpDelete("{id:guid}/delete-special-service-request")]
+        public async Task<ActionResult<Passenger>> DeleteSpecialServiceRequest(Guid id,
             [FromBody] Dictionary<string, List<string>> ssrCodesToDelete)
         {
-            Expression<Func<Passenger, bool>> criteria = c => c.Id == id && c.Flights.Any(pf => pf.FlightId == flightId);
-
-            var passenger = await _passengerRepository.GetPassengerByCriteriaAsync(criteria);
+            var passenger = await _passengerRepository.GetPassengerByIdAsync(id);
 
             if (passenger == null)
             {
@@ -504,10 +559,10 @@ namespace Web.Api.PassengerContext.Controllers
             foreach (var flight in ssrCodesToDelete.Keys)
             {
                 var ssrCodes = ssrCodesToDelete[flight];
-                var flightIdInt = int.Parse(flight);
+                var flightId = int.Parse(flight);
 
                 var ssrToDelete = passenger.SpecialServiceRequests
-                    .Where(ssr => ssr.FlightId == flightIdInt && ssrCodes.Contains(ssr.SSRCodeId))
+                    .Where(ssr => ssr.FlightId == flightId && ssrCodes.Contains(ssr.SSRCodeId))
                     .ToList();
 
                 if (ssrToDelete.Count != ssrCodes.Count)
@@ -523,34 +578,30 @@ namespace Web.Api.PassengerContext.Controllers
             return NoContent();
         }
 
-        private async Task<ActionResult<List<APISData>>> _ProcessTravelDocumentsAsync<TModel>(
-            Guid id,
-            List<JObject> dataList, 
-            Func<APISData[], Task> saveMethod,
-            Func<Guid, Task<APISData>> getByIdMethod = null) where TModel : APISDataModel
+        private async Task _ProcessTravelDocumentsAsync<TModel>(Guid id, List<JObject> dataList,
+            Func<APISData[], Task> saveMethod, Func<Guid, Task<APISData>> getByIdMethod = null)
+            where TModel : APISDataModel
         {
             var processedApisDataList = new List<APISData>();
-
             foreach (var data in dataList)
             {
                 var model = JsonConvert.DeserializeObject<TModel>(data.ToString());
-
                 var nationality = await _countryRepository.GetCountryByCriteriaAsync(d =>
                     d.Country3LetterCode == model.Nationality);
                 var countryOfIssue = await _countryRepository.GetCountryByCriteriaAsync(d =>
                     d.Country3LetterCode == model.CountryOfIssue);
-
                 if (nationality == null || countryOfIssue == null)
                 {
-                    var message = (nationality == null) ? $"Nationality {model.Nationality}"
-                        : (countryOfIssue == null) ? $"Country of Issue {model.CountryOfIssue}"
-                        : $"Nationality {model.Nationality} and Country of Issue {model.CountryOfIssue}";
-
-                    return NotFound(new ApiResponse(404, message + " not found."));
+                    var message = (nationality == null && countryOfIssue == null)
+                        ? $"Nationality {model.Nationality} and Country of Issue {model.CountryOfIssue}"
+                        : (nationality == null)
+                            ? $"Nationality {model.Nationality}"
+                            : $"Country of Issue {model.CountryOfIssue}";
+                    
+                    throw new Exception(message + " not found.");
                 }
 
                 APISData travelDocument;
-
                 if (getByIdMethod == null) // Add method
                 {
                     travelDocument = new APISData(id,
@@ -567,8 +618,10 @@ namespace Web.Api.PassengerContext.Controllers
                 }
                 else // Edit method
                 {
-                    travelDocument = await getByIdMethod((model as EditAPISDataModel).APISDataId);
-
+                    travelDocument = (model is EditAPISDataModel dataModel)
+                        ? await getByIdMethod(dataModel.APISDataId)
+                        : null;
+                    
                     if (travelDocument != null)
                     {
                         travelDocument.FirstName = model.FirstName;
@@ -588,33 +641,61 @@ namespace Web.Api.PassengerContext.Controllers
             }
 
             await saveMethod(processedApisDataList.ToArray());
-
-            return processedApisDataList;
         }
 
+        /// <summary>
+        /// Adds a travel document to a passenger's APIS data.
+        /// </summary>
+        /// <param name="id">The ID of the passenger</param>
+        /// <param name="dataList">The list of travel documents to add</param>
+        /// <returns>An HTTP action result with the added APIS data</returns>
         [HttpPost("{id:guid}/add-travel-document")]
         public async Task<ActionResult<APISData>> AddTravelDocument(Guid id, [FromBody] List<JObject> dataList)
         {
             Func<APISData[], Task> saveMethod = _apisDataRepository.AddAsync;
-            var addedApisDataList = await _ProcessTravelDocumentsAsync<AddAPISDataModel>(id, dataList, saveMethod);
-
-            return Ok();
+            
+            try
+            {
+                await _ProcessTravelDocumentsAsync<AddAPISDataModel>(id, dataList, saveMethod);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new ApiResponse(404, ex.Message));
+            }
         }
 
+        /// <summary>
+        /// Edits the travel document for a passenger.
+        /// </summary>
+        /// <param name="id">The ID of the passenger.</param>
+        /// <param name="dataList">The list of data for the travel document.</param>
+        /// <returns>The updated <see cref="APISData"/> object.</returns>
         [HttpPut("{id:guid}/edit-travel-document")]
         public async Task<ActionResult<APISData>> EditTravelDocument(Guid id, [FromBody] List<JObject> dataList)
         {
             Func<APISData[], Task> saveMethod = _apisDataRepository.UpdateAsync;
 
-            Func<Guid, Task<APISData>> getByIdMethod = async (apisDataId) => 
+            try
+            {
+                await _ProcessTravelDocumentsAsync<EditAPISDataModel>(id, dataList, saveMethod, GetByIdMethod);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new ApiResponse(404, ex.Message));
+            }
+            
+            async Task<APISData> GetByIdMethod(Guid apisDataId) =>
                 await _apisDataRepository.GetAPISDataByCriteriaAsync(d => d.Id == apisDataId);
-
-            var editedApisDataList = 
-                await _ProcessTravelDocumentsAsync<EditAPISDataModel>(id, dataList, saveMethod, getByIdMethod);
-
-            return Ok();
         }
 
+        /// <summary>
+        /// Deletes the specified travel documents for a passenger.
+        /// </summary>
+        /// <param name="id">The ID of the passenger.</param>
+        /// <param name="apisDataIds">The IDs of the travel documents to delete.</param>
+        /// <returns>An ActionResult of APISData.</returns>
         [HttpDelete("{id:guid}/delete-travel-document")]
         public async Task<ActionResult<APISData>> DeleteTravelDocument(Guid id,
             [FromBody] List<Guid> apisDataIds)

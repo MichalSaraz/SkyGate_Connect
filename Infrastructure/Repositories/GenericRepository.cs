@@ -9,7 +9,7 @@ namespace Infrastructure.Repositories
         protected readonly AppDbContext _context;
 
         public GenericRepository(AppDbContext context)
-        {     
+        {
             _context = context;
         }
 
@@ -19,6 +19,7 @@ namespace Infrastructure.Repositories
             {
                 await _context.Set<T>().AddAsync(entity);
             }
+
             await _context.SaveChangesAsync();
 
             return entities.FirstOrDefault();

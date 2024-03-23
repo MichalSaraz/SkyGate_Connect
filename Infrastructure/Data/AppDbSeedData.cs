@@ -33,7 +33,7 @@ namespace Infrastructure.Data
         {
             if (!context.Set<TEntity>().Any())
             {
-                var jsonData = File.ReadAllText(jsonFilePath);
+                var jsonData = await File.ReadAllTextAsync(jsonFilePath);
                 var entities = JsonSerializer.Deserialize<List<TEntity>>(jsonData);
                 context.Set<TEntity>().AddRange(entities);
                 await context.SaveChangesAsync();

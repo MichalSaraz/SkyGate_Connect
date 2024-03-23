@@ -21,7 +21,7 @@ namespace Infrastructure.Repositories
                 .Include(_ => _.SpecialBag)
                 .Include(_ => _.FinalDestination)
                 .Include(_ => _.Flights)
-                    .ThenInclude(_ => _.Flight)
+                .ThenInclude(_ => _.Flight)
                 .FirstOrDefaultAsync(_ => _.BaggageTag.TagNumber == tagNumber);
         }
 
@@ -54,7 +54,7 @@ namespace Infrastructure.Repositories
 
             return baggage;
         }
-        
+
         public async Task<IReadOnlyList<Baggage>> GetAllBaggageByCriteriaAsync(Expression<Func<Baggage, bool>> criteria)
         {
             return await _context.Baggage.AsNoTracking()
@@ -63,7 +63,7 @@ namespace Infrastructure.Repositories
                 .Include(_ => _.SpecialBag)
                 .Include(_ => _.FinalDestination)
                 .Include(_ => _.Flights)
-                    .ThenInclude(_ => _.Flight)
+                .ThenInclude(_ => _.Flight)
                 .Where(criteria)
                 .ToListAsync();
         }
@@ -75,13 +75,12 @@ namespace Infrastructure.Repositories
             if (connection.State != ConnectionState.Open)
             {
                 connection.Open();
-            }            
-            using (var cmd = connection.CreateCommand())
-            {
-                cmd.CommandText = $"SELECT nextval('\"{sequenceName}\"')";
-                var nextValue = cmd.ExecuteScalar();
-                return Convert.ToInt32(nextValue);
             }
+
+            using var cmd = connection.CreateCommand();
+            cmd.CommandText = $"SELECT nextval('\"{sequenceName}\"')";
+            var nextValue = cmd.ExecuteScalar();
+            return Convert.ToInt32(nextValue);
         }
     }
 }

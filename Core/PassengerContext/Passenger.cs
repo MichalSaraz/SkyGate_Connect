@@ -20,6 +20,10 @@ namespace Core.PassengerContext
 
         public List<SpecialServiceRequest> SpecialServiceRequests { get; set; } = new();
 
+        /// <summary>
+        /// Maps a <see cref="PassengerInfo"/> object to this <see cref="Passenger"/> object.
+        /// </summary>
+        /// <param name="passengerInfo">The <see cref="PassengerInfo"/> object to be mapped.</param>
         public void MapFromPassengerInfo(PassengerInfo passengerInfo)
         {
             Id = new Guid();

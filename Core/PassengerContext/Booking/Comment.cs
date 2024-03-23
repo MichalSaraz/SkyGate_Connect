@@ -11,16 +11,16 @@ namespace Core.PassengerContext.Booking
         public Passenger? Passenger { get; private set; }
         public Guid PassengerId { get; private set; }
 
-        public CommentTypeEnum CommentType { get; private set; }
-
+        public PredefinedComment? PredefinedComment { get; private set; }
+        public string? PredefinedCommentId { get; private set; } 
+        
         [Required]
         [MaxLength(150)]
         public string Text { get; private set; }
+        
         public bool? IsMarkedAsRead { get; private set; }
 
-
-        public string? PredefinedCommentId { get; private set; } 
-        public PredefinedComment? PredefinedComment { get; private set; }
+        public CommentTypeEnum CommentType { get; private set; }
 
         // Constructor for adding custom comment
         public Comment(Guid passengerId, CommentTypeEnum commentType, string text, bool? isMarkedAsRead)

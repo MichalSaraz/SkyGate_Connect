@@ -1,7 +1,6 @@
 ﻿using Core.PassengerContext.APIS.Enums;
 using Core.PassengerContext.Booking.Enums;
 using System.ComponentModel.DataAnnotations;
-using Xunit.Sdk;
 
 namespace Web.Api.PassengerContext.Models
 {

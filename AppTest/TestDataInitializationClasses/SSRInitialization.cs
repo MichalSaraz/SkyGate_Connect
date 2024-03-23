@@ -130,44 +130,41 @@ namespace TestProject.TestDataInitializationClasses
 
                         if (!hasSSR || !hasWheelchairSSR && SSR is "WCMP" or "WCBD" or "WCLB")
                         {
-                            var selectedFlights = flights?.Select(f => f.Key).ToList();
+                            var selectedFlights = flights.Select(f => f.Key).ToList();
 
-                            if (selectedFlights != null)
+                            foreach (var flight in selectedFlights)
                             {
-                                foreach (var flight in selectedFlights)
+                                if (selectedPassenger?.BookedSSR == null)
                                 {
-                                    if (selectedPassenger?.BookedSSR == null)
+                                    if (selectedPassenger != null)
+                                        selectedPassenger.BookedSSR = new Dictionary<string, List<string>>();
+                                }
+
+                                if (selectedPassenger != null && !hasSSR)
+                                {
+                                    string value;
+
+                                    var first = ssrList.FirstOrDefault(f => f.Code == SSR);
+
+                                    if (first is { IsFreeTextMandatory: true })
                                     {
-                                        if (selectedPassenger != null)
-                                            selectedPassenger.BookedSSR = new Dictionary<string, List<string>>();
+                                        value = _GenerateStringValue(SSR, selectedPassenger.Age,
+                                            selectedPassenger.FirstName);
+                                    }
+                                    else
+                                    {
+                                        value = SSR;
                                     }
 
-                                    if (selectedPassenger != null && !hasSSR)
+                                    if (!selectedPassenger.BookedSSR.TryGetValue(flight, out var list))
                                     {
-                                        string value;
-
-                                        var first = ssrList.FirstOrDefault(f => f.Code == SSR);
-
-                                        if (first is { IsFreeTextMandatory: true })
-                                        {
-                                            value = _GenerateStringValue(SSR, selectedPassenger.Age,
-                                                selectedPassenger.FirstName);
-                                        }
-                                        else
-                                        {
-                                            value = SSR;
-                                        }
-
-                                        if (!selectedPassenger.BookedSSR.TryGetValue(flight, out var list))
-                                        {
-                                            list = new List<string>();
-                                            selectedPassenger.BookedSSR.Add(flight, list);
-                                        }
-
-                                        list.Add(value);
-
-                                        Trace.WriteLine($"SSR added {value}");
+                                        list = new List<string>();
+                                        selectedPassenger.BookedSSR.Add(flight, list);
                                     }
+
+                                    list.Add(value);
+
+                                    Trace.WriteLine($"SSR added {value}");
                                 }
                             }
                         }

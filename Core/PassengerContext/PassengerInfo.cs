@@ -33,11 +33,11 @@ namespace Core.PassengerContext
         public int FrequentFlyerId { get; protected set; }
 
         public Dictionary<string, FlightClassEnum> BookedClass { get; private set; } = new();
+        
         public Dictionary<string, string> ReservedSeats { get; set; } = new();
 
         public Dictionary<string, List<string>> BookedSSR { get; set; } = new();
         
-
         public PassengerInfo()
         {
         }

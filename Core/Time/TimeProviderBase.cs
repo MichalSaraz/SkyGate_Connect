@@ -1,10 +1,5 @@
 ﻿using Core.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.Time
 {
@@ -12,6 +7,14 @@ namespace Core.Time
     {
         public virtual DateTime Now => DateTime.Now;
 
+        /// <summary>
+        /// Parses the input string into a DateTime object.
+        /// </summary>
+        /// <param name="input">The string to parse into a DateTime object.</param>
+        /// <param name="useFormatsWithYear">Optional. Specifies whether to use formats with year or not. Default
+        /// is false.</param>
+        /// <returns> If the input string is a valid date format, returns the parsed DateTime object. Otherwise,
+        /// throws an ArgumentException with the message "Invalid date format". </returns>
         public virtual DateTime? ParseDate(string input, bool useFormatsWithYear = false)
         {
             string[] formatsDateOnly = { "dMMM", "DDMMM", "ddMMM" };
@@ -24,7 +27,8 @@ namespace Core.Time
                 return null;
             }
 
-            var isValid = DateTime.TryParseExact(input, formatsToUse, CultureInfo.InvariantCulture, DateTimeStyles.None, out var result);
+            var isValid = DateTime.TryParseExact(input, formatsToUse, CultureInfo.InvariantCulture, DateTimeStyles.None,
+                out var result);
 
             if (isValid)
             {

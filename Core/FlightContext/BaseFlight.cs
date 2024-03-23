@@ -25,9 +25,9 @@ namespace Core.FlightContext
 
         public List<PassengerFlight> ListOfBookedPassengers { get; set; } = new();
 
-        public List<FlightBaggage> ListOfCheckedBaggage { get; set; } = new();        
+        public List<FlightBaggage> ListOfCheckedBaggage { get; set; } = new();
 
-        public BaseFlight(
+        protected BaseFlight(
             DateTime departureDateTime,
             DateTime? arrivalDateTime,
             string destinationFromId, 

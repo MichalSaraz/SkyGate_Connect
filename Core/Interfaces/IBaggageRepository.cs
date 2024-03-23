@@ -53,7 +53,11 @@ namespace Core.Interfaces
         /// </returns>
         Task<IReadOnlyList<Baggage>> GetAllBaggageByCriteriaAsync(Expression<Func<Baggage, bool>> criteria);
 
-        
+        /// <summary>
+        /// Gets the next value from a sequence.
+        /// </summary>
+        /// <param name="sequenceName">The name of the sequence.</param>
+        /// <returns>The next value from the sequence.</returns>
         int GetNextSequenceValue(string sequenceName);
     }
 }

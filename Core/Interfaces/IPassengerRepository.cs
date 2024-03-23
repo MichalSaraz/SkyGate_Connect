@@ -16,6 +16,12 @@ namespace Core.Interfaces
         Task<IReadOnlyList<Passenger>> GetPassengersByCriteriaAsync(Expression<Func<Passenger, bool>> criteria,
             bool tracked = false);
 
+        /// <summary>
+        /// Retrieves a passenger based on the specified criteria.
+        /// </summary>
+        /// <param name="criteria">The criteria to filter passengers.</param>
+        /// <param name="tracked">A flag indicating whether to enable tracking of the entity.</param>
+        /// <returns>The passenger that matches the specified criteria.</returns>
         Task<Passenger> GetPassengerByCriteriaAsync(Expression<Func<Passenger, bool>> criteria, bool tracked = true);
 
        /// <summary>

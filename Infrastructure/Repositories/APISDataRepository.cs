@@ -2,6 +2,7 @@
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using Core.Interfaces;
 
 namespace Infrastructure.Repositories
 {
@@ -11,10 +12,10 @@ namespace Infrastructure.Repositories
         {
         }
 
-        public async Task<APISData> GetAPISDataByCriteriaAsync(Expression<Func<APISData, bool>> criteria, bool tracked = true)
+        public async Task<APISData> GetAPISDataByCriteriaAsync(Expression<Func<APISData, bool>> criteria,
+            bool tracked = true)
         {
-            var apisDataQuery = _context.APISData.AsQueryable()
-                .Where(criteria);
+            var apisDataQuery = _context.APISData.AsQueryable().Where(criteria);
 
             if (!tracked)
             {

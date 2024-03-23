@@ -31,7 +31,7 @@ namespace Infrastructure.Repositories
                 .Include(_ => _.PNR)
                 .Include(_ => _.TravelDocuments)
                 .Include(_ => _.Flights)
-                    .ThenInclude(_ => _.Flight)
+                .ThenInclude(_ => _.Flight)
                 .Include(_ => _.AssignedSeats)
                 .Where(criteria);
 
@@ -42,21 +42,20 @@ namespace Infrastructure.Repositories
 
             var passengers = await passengersQuery.ToListAsync();
 
-            _cache.Set(CACHE_KEY, passengers, new MemoryCacheEntryOptions
-            {
-                SlidingExpiration = TimeSpan.FromMinutes(5)
-            });
+            _cache.Set(CACHE_KEY, passengers,
+                new MemoryCacheEntryOptions { SlidingExpiration = TimeSpan.FromMinutes(5) });
 
             return passengers;
         }
 
-        public async Task<Passenger> GetPassengerByCriteriaAsync(Expression<Func<Passenger, bool>> criteria, bool tracked = true)
+        public async Task<Passenger> GetPassengerByCriteriaAsync(Expression<Func<Passenger, bool>> criteria,
+            bool tracked = true)
         {
             var passengerQuery = _context.Passengers.AsQueryable()
                 .Include(_ => _.SpecialServiceRequests)
                 .Include(_ => _.PNR)
                 .Include(_ => _.Flights)
-                    .ThenInclude(_ => _.Flight)
+                .ThenInclude(_ => _.Flight)
                 .Where(criteria);
 
             if (!tracked)
@@ -69,8 +68,7 @@ namespace Infrastructure.Repositories
             return passenger;
         }
 
-        public async Task<Passenger> GetPassengerByIdAsync(Guid id, bool tracked = true,
-            bool displayDetails = false)
+        public async Task<Passenger> GetPassengerByIdAsync(Guid id, bool tracked = true, bool displayDetails = false)
         {
             var CACHE_KEY = $"Passenger_{id}_{displayDetails}";
 
@@ -83,23 +81,22 @@ namespace Infrastructure.Repositories
             var passengerQuery = _context.Passengers.AsQueryable()
                 .Include(_ => _.PNR)
                 .Include(_ => _.Flights)
-                    .ThenInclude(_ => _.Flight)                        
+                .ThenInclude(_ => _.Flight)
                 .Where(_ => _.Id == id);
 
             if (displayDetails)
             {
-                passengerQuery = passengerQuery
-                .Include(_ => _.PassengerCheckedBags)
+                passengerQuery = passengerQuery.Include(_ => _.PassengerCheckedBags)
                     .ThenInclude(_ => _.BaggageTag)
-                .Include(_ => _.PassengerCheckedBags)
+                    .Include(_ => _.PassengerCheckedBags)
                     .ThenInclude(_ => _.SpecialBag)
-                .Include(_ => _.PassengerCheckedBags)
+                    .Include(_ => _.PassengerCheckedBags)
                     .ThenInclude(_ => _.FinalDestination)
-                .Include(_ => _.PassengerCheckedBags)
+                    .Include(_ => _.PassengerCheckedBags)
                     .ThenInclude(_ => _.Flights)
-                        .ThenInclude(_ => _.Flight)
-                .Include(_ => _.AssignedSeats)
-                .Include(_ => _.SpecialServiceRequests);
+                    .ThenInclude(_ => _.Flight)
+                    .Include(_ => _.AssignedSeats)
+                    .Include(_ => _.SpecialServiceRequests);
             }
 
             if (!tracked)
@@ -109,10 +106,8 @@ namespace Infrastructure.Repositories
 
             var passenger = await passengerQuery.SingleOrDefaultAsync();
 
-            _cache.Set(CACHE_KEY, passenger, new MemoryCacheEntryOptions
-            {
-                SlidingExpiration = TimeSpan.FromMinutes(5)
-            });
+            _cache.Set(CACHE_KEY, passenger,
+                new MemoryCacheEntryOptions { SlidingExpiration = TimeSpan.FromMinutes(5) });
 
             return passenger;
         }
@@ -120,30 +115,28 @@ namespace Infrastructure.Repositories
         public async Task<IReadOnlyList<Passenger>> GetPassengersWithFlightConnectionsAsync(int flightId,
             bool isOnwardFlight)
         {
-            var passengerQuery = _context.Passengers.AsQueryable().AsNoTracking()
+            var passengerQuery = _context.Passengers.AsQueryable()
+                .AsNoTracking()
                 .Include(_ => _.Flights)
-                    .ThenInclude(_ => _.Flight)
+                .ThenInclude(_ => _.Flight)
                 .Include(_ => _.PassengerCheckedBags)
                 .Include(_ => _.AssignedSeats)
-                .Where(_ => _.Flights
-                    .Any(_ => _.FlightId == flightId));
+                .Where(_ => _.Flights.Any(_ => _.FlightId == flightId));
 
             if (isOnwardFlight)
             {
-                passengerQuery = passengerQuery
-                    .Where(p => p.Flights
-                        .Any(_ => _.Flight.DepartureDateTime > p.Flights
-                            .FirstOrDefault(_ => _.FlightId == flightId).Flight.DepartureDateTime));
+                passengerQuery = passengerQuery.Where(p => p.Flights.Any(_ =>
+                    _.Flight.DepartureDateTime >
+                    p.Flights.FirstOrDefault(_ => _.FlightId == flightId).Flight.DepartureDateTime));
             }
             else
             {
-                passengerQuery = passengerQuery
-                    .Where(p => p.Flights
-                        .Any(_ => _.Flight.DepartureDateTime < p.Flights
-                            .FirstOrDefault(_ => _.FlightId == flightId).Flight.DepartureDateTime));
+                passengerQuery = passengerQuery.Where(p => p.Flights.Any(_ =>
+                    _.Flight.DepartureDateTime <
+                    p.Flights.FirstOrDefault(_ => _.FlightId == flightId).Flight.DepartureDateTime));
             }
 
             return await passengerQuery.ToListAsync();
-        }        
+        }
     }
 }
