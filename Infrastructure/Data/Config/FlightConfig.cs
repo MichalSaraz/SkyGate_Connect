@@ -26,6 +26,14 @@ namespace Infrastructure.Data.Config
             
             builder.Property(f => f.FlightStatus)
                 .HasEnumConversion();
+
+            builder.HasMany(f => f.Seats)
+                .WithOne(s => s.Flight)
+                .HasForeignKey(s => s.FlightId);
+
+            builder.HasMany(f => f.Comments)
+                .WithOne(c => c.Flight)
+                .HasForeignKey(c => c.FlightId);
         }
     }
 }

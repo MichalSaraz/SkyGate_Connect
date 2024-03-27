@@ -24,7 +24,6 @@ namespace TestProject.Tests
 
             service.InitializePassengers();
 
-                
             service.AcceptingRandomCustomers();
         }
     }

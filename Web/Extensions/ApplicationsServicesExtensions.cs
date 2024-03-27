@@ -29,6 +29,8 @@ namespace Web.Extensions
             services.AddScoped<ISpecialServiceRequestRepository, SpecialServiceRequestRepository>();
             services.AddScoped<IAPISDataRepository, APISDataRepository>();
             services.AddScoped<ICountryRepository, CountryRepository>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<IPredefinedCommentRepository, PredefinedCommentRepository>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

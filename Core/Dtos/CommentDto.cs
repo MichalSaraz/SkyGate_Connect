@@ -2,8 +2,9 @@
 {
     public class CommentDto
     {
-        public int Id { get; init; }
+        public Guid Id { get; init; }
         public Guid PassengerId { get; init; }
+        public List<FlightCommentDto> LinkedToFlights { get; init; }
         public string CommentType { get; init; }
         public string Text { get; init; }
         public bool? IsMarkedAsRead { get; init; }

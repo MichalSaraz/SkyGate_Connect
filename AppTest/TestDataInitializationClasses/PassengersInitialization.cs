@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Core.FlightContext;
+using Core.FlightContext.JoinClasses;
 using Core.PassengerContext;
 using Core.PassengerContext.Booking;
 using Core.PassengerContext.Booking.Enums;
@@ -194,14 +195,26 @@ namespace TestProject.TestDataInitializationClasses
                                 countries.FirstOrDefault(c => c.Country2LetterCode == p.NationalityId)?.IsEUCountry !=
                                 true) && docsComment != null)
                         {
-                            var newComment = new Comment(passenger.Id, CommentTypeEnum.Gate, false, docsComment);
+                            var newComment = new Comment(passenger.Id, docsComment.Id, docsComment.Text);
+
+                            foreach (var iteratedPassengerFlight in passenger.Flights)
+                            {
+                                var flightComment = new FlightComment(newComment.Id, iteratedPassengerFlight.FlightId);
+                                dbContext.FlightComment.Add(flightComment);
+                            }
 
                             dbContext.Comments.Add(newComment);
                         }
 
                         if (passengerSeat is { SeatType: SeatTypeEnum.EmergencyExit } && exitComment != null)
                         {
-                            var newComment = new Comment(passenger.Id, CommentTypeEnum.Gate, false, exitComment);
+                            var newComment = new Comment(passenger.Id, exitComment.Id, exitComment.Text);
+
+                            foreach (var iteratedPassengerFlight in passenger.Flights)
+                            {
+                                var flightComment = new FlightComment(newComment.Id, iteratedPassengerFlight.FlightId);
+                                dbContext.FlightComment.Add(flightComment);
+                            }
 
                             dbContext.Comments.Add(newComment);
                         }

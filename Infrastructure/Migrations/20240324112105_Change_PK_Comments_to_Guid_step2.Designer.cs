@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240324112105_Change_PK_Comments_to_Guid_step2")]
+    partial class Change_PK_Comments_to_Guid_step2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -198,21 +201,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("BaggageId");
 
                     b.ToTable("FlightBaggage");
-                });
-
-            modelBuilder.Entity("Core.FlightContext.JoinClasses.FlightComment", b =>
-                {
-                    b.Property<Guid>("CommentId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("FlightId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("CommentId", "FlightId");
-
-                    b.HasIndex("FlightId");
-
-                    b.ToTable("FlightComment");
                 });
 
             modelBuilder.Entity("Core.FlightContext.ScheduledFlight", b =>
@@ -807,25 +795,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Flight");
                 });
 
-            modelBuilder.Entity("Core.FlightContext.JoinClasses.FlightComment", b =>
-                {
-                    b.HasOne("Core.PassengerContext.Booking.Comment", "Comment")
-                        .WithMany("LinkedToFlights")
-                        .HasForeignKey("CommentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.FlightContext.Flight", "Flight")
-                        .WithMany("Comments")
-                        .HasForeignKey("FlightId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Comment");
-
-                    b.Navigation("Flight");
-                });
-
             modelBuilder.Entity("Core.PassengerContext.APIS.APISData", b =>
                 {
                     b.HasOne("Core.PassengerContext.APIS.Country", "CountryOfIssue")
@@ -1037,11 +1006,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("LinkedPassengers");
                 });
 
-            modelBuilder.Entity("Core.PassengerContext.Booking.Comment", b =>
-                {
-                    b.Navigation("LinkedToFlights");
-                });
-
             modelBuilder.Entity("Core.PassengerContext.PassengerInfo", b =>
                 {
                     b.Navigation("FrequentFlyer");
@@ -1049,8 +1013,6 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.FlightContext.Flight", b =>
                 {
-                    b.Navigation("Comments");
-
                     b.Navigation("Seats");
                 });
 

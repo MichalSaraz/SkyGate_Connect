@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
 using Core.PassengerContext.APIS;
+using Core.FlightContext.JoinClasses;
 
 namespace Infrastructure.Data
 {
@@ -28,6 +29,8 @@ namespace Infrastructure.Data
         public DbSet<Destination> Destinations { get; set; }
         public DbSet<BookingReference> BookingReferences { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<FlightComment> FlightComment { get; set; }
+        public DbSet<FlightBaggage> FlightBaggage { get; set; }
         public DbSet<PredefinedComment> PredefinedComments { get; set; }
         public DbSet<FrequentFlyer> FrequentFlyers { get; set; }
         public DbSet<SSRCode> SSRCodes { get; set; }

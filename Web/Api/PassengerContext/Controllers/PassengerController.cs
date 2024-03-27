@@ -8,6 +8,8 @@ using Core.FlightContext.JoinClasses;
 using Core.Interfaces;
 using Core.PassengerContext;
 using Core.PassengerContext.APIS;
+using Core.PassengerContext.Booking;
+using Core.PassengerContext.Booking.Enums;
 using Core.PassengerContext.JoinClasses;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -31,6 +33,8 @@ namespace Web.Api.PassengerContext.Controllers
         private readonly ISpecialServiceRequestRepository _specialServiceRequestRepository;
         private readonly IAPISDataRepository _apisDataRepository;
         private readonly ICountryRepository _countryRepository;
+        private readonly ICommentRepository _commentRepository;
+        private readonly IPredefinedCommentRepository _predefinedCommentRepository;
 
         public PassengerController(
             IMapper mapper,
@@ -42,7 +46,9 @@ namespace Web.Api.PassengerContext.Controllers
             ISSRCodeRepository sSRCodeRepository,
             ISpecialServiceRequestRepository specialServiceRequestRepository,
             IAPISDataRepository apisDataRepository,
-            ICountryRepository countryRepository)
+            ICountryRepository countryRepository,
+            ICommentRepository commentRepository,
+            IPredefinedCommentRepository predefinedCommentRepository)
         {
             _mapper = mapper;
             _timeProvider = timeProvider;
@@ -54,6 +60,8 @@ namespace Web.Api.PassengerContext.Controllers
             _specialServiceRequestRepository = specialServiceRequestRepository;
             _apisDataRepository = apisDataRepository;
             _countryRepository = countryRepository;
+            _commentRepository = commentRepository;
+            _predefinedCommentRepository = predefinedCommentRepository;
         }
 
         /// <summary>
@@ -719,6 +727,86 @@ namespace Web.Api.PassengerContext.Controllers
             await _apisDataRepository.DeleteAsync(travelDocumentsToDelete.ToArray());
 
             return NoContent();
+        }
+
+        [HttpPost("{id:guid}/add-comment")]
+        public async Task<ActionResult<Comment>> AddComment(Guid id, CommentTypeEnum commentType,
+            [FromBody] JObject data, string predefineCommentId = null)
+        {
+            var flightIds = data["flightIds"]?.ToObject<List<int>>();
+            var text = data["text"]?.ToString();
+
+            Comment comment;
+
+            if (!string.IsNullOrEmpty(predefineCommentId))
+            {
+                var predefinedComment = await _predefinedCommentRepository.GetPredefinedCommentByIdAsync(predefineCommentId);
+
+                if (predefinedComment == null)
+                    return BadRequest(new ApiResponse(400, "Predefined comment not found."));
+
+                var existingComment = await _commentRepository.GetCommentByCriteriaAsync(c => 
+                    c.PassengerId == id && c.PredefinedCommentId == predefineCommentId);
+
+                if (existingComment != null)
+                    return BadRequest(new ApiResponse(400, "Predefined comment already exists."));
+
+                comment = new Comment(id, predefineCommentId, predefinedComment.Text);
+            }
+            else
+                comment = new Comment(id, commentType, text, commentType == CommentTypeEnum.Gate ? false : true);
+
+            await _commentRepository.AddAsync(comment);
+
+            if (flightIds == null)
+                return BadRequest(new ApiResponse(400, "Flight IDs must be provided."));
+
+            foreach (var flightId in flightIds)
+            {
+                var newFlightComment = new FlightComment(comment.Id, flightId);
+                comment.LinkedToFlights.Add(newFlightComment);
+            }
+
+            await _commentRepository.UpdateAsync(comment);
+
+            return Ok();
+        }
+
+        [HttpDelete("{id:guid}/delete-comment")]
+        public async Task<ActionResult<Comment>> DeleteComment(Guid id, [FromBody] Dictionary<string, List<Guid>> commentIds)
+        {
+            var commentsToDelete = new List<Comment>();
+
+            foreach (var flight in commentIds.Keys)
+            {
+                var commentIdsList = commentIds[flight];
+
+                foreach (var commentId in commentIdsList)
+                {
+                    var comment = await _commentRepository.GetCommentByIdAsync(commentId);
+
+                    if (comment == null)
+                        return BadRequest(new ApiResponse(400, $"Comment with ID {commentId} does not exist."));
+                    
+                    comment.LinkedToFlights.Remove(comment.LinkedToFlights.FirstOrDefault(f => f.FlightId == int.Parse(flight)));
+                    
+                    if (comment.LinkedToFlights.Count == 0)
+                        commentsToDelete.Add(comment);                    
+                }
+            }
+
+            foreach (var comment in commentsToDelete)
+            {
+                if (comment.LinkedToFlights.Count == 0)
+                    await _commentRepository.DeleteAsync(comment);
+                else
+                    await _commentRepository.UpdateAsync(comment);
+            }
+
+            if (commentsToDelete.Any())
+                return NoContent();
+
+            return Ok();
         }
     }
 }

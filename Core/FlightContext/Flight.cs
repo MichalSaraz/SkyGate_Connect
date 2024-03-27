@@ -1,6 +1,7 @@
 ﻿using Core.BoardingContext;
 using Core.FlightContext.FlightInfo;
 using Core.FlightContext.FlightInfo.Enums;
+using Core.FlightContext.JoinClasses;
 using Core.SeatingContext;
 using Core.SeatingContext.Enums;
 
@@ -21,6 +22,8 @@ namespace Core.FlightContext
         public FlightStatusEnum FlightStatus { get; private set; } = FlightStatusEnum.Closed;
 
         public List<Seat> Seats { get; private set; } = new();
+
+        public List<FlightComment> Comments { get; private set; } = new();
 
         public Flight(
             string scheduledFlightId, 

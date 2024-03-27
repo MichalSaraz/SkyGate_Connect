@@ -1,15 +1,16 @@
 ﻿#nullable enable
 using System.ComponentModel.DataAnnotations;
+using Core.FlightContext.JoinClasses;
 using Core.PassengerContext.Booking.Enums;
 
 namespace Core.PassengerContext.Booking
 {
     public class Comment
     {
-        public int Id { get; private set; }
+        public Guid Id { get; private set; }
 
-        public Passenger? Passenger { get; private set; }
-        public Guid PassengerId { get; private set; }
+        public Passenger Passenger { get; private set; }
+        public Guid PassengerId { get; private set; }        
 
         public PredefinedComment? PredefinedComment { get; private set; }
         public string? PredefinedCommentId { get; private set; } 
@@ -18,30 +19,31 @@ namespace Core.PassengerContext.Booking
         [MaxLength(150)]
         public string Text { get; private set; }
         
-        public bool? IsMarkedAsRead { get; private set; }
+        public bool IsMarkedAsRead { get; set; }
 
         public CommentTypeEnum CommentType { get; private set; }
 
+        public List<FlightComment> LinkedToFlights { get; private set; } = new();
+
         // Constructor for adding custom comment
-        public Comment(Guid passengerId, CommentTypeEnum commentType, string text, bool? isMarkedAsRead)
+        public Comment(Guid passengerId, CommentTypeEnum commentType, string text, bool isMarkedAsRead)
         {
+            Id = Guid.NewGuid();
             PassengerId = passengerId;
             CommentType = commentType;
             Text = text;
             IsMarkedAsRead = isMarkedAsRead;
-            PredefinedCommentId = null;
         }
 
         // Constructor for adding predefined comment
-        public Comment(Guid passengerId, CommentTypeEnum commentType, bool? isMarkedAsRead, 
-            PredefinedComment predefinedComment)
+        public Comment(Guid passengerId, string predefinedCommentId, string text)
         {
+            Id = Guid.NewGuid();
             PassengerId = passengerId;
-            CommentType = commentType;
-            Text = predefinedComment.Text;
-            IsMarkedAsRead = isMarkedAsRead;
-            PredefinedCommentId = predefinedComment.Id;
-            PredefinedComment = predefinedComment;
+            PredefinedCommentId = predefinedCommentId;
+            Text = text;
+            IsMarkedAsRead = false;
+            CommentType = CommentTypeEnum.Gate;
         }
     }
 }

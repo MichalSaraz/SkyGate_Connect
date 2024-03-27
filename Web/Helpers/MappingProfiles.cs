@@ -99,6 +99,9 @@ namespace Web.Helpers
 
             CreateMap<SpecialServiceRequest, SpecialServiceRequestDto>()
                 .ForMember(dest => dest.SSRCode, opt => opt.MapFrom(src => src.SSRCode.Code));
+
+            CreateMap<FlightComment, FlightCommentDto>()
+                .ForMember(dest => dest.FlightNumber, opt => opt.MapFrom(src => src.Flight.ScheduledFlightId));
         }
     }
 }
