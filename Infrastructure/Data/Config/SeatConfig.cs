@@ -11,9 +11,9 @@ namespace Infrastructure.Data.Config
         {
             builder.HasKey(s => s.Id);
             
-            builder.HasOne(s => s.Passenger)
+            builder.HasOne(s => s.PassengerOrItem)
                 .WithMany(p => p.AssignedSeats)
-                .HasForeignKey(s => s.PassengerId);
+                .HasForeignKey(s => s.PassengerOrItemId);
             
             builder.HasOne(s => s.Flight)
                 .WithMany(f => f.Seats)

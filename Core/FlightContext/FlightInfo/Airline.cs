@@ -4,7 +4,8 @@ using Core.PassengerContext.APIS;
 namespace Core.FlightContext.FlightInfo
 {
     public class Airline
-    {   
+    {
+        [Key]
         public string CarrierCode { get; set; }
 
         public Country Country { get; private set; }

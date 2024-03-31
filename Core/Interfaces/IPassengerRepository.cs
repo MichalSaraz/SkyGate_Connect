@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Core.Interfaces
 {
-    public interface IPassengerRepository : IGenericRepository<Passenger>
+    public interface IPassengerRepository : IBasePassengerOrItemRepository
     {
         /// <summary>
         /// Retrieves a list of passengers based on the given criteria.

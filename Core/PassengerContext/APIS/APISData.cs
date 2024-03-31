@@ -8,8 +8,8 @@ namespace Core.PassengerContext.APIS
     {
         public Guid Id { get; set; }        
 
-        public Passenger Passenger { get; set; }
-        public Guid PassengerId { get; set; }
+        public BasePassengerOrItem Passenger { get; set; }
+        public Guid? PassengerId { get; set; }
 
         public Country Nationality { get; set; }
         public string NationalityId { get; set; }
@@ -42,7 +42,7 @@ namespace Core.PassengerContext.APIS
         public DateTime ExpirationDate { get; set; }
 
         public APISData(
-            Guid passengerId,
+            Guid? passengerId,
             string nationalityId,
             string countryOfIssueId,
             string documentNumber, 

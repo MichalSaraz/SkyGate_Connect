@@ -1,6 +1,7 @@
 ﻿using Core.PassengerContext;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using Core.PassengerContext.Booking;
 
 namespace Infrastructure.Data.Config
 {
@@ -8,25 +9,21 @@ namespace Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<Passenger> builder)
         {
-            builder.HasMany(p => p.AssignedSeats)
-                .WithOne(s => s.Passenger)
-                .HasForeignKey(s => s.PassengerId);
+            builder.HasOne(p => p.FrequentFlyerCard)
+                .WithOne(ff => ff.Passenger)
+                .HasForeignKey<FrequentFlyer>(ff => ff.PassengerId);
+
+            builder.HasOne(p => p.Infant)
+                .WithOne(i => i.AssociatedAdultPassenger)
+                .HasForeignKey<Infant>(i => i.AssociatedAdultPassengerId);            
 
             builder.HasMany(p => p.SpecialServiceRequests)
                 .WithOne(ssr => ssr.Passenger)
-                .HasForeignKey(ssr => ssr.PassengerId);
-
-            builder.HasMany(p => p.TravelDocuments)
-                .WithOne(ad => ad.Passenger)
-                .HasForeignKey(ad => ad.PassengerId);
+                .HasForeignKey(ssr => ssr.PassengerId);           
 
             builder.HasMany(p => p.PassengerCheckedBags)
                 .WithOne(b => b.Passenger)
-                .HasForeignKey(b => b.PassengerId);
-
-            builder.HasMany(p => p.Comments)
-                .WithOne(c => c.Passenger)
-                .HasForeignKey(c => c.PassengerId);            
+                .HasForeignKey(b => b.PassengerId);                       
         }
     }
 }

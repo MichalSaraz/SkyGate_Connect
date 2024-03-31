@@ -6,25 +6,24 @@ namespace Core.PassengerContext.Booking
 {
     public class FrequentFlyer
     {
-        public int Id { get; private set; }
+        public Guid Id { get; private set; }
 
         public string FrequentFlyerNumber
         {
             get => $"{Airline.CarrierCode}{CardNumber}";
             set
             {
-                if (value.Length < 2)
+                if (value.Length < 10)
                     throw new ArgumentException("Invalid FrequentFlyerNumber");
 
-                Airline.CarrierCode = value[..2];
+                AirlineId = value[..2];
                 CardNumber = value[2..];
             }
         }
         
-        public PassengerInfo PassengerInfo { get; private set; }
-        public Guid PassengerInfoId { get; private set; }
+        public Passenger Passenger { get; private set; }
+        public Guid PassengerId { get; private set; }
 
-        [Required]
         public Airline Airline { get; private set; }
         public string AirlineId { get; private set; }
                 
@@ -33,7 +32,10 @@ namespace Core.PassengerContext.Booking
         public string CardNumber { get; private set; }
 
         [Required]
-        public string CardholderName { get; private set; }
+        public string CardholderFirstName { get; private set; }
+
+        [Required]
+        public string CardholderLastName { get; private set; }
 
         [Required]
         public TierLevelEnum TierLever { get; private set; }

@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240330003621_Add_BasePassengerOrItem_and_derived_classes")]
+    partial class Add_BasePassengerOrItem_and_derived_classes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -413,9 +416,11 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.PassengerContext.Booking.FrequentFlyer", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AirlineId")
                         .HasColumnType("text");
@@ -437,6 +442,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<long>("MilesAvailable")
                         .HasColumnType("bigint");
+
+                    b.Property<Guid>("NewId")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("PassengerId")
                         .HasColumnType("uuid");
@@ -467,7 +475,7 @@ namespace Infrastructure.Migrations
                     b.Property<int?>("Age")
                         .HasColumnType("integer");
 
-                    b.Property<Guid?>("AssociatedPassengerBookingDetailsId")
+                    b.Property<Guid?>("AssociatedPassengerId")
                         .HasColumnType("uuid");
 
                     b.Property<int>("BaggageAllowance")
@@ -500,7 +508,7 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("PassengerId")
+                    b.Property<Guid>("PassengerId")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("PriorityBoarding")
@@ -512,7 +520,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AssociatedPassengerBookingDetailsId")
+                    b.HasIndex("AssociatedPassengerId")
                         .IsUnique();
 
                     b.HasIndex("PNRId");
@@ -712,10 +720,10 @@ namespace Infrastructure.Migrations
                 {
                     b.HasBaseType("Core.PassengerContext.BasePassengerOrItem");
 
-                    b.Property<Guid>("AssociatedAdultPassengerId")
+                    b.Property<Guid>("AssociatedPassengerId")
                         .HasColumnType("uuid");
 
-                    b.HasIndex("AssociatedAdultPassengerId")
+                    b.HasIndex("AssociatedPassengerId")
                         .IsUnique();
 
                     b.HasDiscriminator().HasValue("Infant");
@@ -982,9 +990,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.PassengerContext.Booking.PassengerBookingDetails", b =>
                 {
-                    b.HasOne("Core.PassengerContext.Booking.PassengerBookingDetails", "AssociatedPassengerBookingDetails")
+                    b.HasOne("Core.PassengerContext.Booking.PassengerBookingDetails", "AssociatedPassenger")
                         .WithOne()
-                        .HasForeignKey("Core.PassengerContext.Booking.PassengerBookingDetails", "AssociatedPassengerBookingDetailsId");
+                        .HasForeignKey("Core.PassengerContext.Booking.PassengerBookingDetails", "AssociatedPassengerId");
 
                     b.HasOne("Core.PassengerContext.Booking.BookingReference", "PNR")
                         .WithMany("LinkedPassengers")
@@ -992,7 +1000,7 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("AssociatedPassengerBookingDetails");
+                    b.Navigation("AssociatedPassenger");
 
                     b.Navigation("PNR");
                 });
@@ -1097,13 +1105,13 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.PassengerContext.Infant", b =>
                 {
-                    b.HasOne("Core.PassengerContext.Passenger", "AssociatedAdultPassenger")
+                    b.HasOne("Core.PassengerContext.Passenger", "AssociatedPassenger")
                         .WithOne("Infant")
-                        .HasForeignKey("Core.PassengerContext.Infant", "AssociatedAdultPassengerId")
+                        .HasForeignKey("Core.PassengerContext.Infant", "AssociatedPassengerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("AssociatedAdultPassenger");
+                    b.Navigation("AssociatedPassenger");
                 });
 
             modelBuilder.Entity("Core.BaggageContext.Baggage", b =>

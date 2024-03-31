@@ -2,6 +2,7 @@
 using Core.PassengerContext.APIS;
 using Core.PassengerContext.APIS.Enums;
 using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace TestProject.TestDataInitializationClasses
 {
@@ -18,16 +19,16 @@ namespace TestProject.TestDataInitializationClasses
 
         public void GenerateAPIS()
         {
-            var passengerList = dbContext.Passengers.ToList();
+            var passengerList = dbContext.Passengers.Include(p => p.BookingDetails).ToList();
 
             var passengerListSortedByPNRId = passengerList
-                .OrderBy(f => f.PNRId)
+                .OrderBy(f => f.BookingDetails.PNRId)
                 .Take((int)Math.Ceiling(passengerList.Count * 0.5))
                 .ToList();
 
             var passengerListWithAssignedSeats = passengerListSortedByPNRId
                 .Where(f => f.AssignedSeats.Any())
-                .OrderBy(f => f.PNRId)
+                .OrderBy(f => f.BookingDetails.PNRId)
                 .Take((int)Math.Ceiling(passengerList.Count * 0.9))
                 .ToList();
 
@@ -168,9 +169,9 @@ namespace TestProject.TestDataInitializationClasses
                 var selectedCountry =
                     dbContext.Countries.FirstOrDefault(f => f.Country3LetterCode == randomCountrySelection.Key);
 
-                if (!nationalityByPNRId.TryGetValue(passenger.PNRId, out var value))
+                if (!nationalityByPNRId.TryGetValue(passenger.BookingDetails.PNRId, out var value))
                 {
-                    nationalityByPNRId[passenger.PNRId] = selectedCountry;
+                    nationalityByPNRId[passenger.BookingDetails.PNRId] = selectedCountry;
                 }
                 else
                 {
@@ -179,7 +180,7 @@ namespace TestProject.TestDataInitializationClasses
 
                 var currentDate = new DateTime(2023, 10, 14);
 
-                var dateOfBirth = currentDate.AddYears(-passenger.Age);
+                var dateOfBirth = currentDate.AddYears(-passenger.BookingDetails.Age ?? 0);
                 dateOfBirth = dateOfBirth.AddDays(-random.Next(0, 366));
 
                 var dateOfIssue = currentDate.AddYears(-random.Next(0, 10));

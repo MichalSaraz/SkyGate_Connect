@@ -22,7 +22,9 @@ namespace Web.Extensions
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IBaggageRepository, BaggageRepository>();
-            services.AddScoped<IFlightRepository<BaseFlight>, FlightRepository<BaseFlight>>();
+            services.AddScoped<IFlightRepository, FlightRepository>();
+            services.AddScoped<IOtherFlightRepository, OtherFlightRepository>();
+            services.AddScoped<IBaseFlightRepository, BaseFlightRepository>();
             services.AddScoped<IPassengerRepository, PassengerRepository>();
             services.AddScoped<IDestinationRepository, DestinationRepository>();
             services.AddScoped<ISSRCodeRepository, SSRCodeRepository>();

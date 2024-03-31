@@ -2,21 +2,22 @@
 using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Infrastructure.Repositories
 {
-    public class BaseFlightRepository : GenericRepository<BaseFlight>, IBaseFlightRepository
+    public class OtherFlightRepository : BaseFlightRepository, IOtherFlightRepository
     {
-        public BaseFlightRepository(AppDbContext context) : base(context)
+        public OtherFlightRepository(AppDbContext context) : base(context)
         {
         }
 
-        public virtual async Task<BaseFlight> GetFlightByIdAsync(int id, bool tracked = true)
+        public async Task<OtherFlight> GetOtherFlightByCriteriaAsync(Expression<Func<OtherFlight, bool>> criteria, bool tracked = false)
         {
-            var flightQuery = _context.Flights.AsQueryable()
+            var flightQuery = _context.Set<OtherFlight>().AsQueryable()
                 .Include(_ => _.Airline)
                 .Include(_ => _.ListOfBookedPassengers)
-                .Where(_ => _.Id == id);
+                .Where(criteria);
 
             if (!tracked)
             {

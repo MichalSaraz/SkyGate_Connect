@@ -15,22 +15,24 @@ namespace Web.Api.FlightContext.Controllers
     [Route("flight")]
     public class FlightController : ControllerBase
     {
-        private readonly IFlightRepository<BaseFlight> _flightRepository;
+        private readonly IFlightRepository _flightRepository;
+        private readonly IBaseFlightRepository _baseFlightRepository;
         private readonly IPassengerRepository _passengerRepository;
         private readonly ITimeProvider _timeProvider;
         private readonly IMapper _mapper;
 
         public FlightController(
-            IFlightRepository<BaseFlight> flightRepository,
+            IFlightRepository flightRepository,
+            IBaseFlightRepository baseFlightRepository,
             IPassengerRepository passengerRepository,
             ITimeProvider timeProvider,
-            IMapper mapper
-            )
+            IMapper mapper)
         {
             _flightRepository = flightRepository;
+            _baseFlightRepository = baseFlightRepository;
             _passengerRepository = passengerRepository;
-            _timeProvider = timeProvider;            
-            _mapper = mapper;            
+            _timeProvider = timeProvider;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -98,7 +100,7 @@ namespace Web.Api.FlightContext.Controllers
         [HttpGet("{id:int}/details")]
         public async Task<ActionResult<Flight>> GetFlightDetails(int id)
         {
-            var flight = await _flightRepository.GetFlightByIdAsync<Flight>(id, false);
+            var flight = await _flightRepository.GetFlightByIdAsync(id, false);
 
             var flightDto = _mapper.Map<FlightDetailsDto>(flight);
 
@@ -137,7 +139,7 @@ namespace Web.Api.FlightContext.Controllers
         private async Task<ActionResult<List<BaseFlight>>> _GetConnectedFlights(int id,
             Func<(int FlightId, BaseFlight IteratedFlight, BaseFlight CurrentFlight), bool> condition)
         {
-            var currentFlight = await _flightRepository.GetFlightByIdAsync<Flight>(id, false);
+            var currentFlight = await _flightRepository.GetFlightByIdAsync(id, false);
 
             if (currentFlight == null)
             {
@@ -149,21 +151,21 @@ namespace Web.Api.FlightContext.Controllers
             foreach (var passengerFlight in currentFlight.ListOfBookedPassengers)
             {
                 var passenger = await _passengerRepository
-                    .GetPassengerByIdAsync(passengerFlight.PassengerId);
+                    .GetPassengerByIdAsync(passengerFlight.PassengerOrItemId);
 
-                var matchingFlightsId = passenger.Flights
+                var nonCurrentFlightsId = passenger.Flights
                     .Where(pf =>
                         pf.FlightId != currentFlight.Id &&
                         condition((pf.FlightId, pf.Flight, currentFlight)))
                     .Select(pf => pf.FlightId);
 
-                foreach (var otherFlightId in matchingFlightsId)
+                foreach (var nonCurrentFlightId in nonCurrentFlightsId)
                 {
-                    var otherFlight = await _flightRepository.GetFlightByIdAsync<BaseFlight>(otherFlightId, false);
+                    var nonCurrentFlight = await _baseFlightRepository.GetFlightByIdAsync(nonCurrentFlightId, false);
 
-                    if (otherFlight != null)
+                    if (nonCurrentFlight != null)
                     {
-                        connectedFlights.Add(otherFlight);
+                        connectedFlights.Add(nonCurrentFlight);
                     }
                 }
             }

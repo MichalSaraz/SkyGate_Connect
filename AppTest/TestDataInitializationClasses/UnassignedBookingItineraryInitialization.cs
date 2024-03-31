@@ -33,7 +33,7 @@ namespace TestProject.TestDataInitializationClasses
 
             foreach (var unassignedBooking in PNRWithoutItinerary)
             {
-                unassignedBooking.LinkedPassengers = dbContext.PassengerInfo
+                unassignedBooking.LinkedPassengers = dbContext.PassengerBookingDetails
                     .Where(p => p.PNRId == unassignedBooking.PNR)
                     .ToList();
 

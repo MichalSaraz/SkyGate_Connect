@@ -17,9 +17,9 @@ namespace Infrastructure.Data
     {
         public DbSet<ScheduledFlight> ScheduledFlights { get; set; }
         public DbSet<BaseFlight> Flights { get; set; }
-        public DbSet<Passenger> Passengers { get; set; }
+        public DbSet<BasePassengerOrItem> Passengers { get; set; }
         public DbSet<PassengerFlight> PassengerFlight { get; set; }
-        public DbSet<PassengerInfo> PassengerInfo { get; set; }
+        public DbSet<PassengerBookingDetails> PassengerBookingDetails { get; set; }
         public DbSet<Baggage> Baggage { get; set; }
         public DbSet<Aircraft> Aircrafts { get; set; }
         public DbSet<Seat> Seats { get; set; }
@@ -32,7 +32,7 @@ namespace Infrastructure.Data
         public DbSet<FlightComment> FlightComment { get; set; }
         public DbSet<FlightBaggage> FlightBaggage { get; set; }
         public DbSet<PredefinedComment> PredefinedComments { get; set; }
-        public DbSet<FrequentFlyer> FrequentFlyers { get; set; }
+        public DbSet<FrequentFlyer> FrequentFlyerCards { get; set; }
         public DbSet<SSRCode> SSRCodes { get; set; }
         public DbSet<APISData> APISData { get; set; }
         public DbSet<Country> Countries { get; set; }

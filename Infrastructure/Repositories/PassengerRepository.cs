@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace Infrastructure.Repositories
 {
-    public class PassengerRepository : GenericRepository<Passenger>, IPassengerRepository
+    public class PassengerRepository : BasePassengerOrItemRepository, IPassengerRepository
     {
         private readonly IMemoryCache _cache;
 
@@ -27,8 +27,9 @@ namespace Infrastructure.Repositories
                 return passengersCache;
             }
 
-            var passengersQuery = _context.Passengers.AsQueryable()
-                .Include(_ => _.PNR)
+            var passengersQuery = _context.Set<Passenger>().AsQueryable()
+                .Include(_ => _.BookingDetails)
+                    .ThenInclude(_ => _.PNR)
                 .Include(_ => _.TravelDocuments)
                 .Include(_ => _.Flights)
                 .ThenInclude(_ => _.Flight)
@@ -51,9 +52,10 @@ namespace Infrastructure.Repositories
         public async Task<Passenger> GetPassengerByCriteriaAsync(Expression<Func<Passenger, bool>> criteria,
             bool tracked = true)
         {
-            var passengerQuery = _context.Passengers.AsQueryable()
+            var passengerQuery = _context.Set<Passenger>().AsQueryable()
                 .Include(_ => _.SpecialServiceRequests)
-                .Include(_ => _.PNR)
+                .Include(_ => _.BookingDetails)
+                .ThenInclude(_ => _.PNR)
                 .Include(_ => _.Flights)
                 .ThenInclude(_ => _.Flight)
                 .Where(criteria);
@@ -78,8 +80,9 @@ namespace Infrastructure.Repositories
                 return passengerCache;
             }
 
-            var passengerQuery = _context.Passengers.AsQueryable()
-                .Include(_ => _.PNR)
+            var passengerQuery = _context.Set<Passenger>().AsQueryable()
+                .Include(_ => _.BookingDetails)
+                .ThenInclude(_ => _.PNR)
                 .Include(_ => _.Flights)
                 .ThenInclude(_ => _.Flight)
                 .Where(_ => _.Id == id);
@@ -115,7 +118,7 @@ namespace Infrastructure.Repositories
         public async Task<IReadOnlyList<Passenger>> GetPassengersWithFlightConnectionsAsync(int flightId,
             bool isOnwardFlight)
         {
-            var passengerQuery = _context.Passengers.AsQueryable()
+            var passengerQuery = _context.Set<Passenger>().AsQueryable()
                 .AsNoTracking()
                 .Include(_ => _.Flights)
                 .ThenInclude(_ => _.Flight)

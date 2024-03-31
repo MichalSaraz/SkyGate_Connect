@@ -9,11 +9,11 @@ namespace Infrastructure.Data.Config.JoinClassesConfig
     {
         public void Configure(EntityTypeBuilder<PassengerFlight> builder)
         {
-            builder.HasKey(pf => new { pf.PassengerId, pf.FlightId });
+            builder.HasKey(pf => new { pf.PassengerOrItemId, pf.FlightId });
             
-            builder.HasOne(pf => pf.Passenger)
+            builder.HasOne(pf => pf.PassengerOrItem)
                 .WithMany(p => p.Flights)
-                .HasForeignKey(pf => pf.PassengerId);
+                .HasForeignKey(pf => pf.PassengerOrItemId);
             
             builder.HasOne(pf => pf.Flight)
                 .WithMany(bf => bf.ListOfBookedPassengers)

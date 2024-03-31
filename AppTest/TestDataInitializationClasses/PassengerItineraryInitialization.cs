@@ -2,6 +2,7 @@
 using Core.FlightContext;
 using Core.PassengerContext;
 using Core.PassengerContext.Booking;
+using Core.PassengerContext.Booking.Enums;
 using Infrastructure.Data;
 
 namespace TestProject.TestDataInitializationClasses
@@ -38,19 +39,82 @@ namespace TestProject.TestDataInitializationClasses
             {
                 var numberOfFlights = random.Next(1, 3);
 
-                bookingReference.LinkedPassengers = dbContext.PassengerInfo
+                bookingReference.LinkedPassengers = dbContext.PassengerBookingDetails
                     .Where(p => p.PNRId == bookingReference.PNR)
-                    .ToList();
+                    .OrderBy(p => p.Age)
+                    .ToList();               
 
                 var selectedFlights = _SelectFlightsWithRules(flights, numberOfFlights,
                     bookingReference.LinkedPassengers.Count, passengerCountPerFlight, totalBookedPassengers);
 
                 foreach (var flight in selectedFlights)
                 {
-                    foreach (var passengerInfo in bookingReference.LinkedPassengers.ToList())
+                    foreach (var passengerBookingDetails in bookingReference.LinkedPassengers.ToList())
                     {
-                        var passenger = new Passenger();
-                        passenger.MapFromPassengerInfo(passengerInfo);
+                        BasePassengerOrItem passenger;
+                        
+                        if (passengerBookingDetails.FirstName == "CBBG")
+                        {
+                            passenger = new CabinBaggageRequiringSeat(
+                                passengerBookingDetails.FirstName,
+                                passengerBookingDetails.LastName,
+                                passengerBookingDetails.Gender,
+                                passengerBookingDetails.Id,
+                                null);
+
+                            //passenger.MapFromPassengerBookingDetails(passengerBookingDetails);
+                        }
+                            
+                        else if (passengerBookingDetails.FirstName == "EXST")
+                        {
+                            passenger = new ExtraSeat(
+                                passengerBookingDetails.FirstName,
+                                passengerBookingDetails.LastName,
+                                passengerBookingDetails.Gender,
+                                passengerBookingDetails.Id);
+
+                            //passenger.MapFromPassengerBookingDetails(passengerBookingDetails);
+                        }
+                            
+                        else if (passengerBookingDetails.Age < 2)
+                        {
+                            var associatedPassenger = bookingReference.LinkedPassengers
+                                .FirstOrDefault(p => p.Age >= 18 && p.AssociatedPassengerBookingDetailsId == null);
+
+                            if (associatedPassenger != null)
+                            {
+                                passenger = new Infant(
+                                associatedPassenger.Id,
+                                passengerBookingDetails.FirstName,
+                                passengerBookingDetails.LastName,
+                                passengerBookingDetails.Gender,
+                                passengerBookingDetails.Id,
+                                0);
+
+                                associatedPassenger.AssociatedPassengerBookingDetailsId = passenger.Id;
+                                //passenger.MapFromPassengerBookingDetails(passengerBookingDetails);
+                            }                            
+                        }
+                        else
+                        {
+                            var weight = (passengerBookingDetails.Age < 12) ? 35 
+                                : (passengerBookingDetails.Gender == PaxGenderEnum.M) ? 88 : 70;
+
+                            passenger = new Passenger(
+                                passengerBookingDetails.BaggageAllowance,
+                                passengerBookingDetails.PriorityBoarding,
+                                passengerBookingDetails.FirstName,
+                                passengerBookingDetails.LastName,
+                                passengerBookingDetails.Gender,
+                                passengerBookingDetails.Id,
+                                weight
+                                );
+
+                            if (passengerBookingDetails.AssociatedPassengerBookingDetailsId != null)
+                                ((Passenger)passenger).InfantId = passengerBookingDetails.AssociatedPassengerBookingDetailsId;
+                            
+                            //passenger.MapFromPassengerBookingDetails(passengerBookingDetails);
+                        }
                     }
 
                     totalBookedPassengers[flight.Id] += bookingReference.LinkedPassengers.Count;

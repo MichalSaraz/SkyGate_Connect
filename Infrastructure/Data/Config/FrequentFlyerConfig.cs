@@ -12,9 +12,9 @@ namespace Infrastructure.Data.Config
         {
             builder.HasKey(ff => ff.Id);
             
-            builder.HasOne(ff => ff.PassengerInfo)
-                .WithOne(pi => pi.FrequentFlyer)
-                .HasForeignKey<PassengerInfo>(pi => pi.FrequentFlyerId);
+            builder.HasOne(ff => ff.Passenger)
+                .WithOne(p => p.FrequentFlyerCard)
+                .HasForeignKey<Passenger>(p => p.FrequentFlyerCardId);
             
             builder.HasOne(ff => ff.Airline)
                 .WithMany()

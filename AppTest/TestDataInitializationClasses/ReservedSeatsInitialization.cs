@@ -17,7 +17,7 @@ namespace TestProject.TestDataInitializationClasses
         {
             var seatList = _GenerateSeatList();
             var bookingReferences = dbContext.BookingReferences.ToList();
-            var passengerInfos = dbContext.PassengerInfo.ToList();
+            var passengerInfos = dbContext.PassengerBookingDetails.ToList();
             var seatsOccupied = new Dictionary<string, List<string>>();
 
             foreach (var bookingReference in bookingReferences.Where((_, i) => (i + 1) % 5 == 0))

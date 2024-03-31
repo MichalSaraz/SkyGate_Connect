@@ -13,6 +13,6 @@ namespace Core.PassengerContext.APIS
         
         public string[] AircraftRegistrationPrefix { get; private set; }
 
-        public bool IsEUCountry { get; private set; }
+        public bool IsEEACountry { get; private set; }
     }
 }

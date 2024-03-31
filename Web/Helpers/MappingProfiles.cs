@@ -35,7 +35,7 @@ namespace Web.Helpers
                 .IncludeBase<BaseFlight, FlightDetailsDto>();
 
             CreateMap<Passenger, PassengerOverviewDto>()
-                .ForMember(dest => dest.PNR, opt => opt.MapFrom(src => src.PNR.PNR))
+                .ForMember(dest => dest.PNR, opt => opt.MapFrom(src => src.BookingDetails.PNR))
                 .ForMember(dest => dest.NumberOfCheckedBags, opt => opt.MapFrom(src => src.PassengerCheckedBags.Count))
                 .ForMember(dest => dest.CurrentFlight, opt => opt.MapFrom((src, _, _, context) => src.Flights
                     .FirstOrDefault(pf => pf.Flight.DepartureDateTime == (DateTime)context.Items["DepartureDateTime"])))
@@ -46,7 +46,7 @@ namespace Web.Helpers
 
             CreateMap<Passenger, PassengerDetailsDto>()
                 .IncludeBase<Passenger, PassengerOverviewDto>()
-                .ForMember(dest => dest.FrequentFlyer, opt => opt.MapFrom(src => src.FrequentFlyer.FrequentFlyerNumber))
+                .ForMember(dest => dest.FrequentFlyerNumber, opt => opt.MapFrom(src => src.FrequentFlyerCard.FrequentFlyerNumber))
                 .ForMember(dest => dest.ConnectingFlights, opt => opt.MapFrom((src, _, _, context) => src.Flights
                     .Where(pf => pf.Flight.DepartureDateTime > (DateTime)context.Items["DepartureDateTime"])
                     .OrderBy(pf => pf.Flight.DepartureDateTime)))
@@ -67,8 +67,8 @@ namespace Web.Helpers
                 .ForMember(dest => dest.ArrivalDateTime, opt => opt.MapFrom(src => src.Flight.ArrivalDateTime));
                 
             CreateMap<Seat, SeatDto>()
-                .ForMember(dest => dest.PassengerFirstName, opt => opt.MapFrom(src => src.Passenger.FirstName))
-                .ForMember(dest => dest.PassengerLastName, opt => opt.MapFrom(src => src.Passenger.LastName));
+                .ForMember(dest => dest.PassengerFirstName, opt => opt.MapFrom(src => src.PassengerOrItem.FirstName))
+                .ForMember(dest => dest.PassengerLastName, opt => opt.MapFrom(src => src.PassengerOrItem.LastName));
 
             CreateMap<APISData, APISDataDto>()
                 .ForMember(dest => dest.CountryOfIssue, opt => opt.MapFrom(src => src.CountryOfIssueId))

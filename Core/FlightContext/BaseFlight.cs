@@ -7,7 +7,7 @@ namespace Core.FlightContext
 {
     public abstract class BaseFlight
     {
-        public int Id { get; set; }        
+        public int Id { get; protected set; }        
 
         public Destination DestinationFrom { get; protected set; }
         public string DestinationFromId { get; protected set; }

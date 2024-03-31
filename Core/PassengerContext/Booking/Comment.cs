@@ -9,7 +9,7 @@ namespace Core.PassengerContext.Booking
     {
         public Guid Id { get; private set; }
 
-        public Passenger Passenger { get; private set; }
+        public BasePassengerOrItem Passenger { get; private set; }
         public Guid PassengerId { get; private set; }        
 
         public PredefinedComment? PredefinedComment { get; private set; }

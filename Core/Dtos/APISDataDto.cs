@@ -2,7 +2,7 @@
 {
     public class APISDataDto
     {
-        public int Id { get; init; }
+        public Guid Id { get; init; }
         public string DocumentNumber { get; init; }
         public string FirstName { get; init; }
         public string LastName { get; init; }

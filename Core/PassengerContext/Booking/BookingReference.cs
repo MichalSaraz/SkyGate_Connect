@@ -9,7 +9,7 @@ namespace Core.PassengerContext.Booking
         public string PNR { get; private set; }
         
         [Required]
-        public List<PassengerInfo> LinkedPassengers { get; set; } = new();
+        public List<PassengerBookingDetails> LinkedPassengers { get; set; } = new();
         
         public List<KeyValuePair<string, DateTime>> FlightItinerary { get; set; } = new();
     }

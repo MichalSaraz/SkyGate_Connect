@@ -7,8 +7,8 @@ namespace Core.SeatingContext
     public class Seat
     {        
         public Guid Id { get; private set; }
-        public Passenger Passenger  { get; set; }
-        public Guid? PassengerId { get; private set; }
+        public BasePassengerOrItem PassengerOrItem  { get; set; }
+        public Guid? PassengerOrItemId { get; private set; }
 
         public Flight Flight { get; private set; }
         public int FlightId { get; private set; }

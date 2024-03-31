@@ -1,42 +1,57 @@
 ﻿using Core.BaggageContext;
 using Core.PassengerContext.Booking;
 using Core.PassengerContext.JoinClasses;
-using Core.SeatingContext;
-using Core.PassengerContext.APIS;
+using Core.PassengerContext.Booking.Enums;
 
 namespace Core.PassengerContext
 {
-    public class Passenger : PassengerInfo
+    public class Passenger : BasePassengerOrItem
     {
-        public List<APISData> TravelDocuments { get; set; } = new();
+        public FrequentFlyer FrequentFlyerCard { get; set; }
+        public Guid? FrequentFlyerCardId { get; set; }       
 
-        public List<Baggage> PassengerCheckedBags { get; set; } = new();
+        // The 'InfantId' property may have a value only if the associated 'Passenger' instance,
+        // which it refers to, has a value in the 'BookingDetails.Age' property greater than or equal to 18.
+        public Guid? InfantId { get; set; }
+        public Infant Infant { get; set; }
 
-        public List<PassengerFlight> Flights { get; set; } = new();
+        public int BaggageAllowance { get; set; }
+        public bool PriorityBoarding { get; set; }
 
-        public List<Comment> Comments { get; set; } = new();
-
-        public List<Seat> AssignedSeats { get; set; } = new();
-
+        public List<Baggage> PassengerCheckedBags { get; set; } = new();        
         public List<SpecialServiceRequest> SpecialServiceRequests { get; set; } = new();
 
-        /// <summary>
-        /// Maps a <see cref="PassengerInfo"/> object to this <see cref="Passenger"/> object.
-        /// </summary>
-        /// <param name="passengerInfo">The <see cref="PassengerInfo"/> object to be mapped.</param>
-        public void MapFromPassengerInfo(PassengerInfo passengerInfo)
+        public Passenger(
+            int baggageAllowance,
+            bool priorityBoarding,
+            string firstName,
+            string lastName,
+            PaxGenderEnum gender,
+            Guid bookingDetailsId,
+            int? weight)
+            : base(
+                firstName,
+                lastName,
+                gender,
+                bookingDetailsId,
+                weight)
         {
-            Id = new Guid();
-            FirstName = passengerInfo.FirstName;
-            LastName = passengerInfo.LastName;
-            Gender = passengerInfo.Gender;
-            PNR = passengerInfo.PNR;
-            PNRId = passengerInfo.PNRId;
-            Age = passengerInfo.Age;
-            BaggageAllowance = passengerInfo.BaggageAllowance;
-            PriorityBoarding = passengerInfo.PriorityBoarding;
-            FrequentFlyer = passengerInfo.FrequentFlyer;
-            FrequentFlyerId = passengerInfo.FrequentFlyerId;
+            BaggageAllowance = baggageAllowance;
+            PriorityBoarding = priorityBoarding;
+        }
+
+        /// <summary>
+        /// Maps a <see cref="PassengerBookingDetails"/> object to this <see cref="Passenger"/> object.
+        /// </summary>
+        /// <param name="passengerBookingDetails">The <see cref="PassengerBookingDetails"/> object to be mapped.</param>
+        public override void MapFromPassengerBookingDetails(PassengerBookingDetails passengerBookingDetails)
+        {
+            base.MapFromPassengerBookingDetails(passengerBookingDetails);
+            BaggageAllowance = passengerBookingDetails.BaggageAllowance;
+            PriorityBoarding = passengerBookingDetails.PriorityBoarding;
+            InfantId = passengerBookingDetails.AssociatedPassengerBookingDetailsId;
+            // FrequentFlyerCard
+            // FrequentFlyerCardId
         }
     }
 }

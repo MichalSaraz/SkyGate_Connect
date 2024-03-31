@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace Infrastructure.Repositories
 {
-    public class FlightRepository<T> : BaseFlightRepository<T>, IFlightRepository<T> where T : BaseFlight
+    public class FlightRepository : BaseFlightRepository, IFlightRepository
     {
         private readonly IMemoryCache _cache;
 
@@ -16,18 +16,11 @@ namespace Infrastructure.Repositories
             _cache = cache;
         }
 
-        public async Task<TFlight> GetFlightByCriteriaAsync<TFlight>(
-            Expression<Func<TFlight, bool>> criteria, bool tracked = false) where TFlight : BaseFlight
+        public async Task<Flight> GetFlightByCriteriaAsync(
+        Expression<Func<Flight, bool>> criteria, bool tracked = false)
         {
-            var CACHE_KEY = $"Flight_{criteria}";
-
-            var flightCache = _cache.Get<TFlight>(CACHE_KEY);
-            if (!tracked && flightCache != null)
-            {
-                return flightCache;
-            }
-
-            var flightQuery = _context.Set<TFlight>().AsQueryable()
+            var flightQuery = _context.Set<Flight>().AsQueryable()
+                .Include(_ => _.Airline)
                 .Include(_ => _.ListOfBookedPassengers)
                 .Where(criteria);
 
@@ -38,18 +31,13 @@ namespace Infrastructure.Repositories
 
             var flight = await flightQuery.FirstOrDefaultAsync();
 
-            _cache.Set(CACHE_KEY, flight, new MemoryCacheEntryOptions
-            {
-                SlidingExpiration = TimeSpan.FromMinutes(5)
-            });
-
             return flight;
         }
 
         public async Task<IReadOnlyList<Flight>> GetFlightsByCriteriaAsync(
             Expression<Func<Flight, bool>> criteria, bool tracked = false)
         {
-            var flightsQuery = _context.Flights.OfType<Flight>().AsQueryable()
+            var flightsQuery = _context.Set<Flight>().AsQueryable()
                 .Include(_ => _.ListOfBookedPassengers)
                 .Where(criteria);
 
@@ -63,27 +51,16 @@ namespace Infrastructure.Repositories
             return flights;
         }
 
-        public async Task<TFlight> GetFlightByIdAsync<TFlight>(int id, bool tracked = true) where TFlight : BaseFlight
+        public override async Task<BaseFlight> GetFlightByIdAsync(int id, bool tracked = true)
         {
             var CACHE_KEY = $"Flight_{id}";
 
-            var flightCache = _cache.Get<TFlight>(CACHE_KEY);
-            if (!tracked && flightCache != null)
+            if (!tracked && _cache.TryGetValue(CACHE_KEY, out BaseFlight cachedFlight))
             {
-                return flightCache;
+                return cachedFlight;
             }
 
-            var flightQuery = _context.Set<TFlight>().AsQueryable()
-                .Include(_ => _.Airline)
-                .Include(_ => _.ListOfBookedPassengers)
-                .Where(_ => _.Id == id);
-
-            if (!tracked)
-            {
-                flightQuery = flightQuery.AsNoTracking();
-            }
-
-            var flight = await flightQuery.SingleOrDefaultAsync();
+            var flight = await base.GetFlightByIdAsync(id, tracked) as Flight;
 
             _cache.Set(CACHE_KEY, flight, new MemoryCacheEntryOptions
             {

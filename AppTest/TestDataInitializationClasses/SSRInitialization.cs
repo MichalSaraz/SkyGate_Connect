@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using Core.PassengerContext;
+using Core.PassengerContext.Booking;
 using Core.PassengerContext.Booking.Enums;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -18,14 +18,14 @@ namespace TestProject.TestDataInitializationClasses
 
         public void InitializeSSR()
         {
-            var passengers = dbContext.PassengerInfo.ToList();
+            var passengers = dbContext.PassengerBookingDetails.ToList();
 
             var infants = passengers.Where(p => p.Age < 2).ToList();
             var children = passengers.Where(p => p.Age is < 12 and > 1).ToList();
             var unaccompaniedMinors = passengers.Where(p => p.Age is <= 12 and >= 5).ToList();
             var adults = passengers.Where(p => p.Age >= 18).ToList();
             var elderly = passengers.Where(p => p.Age >= 50).ToList();
-            var wchPaxList = new List<PassengerInfo>();
+            var wchPaxList = new List<PassengerBookingDetails>();
 
             _AssignSSR("CHLD", null, children, null);
             _AssignSSR("UMNR", null, unaccompaniedMinors, null);
@@ -54,8 +54,8 @@ namespace TestProject.TestDataInitializationClasses
             _AssignSSR("WCBD", 80, wchPaxList, null);
         }
 
-        private void _AssignSSR(string SSR, int? SSRFrequency, List<PassengerInfo>? eligiblePassengers,
-            ICollection<PassengerInfo>? wchPaxList)
+        private void _AssignSSR(string SSR, int? SSRFrequency, List<PassengerBookingDetails> eligiblePassengers,
+            ICollection<PassengerBookingDetails>? wchPaxList)
         {
             var ssrList = dbContext.SSRCodes.ToList();
 
@@ -71,7 +71,7 @@ namespace TestProject.TestDataInitializationClasses
             }
             else if (SSRFrequency != null)
             {
-                countForSSR = (int)(dbContext.PassengerInfo.ToList().Count / SSRFrequency);
+                countForSSR = (int)(dbContext.PassengerBookingDetails.ToList().Count / SSRFrequency);
             }
             else if (SSRFrequency == null && eligiblePassengers != null)
             {
@@ -109,10 +109,10 @@ namespace TestProject.TestDataInitializationClasses
                     {
                         if (SSR is "CBBG" or "EXST")
                         {
-                            var passengerInfo = new PassengerInfo(SSR, selectedPassenger?.LastName,
+                            var passengerInfo = new PassengerBookingDetails(SSR, selectedPassenger?.LastName,
                                 PaxGenderEnum.UNDEFINED, selectedPassenger?.PNRId);
 
-                            dbContext.PassengerInfo.Add(passengerInfo);
+                            dbContext.PassengerBookingDetails.Add(passengerInfo);
                             bookingReferences.FirstOrDefault(f => f.PNR == selectedPassenger?.PNRId)
                                 ?.LinkedPassengers.Add(passengerInfo);
                         }
@@ -148,7 +148,7 @@ namespace TestProject.TestDataInitializationClasses
 
                                     if (first is { IsFreeTextMandatory: true })
                                     {
-                                        value = _GenerateStringValue(SSR, selectedPassenger.Age,
+                                        value = _GenerateStringValue(SSR, selectedPassenger.Age ?? 0,
                                             selectedPassenger.FirstName);
                                     }
                                     else

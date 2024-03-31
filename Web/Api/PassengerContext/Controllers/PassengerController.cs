@@ -11,6 +11,7 @@ using Core.PassengerContext.APIS;
 using Core.PassengerContext.Booking;
 using Core.PassengerContext.Booking.Enums;
 using Core.PassengerContext.JoinClasses;
+using Infrastructure.Migrations;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -25,7 +26,8 @@ namespace Web.Api.PassengerContext.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ITimeProvider _timeProvider;
-        private readonly IFlightRepository<BaseFlight> _flightRepository;
+        private readonly IFlightRepository _flightRepository;
+        private readonly IOtherFlightRepository _otherFlightRepository;
         private readonly IPassengerRepository _passengerRepository;
         private readonly IBaggageRepository _baggageRepository;
         private readonly IDestinationRepository _destinationRepository;
@@ -39,7 +41,8 @@ namespace Web.Api.PassengerContext.Controllers
         public PassengerController(
             IMapper mapper,
             ITimeProvider timeProvider,
-            IFlightRepository<BaseFlight> flightRepository,
+            IFlightRepository flightRepository,
+            IOtherFlightRepository otherFlightRepository,
             IPassengerRepository passengerRepository,
             IBaggageRepository baggageRepository,
             IDestinationRepository destinationRepository,
@@ -53,6 +56,7 @@ namespace Web.Api.PassengerContext.Controllers
             _mapper = mapper;
             _timeProvider = timeProvider;
             _flightRepository = flightRepository;
+            _otherFlightRepository = otherFlightRepository;
             _passengerRepository = passengerRepository;
             _baggageRepository = baggageRepository;
             _destinationRepository = destinationRepository;
@@ -113,11 +117,11 @@ namespace Web.Api.PassengerContext.Controllers
                  c.AssignedSeats.Any(s => s.SeatNumber == model.SeatNumber)) &&
                 (string.IsNullOrEmpty(model.LastName) ||
                  c.LastName.Substring(0, model.LastName.Length) == model.LastName) &&
-                (string.IsNullOrEmpty(model.PNR) || c.PNRId == model.PNR);
+                (string.IsNullOrEmpty(model.PNR) || c.BookingDetails.PNRId == model.PNR);
 
             var passengers = await _passengerRepository.GetPassengersByCriteriaAsync(criteria);
 
-            var selectedFlight = await _flightRepository.GetFlightByCriteriaAsync<Flight>(f =>
+            var selectedFlight = await _flightRepository.GetFlightByCriteriaAsync(f =>
                 f.ScheduledFlightId.Substring(2) == model.FlightNumber && f.AirlineId == model.AirlineId &&
                 f.DepartureDateTime.Date == model.DepartureDate.Value.Date);
 
@@ -142,7 +146,7 @@ namespace Web.Api.PassengerContext.Controllers
         public async Task<ActionResult<Passenger>> GetPassengerDetails(Guid id, int flightId)
         {
             var passenger = await _passengerRepository.GetPassengerByIdAsync(id, false, true);
-            var selectedFlight = await _flightRepository.GetFlightByIdAsync<Flight>(flightId, false);
+            var selectedFlight = await _flightRepository.GetFlightByIdAsync(flightId, false);
 
             var passengerDto = _mapper.Map<PassengerDetailsDto>(passenger, opt =>
             {
@@ -170,7 +174,7 @@ namespace Web.Api.PassengerContext.Controllers
             [FromBody] List<AddBaggageModel> addBaggageModels)
         {
             var passenger = await _passengerRepository.GetPassengerByIdAsync(id);
-            var selectedFlight = await _flightRepository.GetFlightByIdAsync<Flight>(flightId);
+            var selectedFlight = await _flightRepository.GetFlightByIdAsync(flightId);
             var destination = await _destinationRepository.GetDestinationByCriteriaAsync(d =>
                 d.IATAAirportCode == addBaggageModels.FirstOrDefault().FinalDestination);
 
@@ -360,7 +364,7 @@ namespace Web.Api.PassengerContext.Controllers
             }
 
             var currentPassengerFlights = passenger.Flights.Select(pf => pf.Flight).ToList();
-            var currentFlight = await _flightRepository.GetFlightByIdAsync<Flight>(flightId, false);
+            var currentFlight = await _flightRepository.GetFlightByIdAsync(flightId, false);
 
             foreach (var connectingFlightModel in addConnectingFlightModels)
             {
@@ -416,7 +420,7 @@ namespace Web.Api.PassengerContext.Controllers
             var connectingFlight = await _flightRepository.GetFlightByCriteriaAsync(flightCriteria, true);
             if (connectingFlight != null) return connectingFlight;
 
-            var otherFlight = await _flightRepository.GetFlightByCriteriaAsync(otherFlightCriteria, true);
+            var otherFlight = await _otherFlightRepository.GetOtherFlightByCriteriaAsync(otherFlightCriteria, true);
             if (otherFlight != null) return otherFlight;
 
             otherFlight = new OtherFlight(connectingFlightModel.FlightNumber, parsedDepartureDateTime, null,
@@ -805,6 +809,21 @@ namespace Web.Api.PassengerContext.Controllers
 
             if (commentsToDelete.Any())
                 return NoContent();
+
+            return Ok();
+        }
+
+        [HttpPatch("{id:guid}/mark-comment-as-read")]
+        public async Task<ActionResult<Comment>> MarkCommentAsRead(Guid id, [FromBody] Guid commentId)
+        {
+            var comment = await _commentRepository.GetCommentByIdAsync(commentId);
+
+            if (comment == null)
+                return BadRequest(new ApiResponse(400, $"Comment with ID {commentId} does not exist."));
+
+            comment.IsMarkedAsRead = true;
+
+            await _commentRepository.UpdateAsync(comment);
 
             return Ok();
         }
