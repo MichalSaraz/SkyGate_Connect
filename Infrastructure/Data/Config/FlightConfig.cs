@@ -30,10 +30,6 @@ namespace Infrastructure.Data.Config
             builder.HasMany(f => f.Seats)
                 .WithOne(s => s.Flight)
                 .HasForeignKey(s => s.FlightId);
-
-            builder.HasMany(f => f.Comments)
-                .WithOne(c => c.Flight)
-                .HasForeignKey(c => c.FlightId);
         }
     }
 }

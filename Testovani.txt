@@ -16,7 +16,7 @@
 
 
 005d511e-f677-4c64-ae6b-8ea7bf09474f
-2181
+2181 === 58590667-cec5-4a89-a58e-b1572d7086e9
 
 [
   {
@@ -53,10 +53,10 @@
 ]
 
 
-add
+add, conn fl = 99382844-5d43-4051-97a7-07858f76bc7e
 [
   {
-    "flightIds": [2181, 2303],
+    "flightIds": ["58590667-cec5-4a89-a58e-b1572d7086e9", "99382844-5d43-4051-97a7-07858f76bc7e"],
     "specialServiceRequests": [
       {
         "SSRCode": "WCHR",
@@ -72,8 +72,8 @@ add
 
 delete
 {
-  "2181": ["WCHR", "WCMP"],
-  "2303": ["WCHR", "WCMP"]
+  "58590667-cec5-4a89-a58e-b1572d7086e9": ["WCHR", "WCMP"],
+  "99382844-5d43-4051-97a7-07858f76bc7e": ["WCHR", "WCMP"]
 }
 
 
@@ -127,14 +127,20 @@ edit:
 
 
 
+deletecomment
+{
+    "58590667-cec5-4a89-a58e-b1572d7086e9": ["17e72928-7c09-48b8-bbe0-a5aa9491eb6c"],
+    "99382844-5d43-4051-97a7-07858f76bc7e": ["17e72928-7c09-48b8-bbe0-a5aa9491eb6c", "8ff272ba-58e0-4578-8d8a-71d79b917074"]
+}
 
-
-
-
-
-
-
-
+comment
+{
+    "flightIds": [
+        "58590667-cec5-4a89-a58e-b1572d7086e9",
+        "99382844-5d43-4051-97a7-07858f76bc7e"
+    ],
+    "text": "Tento let byl skvělý!"
+}
 
 
 
@@ -260,7 +266,6 @@ edit:
         //            selectedTravelDocument.DateOfIssue = model.DateOfIssue;
         //            selectedTravelDocument.ExpirationDate = model.ExpirationDate;
         //            selectedTravelDocument.NationalityId = nationality.Country2LetterCode;
-
         //            editedApisDataList.Add(selectedTravelDocument);
         //        }
         //    }
@@ -269,3 +274,145 @@ edit:
 
         //    return Ok();
         //}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace Infrastructure.Migrations
+{
+    /// <inheritdoc />
+    public partial class Add_and_delete_some_indexes : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropIndex(
+                name: "IX_FrequentFlyerCards_CardNumber",
+                table: "FrequentFlyerCards");            
+
+             migrationBuilder.DropIndex(
+                name: "IX_Passengers_Id",
+                table: "Passengers");
+
+            migrationBuilder.DropColumn(
+                name: "FrequentFlyerNumber",
+                table: "FrequentFlyerCards");
+
+            migrationBuilder.DropColumn(
+                name: "NewId",
+                table: "Flights");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FlightBaggage_FlightId",
+                table: "FlightBaggage",
+                column: "FlightId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FlightComment_FlightId",
+                table: "FlightComment",
+                column: "FlightId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FlightComment_CommentId",
+                table: "FlightComment",
+                column: "CommentId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Seats_FlightId",
+                table: "Seats",
+                column: "FlightId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SpecialServiceRequests_FlightId",
+                table: "SpecialServiceRequests",
+                column: "FlightId",
+                unique: true);
+
+            migrationBuilder.RenameIndex(
+                name: "IX_PassengerFlight_PassengerId",
+                table: "PassengerFlight",
+                newName: "IX_PassengerFlight_BasePassengerOrItemId");
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropIndex(
+                name: "IX_FlightBaggage_FlightId",
+                table: "FlightBaggage");
+
+            migrationBuilder.DropIndex(
+                name: "IX_FlightComment_FlightId",
+                table: "FlightComment");
+
+            migrationBuilder.DropIndex(
+                name: "IX_FlightComment_CommentId",
+                table: "FlightComment");
+
+            migrationBuilder.DropIndex(
+                name: "IX_Seats_FlightId",
+                table: "Seats");
+
+            migrationBuilder.DropIndex(
+                name: "IX_SpecialServiceRequests_FlightId",
+                table: "SpecialServiceRequests");
+
+            migrationBuilder.RenameIndex(
+                name: "IX_PassengerFlight_BasePassengerOrItemId",
+                table: "PassengerFlight",
+                newName: "IX_PassengerFlight_PassengerId");
+
+            migrationBuilder.AddColumn<string>(
+                name: "FrequentFlyerNumber",
+                table: "FrequentFlyerCards",
+                type: "text",
+                nullable: true);
+
+            migrationBuilder.AddColumn<Guid>(
+                name: "NewId",
+                table: "Flights",
+                type: "uuid",
+                nullable: false,
+                defaultValue: new Guid());
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FrequentFlyerCards_CardNumber",
+                table: "FrequentFlyerCards",
+                column: "CardNumber",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Passengers_Id",
+                table: "Passengers",
+                column: "Id",
+                unique: true);
+        }
+    }
+}

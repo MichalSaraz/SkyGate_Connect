@@ -16,8 +16,8 @@ namespace TestProject.TestDataInitializationClasses
         public void InitializeItinerary()
         {
             var flights = dbContext.Flights.ToList();
-            var notLoadedFlights = new Dictionary<int, DateTime>();
-            var flightCounts = new Dictionary<int, int>();
+            var notLoadedFlights = new Dictionary<Guid, DateTime>();
+            var flightCounts = new Dictionary<Guid, int>();
 
             foreach (var t in flights)
             {
@@ -54,8 +54,8 @@ namespace TestProject.TestDataInitializationClasses
             dbContext.SaveChanges();
         }
 
-        private static KeyValuePair<int, DateTime> _FindFlightInformation(Dictionary<int, DateTime> notLoadedFlights,
-            int numberOfLinkedPassengers, IDictionary<int, int> flightCounts)
+        private static KeyValuePair<Guid, DateTime> _FindFlightInformation(Dictionary<Guid, DateTime> notLoadedFlights,
+            int numberOfLinkedPassengers, IDictionary<Guid, int> flightCounts)
         {
             var availableFlight =
                 notLoadedFlights.FirstOrDefault(flight => flightCounts[flight.Key] + numberOfLinkedPassengers <= 189);

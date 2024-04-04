@@ -2,8 +2,8 @@
 {
     public class PassengerFlightDto
     {
-        public Guid PassengerId { get; init; }
-        public int FlightId { get; init; }
+        public Guid PassengerOrItemId { get; init; }
+        public Guid FlightId { get; init; }
         public string FlightNumber { get; init; }
         public string DestinationFrom { get; init; }
         public string DestinationTo { get; init; }

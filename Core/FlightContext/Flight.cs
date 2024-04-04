@@ -2,6 +2,7 @@
 using Core.FlightContext.FlightInfo;
 using Core.FlightContext.FlightInfo.Enums;
 using Core.FlightContext.JoinClasses;
+using Core.PassengerContext.JoinClasses;
 using Core.SeatingContext;
 using Core.SeatingContext.Enums;
 
@@ -24,6 +25,8 @@ namespace Core.FlightContext
         public List<Seat> Seats { get; private set; } = new();
 
         public List<FlightComment> Comments { get; private set; } = new();
+
+        public List<SpecialServiceRequest> SSRList { get; private set; } = new();
 
         public Flight(
             string scheduledFlightId, 

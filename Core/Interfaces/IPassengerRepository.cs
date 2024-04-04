@@ -42,6 +42,6 @@ namespace Core.Interfaces
         /// <param name="isOnwardFlight">Specifies if the flight connection is onward or inbound.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains a list of passengers
         /// with flight connections.</returns>
-        Task<IReadOnlyList<Passenger>> GetPassengersWithFlightConnectionsAsync(int flightId, bool isOnwardFlight);
+        Task<IReadOnlyList<Passenger>> GetPassengersWithFlightConnectionsAsync(Guid flightId, bool isOnwardFlight);
     }
 }

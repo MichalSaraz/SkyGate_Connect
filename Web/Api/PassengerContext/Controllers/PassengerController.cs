@@ -28,6 +28,7 @@ namespace Web.Api.PassengerContext.Controllers
         private readonly ITimeProvider _timeProvider;
         private readonly IFlightRepository _flightRepository;
         private readonly IOtherFlightRepository _otherFlightRepository;
+        private readonly IBaseFlightRepository _baseFlightRepository;
         private readonly IPassengerRepository _passengerRepository;
         private readonly IBaggageRepository _baggageRepository;
         private readonly IDestinationRepository _destinationRepository;
@@ -43,6 +44,7 @@ namespace Web.Api.PassengerContext.Controllers
             ITimeProvider timeProvider,
             IFlightRepository flightRepository,
             IOtherFlightRepository otherFlightRepository,
+            IBaseFlightRepository baseFlightRepository,
             IPassengerRepository passengerRepository,
             IBaggageRepository baggageRepository,
             IDestinationRepository destinationRepository,
@@ -57,6 +59,7 @@ namespace Web.Api.PassengerContext.Controllers
             _timeProvider = timeProvider;
             _flightRepository = flightRepository;
             _otherFlightRepository = otherFlightRepository;
+            _baseFlightRepository = baseFlightRepository;
             _passengerRepository = passengerRepository;
             _baggageRepository = baggageRepository;
             _destinationRepository = destinationRepository;
@@ -142,8 +145,8 @@ namespace Web.Api.PassengerContext.Controllers
         /// <returns>An ActionResult object containing the details of the passenger for the specified flight.
         /// If the passenger is not found, returns a NotFound status with an error message. If the passenger details
         /// are retrieved successfully, returns an Ok status with the passenger details.</returns>
-        [HttpGet("{id:guid}/flight/{flightId:int}/details")]
-        public async Task<ActionResult<Passenger>> GetPassengerDetails(Guid id, int flightId)
+        [HttpGet("{id:guid}/flight/{flightId:guid}/details")]
+        public async Task<ActionResult<Passenger>> GetPassengerDetails(Guid id, Guid flightId)
         {
             var passenger = await _passengerRepository.GetPassengerByIdAsync(id, false, true);
             var selectedFlight = await _flightRepository.GetFlightByIdAsync(flightId, false);
@@ -169,8 +172,8 @@ namespace Web.Api.PassengerContext.Controllers
         /// <param name="flightId">The ID of the flight.</param>
         /// <param name="addBaggageModels">The list of baggage models to add.</param>
         /// <returns>An ActionResult with the added baggage.</returns>
-        [HttpPost("{id:guid}/flight/{flightId:int}/add-baggage")]
-        public async Task<ActionResult<Baggage>> AddBaggage(Guid id, int flightId,
+        [HttpPost("{id:guid}/flight/{flightId:guid}/add-baggage")]
+        public async Task<ActionResult<Baggage>> AddBaggage(Guid id, Guid flightId,
             [FromBody] List<AddBaggageModel> addBaggageModels)
         {
             var passenger = await _passengerRepository.GetPassengerByIdAsync(id);
@@ -352,8 +355,8 @@ namespace Web.Api.PassengerContext.Controllers
         /// <param name="isInbound">Specifies if the connecting flight is inbound.</param>
         /// <param name="addConnectingFlightModels">The list of connecting flights to add.</param>
         /// <returns>An ActionResult of type BaseFlight.</returns>
-        [HttpPost("{id:guid}/flight/{flightId:int}/add-connecting-flight")]
-        public async Task<ActionResult<BaseFlight>> AddConnectingFlight(Guid id, int flightId, bool isInbound,
+        [HttpPost("{id:guid}/flight/{flightId:guid}/add-connecting-flight")]
+        public async Task<ActionResult<BaseFlight>> AddConnectingFlight(Guid id, Guid flightId, bool isInbound,
             [FromBody] List<AddConnectingFlightModel> addConnectingFlightModels)
         {
             var passenger = await _passengerRepository.GetPassengerByIdAsync(id);
@@ -458,9 +461,9 @@ namespace Web.Api.PassengerContext.Controllers
         /// <param name="flightId">The id of the current flight.</param>
         /// <param name="flightIds">The list of flight ids to delete.</param>
         /// <returns>Returns an ActionResult of type BaseFlight.</returns>
-        [HttpDelete("{id:guid}/flight/{flightId:int}/delete-connecting-flight")]
-        public async Task<ActionResult<BaseFlight>> DeleteConnectingFlight(Guid id, int flightId,
-            [FromBody] List<int> flightIds)
+        [HttpDelete("{id:guid}/flight/{flightId:guid}/delete-connecting-flight")]
+        public async Task<ActionResult<BaseFlight>> DeleteConnectingFlight(Guid id, Guid flightId,
+            [FromBody] List<Guid> flightIds)
         {
             var passenger = await _passengerRepository.GetPassengerByIdAsync(id);
 
@@ -469,27 +472,25 @@ namespace Web.Api.PassengerContext.Controllers
                 return NotFound(new ApiResponse(404, $"Passenger with Id {id} was not found."));
             }
 
-            var flightsToDelete = new List<BaseFlight>();
+            var flightsToDelete = await _baseFlightRepository.GetFlightsByCriteriaAsync(f =>
+                flightIds.Contains(f.Id) && f.Id != flightId, true);
 
-            foreach (var iteratedFlightId in flightIds)
+            if (flightsToDelete.Count == 0)
             {
-                var flight = passenger.Flights.FirstOrDefault(pf => pf.Flight.Id == iteratedFlightId)?.Flight;
-
-                if (flight != null)
-                {
-                    flightsToDelete.Add(flight);
-                }
-                else if (iteratedFlightId == flightId)
-                {
-                    return BadRequest(new ApiResponse(400, "Current flight cannot be removed."));
-                }
-                else
-                {
-                    return BadRequest(new ApiResponse(400, "Invalid flight IDs."));
-                }
+                return BadRequest(new ApiResponse(400, "Invalid flight IDs."));
             }
 
-            await _flightRepository.DeleteAsync(flightsToDelete.ToArray());
+            // Odstranění letů z kolekce a jejich smazání
+            passenger.Flights.RemoveAll(pf => flightsToDelete.Contains(pf.Flight));
+            await _passengerRepository.UpdateAsync(passenger);
+
+            foreach (var flight in flightsToDelete)
+            {
+                if (flight.ListOfBookedPassengers.Count == 0)
+                {
+                    await _baseFlightRepository.DeleteAsync(flight);
+                }
+            }
 
             return NoContent();
         }
@@ -506,7 +507,7 @@ namespace Web.Api.PassengerContext.Controllers
         {
             foreach (var request in requestData)
             {
-                var flightIds = request["flightIds"]?.ToObject<List<int>>();
+                var flightIds = request["flightIds"]?.ToObject<List<Guid>>();
                 var specialServiceRequests = new List<SpecialServiceRequest>();
 
                 var ssrData = request["specialServiceRequests"];
@@ -559,7 +560,7 @@ namespace Web.Api.PassengerContext.Controllers
         public async Task<ActionResult<Passenger>> DeleteSpecialServiceRequest(Guid id,
             [FromBody] Dictionary<string, List<string>> ssrCodesToDelete)
         {
-            var passenger = await _passengerRepository.GetPassengerByIdAsync(id);
+            var passenger = await _passengerRepository.GetPassengerByIdAsync(id, true, true);
 
             if (passenger == null)
             {
@@ -571,7 +572,7 @@ namespace Web.Api.PassengerContext.Controllers
             foreach (var flight in ssrCodesToDelete.Keys)
             {
                 var ssrCodes = ssrCodesToDelete[flight];
-                var flightId = int.Parse(flight);
+                var flightId = Guid.Parse(flight);
 
                 var ssrToDelete = passenger.SpecialServiceRequests
                     .Where(ssr => ssr.FlightId == flightId && ssrCodes.Contains(ssr.SSRCodeId))
@@ -737,7 +738,7 @@ namespace Web.Api.PassengerContext.Controllers
         public async Task<ActionResult<Comment>> AddComment(Guid id, CommentTypeEnum commentType,
             [FromBody] JObject data, string predefineCommentId = null)
         {
-            var flightIds = data["flightIds"]?.ToObject<List<int>>();
+            var flightIds = data["flightIds"]?.ToObject<List<Guid>>();
             var text = data["text"]?.ToString();
 
             Comment comment;
@@ -758,7 +759,7 @@ namespace Web.Api.PassengerContext.Controllers
                 comment = new Comment(id, predefineCommentId, predefinedComment.Text);
             }
             else
-                comment = new Comment(id, commentType, text, commentType == CommentTypeEnum.Gate ? false : true);
+                comment = new Comment(id, commentType, text);
 
             await _commentRepository.AddAsync(comment);
 
@@ -779,7 +780,7 @@ namespace Web.Api.PassengerContext.Controllers
         [HttpDelete("{id:guid}/delete-comment")]
         public async Task<ActionResult<Comment>> DeleteComment(Guid id, [FromBody] Dictionary<string, List<Guid>> commentIds)
         {
-            var commentsToDelete = new List<Comment>();
+            var commentsToDelete = new HashSet<Comment>();
 
             foreach (var flight in commentIds.Keys)
             {
@@ -791,11 +792,14 @@ namespace Web.Api.PassengerContext.Controllers
 
                     if (comment == null)
                         return BadRequest(new ApiResponse(400, $"Comment with ID {commentId} does not exist."));
-                    
-                    comment.LinkedToFlights.Remove(comment.LinkedToFlights.FirstOrDefault(f => f.FlightId == int.Parse(flight)));
-                    
-                    if (comment.LinkedToFlights.Count == 0)
-                        commentsToDelete.Add(comment);                    
+
+                    if (comment.LinkedToFlights.All(f => f.FlightId != Guid.Parse(flight)) && comment.LinkedToFlights.Count > 0)
+                        return BadRequest(new ApiResponse(400, $"Comment with ID {commentId} is not linked to flight with ID {flight}"));
+
+                    comment.LinkedToFlights.RemoveAll(f => f.FlightId == Guid.Parse(flight));
+
+                    if (!commentsToDelete.Any(c => c.Id == commentId) && comment.LinkedToFlights.Count == 0)
+                        commentsToDelete.Add(comment);
                 }
             }
 
@@ -807,25 +811,23 @@ namespace Web.Api.PassengerContext.Controllers
                     await _commentRepository.UpdateAsync(comment);
             }
 
-            if (commentsToDelete.Any())
-                return NoContent();
-
-            return Ok();
+            return commentsToDelete.Any()
+                ? NoContent()
+                : Ok();
         }
 
-        [HttpPatch("{id:guid}/mark-comment-as-read")]
-        public async Task<ActionResult<Comment>> MarkCommentAsRead(Guid id, [FromBody] Guid commentId)
+        [HttpDelete("{id:guid}/mark-comment-as-read")]
+        public async Task<ActionResult<Comment>> MarkGateCommentAsRead(Guid id, [FromBody] Guid commentId)
         {
-            var comment = await _commentRepository.GetCommentByIdAsync(commentId);
+            var comment = await _commentRepository.GetCommentByCriteriaAsync(c =>
+                c.Id == commentId && c.CommentType == CommentTypeEnum.Gate);
 
             if (comment == null)
-                return BadRequest(new ApiResponse(400, $"Comment with ID {commentId} does not exist."));
+                return BadRequest(new ApiResponse(400, $"Gate comment with ID {commentId} does not exist."));
 
-            comment.IsMarkedAsRead = true;
+            await _commentRepository.DeleteAsync(comment);
 
-            await _commentRepository.UpdateAsync(comment);
-
-            return Ok();
+            return NoContent();
         }
     }
 }

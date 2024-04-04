@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240401200537_Change_PK_Flights_step2")]
+    partial class Change_PK_Flights_step2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,6 +77,9 @@ namespace Infrastructure.Migrations
                     b.Property<string>("FlightType")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<Guid>("NewId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -386,6 +392,9 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsMarkedAsRead")
+                        .HasColumnType("boolean");
+
                     b.Property<Guid>("PassengerId")
                         .HasColumnType("uuid");
 
@@ -427,6 +436,9 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("FrequentFlyerNumber")
+                        .HasColumnType("text");
+
                     b.Property<long>("MilesAvailable")
                         .HasColumnType("bigint");
 
@@ -440,6 +452,9 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AirlineId");
+
+                    b.HasIndex("CardNumber")
+                        .IsUnique();
 
                     b.HasIndex("PassengerId")
                         .IsUnique();
@@ -1008,7 +1023,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.PassengerContext.JoinClasses.SpecialServiceRequest", b =>
                 {
                     b.HasOne("Core.FlightContext.Flight", "Flight")
-                        .WithMany("SSRList")
+                        .WithMany()
                         .HasForeignKey("FlightId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1153,8 +1168,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.FlightContext.Flight", b =>
                 {
                     b.Navigation("Comments");
-
-                    b.Navigation("SSRList");
 
                     b.Navigation("Seats");
                 });

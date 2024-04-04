@@ -7,5 +7,6 @@ namespace Core.Interfaces
     {
         Task<Comment> GetCommentByIdAsync(Guid id);
         Task<Comment> GetCommentByCriteriaAsync(Expression<Func<Comment, bool>> criteria);
+        Task<IReadOnlyList<Comment>> GetCommentsByCriteriaAsync(Expression<Func<Comment, bool>> criteria);
     }
 }

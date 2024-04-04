@@ -20,9 +20,8 @@ namespace Infrastructure.Data.Config
                 .WithMany()
                 .HasForeignKey(ff => ff.AirlineId)
                 .OnDelete(DeleteBehavior.Cascade);
-            
-            builder.HasIndex(ff => ff.CardNumber)
-                .IsUnique();
+
+            builder.Ignore(ff => ff.FrequentFlyerNumber);
             
             builder.Property(ff => ff.TierLever)
                 .HasEnumConversion();

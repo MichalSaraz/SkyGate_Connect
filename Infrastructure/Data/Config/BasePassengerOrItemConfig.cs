@@ -30,17 +30,13 @@ namespace Infrastructure.Data.Config
                 .WithOne(td => td.Passenger)
                 .HasForeignKey(td => td.PassengerId);
 
-            builder.HasMany(p => p.Comments)
+            builder.HasMany(bpoi => bpoi.Comments)
                 .WithOne(c => c.Passenger)
                 .HasForeignKey(c => c.PassengerId);
 
-            builder.HasMany(p => p.AssignedSeats)
+            builder.HasMany(bpoi => bpoi.AssignedSeats)
                 .WithOne(s => s.PassengerOrItem)
                 .HasForeignKey(s => s.PassengerOrItemId);
-
-            builder.HasMany(bpoi => bpoi.Flights)
-                .WithOne(pf => pf.PassengerOrItem)
-                .HasForeignKey(pf => pf.PassengerOrItemId);
         }
     }
 }

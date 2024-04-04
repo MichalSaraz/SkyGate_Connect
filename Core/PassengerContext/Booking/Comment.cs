@@ -18,32 +18,29 @@ namespace Core.PassengerContext.Booking
         [Required]
         [MaxLength(150)]
         public string Text { get; private set; }
-        
-        public bool IsMarkedAsRead { get; set; }
 
         public CommentTypeEnum CommentType { get; private set; }
 
         public List<FlightComment> LinkedToFlights { get; private set; } = new();
 
         // Constructor for adding custom comment
-        public Comment(Guid passengerId, CommentTypeEnum commentType, string text, bool isMarkedAsRead)
+        public Comment(Guid passengerId, CommentTypeEnum commentType, string text)
         {
             Id = Guid.NewGuid();
             PassengerId = passengerId;
             CommentType = commentType;
             Text = text;
-            IsMarkedAsRead = isMarkedAsRead;
         }
 
         // Constructor for adding predefined comment
-        public Comment(Guid passengerId, string predefinedCommentId, string text)
+        public Comment(Guid passengerId, string predefinedCommentId, string text, 
+            CommentTypeEnum commentType = CommentTypeEnum.Gate)
         {
             Id = Guid.NewGuid();
             PassengerId = passengerId;
             PredefinedCommentId = predefinedCommentId;
             Text = text;
-            IsMarkedAsRead = false;
-            CommentType = CommentTypeEnum.Gate;
+            CommentType = commentType;
         }
     }
 }

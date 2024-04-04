@@ -2,6 +2,7 @@
 using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Infrastructure.Repositories
 {
@@ -11,7 +12,24 @@ namespace Infrastructure.Repositories
         {
         }
 
-        public virtual async Task<BaseFlight> GetFlightByIdAsync(int id, bool tracked = true)
+        public async Task<IReadOnlyList<BaseFlight>> GetFlightsByCriteriaAsync(
+            Expression<Func<BaseFlight, bool>> criteria, bool tracked = false)
+        {
+            var flightsQuery = _context.Flights.AsQueryable()
+                .Include(_ => _.ListOfBookedPassengers)
+                .Where(criteria);
+
+            if (!tracked)
+            {
+                flightsQuery = flightsQuery.AsNoTracking();
+            }
+
+            var flights = await flightsQuery.ToListAsync();
+
+            return flights;
+        }
+
+        public virtual async Task<BaseFlight> GetFlightByIdAsync(Guid id, bool tracked = true)
         {
             var flightQuery = _context.Flights.AsQueryable()
                 .Include(_ => _.Airline)

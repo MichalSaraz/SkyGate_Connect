@@ -11,7 +11,7 @@ namespace Core.SeatingContext
         public Guid? PassengerOrItemId { get; private set; }
 
         public Flight Flight { get; private set; }
-        public int FlightId { get; private set; }
+        public Guid FlightId { get; private set; }
         
 
         public string SeatNumber
@@ -39,7 +39,7 @@ namespace Core.SeatingContext
         public SeatStatusEnum SeatStatus { get; set; } = SeatStatusEnum.Empty;
 
         public Seat(
-            int flightId,
+            Guid flightId,
             string seatNumber,
             SeatTypeEnum seatType,
             FlightClassEnum flightClass 

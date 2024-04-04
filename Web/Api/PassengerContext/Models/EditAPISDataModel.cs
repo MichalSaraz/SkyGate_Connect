@@ -2,7 +2,7 @@
 
 namespace Web.Api.PassengerContext.Models
 {
-    public abstract class EditAPISDataModel : APISDataModel
+    public class EditAPISDataModel : APISDataModel
     {
         [Required]
         public Guid APISDataId { get; set; }

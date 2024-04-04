@@ -152,8 +152,8 @@ namespace TestProject.TestDataInitializationClasses
         }
 
         private List<Flight> _SelectFlightsWithRules(IReadOnlyCollection<Flight> flights, int numberOfFlights,
-            int linkedPassengers, Dictionary<int, int> passengerCountPerFlight,
-            IReadOnlyDictionary<int, int> totalBookedPassengers)
+            int linkedPassengers, Dictionary<Guid, int> passengerCountPerFlight,
+            IReadOnlyDictionary<Guid, int> totalBookedPassengers)
         {
             var scheduledFlights = dbContext.ScheduledFlights.ToList();
             var selectedFlights = new List<Flight>();
@@ -186,8 +186,8 @@ namespace TestProject.TestDataInitializationClasses
         }
 
         private List<Flight> _GetValidFlights(IEnumerable<Flight> flights, DateTime departureDateTime,
-            int linkedPassengers, string? arrivalAirport, Dictionary<int, int> passengerCountPerFlight,
-            IReadOnlyDictionary<int, int> totalBookedPassengers)
+            int linkedPassengers, string? arrivalAirport, Dictionary<Guid, int> passengerCountPerFlight,
+            IReadOnlyDictionary<Guid, int> totalBookedPassengers)
         {
             if (arrivalAirport == "")
             {
@@ -234,9 +234,9 @@ namespace TestProject.TestDataInitializationClasses
             };
         }
 
-        private Dictionary<int, int> _GeneratePassengersForFlights(List<Flight> flights)
+        private Dictionary<Guid, int> _GeneratePassengersForFlights(List<Flight> flights)
         {
-            var passengersPerFlight = new Dictionary<int, int>();
+            var passengersPerFlight = new Dictionary<Guid, int>();
 
             foreach (var flight in flights)
             {
@@ -247,7 +247,7 @@ namespace TestProject.TestDataInitializationClasses
             return passengersPerFlight;
         }
 
-        private static Dictionary<int, int> _GenerateKeysForFlights(IEnumerable<Flight> flights)
+        private static Dictionary<Guid, int> _GenerateKeysForFlights(IEnumerable<Flight> flights)
         {
             return flights.ToDictionary(flight => flight.Id, _ => 0);
         }

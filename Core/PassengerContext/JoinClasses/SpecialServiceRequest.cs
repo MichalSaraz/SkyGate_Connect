@@ -13,12 +13,12 @@ namespace Core.PassengerContext.JoinClasses
         public Guid PassengerId { get; private set; }
 
         public Flight Flight { get; private set; }
-        public int FlightId { get; private set; }
+        public Guid FlightId { get; private set; }
 
         [MaxLength(150)]
         public string FreeText { get; private set; }
 
-        public SpecialServiceRequest(string sSRCodeId, int flightId, Guid passengerId, string freeText)
+        public SpecialServiceRequest(string sSRCodeId, Guid flightId, Guid passengerId, string freeText)
         {
             SSRCodeId = sSRCodeId;
             FlightId = flightId;

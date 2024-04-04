@@ -7,7 +7,7 @@ namespace Core.FlightContext
 {
     public abstract class BaseFlight
     {
-        public int Id { get; protected set; }        
+        public Guid Id { get; protected set; }
 
         public Destination DestinationFrom { get; protected set; }
         public string DestinationFromId { get; protected set; }
@@ -34,6 +34,7 @@ namespace Core.FlightContext
             string destinationToId, 
             string airlineId)
         {
+            Id = Guid.NewGuid();
             DepartureDateTime = departureDateTime;
             ArrivalDateTime = arrivalDateTime;
             DestinationFromId = destinationFromId;

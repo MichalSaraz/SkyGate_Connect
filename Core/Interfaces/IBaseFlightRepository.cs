@@ -5,6 +5,8 @@ namespace Core.Interfaces
 {
     public interface IBaseFlightRepository : IGenericRepository<BaseFlight>
     {
-        Task<BaseFlight> GetFlightByIdAsync(int id, bool tracked = true);
+        Task<IReadOnlyList<BaseFlight>> GetFlightsByCriteriaAsync(
+            Expression<Func<BaseFlight, bool>> criteria, bool tracked = false);
+        Task<BaseFlight> GetFlightByIdAsync(Guid id, bool tracked = true);
     }
 }

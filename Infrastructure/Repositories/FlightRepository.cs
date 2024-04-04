@@ -51,7 +51,7 @@ namespace Infrastructure.Repositories
             return flights;
         }
 
-        public override async Task<BaseFlight> GetFlightByIdAsync(int id, bool tracked = true)
+        public override async Task<BaseFlight> GetFlightByIdAsync(Guid id, bool tracked = true)
         {
             var CACHE_KEY = $"Flight_{id}";
 

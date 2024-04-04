@@ -97,8 +97,8 @@ namespace Web.Api.FlightContext.Controllers
         /// </summary>
         /// <param name="id">The ID of the flight.</param>
         /// <returns>The flight details.</returns>
-        [HttpGet("{id:int}/details")]
-        public async Task<ActionResult<Flight>> GetFlightDetails(int id)
+        [HttpGet("{id:guid}/details")]
+        public async Task<ActionResult<Flight>> GetFlightDetails(Guid id)
         {
             var flight = await _flightRepository.GetFlightByIdAsync(id, false);
 
@@ -117,8 +117,8 @@ namespace Web.Api.FlightContext.Controllers
         /// </summary>
         /// <param name="id">The ID of the flight.</param>
         /// <returns>The list of onward flights as a <see cref="List{T}"/> of <see cref="BaseFlight"/>.</returns>
-        [HttpGet("{id:int}/onward-flights")]
-        public async Task<ActionResult<List<BaseFlight>>> GetOnwardFlights(int id)
+        [HttpGet("{id:guid}/onward-flights")]
+        public async Task<ActionResult<List<BaseFlight>>> GetOnwardFlights(Guid id)
         {
             return await _GetConnectedFlights(id, bf =>
                 bf.IteratedFlight.DepartureDateTime > bf.CurrentFlight.DepartureDateTime);
@@ -129,15 +129,15 @@ namespace Web.Api.FlightContext.Controllers
         /// </summary>
         /// <param name="id">The ID of the flight to retrieve inbound flights for.</param>
         /// <returns>A list of <see cref="BaseFlight"/> objects representing the inbound flights.</returns>
-        [HttpGet("{id:int}/inbound-flights")]
-        public async Task<ActionResult<List<BaseFlight>>> GetInboundFlights(int id)
+        [HttpGet("{id:guid}/inbound-flights")]
+        public async Task<ActionResult<List<BaseFlight>>> GetInboundFlights(Guid id)
         {
             return await _GetConnectedFlights(id, bf =>
                 bf.IteratedFlight.DepartureDateTime < bf.CurrentFlight.DepartureDateTime);
         }
 
-        private async Task<ActionResult<List<BaseFlight>>> _GetConnectedFlights(int id,
-            Func<(int FlightId, BaseFlight IteratedFlight, BaseFlight CurrentFlight), bool> condition)
+        private async Task<ActionResult<List<BaseFlight>>> _GetConnectedFlights(Guid id,
+            Func<(Guid FlightId, BaseFlight IteratedFlight, BaseFlight CurrentFlight), bool> condition)
         {
             var currentFlight = await _flightRepository.GetFlightByIdAsync(id, false);
 
@@ -196,8 +196,8 @@ namespace Web.Api.FlightContext.Controllers
         /// </summary>
         /// <param name="id">The ID of the flight.</param>
         /// <returns>The list of passengers with onward flight.</returns>
-        [HttpGet("{id:int}/passengers-with-onward-flight")]
-        public async Task<ActionResult<List<Passenger>>> GetPassengersWithOnwardFlight(int id)
+        [HttpGet("{id:guid}/passengers-with-onward-flight")]
+        public async Task<ActionResult<List<Passenger>>> GetPassengersWithOnwardFlight(Guid id)
         {
             return await _GetPassengersWithFlightConnection(id, true);
         }
@@ -207,13 +207,13 @@ namespace Web.Api.FlightContext.Controllers
         /// </summary>
         /// <param name="id">The ID of the flight.</param>
         /// <returns>A list of passengers with an inbound flight.</returns>
-        [HttpGet("{id:int}/passengers-with-inbound-flight")]
-        public async Task<ActionResult<List<Passenger>>> GetPassengersWithInboundFlight(int id)
+        [HttpGet("{id:guid}/passengers-with-inbound-flight")]
+        public async Task<ActionResult<List<Passenger>>> GetPassengersWithInboundFlight(Guid id)
         {
             return await _GetPassengersWithFlightConnection(id, false);
         }
 
-        private async Task<ActionResult<List<Passenger>>> _GetPassengersWithFlightConnection(int id, 
+        private async Task<ActionResult<List<Passenger>>> _GetPassengersWithFlightConnection(Guid id, 
             bool isOnwardFlight)
         {
             var passengers = await _passengerRepository.GetPassengersWithFlightConnectionsAsync(id, isOnwardFlight);

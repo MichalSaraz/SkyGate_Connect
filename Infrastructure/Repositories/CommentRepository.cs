@@ -27,5 +27,13 @@ namespace Infrastructure.Repositories
                 .Where(criteria)
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<IReadOnlyList<Comment>> GetCommentsByCriteriaAsync(Expression<Func<Comment, bool>> criteria)
+        {
+            return await _context.Comments.AsQueryable()
+                .Include(_ => _.LinkedToFlights)
+                .Where(criteria)
+                .ToListAsync();
+        }
     }
 }

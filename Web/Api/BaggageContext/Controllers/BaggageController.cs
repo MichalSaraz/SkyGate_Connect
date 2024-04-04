@@ -48,8 +48,8 @@ namespace Web.Api.BaggageContext.Controllers
         /// <param name="flightId">The ID of the flight.</param>
         /// <returns>An asynchronous task that represents the operation. The task result contains an HTTP action result
         /// with the list of bags for the specified flight.</returns>
-        [HttpGet("{flightId:int}/all-bags")]
-        public async Task<ActionResult<List<Baggage>>> GetAllBags(int flightId)
+        [HttpGet("{flightId:guid}/all-bags")]
+        public async Task<ActionResult<List<Baggage>>> GetAllBags(Guid flightId)
         {
             var bagList = await _baggageRepository.GetAllBaggageByCriteriaAsync(b =>
                 b.Flights.Any(fb => fb.FlightId == flightId));
@@ -66,8 +66,8 @@ namespace Web.Api.BaggageContext.Controllers
         /// <param name="flightId">The ID of the flight.</param>
         /// <param name="specialBagType">The special bag type to filter by.</param>
         /// <returns>A list of baggage of the specified special bag type for the given flight ID.</returns>
-        [HttpGet("{flightId:int}/special-bag-type/{specialBagType}")]
-        public async Task<ActionResult<List<Baggage>>> GetAllBagsBySpecialBagType(int flightId,
+        [HttpGet("{flightId:guid}/special-bag-type/{specialBagType}")]
+        public async Task<ActionResult<List<Baggage>>> GetAllBagsBySpecialBagType(Guid flightId,
             SpecialBagEnum specialBagType)
         {
             Expression<Func<Baggage, bool>> criteria = c =>
@@ -87,8 +87,8 @@ namespace Web.Api.BaggageContext.Controllers
         /// <param name="flightId">The ID of the flight.</param>
         /// <param name="baggageType">The type of baggage to filter the bags by.</param>
         /// <returns>A list of bags filtered by the specified baggage type for the given flight.</returns>
-        [HttpGet("{flightId:int}/baggage-type/{baggageType}")]
-        public async Task<ActionResult<List<Baggage>>> GetAllBagsByBaggageType(int flightId,
+        [HttpGet("{flightId:guid}/baggage-type/{baggageType}")]
+        public async Task<ActionResult<List<Baggage>>> GetAllBagsByBaggageType(Guid flightId,
             BaggageTypeEnum baggageType)
         {
             Expression<Func<Baggage, bool>> criteria = c =>
@@ -109,8 +109,8 @@ namespace Web.Api.BaggageContext.Controllers
         /// <returns>A <see cref="Task"/> representing the asynchronous operation. The task result contains
         /// an <see cref="ActionResult"/> of type <see cref="List{Baggage}"/> that represents the inactive bags
         /// for the specified flight.</returns>
-        [HttpGet("{flightId:int}/inactive-bags")]
-        public async Task<ActionResult<List<Baggage>>> GetAllInactiveBags(int flightId)
+        [HttpGet("{flightId:guid}/inactive-bags")]
+        public async Task<ActionResult<List<Baggage>>> GetAllInactiveBags(Guid flightId)
         {
             Expression<Func<Baggage, bool>> criteria = c =>
                 c.Flights.Any(fb => fb.FlightId == flightId) && string.IsNullOrEmpty(c.BaggageTag.TagNumber);
@@ -128,8 +128,8 @@ namespace Web.Api.BaggageContext.Controllers
         /// </summary>
         /// <param name="flightId">The ID of the flight.</param>
         /// <returns>A list of bags with onward connections.</returns>
-        [HttpGet("{flightId:int}/onward-connections")]
-        public async Task<ActionResult<List<Baggage>>> GetAllBagsWithOnwardConnection(int flightId)
+        [HttpGet("{flightId:guid}/onward-connections")]
+        public async Task<ActionResult<List<Baggage>>> GetAllBagsWithOnwardConnection(Guid flightId)
         {
             Expression<Func<Baggage, bool>> criteria = c =>
                 c.Flights.Any(fb => fb.FlightId == flightId) && 

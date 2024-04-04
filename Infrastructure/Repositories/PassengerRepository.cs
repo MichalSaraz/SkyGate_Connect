@@ -82,9 +82,9 @@ namespace Infrastructure.Repositories
 
             var passengerQuery = _context.Set<Passenger>().AsQueryable()
                 .Include(_ => _.BookingDetails)
-                .ThenInclude(_ => _.PNR)
+                    .ThenInclude(_ => _.PNR)
                 .Include(_ => _.Flights)
-                .ThenInclude(_ => _.Flight)
+                    .ThenInclude(_ => _.Flight)
                 .Where(_ => _.Id == id);
 
             if (displayDetails)
@@ -115,7 +115,7 @@ namespace Infrastructure.Repositories
             return passenger;
         }
 
-        public async Task<IReadOnlyList<Passenger>> GetPassengersWithFlightConnectionsAsync(int flightId,
+        public async Task<IReadOnlyList<Passenger>> GetPassengersWithFlightConnectionsAsync(Guid flightId,
             bool isOnwardFlight)
         {
             var passengerQuery = _context.Set<Passenger>().AsQueryable()

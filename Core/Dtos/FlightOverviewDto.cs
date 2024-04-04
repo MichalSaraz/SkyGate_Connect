@@ -2,7 +2,7 @@
 {
     public class FlightOverviewDto
     {
-        public int Id { get; init; }
+        public Guid Id { get; init; }
         public string ScheduledFlight { get; init; }
         public DateTime DepartureDateTime { get; init; }
         public DateTime ArrivalDateTime { get; init; }

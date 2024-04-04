@@ -28,7 +28,7 @@ namespace Core.PassengerContext.Booking
         public string AirlineId { get; private set; }
                 
         [Required]
-        [RegularExpression("^[A-Z0-9]{8,15}$")]
+        [RegularExpression("^[A-Z0-9]{6,15}$")]
         public string CardNumber { get; private set; }
 
         [Required]

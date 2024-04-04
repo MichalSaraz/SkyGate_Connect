@@ -15,11 +15,7 @@ namespace Infrastructure.Data.Config
 
             builder.HasOne(p => p.Infant)
                 .WithOne(i => i.AssociatedAdultPassenger)
-                .HasForeignKey<Infant>(i => i.AssociatedAdultPassengerId);            
-
-            builder.HasMany(p => p.SpecialServiceRequests)
-                .WithOne(ssr => ssr.Passenger)
-                .HasForeignKey(ssr => ssr.PassengerId);           
+                .HasForeignKey<Infant>(i => i.AssociatedAdultPassengerId);           
 
             builder.HasMany(p => p.PassengerCheckedBags)
                 .WithOne(b => b.Passenger)

@@ -19,7 +19,7 @@ namespace Infrastructure.Data.Config.JoinClassesConfig
                 .HasForeignKey(ssr => ssr.PassengerId);
 
             builder.HasOne(ssr => ssr.Flight)
-                .WithMany()
+                .WithMany(ssr => ssr.SSRList)
                 .HasForeignKey(ssr => ssr.FlightId);
         }
     }

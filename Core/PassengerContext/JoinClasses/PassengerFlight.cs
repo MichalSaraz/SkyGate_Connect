@@ -10,7 +10,7 @@ namespace Core.PassengerContext.JoinClasses
         public Guid PassengerOrItemId { get; private set; }
 
         public BaseFlight Flight { get; private set; }
-        public int FlightId { get; private set; }
+        public Guid FlightId { get; private set; }
 
         // is null when AcceptanceStatus is NotAccepted
         public int? BoardingSequenceNumber { get; set; }
@@ -22,7 +22,7 @@ namespace Core.PassengerContext.JoinClasses
         
         public PassengerFlight(
             Guid passengerOrItemId,
-            int flightId,
+            Guid flightId,
             FlightClassEnum flightClass)
 
         {

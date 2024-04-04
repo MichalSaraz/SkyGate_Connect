@@ -26,7 +26,7 @@ namespace Web.Helpers
                 .IncludeBase<BaseFlight, FlightOverviewDto>()
                 .ForMember(dest => dest.CodeShare, opt => opt.MapFrom(src => src is Flight
                     ? ((Flight)src).ScheduledFlight.Codeshare
-                    : null ))
+                    : null))
                 .ForMember(dest => dest.Airline, opt => opt.MapFrom(src => src.AirlineId))
                 .ForMember(dest => dest.TotalBookedPassengers, opt => opt
                     .MapFrom(src => src.ListOfBookedPassengers.Count));
@@ -35,14 +35,14 @@ namespace Web.Helpers
                 .IncludeBase<BaseFlight, FlightDetailsDto>();
 
             CreateMap<Passenger, PassengerOverviewDto>()
-                .ForMember(dest => dest.PNR, opt => opt.MapFrom(src => src.BookingDetails.PNR))
+                .ForMember(dest => dest.PNR, opt => opt.MapFrom(src => src.BookingDetails.PNRId))
                 .ForMember(dest => dest.NumberOfCheckedBags, opt => opt.MapFrom(src => src.PassengerCheckedBags.Count))
                 .ForMember(dest => dest.CurrentFlight, opt => opt.MapFrom((src, _, _, context) => src.Flights
                     .FirstOrDefault(pf => pf.Flight.DepartureDateTime == (DateTime)context.Items["DepartureDateTime"])))
                 .ForMember(dest => dest.SeatOnCurrentFlight, opt => opt.MapFrom(src => src.AssignedSeats))
                 .ForMember(dest => dest.SeatOnCurrentFlight, opt => opt
                     .MapFrom((src, _, _, context) => src.AssignedSeats
-                        .FirstOrDefault(s => s.FlightId == (int)context.Items["FlightId"])));
+                        .FirstOrDefault(s => s.FlightId == (Guid)context.Items["FlightId"])));
 
             CreateMap<Passenger, PassengerDetailsDto>()
                 .IncludeBase<Passenger, PassengerOverviewDto>()
@@ -55,7 +55,7 @@ namespace Web.Helpers
                     .OrderBy(pf => pf.Flight.DepartureDateTime)))
                 .ForMember(dest => dest.OtherFlightsSeats, opt => opt
                     .MapFrom((src, _, _, context) => src.AssignedSeats
-                        .Where(s => s.FlightId != (int)context.Items["FlightId"])));
+                        .Where(s => s.FlightId != (Guid)context.Items["FlightId"])));
 
             CreateMap<PassengerFlight, PassengerFlightDto>()
                 .ForMember(dest => dest.FlightNumber, opt => opt.MapFrom(src => src.Flight is Flight
@@ -87,7 +87,7 @@ namespace Web.Helpers
             CreateMap<Baggage, BaggageOverviewDto>()
                 .IncludeBase<Baggage, BaggageBaseDto>()
                 .ForMember(dest => dest.BaggageType, opt => opt.MapFrom((src, _, _, context) => src.Flights
-                    .FirstOrDefault(fb => fb.FlightId == (int)context.Items["FlightId"])?.BaggageType));
+                    .FirstOrDefault(fb => fb.FlightId == (Guid)context.Items["FlightId"])?.BaggageType));
 
             CreateMap<Baggage, BaggageDetailsDto>()
                 .IncludeBase<Baggage, BaggageBaseDto>();                
