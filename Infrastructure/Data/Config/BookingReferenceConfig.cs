@@ -1,7 +1,6 @@
 ﻿using Core.PassengerContext.Booking;
 using Infrastructure.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Data.Config

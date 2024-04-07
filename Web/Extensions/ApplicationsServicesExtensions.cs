@@ -1,5 +1,4 @@
-﻿using Core.FlightContext;
-using Core.Interfaces;
+﻿using Core.Interfaces;
 using Core.Time;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;

@@ -1,8 +1,6 @@
 ﻿using Core.Interfaces;
 using Core.PassengerContext;
 using Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace Infrastructure.Repositories
 {

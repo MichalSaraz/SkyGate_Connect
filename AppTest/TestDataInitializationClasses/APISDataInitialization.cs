@@ -21,13 +21,11 @@ namespace TestProject.TestDataInitializationClasses
         {
             var passengerList = dbContext.Passengers.Include(p => p.BookingDetails).ToList();
 
-            var passengerListSortedByPNRId = passengerList
-                .OrderBy(f => f.BookingDetails.PNRId)
+            var passengerListSortedByPNRId = passengerList.OrderBy(f => f.BookingDetails.PNRId)
                 .Take((int)Math.Ceiling(passengerList.Count * 0.5))
                 .ToList();
 
-            var passengerListWithAssignedSeats = passengerListSortedByPNRId
-                .Where(f => f.AssignedSeats.Any())
+            var passengerListWithAssignedSeats = passengerListSortedByPNRId.Where(f => f.AssignedSeats.Any())
                 .OrderBy(f => f.BookingDetails.PNRId)
                 .Take((int)Math.Ceiling(passengerList.Count * 0.9))
                 .ToList();
@@ -189,18 +187,10 @@ namespace TestProject.TestDataInitializationClasses
                 var expirationDate = dateOfIssue.AddYears(10);
 
                 var newAPISData = new APISData(
-                    passenger.Id, 
-                    selectedCountry?.Country2LetterCode,
-                    selectedCountry?.Country2LetterCode,
-                    passportNumberList[id],
-                    DocumentTypeEnum.NormalPassport,
-                    passenger.Gender,
-                    passenger.FirstName,
-                    passenger.LastName,
-                    dateOfBirth,
-                    dateOfIssue,
-                    expirationDate)                    
-                { 
+                    passenger.Id, selectedCountry?.Country2LetterCode, selectedCountry?.Country2LetterCode,
+                    passportNumberList[id], DocumentTypeEnum.NormalPassport, passenger.Gender, passenger.FirstName,
+                    passenger.LastName, dateOfBirth, dateOfIssue, expirationDate)
+                {
                     Id = Guid.NewGuid(),
                     Passenger = passenger,
                     Nationality = selectedCountry,

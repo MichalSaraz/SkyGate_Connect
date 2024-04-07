@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Web.Api.PassengerContext.Models
+namespace Web.Api.PassengerManagement.Models
 {
     public class EditAPISDataModel : APISDataModel
     {

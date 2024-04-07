@@ -17,7 +17,7 @@ namespace Infrastructure.Repositories
         }
 
         public async Task<IReadOnlyList<Passenger>> GetPassengersByCriteriaAsync(
-            Expression<Func<Passenger, bool>> criteria, bool tracked = false)
+            Expression<Func<Passenger, bool>> criteria, bool tracked = false, bool displayDetails = false)
         {
             var CACHE_KEY = $"Passengers_{criteria}";
 
@@ -32,9 +32,25 @@ namespace Infrastructure.Repositories
                     .ThenInclude(_ => _.PNR)
                 .Include(_ => _.TravelDocuments)
                 .Include(_ => _.Flights)
-                .ThenInclude(_ => _.Flight)
+                    .ThenInclude(_ => _.Flight)
                 .Include(_ => _.AssignedSeats)
                 .Where(criteria);
+
+            if (displayDetails)
+            {
+                passengersQuery = passengersQuery
+                    .Include(_ => _.PassengerCheckedBags)
+                        .ThenInclude(_ => _.BaggageTag)
+                    .Include(_ => _.PassengerCheckedBags)
+                        .ThenInclude(_ => _.SpecialBag)
+                    .Include(_ => _.PassengerCheckedBags)
+                        .ThenInclude(_ => _.FinalDestination)
+                    .Include(_ => _.PassengerCheckedBags)
+                        .ThenInclude(_ => _.Flights)
+                            .ThenInclude(_ => _.Flight)
+                    .Include(_ => _.AssignedSeats)
+                    .Include(_ => _.SpecialServiceRequests);
+            }
 
             if (!tracked)
             {
@@ -55,9 +71,9 @@ namespace Infrastructure.Repositories
             var passengerQuery = _context.Set<Passenger>().AsQueryable()
                 .Include(_ => _.SpecialServiceRequests)
                 .Include(_ => _.BookingDetails)
-                .ThenInclude(_ => _.PNR)
+                    .ThenInclude(_ => _.PNR)
                 .Include(_ => _.Flights)
-                .ThenInclude(_ => _.Flight)
+                    .ThenInclude(_ => _.Flight)
                 .Where(criteria);
 
             if (!tracked)
@@ -89,15 +105,16 @@ namespace Infrastructure.Repositories
 
             if (displayDetails)
             {
-                passengerQuery = passengerQuery.Include(_ => _.PassengerCheckedBags)
-                    .ThenInclude(_ => _.BaggageTag)
+                passengerQuery = passengerQuery
                     .Include(_ => _.PassengerCheckedBags)
-                    .ThenInclude(_ => _.SpecialBag)
+                        .ThenInclude(_ => _.BaggageTag)
                     .Include(_ => _.PassengerCheckedBags)
-                    .ThenInclude(_ => _.FinalDestination)
+                        .ThenInclude(_ => _.SpecialBag)
                     .Include(_ => _.PassengerCheckedBags)
-                    .ThenInclude(_ => _.Flights)
-                    .ThenInclude(_ => _.Flight)
+                        .ThenInclude(_ => _.FinalDestination)
+                    .Include(_ => _.PassengerCheckedBags)
+                        .ThenInclude(_ => _.Flights)
+                            .ThenInclude(_ => _.Flight)
                     .Include(_ => _.AssignedSeats)
                     .Include(_ => _.SpecialServiceRequests);
             }
@@ -118,10 +135,9 @@ namespace Infrastructure.Repositories
         public async Task<IReadOnlyList<Passenger>> GetPassengersWithFlightConnectionsAsync(Guid flightId,
             bool isOnwardFlight)
         {
-            var passengerQuery = _context.Set<Passenger>().AsQueryable()
-                .AsNoTracking()
+            var passengerQuery = _context.Set<Passenger>().AsQueryable().AsNoTracking()
                 .Include(_ => _.Flights)
-                .ThenInclude(_ => _.Flight)
+                    .ThenInclude(_ => _.Flight)
                 .Include(_ => _.PassengerCheckedBags)
                 .Include(_ => _.AssignedSeats)
                 .Where(_ => _.Flights.Any(_ => _.FlightId == flightId));

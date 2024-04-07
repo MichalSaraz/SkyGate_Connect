@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using Core.FlightContext.JoinClasses;
 using Core.PassengerContext.Booking.Enums;
 
@@ -12,8 +11,8 @@ namespace Core.PassengerContext.Booking
         public BasePassengerOrItem Passenger { get; private set; }
         public Guid PassengerId { get; private set; }        
 
-        public PredefinedComment? PredefinedComment { get; private set; }
-        public string? PredefinedCommentId { get; private set; } 
+        public PredefinedComment PredefinedComment { get; private set; }
+        public string PredefinedCommentId { get; private set; } 
         
         [Required]
         [MaxLength(150)]

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Core.SeatingContext.Enums;
 
-namespace Web.Api.PassengerContext.Models
+namespace Web.Api.FlightManagement.Models
 {
     public class AddConnectingFlightModel
     {

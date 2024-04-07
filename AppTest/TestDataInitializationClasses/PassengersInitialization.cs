@@ -46,22 +46,17 @@ namespace TestProject.TestDataInitializationClasses
 
                     if (passengerBookingDetails.FirstName == "CBBG")
                     {
-                        passengerOrItem = new CabinBaggageRequiringSeat(
-                            passengerBookingDetails.FirstName,
-                            passengerBookingDetails.LastName,
-                            passengerBookingDetails.Gender,
-                            passengerBookingDetails.Id,
-                            null);
+                        passengerOrItem = new CabinBaggageRequiringSeat(passengerBookingDetails.FirstName,
+                            passengerBookingDetails.LastName, passengerBookingDetails.Gender,
+                            passengerBookingDetails.Id, null);
 
                         //passenger.MapFromPassengerBookingDetails(passengerBookingDetails);
                         dbContext.Passengers.Add(passengerOrItem);
                     }
                     else if (passengerBookingDetails.FirstName == "EXST")
                     {
-                        passengerOrItem = new ExtraSeat(
-                            passengerBookingDetails.FirstName,
-                            passengerBookingDetails.LastName,
-                            passengerBookingDetails.Gender,
+                        passengerOrItem = new ExtraSeat(passengerBookingDetails.FirstName,
+                            passengerBookingDetails.LastName, passengerBookingDetails.Gender,
                             passengerBookingDetails.Id);
 
                         //passenger.MapFromPassengerBookingDetails(passengerBookingDetails);
@@ -69,43 +64,36 @@ namespace TestProject.TestDataInitializationClasses
                     }
                     else if (passengerBookingDetails.Age < 2)
                     {
-                        var associatedPassenger = bookingReference.LinkedPassengers
-                            .FirstOrDefault(p => p.Age >= 18 && p.AssociatedPassengerBookingDetailsId == null);
-                        
-                            passengerOrItem = new Infant(
-                                associatedPassenger?.Id ?? Guid.Empty,
-                                passengerBookingDetails.FirstName,
-                                passengerBookingDetails.LastName,
-                                passengerBookingDetails.Gender,
-                                passengerBookingDetails.Id,
-                                0);
+                        var associatedPassenger = bookingReference.LinkedPassengers.FirstOrDefault(p =>
+                            p.Age >= 18 && p.AssociatedPassengerBookingDetailsId == null);
 
-                            if (associatedPassenger != null)
-                                associatedPassenger.AssociatedPassengerBookingDetailsId = passengerOrItem.Id;
+                        passengerOrItem = new Infant(associatedPassenger?.Id ?? Guid.Empty,
+                            passengerBookingDetails.FirstName, passengerBookingDetails.LastName,
+                            passengerBookingDetails.Gender, passengerBookingDetails.Id, 0);
 
-                            //passenger.MapFromPassengerBookingDetails(passengerBookingDetails);
-                            dbContext.Passengers.Add(passengerOrItem);                        
-                    }
-                    else
-                    {
-                        var weight = (passengerBookingDetails.Age < 12) ? 35
-                                : (passengerBookingDetails.Gender == PaxGenderEnum.M) ? 88 : 70;
-
-                        passengerOrItem = new Passenger(
-                            passengerBookingDetails.BaggageAllowance,
-                            passengerBookingDetails.PriorityBoarding,
-                            passengerBookingDetails.FirstName,
-                            passengerBookingDetails.LastName,
-                            passengerBookingDetails.Gender,
-                            passengerBookingDetails.Id,
-                            weight);
-
-                        if (passengerBookingDetails.AssociatedPassengerBookingDetailsId != null)
-                            ((Passenger)passengerOrItem).InfantId = passengerBookingDetails.AssociatedPassengerBookingDetailsId;
+                        if (associatedPassenger != null)
+                            associatedPassenger.AssociatedPassengerBookingDetailsId = passengerOrItem.Id;
 
                         //passenger.MapFromPassengerBookingDetails(passengerBookingDetails);
                         dbContext.Passengers.Add(passengerOrItem);
-                    }                    
+                    }
+                    else
+                    {
+                        var weight = (passengerBookingDetails.Age < 12) ? 35 :
+                            (passengerBookingDetails.Gender == PaxGenderEnum.M) ? 88 : 70;
+
+                        passengerOrItem = new Passenger(passengerBookingDetails.BaggageAllowance,
+                            passengerBookingDetails.PriorityBoarding, passengerBookingDetails.FirstName,
+                            passengerBookingDetails.LastName, passengerBookingDetails.Gender,
+                            passengerBookingDetails.Id, weight);
+
+                        if (passengerBookingDetails.AssociatedPassengerBookingDetailsId != null)
+                            ((Passenger)passengerOrItem).InfantId =
+                                passengerBookingDetails.AssociatedPassengerBookingDetailsId;
+
+                        //passenger.MapFromPassengerBookingDetails(passengerBookingDetails);
+                        dbContext.Passengers.Add(passengerOrItem);
+                    }
 
                     foreach (var flight in flightsInPNR)
                     {
@@ -114,8 +102,7 @@ namespace TestProject.TestDataInitializationClasses
 
                         dbContext.PassengerFlight.Add(passengerFlight);
 
-                        var passengerReservedSeats = paxList
-                            .FirstOrDefault(f => f.Id == passengerBookingDetails.Id)
+                        var passengerReservedSeats = paxList.FirstOrDefault(f => f.Id == passengerBookingDetails.Id)
                             ?.ReservedSeats;
 
                         if (passengerReservedSeats != null && passengerReservedSeats.Any())
@@ -151,7 +138,8 @@ namespace TestProject.TestDataInitializationClasses
                                 if ((passengerOrItem as Passenger)?.SpecialServiceRequests == null)
                                 {
                                     if (passengerOrItem != null)
-                                        ((Passenger)passengerOrItem).SpecialServiceRequests = new List<SpecialServiceRequest>();
+                                        ((Passenger)passengerOrItem).SpecialServiceRequests =
+                                            new List<SpecialServiceRequest>();
                                 }
 
                                 var ssrCode = ssrCodes.FirstOrDefault(s => s.Code == serviceRequest[0])?.Code;
@@ -159,8 +147,9 @@ namespace TestProject.TestDataInitializationClasses
 
                                 if (ssrCode != null && flight != null && (passengerOrItem as Passenger) != null)
                                 {
-                                    (passengerOrItem as Passenger)?.SpecialServiceRequests.Add(new SpecialServiceRequest(ssrCode, flight.Id,
-                                        passengerOrItem.Id, serviceRequest.Length > 1 ? serviceRequest[1] : null));
+                                    (passengerOrItem as Passenger)?.SpecialServiceRequests.Add(
+                                        new SpecialServiceRequest(ssrCode, flight.Id, passengerOrItem.Id,
+                                            serviceRequest.Length > 1 ? serviceRequest[1] : null));
                                 }
                             }
                         }
@@ -205,10 +194,12 @@ namespace TestProject.TestDataInitializationClasses
 
                 foreach (var passenger in notAcceptedPassengers)
                 {
-                    var hasPassengerTwoFlights = passengerFlights.Count(pf => pf.PassengerOrItemId == passenger.Id) == 2;
-                    var passengerFlightsList = passengerFlights.Where(pf => pf.PassengerOrItemId == passenger.Id).ToList();
+                    var hasPassengerTwoFlights =
+                        passengerFlights.Count(pf => pf.PassengerOrItemId == passenger.Id) == 2;
+                    var passengerFlightsList =
+                        passengerFlights.Where(pf => pf.PassengerOrItemId == passenger.Id).ToList();
 
-                    var isAnyPassengerAccepted = notAcceptedPassengers.Any(p => passengerFlights.FirstOrDefault(f => 
+                    var isAnyPassengerAccepted = notAcceptedPassengers.Any(p => passengerFlights.FirstOrDefault(f =>
                             f.FlightId == flight.Id && p.BookingDetails.PNRId == passenger.BookingDetails.PNRId)
                         ?.AcceptanceStatus == AcceptanceStatusEnum.Accepted);
 
@@ -251,7 +242,7 @@ namespace TestProject.TestDataInitializationClasses
                                 passengerFlight.BoardingZone = BoardingZoneEnum.C;
                             }
                         }
-                        
+
                         var docsComment = predefinedComments.FirstOrDefault(pc => pc.Id == "Docs");
                         var exitComment = predefinedComments.FirstOrDefault(pc => pc.Id == "Exit");
 

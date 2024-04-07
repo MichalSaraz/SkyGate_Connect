@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Web.Api.FlightContext.Models
+namespace Web.Api.FlightManagement.Models
 {
     public class FlightSearchModel
     {        

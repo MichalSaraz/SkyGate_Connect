@@ -14,7 +14,7 @@ namespace Core.Interfaces
         /// <returns>A task representing the asynchronous operation, which contains the list of passengers matching
         /// the criteria.</returns>
         Task<IReadOnlyList<Passenger>> GetPassengersByCriteriaAsync(Expression<Func<Passenger, bool>> criteria,
-            bool tracked = false);
+            bool tracked = false, bool displayDetails = false);
 
         /// <summary>
         /// Retrieves a passenger based on the specified criteria.

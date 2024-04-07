@@ -21,20 +21,9 @@ namespace Core.PassengerContext
         public List<Baggage> PassengerCheckedBags { get; set; } = new();        
         public List<SpecialServiceRequest> SpecialServiceRequests { get; set; } = new();
 
-        public Passenger(
-            int baggageAllowance,
-            bool priorityBoarding,
-            string firstName,
-            string lastName,
-            PaxGenderEnum gender,
-            Guid bookingDetailsId,
-            int? weight)
-            : base(
-                firstName,
-                lastName,
-                gender,
-                bookingDetailsId,
-                weight)
+        public Passenger(int baggageAllowance, bool priorityBoarding, string firstName, string lastName,
+            PaxGenderEnum gender, Guid bookingDetailsId, int? weight) : base(firstName, lastName, gender,
+            bookingDetailsId, weight)
         {
             BaggageAllowance = baggageAllowance;
             PriorityBoarding = priorityBoarding;

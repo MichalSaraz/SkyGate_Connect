@@ -1,8 +1,8 @@
-﻿using Core.PassengerContext.APIS.Enums;
+﻿using System.ComponentModel.DataAnnotations;
+using Core.PassengerContext.APIS.Enums;
 using Core.PassengerContext.Booking.Enums;
-using System.ComponentModel.DataAnnotations;
 
-namespace Web.Api.PassengerContext.Models
+namespace Web.Api.PassengerManagement.Models
 {
     public class APISDataModel
     {

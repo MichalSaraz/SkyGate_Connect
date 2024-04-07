@@ -24,7 +24,8 @@ namespace Core.PassengerContext
         public List<Seat> AssignedSeats { get; set; }
         public List<PassengerFlight> Flights { get; set; } = new();
 
-        protected BasePassengerOrItem(string firstName, string lastName, PaxGenderEnum gender, Guid bookingDetailsId, int? weight)
+        protected BasePassengerOrItem(string firstName, string lastName, PaxGenderEnum gender, Guid bookingDetailsId,
+            int? weight)
         {
             Id = Guid.NewGuid();
             FirstName = firstName;
@@ -39,7 +40,7 @@ namespace Core.PassengerContext
             Id = new Guid();
             FirstName = passengerBookingDetails.FirstName;
             LastName = passengerBookingDetails.LastName;
-            Gender = passengerBookingDetails.Gender;            
+            Gender = passengerBookingDetails.Gender;
         }
     }
 }

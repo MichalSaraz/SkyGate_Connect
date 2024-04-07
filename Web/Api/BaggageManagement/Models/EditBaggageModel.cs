@@ -1,6 +1,6 @@
 ﻿using Core.BaggageContext.Enums;
 
-namespace Web.Api.PassengerContext.Models
+namespace Web.Api.BaggageManagement.Models
 {
     public class EditBaggageModel
     {
