@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using AutoMapper;
+using AutoMapper.Internal;
 using Core.BaggageContext;
 using Core.Dtos;
 using Core.FlightContext;
@@ -187,15 +188,16 @@ namespace Web.Api.PassengerManagement.Controllers
         }
 
         /// <summary>
-        /// Adds the specified passengers to the selection for a given flight.
+        /// Add passengers to the selection for a specific flight.
         /// </summary>
-        /// <param name="flightId">The ID of the flight.</param>
-        /// <param name="selectedPassengers">The currently selected passengers for the flight.</param>
-        /// <param name="passengersToAdd">The IDs of the passengers to add to the selection.</param>
-        /// <returns>The list of passenger details DTOs for the added passengers.</returns>
+        /// <param name="flightId">The ID of the flight to add passengers to.</param>
+        /// <param name="passengerSelectionUpdate">The model containing passenger selection updates.</param>
+        /// <returns>
+        /// The list of passengers with additional details (PassengerDetailsDto) for the selected flight.
+        /// </returns>
         [HttpPost("selected-flight/{flightId:guid}/add-passengers")]
         public async Task<ActionResult<List<Passenger>>> AddPassengersToSelection(Guid flightId,
-            List<Passenger> selectedPassengers, [FromBody] List<Guid> passengersToAdd)
+            [FromBody] PassengerSelectionUpdateModel passengerSelectionUpdate)
         {
             var selectedFlight = await _flightRepository.GetFlightByIdAsync(flightId, false);
 
@@ -204,22 +206,28 @@ namespace Web.Api.PassengerManagement.Controllers
                 return NotFound(new ApiResponse(404, $"Flight with Id {flightId} was not found."));
             }
 
-            var passengers =
-                await _passengerRepository.GetPassengersByCriteriaAsync(p => passengersToAdd.Contains(p.Id), false,
-                    true);
+            var existingPassengers =
+                await _passengerRepository.GetPassengersByCriteriaAsync(
+                    p => passengerSelectionUpdate.ExistingPassengers.Contains(p.Id), true, true);
 
-            if (!passengers.Any())
+            var passengersToAdd = 
+                await _passengerRepository.GetPassengersByCriteriaAsync(
+                    p => passengerSelectionUpdate.PassengersToAdd.Contains(p.Id), true, true);
+                
+            
+            if (!existingPassengers.Any() || !passengersToAdd.Any())
             {
                 return NotFound(new ApiResponse(404, $"No passengers found with provided ids"));
             }
 
-            selectedPassengers.AddRange(passengers);
+            existingPassengers.Concat(passengersToAdd);
 
-            var passengersDto = passengers.Select(passenger => _mapper.Map<PassengerDetailsDto>(passenger, opt =>
-            {
-                opt.Items["DepartureDateTime"] = selectedFlight.DepartureDateTime;
-                opt.Items["FlightId"] = flightId;
-            }));
+            var passengersDto = existingPassengers.Select(passenger => _mapper.Map<PassengerDetailsDto>(
+                passenger, opt =>
+                {
+                    opt.Items["DepartureDateTime"] = selectedFlight.DepartureDateTime;
+                    opt.Items["FlightId"] = flightId;
+                }));
 
             return Ok(passengersDto);
         }
