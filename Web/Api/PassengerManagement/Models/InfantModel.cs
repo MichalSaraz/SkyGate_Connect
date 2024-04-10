@@ -7,6 +7,5 @@ namespace Web.Api.PassengerManagement.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public PaxGenderEnum Gender { get; set; }
-        public Guid BookingDetailsId { get; set; }
     }
 }
