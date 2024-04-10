@@ -1,11 +1,14 @@
 ﻿using System.Linq.Expressions;
 using AutoMapper;
-using AutoMapper.Internal;
 using Core.BaggageContext;
 using Core.Dtos;
 using Core.FlightContext;
 using Core.Interfaces;
 using Core.PassengerContext;
+using Core.PassengerContext.Booking;
+using Core.PassengerContext.Booking.Enums;
+using Core.PassengerContext.JoinClasses;
+using Core.SeatingContext.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using Web.Api.PassengerManagement.Models;
@@ -21,17 +24,23 @@ namespace Web.Api.PassengerManagement.Controllers
         private readonly ITimeProvider _timeProvider;
         private readonly IFlightRepository _flightRepository;
         private readonly IPassengerRepository _passengerRepository;
+        private readonly IInfantRepository _infantRepository;
+        private readonly IPassengerBookingDetailsRepository _passengerBookingDetailsRepository;
 
         public PassengerController(
             IMapper mapper,
             ITimeProvider timeProvider,
             IFlightRepository flightRepository,
-            IPassengerRepository passengerRepository)
+            IPassengerRepository passengerRepository,
+            IInfantRepository infantRepository,
+            IPassengerBookingDetailsRepository passengerBookingDetailsRepository)
         {
             _mapper = mapper;
             _timeProvider = timeProvider;
             _flightRepository = flightRepository;
             _passengerRepository = passengerRepository;
+            _infantRepository = infantRepository;
+            _passengerBookingDetailsRepository = passengerBookingDetailsRepository;
         }
 
         /// <summary>
@@ -212,17 +221,17 @@ namespace Web.Api.PassengerManagement.Controllers
 
             var passengersToAdd = 
                 await _passengerRepository.GetPassengersByCriteriaAsync(
-                    p => passengerSelectionUpdate.PassengersToAdd.Contains(p.Id), true, true);
-                
+                    p => passengerSelectionUpdate.PassengersToAdd.Contains(p.Id), true, true);            
             
             if (!existingPassengers.Any() || !passengersToAdd.Any())
             {
                 return NotFound(new ApiResponse(404, $"No passengers found with provided ids"));
             }
 
-            existingPassengers.Concat(passengersToAdd);
+            var existingPassengerList = new List<Passenger>(existingPassengers);
+            existingPassengerList.AddRange(passengersToAdd);
 
-            var passengersDto = existingPassengers.Select(passenger => _mapper.Map<PassengerDetailsDto>(
+            var passengersDto = existingPassengerList.Select(passenger => _mapper.Map<PassengerDetailsDto>(
                 passenger, opt =>
                 {
                     opt.Items["DepartureDateTime"] = selectedFlight.DepartureDateTime;
@@ -230,6 +239,193 @@ namespace Web.Api.PassengerManagement.Controllers
                 }));
 
             return Ok(passengersDto);
+        }
+
+        [HttpPost("passenger/{id:guid}/add-infant")]
+        public async Task<ActionResult<Infant>> AddInfant(Guid id,
+            [FromBody] InfantModel infantModel)
+        {
+            var passenger = await _passengerRepository.GetPassengerByIdAsync(id, true, false);           
+
+            if (passenger == null)
+            {
+                return NotFound(new ApiResponse(404, $"Passenger with Id {id} was not found."));
+            }
+            if (passenger.Infant != null)
+            {
+                return BadRequest(new ApiResponse(400, $"Passenger with Id {id} already has an infant associated."));
+            }
+            if (passenger.BookingDetails.Age < 18)
+            {
+                return BadRequest(new ApiResponse(400,
+                    $"Passenger with Id {id} must be 18 years or older to have an infant associated."));
+            }
+
+            var infant = new Infant(id, infantModel.FirstName, infantModel.LastName, infantModel.Gender,
+                passenger.BookingDetails.AssociatedPassengerBookingDetailsId ?? null, 0);
+
+            foreach (var flight in passenger.Flights)
+            {
+                infant.Flights.Add(new PassengerFlight(infant.Id, flight.FlightId, flight.FlightClass));
+            }
+
+            await _infantRepository.AddAsync(infant);
+            passenger.InfantId = infant.Id;
+
+            Expression<Func<PassengerBookingDetails, bool>> criteria = c => c.Id == infant.BookingDetailsId;
+            var bookingDetails = await _passengerBookingDetailsRepository.GetBookingDetailsByCriteriaAsync(criteria);
+
+            if (bookingDetails != null)
+            {
+                bookingDetails.PassengerId = infant.Id;
+                await _passengerBookingDetailsRepository.UpdateAsync(bookingDetails);
+            }
+
+            await _passengerRepository.UpdateAsync(passenger);
+
+            return Ok();
+        }
+
+        [HttpDelete("passenger/{id:guid}/remove-infant")]
+        public async Task<ActionResult<Passenger>> RemoveInfant(Guid id)
+        {
+            Expression<Func<Passenger, bool>> criteria = c => c.InfantId == id;
+            var passenger = await _passengerRepository.GetPassengerByCriteriaAsync(criteria);
+            var bookingDetails = await _passengerBookingDetailsRepository.GetBookingDetailsByCriteriaAsync(
+                               b => b.PassengerId == id);    
+            
+            if (passenger != null)
+            {
+                passenger.InfantId = null;
+                await _passengerRepository.UpdateAsync(passenger);
+            }
+
+            if (bookingDetails != null)
+            {
+                bookingDetails.PassengerId = null;
+                await _passengerBookingDetailsRepository.UpdateAsync(bookingDetails);
+            }
+
+            var infant = await _infantRepository.GetInfantByIdAsync(id);
+
+            if (infant == null)
+            {
+                return NotFound(new ApiResponse(404, $"Infant with Id {id} was not found."));
+            }
+            
+            await _infantRepository.DeleteAsync(infant);                    
+
+            return Ok();
+        }
+
+        [HttpPost("passenger/selected-flight/{flightId:guid}/add-no-rec-passenger")]
+        public async Task<ActionResult<Passenger>> AddNoRecPassenger(Guid flightId,
+            [FromBody] NoRecPassengerModel model)
+        {
+            var selectedFlight = await _flightRepository.GetFlightByIdAsync(flightId, false);
+
+            if (selectedFlight == null)
+            {
+                return NotFound(new ApiResponse(404, $"Flight with Id {flightId} was not found."));
+            }
+
+            var bookingDetails = (model.PNRId != null)
+                ? await _passengerBookingDetailsRepository.GetBookingDetailsByCriteriaAsync(b => 
+                    b.PNRId == model.PNRId && 
+                    b.FirstName == model.FirstName &&
+                    b.LastName == model.LastName && 
+                    b.Passenger == null)
+                : null;
+
+            var noRecPassenger = new Passenger(
+                model.BaggageAllowance,
+                model.PriorityBoarding,
+                model.FirstName,
+                model.LastName,
+                model.Gender,
+                bookingDetails?.Id ?? null,
+                bookingDetails?.Age < 12 || model.IsChild
+                    ? 35 : model.Gender == PaxGenderEnum.M
+                    ? 88 : 75);
+
+            List<Flight> flights = new();
+            Dictionary<string, FlightClassEnum> classes = new();
+
+            if (bookingDetails != null)
+            {
+                foreach (var flight in bookingDetails.PNR.FlightItinerary)
+                {
+                    var flightToAdd = await _flightRepository.GetFlightByCriteriaAsync(
+                        f => f.ScheduledFlightId == flight.Key && f.DepartureDateTime == flight.Value);
+
+                    if (flightToAdd != null)
+                    {
+                        flights.Add(flightToAdd);
+                    }
+                }
+
+                foreach (var flightClass in bookingDetails.BookedClass)
+                {
+                    classes.Add(flightClass.Key, flightClass.Value);
+                }
+            }
+            else
+            {
+                foreach (var flight in model.Flights)
+                {
+                    var departureDateTime = _timeProvider.ParseDate(flight.Value);
+                    var flightToAdd = await _flightRepository.GetFlightByCriteriaAsync(
+                        f => f.ScheduledFlightId == flight.Key && f.DepartureDateTime == departureDateTime);
+
+                    if (flightToAdd != null)
+                    {
+                        flights.Add(flightToAdd);
+                    }
+                }
+
+                foreach (var flightClass in model.BookedClass)
+                {
+                    classes.Add(flightClass.Key, flightClass.Value);
+                }
+            }
+
+            foreach (var flight in flights)
+            {
+                noRecPassenger.Flights.Add(new PassengerFlight(noRecPassenger.Id, flight.Id,
+                    classes[flight.ScheduledFlightId]));
+            }
+
+            if (bookingDetails.BookedSSR != null && bookingDetails.BookedSSR.Any(flight => 
+                flight.Value != null && flight.Value.Count > 0))
+                {
+                foreach (var flight in bookingDetails.BookedSSR)
+                {
+                    foreach (var ssr in flight.Value)
+                    {
+                        noRecPassenger.SpecialServiceRequests.Add(new SpecialServiceRequest(
+                            ssr.Substring(0, 4), 
+                            flights.FirstOrDefault(f => f.ScheduledFlightId == flight.Key).Id,
+                            noRecPassenger.Id, 
+                            ssr.Length > 4 ? ssr.Substring(4) : string.Empty)
+                        );
+                    }
+                }                    
+            }
+
+            if (bookingDetails.ReservedSeats != null && bookingDetails.ReservedSeats.Any(flight => flight.Value.Any()))
+            {
+                foreach (var seat in bookingDetails.ReservedSeats)
+                {
+                    //...
+                }
+            }
+            
+            await _passengerRepository.AddAsync(noRecPassenger);
+
+            bookingDetails.PassengerId = noRecPassenger.Id;
+            await _passengerBookingDetailsRepository.UpdateAsync(bookingDetails);
+
+            return Ok();
         }
     }
 }

@@ -17,14 +17,14 @@ namespace Core.PassengerContext
         public int? Weight { get; set; }
 
         public PassengerBookingDetails BookingDetails { get; protected set; }
-        public Guid BookingDetailsId { get; protected set; }
+        public Guid? BookingDetailsId { get; protected set; }
 
         public List<APISData> TravelDocuments { get; set; }
         public List<Comment> Comments { get; set; }
         public List<Seat> AssignedSeats { get; set; }
         public List<PassengerFlight> Flights { get; set; } = new();
 
-        protected BasePassengerOrItem(string firstName, string lastName, PaxGenderEnum gender, Guid bookingDetailsId,
+        protected BasePassengerOrItem(string firstName, string lastName, PaxGenderEnum gender, Guid? bookingDetailsId,
             int? weight)
         {
             Id = Guid.NewGuid();

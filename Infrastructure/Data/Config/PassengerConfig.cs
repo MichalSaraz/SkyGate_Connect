@@ -15,7 +15,8 @@ namespace Infrastructure.Data.Config
 
             builder.HasOne(p => p.Infant)
                 .WithOne(i => i.AssociatedAdultPassenger)
-                .HasForeignKey<Infant>(i => i.AssociatedAdultPassengerId);           
+                .HasForeignKey<Infant>(i => i.AssociatedAdultPassengerId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder.HasMany(p => p.PassengerCheckedBags)
                 .WithOne(b => b.Passenger)

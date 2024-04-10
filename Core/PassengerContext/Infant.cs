@@ -10,7 +10,7 @@ namespace Core.PassengerContext
         public Guid AssociatedAdultPassengerId { get; set; }
 
         public Infant(Guid associatedAdultPassengerId, string firstName, string lastName, PaxGenderEnum gender,
-            Guid bookingDetailsId, int? weight) : base(firstName, lastName, gender, bookingDetailsId, weight)
+            Guid? bookingDetailsId, int? weight) : base(firstName, lastName, gender, bookingDetailsId, weight)
         {
             AssociatedAdultPassengerId = associatedAdultPassengerId;
         }

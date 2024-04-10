@@ -49,7 +49,8 @@ namespace Infrastructure.Repositories
                         .ThenInclude(_ => _.Flights)
                             .ThenInclude(_ => _.Flight)
                     .Include(_ => _.AssignedSeats)
-                    .Include(_ => _.SpecialServiceRequests);
+                    .Include(_ => _.SpecialServiceRequests)
+                        .ThenInclude(_ => _.SSRCode);
             }
 
             if (!tracked)

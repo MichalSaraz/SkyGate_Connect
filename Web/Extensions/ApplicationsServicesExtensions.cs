@@ -25,6 +25,7 @@ namespace Web.Extensions
             services.AddScoped<IOtherFlightRepository, OtherFlightRepository>();
             services.AddScoped<IBaseFlightRepository, BaseFlightRepository>();
             services.AddScoped<IPassengerRepository, PassengerRepository>();
+            services.AddScoped<IInfantRepository, InfantRepository>();
             services.AddScoped<IDestinationRepository, DestinationRepository>();
             services.AddScoped<ISSRCodeRepository, SSRCodeRepository>();
             services.AddScoped<ISpecialServiceRequestRepository, SpecialServiceRequestRepository>();
@@ -32,6 +33,7 @@ namespace Web.Extensions
             services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IPredefinedCommentRepository, PredefinedCommentRepository>();
+            services.AddScoped<IPassengerBookingDetailsRepository, PassengerBookingDetailsRepository>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

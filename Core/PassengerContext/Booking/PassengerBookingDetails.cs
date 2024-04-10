@@ -29,7 +29,7 @@ namespace Core.PassengerContext.Booking
         public string FrequentFlyerCardNumber { get; private set; }
 
         public BasePassengerOrItem Passenger { get; private set; }
-        public Guid? PassengerId { get; private set; }
+        public Guid? PassengerId { get; set; }
 
         public PassengerBookingDetails AssociatedPassengerBookingDetails { get; private set; }
         public Guid? AssociatedPassengerBookingDetailsId { get; set; }

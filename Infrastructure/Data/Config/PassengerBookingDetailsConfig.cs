@@ -16,15 +16,18 @@ namespace Infrastructure.Data.Config
             
             builder.HasOne(pbd => pbd.PNR)
                 .WithMany(br => br.LinkedPassengers)
-                .HasForeignKey(pi => pi.PNRId);           
+                .HasForeignKey(pi => pi.PNRId);
 
             builder.HasOne(pbd => pbd.Passenger)
                 .WithOne(p => p.BookingDetails)
-                .HasForeignKey<BasePassengerOrItem>(p => p.BookingDetailsId);
+                .HasForeignKey<BasePassengerOrItem>(p => p.BookingDetailsId)
+                .OnDelete(DeleteBehavior.SetNull);
+
 
             builder.HasOne(pbd => pbd.AssociatedPassengerBookingDetails)
                 .WithOne()
-                .HasForeignKey<PassengerBookingDetails>(p => p.AssociatedPassengerBookingDetailsId);
+                .HasForeignKey<PassengerBookingDetails>(p => p.AssociatedPassengerBookingDetailsId)
+                .OnDelete(DeleteBehavior.SetNull);
             
             builder.Property(pbd => pbd.BookedClass)
                 .HasColumnName("BookedClass")

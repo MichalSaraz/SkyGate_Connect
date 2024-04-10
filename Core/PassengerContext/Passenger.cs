@@ -22,7 +22,7 @@ namespace Core.PassengerContext
         public List<SpecialServiceRequest> SpecialServiceRequests { get; set; } = new();
 
         public Passenger(int baggageAllowance, bool priorityBoarding, string firstName, string lastName,
-            PaxGenderEnum gender, Guid bookingDetailsId, int? weight) : base(firstName, lastName, gender,
+            PaxGenderEnum gender, Guid? bookingDetailsId, int? weight) : base(firstName, lastName, gender,
             bookingDetailsId, weight)
         {
             BaggageAllowance = baggageAllowance;

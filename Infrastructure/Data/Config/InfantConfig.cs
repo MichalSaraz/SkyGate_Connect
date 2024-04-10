@@ -10,7 +10,8 @@ namespace Infrastructure.Data.Config
         {
             builder.HasOne(i => i.AssociatedAdultPassenger)
                 .WithOne(p => p.Infant)
-                .HasForeignKey<Passenger>(i => i.InfantId);
+                .HasForeignKey<Passenger>(i => i.InfantId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

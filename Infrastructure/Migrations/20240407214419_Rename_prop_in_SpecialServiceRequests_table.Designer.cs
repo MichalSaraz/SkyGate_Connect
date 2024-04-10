@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240407214419_Rename_prop_in_SpecialServiceRequests_table")]
+    partial class Rename_prop_in_SpecialServiceRequests_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -330,7 +333,7 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("BookingDetailsId")
+                    b.Property<Guid>("BookingDetailsId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("FirstName")
@@ -928,7 +931,8 @@ namespace Infrastructure.Migrations
                     b.HasOne("Core.PassengerContext.Booking.PassengerBookingDetails", "BookingDetails")
                         .WithOne("Passenger")
                         .HasForeignKey("Core.PassengerContext.BasePassengerOrItem", "BookingDetailsId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("BookingDetails");
                 });
@@ -972,8 +976,7 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Core.PassengerContext.Booking.PassengerBookingDetails", "AssociatedPassengerBookingDetails")
                         .WithOne()
-                        .HasForeignKey("Core.PassengerContext.Booking.PassengerBookingDetails", "AssociatedPassengerBookingDetailsId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("Core.PassengerContext.Booking.PassengerBookingDetails", "AssociatedPassengerBookingDetailsId");
 
                     b.HasOne("Core.PassengerContext.Booking.BookingReference", "PNR")
                         .WithMany("LinkedPassengers")
@@ -1089,7 +1092,7 @@ namespace Infrastructure.Migrations
                     b.HasOne("Core.PassengerContext.Passenger", "AssociatedAdultPassenger")
                         .WithOne("Infant")
                         .HasForeignKey("Core.PassengerContext.Infant", "AssociatedAdultPassengerId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("AssociatedAdultPassenger");
