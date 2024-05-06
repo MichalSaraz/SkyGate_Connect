@@ -1,5 +1,7 @@
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 using System.Text.Json.Serialization;
 using Web.Extensions;
 using Web.Middleware;
@@ -21,6 +23,32 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+
+//Swagger Documentation Section
+var info = new OpenApiInfo()
+{
+    Title = "SkyGate Connect",
+    Version = "v1",
+    Description = "Customer management airport checkin system",
+    Contact = new OpenApiContact()
+    {
+        Name = "Michal Saraz",
+        Email = "saraz.m@seznam.cz",
+    }
+};
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", info);
+
+    // Set the comments path for the Swagger JSON and UI.
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
+});
+
 builder.Services.AddApplicationServices(builder.Configuration);
 
 var app = builder.Build();
@@ -33,8 +61,16 @@ app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwagger(u =>
+    {
+        u.RouteTemplate = "swagger/{documentName}/swagger.json";
+    });
+
+    app.UseSwaggerUI(c =>
+    {
+        c.RoutePrefix = "swagger";
+        c.SwaggerEndpoint(url: "/swagger/v1/swagger.json", name: "Your API Title or Version");
+    });
 }
 
 app.UseHttpsRedirection();

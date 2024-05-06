@@ -40,9 +40,6 @@ namespace Web.Api.BaggageManagement.Controllers
         /// </summary>
         /// <param name="tagNumber">The tag number of the baggage.</param>
         /// <returns>The details of the baggage with the specified tag number.</returns>
-        /// <remarks>This method retrieves the baggage from the database based on the provided tag number.
-        /// It includes related entities such as passenger, baggage tag, special bag, final destination, and flights.
-        /// The baggage is retrieved with no tracking to improve performance.</remarks>
         [HttpGet("tag-number/{tagNumber}/details")]
         public async Task<ActionResult<Baggage>> GetBaggageDetails(string tagNumber)
         {
@@ -234,7 +231,7 @@ namespace Web.Api.BaggageManagement.Controllers
         /// <summary>
         /// Edit baggage information for a passenger.
         /// </summary>
-        /// <param name="passengerId">The unique identifier of the passenger.</param>
+        /// <param name="passengerId">The ID of the passenger.</param>
         /// <param name="editBaggageModels">The list of baggage models containing the changes to apply.</param>
         /// <returns>The updated baggage information.</returns>
         [HttpPut("passenger/{passengerId:guid}/edit-baggage")]

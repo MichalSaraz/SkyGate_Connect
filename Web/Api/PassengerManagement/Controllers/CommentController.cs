@@ -30,6 +30,19 @@ namespace Web.Api.PassengerManagement.Controllers
         /// <param name="commentType">The type of the comment (Checkin or Gate).</param>
         /// <param name="data">The data object containing the flight IDs and text.</param>
         /// <param name="predefineCommentId">Optional. The ID of a predefined comment to add.</param>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /passenger/3F2504E0-4F89-41D3-9A0C-0305E82C3301/add-comment
+        ///     {
+        ///         "flightIds": [
+        ///             "58590667-cec5-4a89-a58e-b1572d7086e9",
+        ///             "99382844-5d43-4051-97a7-07858f76bc7e"
+        ///         ],
+        ///         "text": "Passenger informed about seat change"
+        ///     }
+        ///
+        /// </remarks>
         /// <returns>An ActionResult of type Comment.</returns>
         [HttpPost("passenger/{id:guid}/add-comment")]
         public async Task<ActionResult<Comment>> AddComment(Guid id, CommentTypeEnum commentType,
@@ -87,6 +100,14 @@ namespace Web.Api.PassengerManagement.Controllers
         /// Deletes comments based on their IDs and flight IDs.
         /// </summary>
         /// <param name="commentIds">A dictionary of flight IDs as keys and a list of comment IDs as values.</param>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     DELETE /delete-comment
+        ///     "58590667-cec5-4a89-a58e-b1572d7086e9": ["17e72928-7c09-48b8-bbe0-a5aa9491eb6c"],
+        ///     "99382844-5d43-4051-97a7-07858f76bc7e": ["17e72928-7c09-48b8-bbe0-a5aa9491eb6c", "8ff272ba-58e0-4578-8d8a-71d79b917074"]
+        ///
+        /// </remarks>
         /// <returns>
         /// Returns an <see cref="ActionResult"/> containing the result of the delete operation.
         /// If any comments were deleted, returns <see cref="NoContentResult"/>.

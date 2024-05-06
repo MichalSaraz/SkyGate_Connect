@@ -24,12 +24,33 @@ namespace Web.Api.PassengerManagement.Controllers
             _sSRCodeRepository = sSRCodeRepository;
             _specialServiceRequestRepository = specialServiceRequestRepository;
         }
-        
+
         /// <summary>
         /// Adds special service requests for a passenger on a specific flight.
         /// </summary>
         /// <param name="id">The ID of the passenger.</param>
         /// <param name="requestData">The special service request data.</param>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /passenger/3F2504E0-4F89-41D3-9A0C-0305E82C3301/add-request
+        ///     [
+        ///         {
+        ///             "flightIds": ["58590667-cec5-4a89-a58e-b1572d7086e9", "99382844-5d43-4051-97a7-07858f76bc7e"],
+        ///             "specialServiceRequests": [
+        ///                 {
+        ///                     "SSRCode": "WCHR",
+        ///                     "freeText": null
+        ///                 },
+        ///                 {
+        ///                     "SSRCode": "WCMP",
+        ///                     "freeText": "dimensions 50x50x60"
+        ///                 }
+        ///             ]
+        ///         }
+        ///     ]
+        ///
+        /// </remarks>
         /// <returns>An ActionResult representing the HTTP status code and result of the operation.</returns>
         [HttpPost("passenger/{id:guid}/add-request")]
         public async Task<ActionResult<Passenger>> AddSpecialServiceRequest(Guid id,
@@ -85,6 +106,16 @@ namespace Web.Api.PassengerManagement.Controllers
         /// <param name="id">The ID of the passenger.</param>
         /// <param name="ssrCodesToDelete">A dictionary where the key is the flight ID and the value is
         /// a list of SSR codes to delete.</param>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     DELETE /passenger/3F2504E0-4F89-41D3-9A0C-0305E82C3301/delete-request
+        ///     {
+        ///         "58590667-cec5-4a89-a58e-b1572d7086e9": ["WCHR", "WCMP"],
+        ///         "99382844-5d43-4051-97a7-07858f76bc7e": ["WCHR", "WCMP"]
+        ///     }
+        ///
+        /// </remarks>
         /// <returns>The result of the deletion operation.</returns>
         [HttpDelete("passenger/{id:guid}/delete-request")]
         public async Task<ActionResult<Passenger>> DeleteSpecialServiceRequest(Guid id,

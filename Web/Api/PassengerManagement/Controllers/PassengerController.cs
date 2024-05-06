@@ -47,8 +47,25 @@ namespace Web.Api.PassengerManagement.Controllers
         /// Searches for passengers based on the given search criteria.
         /// </summary>
         /// <param name="data">The search criteria as a JObject.</param>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /search-passengers
+        ///     {
+        ///         "flightNumber": "1305",
+        ///         "airlineId": "DY",
+        ///         "departureDate": "18OCT"
+        ///         "destinationFrom": "OSL",
+        ///         "destinationTo": "LHR",
+        ///         "documentNumber": "12345789",
+        ///         "lastName": "Doe",
+        ///         "pnr": "ABC123",
+        ///         "seatNumber": "1A"
+        ///     }
+        ///
+        /// </remarks> 
         /// <returns>Returns a list of Passenger objects that match the search criteria.</returns>
-        [HttpPost("search-passenger")]
+        [HttpPost("search-passengers")]
         public async Task<ActionResult<List<Passenger>>> SearchPassengers([FromBody] JObject data)
         {
             var model = new PassengerSearchModel
@@ -332,10 +349,34 @@ namespace Web.Api.PassengerManagement.Controllers
         }
 
         /// <summary>
-        /// Adds a non-recurring passenger to a selected flight.
+        /// Adds a no-rec passenger to a selected flight. No-rec passengers are passengers who have not been found
+        /// in the customer list of the flight but have valid booking reference on the flight.
         /// </summary>
         /// <param name="flightId">The ID of the selected flight.</param>
         /// <param name="model">The model containing the details of the non-recurring passenger.</param>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     POST /passenger/selected-flight/3F2504E0-4F89-41D3-9A0C-0305E82C3301/add-no-rec-passenger
+        ///     {
+        ///         "firstName": "Dan",
+        ///         "lastName": "Champlin",
+        ///         "gender": "M",
+        ///         "bookingDetailsId": "0406c369-1139-4f3b-bc4b-70679de75c48",
+        ///         "baggageAllowance": 0,
+        ///         "priorityBoarding": false,
+        ///         "pnrId": "WSQ8JU",
+        ///         "isChild": false,
+        ///         "flights": {
+        ///             "DY343": "16OCT",
+        ///             "DY196": "16OCT"
+        ///         },
+        ///         "bookedClass": {
+        ///             "DY343": "Y",
+        ///             "DY196": "Y"
+        ///         }
+        ///     }
+        /// </remarks>
         /// <returns>An ActionResult representing the result of the operation.</returns>
         [HttpPost("passenger/selected-flight/{flightId:guid}/add-no-rec-passenger")]
         public async Task<ActionResult<Passenger>> AddNoRecPassenger(Guid flightId,

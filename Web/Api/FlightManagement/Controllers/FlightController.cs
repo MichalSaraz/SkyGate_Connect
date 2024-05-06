@@ -43,8 +43,21 @@ namespace Web.Api.FlightManagement.Controllers
         /// Searches for flights based on the provided search criteria.
         /// </summary>
         /// <param name="data">The search criteria for the flight search.</param>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /search-flights
+        ///     {
+        ///         "flightNumber": "1305",
+        ///         "airlineId": "DY",
+        ///         "departureDate": "18OCT"
+        ///         "destinationFrom": "OSL",
+        ///         "destinationTo": "LHR"
+        ///     }
+        ///
+        /// </remarks> 
         /// <returns>A list of flights that match the search criteria.</returns>
-        [HttpPost("search-flight")]
+        [HttpPost("search-flights")]
         public async Task<ActionResult<List<Flight>>> SearchFlights([FromBody] JObject data)
         {
             var model = new FlightSearchModel
@@ -110,7 +123,7 @@ namespace Web.Api.FlightManagement.Controllers
         /// <summary>
         /// Get the onward flights for a specific flight.
         /// </summary>
-        /// <param name="id">The ID of the flight.</param>
+        /// <param name="id">The ID of the flight to retrieve onward flights for.</param>
         /// <returns>The list of onward flights as a <see cref="List{T}"/> of <see cref="BaseFlight"/>.</returns>
         [HttpGet("flight/{id:guid}/onward-flights")]
         public async Task<ActionResult<List<BaseFlight>>> GetOnwardFlights(Guid id)

@@ -87,6 +87,24 @@ namespace Web.Api.PassengerManagement.Controllers
         /// </summary>
         /// <param name="id">The ID of the passenger</param>
         /// <param name="dataList">The list of travel documents to add</param>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /passenger/3F2504E0-4F89-41D3-9A0C-0305E82C3301/add-document
+        ///     {
+        ///         "firstName": "John",
+        ///         "lastName": "Doe",
+        ///         "gender": "M",
+        ///         "dateOfBirth": "12JUL2011",
+        ///         "documentNumber": "16543415",
+        ///         "documentType": "NormalPassport",
+        ///         "countryOfIssue": "NOR",
+        ///         "dateOfIssue": "14AUG2020",
+        ///         "expirationDate": "14AUG2030",
+        ///         "nationality": "NOR"
+        ///     }
+        ///
+        /// </remarks>
         /// <returns>An HTTP action result with the added APIS data</returns>
         [HttpPost("passenger/{id:guid}/add-document")]
         public async Task<ActionResult<APISData>> AddTravelDocument(Guid id, [FromBody] List<JObject> dataList)
@@ -109,6 +127,25 @@ namespace Web.Api.PassengerManagement.Controllers
         /// </summary>
         /// <param name="id">The ID of the passenger.</param>
         /// <param name="dataList">The list of data for the travel document.</param>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     PUT /passenger/3F2504E0-4F89-41D3-9A0C-0305E82C3301/edit-document
+        ///     {
+        ///         "apisDataId": "c9a46b82-b1f8-4d0e-ac61-28e7debc2c03",
+        ///         "firstName": "John",
+        ///         "lastName": "Doe",
+        ///         "gender": "M",
+        ///         "dateOfBirth": "12JUL2011",
+        ///         "documentNumber": "16543415",
+        ///         "documentType": "NormalPassport",
+        ///         "countryOfIssue": "NOR",
+        ///         "dateOfIssue": "14AUG2020",
+        ///         "expirationDate": "14AUG2030",
+        ///         "nationality": "NOR"
+        ///     }
+        ///
+        /// </remarks>
         /// <returns>The updated <see cref="APISData"/> object.</returns>
         [HttpPut("passenger/{id:guid}/edit-document")]
         public async Task<ActionResult<APISData>> EditTravelDocument(Guid id, [FromBody] List<JObject> dataList)
