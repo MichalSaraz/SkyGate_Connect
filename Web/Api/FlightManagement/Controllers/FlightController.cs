@@ -1,14 +1,11 @@
 ﻿using System.Linq.Expressions;
-using System.Runtime.Intrinsics.X86;
 using AutoMapper;
-using Core.BaggageContext;
 using Core.Dtos;
 using Core.FlightContext;
 using Core.Interfaces;
 using Core.PassengerContext;
 using Core.PassengerContext.Booking.Enums;
 using Core.PassengerContext.JoinClasses;
-using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using Web.Api.FlightManagement.Models;
@@ -27,7 +24,6 @@ namespace Web.Api.FlightManagement.Controllers
         private readonly ICommentRepository _commentRepository;
         private readonly ISpecialServiceRequestRepository _specialServiceRequestRepository;
         private readonly IBasePassengerOrItemRepository _basePassengerOrItemRepository;
-        private readonly IBaggageRepository _baggageRepository;
         private readonly ITimeProvider _timeProvider;
         private readonly IMapper _mapper;
 
@@ -39,7 +35,6 @@ namespace Web.Api.FlightManagement.Controllers
             ICommentRepository commentRepository,
             ISpecialServiceRequestRepository specialServiceRequestRepository,
             IBasePassengerOrItemRepository basePassengerOrItemRepository,
-            IBaggageRepository baggageRepository,
             ITimeProvider timeProvider,
             IMapper mapper)
         {
@@ -50,7 +45,6 @@ namespace Web.Api.FlightManagement.Controllers
             _commentRepository = commentRepository;
             _specialServiceRequestRepository = specialServiceRequestRepository;
             _basePassengerOrItemRepository = basePassengerOrItemRepository;
-            _baggageRepository = baggageRepository;
             _timeProvider = timeProvider;
             _mapper = mapper;
         }
@@ -407,6 +401,15 @@ namespace Web.Api.FlightManagement.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Retrieves the list of passengers along with their comments for a specific flight.
+        /// </summary>
+        /// <param name="id">The ID of the flight.</param>
+        /// <param name="commentType">The type of comments to retrieve.</param>
+        /// <returns>
+        /// A list of PassengerCommentsDto objects, each containing the details of a passenger along with their
+        /// comments.
+        /// </returns>
         [HttpGet("flight/{id:guid}/get-passengers-with-comments")]
         public async Task<ActionResult<List<PassengerCommentsDto>>> GetPassengersWithComments(Guid id,
             CommentTypeEnum commentType)
@@ -432,10 +435,12 @@ namespace Web.Api.FlightManagement.Controllers
             return Ok(passengerCommentsDtoList);
         }
 
-        private async Task<ActionResult<List<Passenger>>> _GetPassengersWithSpecialRequests(Guid id, List<string> ssrcodes)
+        private async Task<ActionResult<List<Passenger>>> _GetPassengersWithSpecialRequests(Guid id,
+            ICollection<string> ssrCodes)
         {
-            var recordsWithSpecialRequests = await _specialServiceRequestRepository.GetSpecialServiceRequestsByCriteriaAsync(
-                ssr => ssr.FlightId == id && ssrcodes.Contains(ssr.SSRCode.Code));
+            var recordsWithSpecialRequests =
+                await _specialServiceRequestRepository.GetSpecialServiceRequestsByCriteriaAsync(ssr =>
+                    ssr.FlightId == id && ssrCodes.Contains(ssr.SSRCode.Code));
 
             var ssrGroupedByPassenger = recordsWithSpecialRequests.GroupBy(ssr => ssr.Passenger).ToList();
 
@@ -443,11 +448,10 @@ namespace Web.Api.FlightManagement.Controllers
 
             foreach (var group in ssrGroupedByPassenger)
             {
-                var passengerSpecialRequestsDto = _mapper.Map<PassengerSpecialServiceRequestsDto>(group.Key, opt =>
-                {
-                    opt.Items["FlightId"] = id;
-                });
-                passengerSpecialRequestsDto.SpecialServiceRequests = _mapper.Map<List<SpecialServiceRequestDto>>(group.ToList());
+                var passengerSpecialRequestsDto =
+                    _mapper.Map<PassengerSpecialServiceRequestsDto>(group.Key, opt => { opt.Items["FlightId"] = id; });
+                passengerSpecialRequestsDto.SpecialServiceRequests =
+                    _mapper.Map<List<SpecialServiceRequestDto>>(group.ToList());
 
                 passengerSpecialRequestsDtoList.Add(passengerSpecialRequestsDto);
             }
@@ -455,6 +459,14 @@ namespace Web.Api.FlightManagement.Controllers
             return Ok(passengerSpecialRequestsDtoList);
         }
 
+        /// <summary>
+        /// Retrieves a list of passengers with special assistance for a specific flight.
+        /// </summary>
+        /// <param name="id">The ID of the flight.</param>
+        /// <returns>
+        /// An asynchronous task that represents the operation. The task result contains an <see cref="ActionResult"/>
+        /// object that contains the list of passengers with special assistance for the flight.
+        /// </returns>
         [HttpGet("flight/{id:guid}/passengers-with-special-assistance")]
         public async Task<ActionResult<List<Passenger>>> GetPassengersWithSpecialAssistance(Guid id)
         {
@@ -462,6 +474,11 @@ namespace Web.Api.FlightManagement.Controllers
             return await _GetPassengersWithSpecialRequests(id, specialAssistanceSSRCodes);
         }
 
+        /// <summary>
+        /// Retrieves a list of passengers with disability for a specific flight.
+        /// </summary>
+        /// <param name="id">The unique identifier of the flight.</param>
+        /// <returns>A list of passengers with disability.</returns>
         [HttpGet("flight/{id:guid}/passengers-with-disability")]
         public async Task<ActionResult<List<Passenger>>> GetPassengersWithDisability(Guid id)
         {
@@ -469,6 +486,11 @@ namespace Web.Api.FlightManagement.Controllers
             return await _GetPassengersWithSpecialRequests(id, disabilitySSRCodes);
         }
 
+        /// <summary>
+        /// Retrieves the list of deportee passengers for a given flight.
+        /// </summary>
+        /// <param name="id">The ID of the flight.</param>
+        /// <returns>The list of deportee passengers.</returns>
         [HttpGet("flight/{id:guid}/deportee-passengers")]
         public async Task<ActionResult<List<Passenger>>> GetDeporteePassengers(Guid id)
         {
@@ -476,6 +498,11 @@ namespace Web.Api.FlightManagement.Controllers
             return await _GetPassengersWithSpecialRequests(id, deporteeSSRCodes);
         }
 
+        /// <summary>
+        /// Returns a list of passengers with animals on a flight.
+        /// </summary>
+        /// <param name="id">The ID of the flight.</param>
+        /// <returns>A list of Passenger objects with animals.</returns>
         [HttpGet("flight/{id:guid}/passengers-with-animals")]
         public async Task<ActionResult<List<Passenger>>> GetPassengersWithAnimals(Guid id)
         {
@@ -483,6 +510,11 @@ namespace Web.Api.FlightManagement.Controllers
             return await _GetPassengersWithSpecialRequests(id, animalsSSRCodes);
         }
 
+        /// <summary>
+        /// Retrieves a list of unaccompanied minors for a specific flight.
+        /// </summary>
+        /// <param name="id">The ID of the flight.</param>
+        /// <returns>A list of passengers who are unaccompanied minors for the specified flight.</returns>
         [HttpGet("flight/{id:guid}/unaccompanied-minors")]
         public async Task<ActionResult<List<Passenger>>> GetUnaccompaniedMinors(Guid id)
         {
@@ -490,6 +522,11 @@ namespace Web.Api.FlightManagement.Controllers
             return await _GetPassengersWithSpecialRequests(id, unaccompaniedMinorSSRCodes);
         }
 
+        /// <summary>
+        /// Get the list of passengers with sport equipment for a given flight.
+        /// </summary>
+        /// <param name="id">The ID of the flight.</param>
+        /// <returns>The list of passengers with sport equipment.</returns>
         [HttpGet("flight/{id:guid}/passengers-with-sport-equipment")]
         public async Task<ActionResult<List<Passenger>>> GetPassengersWithSportEquipment(Guid id)
         {
@@ -497,6 +534,11 @@ namespace Web.Api.FlightManagement.Controllers
             return await _GetPassengersWithSpecialRequests(id, sportEquipmentSSRCodes);
         }
 
+        /// <summary>
+        /// Retrieves a list of passengers with a firearm on a specific flight.
+        /// </summary>
+        /// <param name="id">The ID of the flight.</param>
+        /// <returns>A list of passengers with a firearm on the specified flight.</returns>
         [HttpGet("flight/{id:guid}/passengers-with-firearm")]
         public async Task<ActionResult<List<Passenger>>> GetPassengersWithFirearm(Guid id)
         {
@@ -504,6 +546,11 @@ namespace Web.Api.FlightManagement.Controllers
             return await _GetPassengersWithSpecialRequests(id, firearmSSRCodes);
         }
 
+        /// <summary>
+        /// Retrieves a list of passengers with infants for a specific flight.
+        /// </summary>
+        /// <param name="id">The ID of the flight.</param>
+        /// <returns>A list of BasePassengerOrItem objects representing passengers with infants.</returns>
         [HttpGet("flight/{id:guid}/passengers-with-infants")]
         public async Task<ActionResult<List<BasePassengerOrItem>>> GetPassengersWithInfants(Guid id)
         {
@@ -515,6 +562,12 @@ namespace Web.Api.FlightManagement.Controllers
             return Ok(infantList);
         }
 
+        /// <summary>
+        /// Retrieves a list of passengers who have either CabinBaggageRequiringSeat or ExtraSeat associated with
+        /// a specific flight.
+        /// </summary>
+        /// <param name="id">The unique identifier of the flight.</param>
+        /// <returns>A list of Passenger objects.</returns>
         [HttpGet("flight/{id:guid}/passengers-with-cbbg-or-exst")]
         public async Task<ActionResult<List<Passenger>>> GetPassengersWithCBBGOrEXST(Guid id)
         {
@@ -526,6 +579,17 @@ namespace Web.Api.FlightManagement.Controllers
             return Ok(cbbgOrExstList);
         }
 
+        /// <summary>
+        /// Retrieves a list of passengers for a given flight.
+        /// </summary>
+        /// <param name="id">The ID of the flight.</param>
+        /// <param name="acceptanceStatus">The acceptance status of the passengers.</param>
+        /// <param name="applyAcceptanceStatusFilter">A flag indicating whether to apply the acceptance status
+        /// filter.</param>
+        /// <returns>
+        /// An <see cref="ActionResult"/> object containing a list of <see cref="BasePassengerDto"/> objects
+        /// representing the passengers.
+        /// </returns>
         [HttpGet("flight/{id:guid}/passenger-list")]
         public async Task<ActionResult<List<Passenger>>> GetPassengerList(Guid id,
             AcceptanceStatusEnum acceptanceStatus, bool applyAcceptanceStatusFilter)
