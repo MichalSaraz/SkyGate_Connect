@@ -30,8 +30,9 @@ namespace Infrastructure.Repositories
 
         public async Task<IReadOnlyList<Comment>> GetCommentsByCriteriaAsync(Expression<Func<Comment, bool>> criteria)
         {
-            return await _context.Comments.AsQueryable()
+            return await _context.Comments.AsQueryable().AsNoTracking()
                 .Include(_ => _.LinkedToFlights)
+                .Include(_ => _.Passenger.AssignedSeats)
                 .Where(criteria)
                 .ToListAsync();
         }

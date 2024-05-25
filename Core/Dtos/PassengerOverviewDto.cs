@@ -2,20 +2,8 @@
 
 namespace Core.Dtos
 {
-    public class PassengerOverviewDto
+    public class PassengerOverviewDto : BasePassengerDto
     {
-        [JsonProperty(Order = -2)]
-        public Guid Id { get; set; }
-
-        [JsonProperty(Order = -2)]
-        public string FirstName { get; set; }
-
-        [JsonProperty(Order = -2)]
-        public string LastName { get; set; }
-
-        [JsonProperty(Order = -2)]
-        public string Gender { get; set; }
-
         [JsonProperty(Order = -2)]
         public string PNR { get; set; }
 
@@ -26,6 +14,6 @@ namespace Core.Dtos
         public PassengerFlightDto CurrentFlight { get; set; }
 
         [JsonProperty(Order = -2)]
-        public SeatDto SeatOnCurrentFlight { get; set; }
+        public SeatDto SeatOnCurrentFlightDetails { get; set; }
     }
 }

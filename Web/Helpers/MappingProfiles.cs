@@ -32,14 +32,22 @@ namespace Web.Helpers
 
             CreateMap<BaseFlight, FlightConnectionsDto>().IncludeBase<BaseFlight, FlightDetailsDto>();
 
+            CreateMap<Passenger, BasePassengerDto>()
+                .ForMember(dest => dest.SeatNumberOnCurrentFlight,
+                    opt => opt.MapFrom((src, _, _, context) =>
+                        src.AssignedSeats.FirstOrDefault(s => s.FlightId == (Guid)context.Items["FlightId"])?.SeatNumber));
+
+            CreateMap<Infant, InfantDto>();
+
             CreateMap<Passenger, PassengerOverviewDto>()
+                .IncludeBase<Passenger, BasePassengerDto>()
                 .ForMember(dest => dest.PNR, opt => opt.MapFrom(src => src.BookingDetails.PNRId))
                 .ForMember(dest => dest.NumberOfCheckedBags, opt => opt.MapFrom(src => src.PassengerCheckedBags.Count))
                 .ForMember(dest => dest.CurrentFlight,
                     opt => opt.MapFrom((src, _, _, context) => src.Flights.FirstOrDefault(pf =>
                         pf.Flight.DepartureDateTime == (DateTime)context.Items["DepartureDateTime"])))
-                .ForMember(dest => dest.SeatOnCurrentFlight, opt => opt.MapFrom(src => src.AssignedSeats))
-                .ForMember(dest => dest.SeatOnCurrentFlight,
+                .ForMember(dest => dest.SeatOnCurrentFlightDetails, opt => opt.MapFrom(src => src.AssignedSeats))
+                .ForMember(dest => dest.SeatOnCurrentFlightDetails,
                     opt => opt.MapFrom((src, _, _, context) =>
                         src.AssignedSeats.FirstOrDefault(s => s.FlightId == (Guid)context.Items["FlightId"])));
 
@@ -103,8 +111,14 @@ namespace Web.Helpers
 
             CreateMap<Comment, CommentDto>();
 
+            CreateMap<Passenger, PassengerCommentsDto>()
+                .IncludeBase<Passenger, BasePassengerDto>();
+
             CreateMap<SpecialServiceRequest, SpecialServiceRequestDto>()
                 .ForMember(dest => dest.SSRCode, opt => opt.MapFrom(src => src.SSRCode.Code));
+
+            CreateMap<Passenger, PassengerSpecialServiceRequestsDto>()
+                .IncludeBase<Passenger, BasePassengerDto>();
 
             CreateMap<FlightComment, FlightCommentDto>()
                 .ForMember(dest => dest.FlightNumber, opt => opt.MapFrom(src => src.Flight.ScheduledFlightId));

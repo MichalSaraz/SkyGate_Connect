@@ -1,10 +1,14 @@
 ﻿using System.Linq.Expressions;
+using System.Runtime.Intrinsics.X86;
 using AutoMapper;
+using Core.BaggageContext;
 using Core.Dtos;
 using Core.FlightContext;
 using Core.Interfaces;
 using Core.PassengerContext;
+using Core.PassengerContext.Booking.Enums;
 using Core.PassengerContext.JoinClasses;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using Web.Api.FlightManagement.Models;
@@ -20,6 +24,10 @@ namespace Web.Api.FlightManagement.Controllers
         private readonly IBaseFlightRepository _baseFlightRepository;
         private readonly IOtherFlightRepository _otherFlightRepository;
         private readonly IPassengerRepository _passengerRepository;
+        private readonly ICommentRepository _commentRepository;
+        private readonly ISpecialServiceRequestRepository _specialServiceRequestRepository;
+        private readonly IBasePassengerOrItemRepository _basePassengerOrItemRepository;
+        private readonly IBaggageRepository _baggageRepository;
         private readonly ITimeProvider _timeProvider;
         private readonly IMapper _mapper;
 
@@ -28,6 +36,10 @@ namespace Web.Api.FlightManagement.Controllers
             IBaseFlightRepository baseFlightRepository,
             IOtherFlightRepository otherFlightRepository,
             IPassengerRepository passengerRepository,
+            ICommentRepository commentRepository,
+            ISpecialServiceRequestRepository specialServiceRequestRepository,
+            IBasePassengerOrItemRepository basePassengerOrItemRepository,
+            IBaggageRepository baggageRepository,
             ITimeProvider timeProvider,
             IMapper mapper)
         {
@@ -35,6 +47,10 @@ namespace Web.Api.FlightManagement.Controllers
             _baseFlightRepository = baseFlightRepository;
             _otherFlightRepository = otherFlightRepository;
             _passengerRepository = passengerRepository;
+            _commentRepository = commentRepository;
+            _specialServiceRequestRepository = specialServiceRequestRepository;
+            _basePassengerOrItemRepository = basePassengerOrItemRepository;
+            _baggageRepository = baggageRepository;
             _timeProvider = timeProvider;
             _mapper = mapper;
         }
@@ -235,8 +251,8 @@ namespace Web.Api.FlightManagement.Controllers
                     pdd.LastName,
                     pdd.Gender,
                     pdd.NumberOfCheckedBags,
-                    pdd.SeatOnCurrentFlight?.SeatNumber,
-                    pdd.SeatOnCurrentFlight?.FlightClass,
+                    pdd.SeatOnCurrentFlightDetails?.SeatNumber,
+                    pdd.SeatOnCurrentFlightDetails?.FlightClass,
                     FlightDetails = isOnwardFlight ? pdd.ConnectingFlights : pdd.InboundFlights
                 });
 
@@ -389,6 +405,150 @@ namespace Web.Api.FlightManagement.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpGet("flight/{id:guid}/get-passengers-with-comments")]
+        public async Task<ActionResult<List<PassengerCommentsDto>>> GetPassengersWithComments(Guid id,
+            CommentTypeEnum commentType)
+        {
+            var comments = await _commentRepository.GetCommentsByCriteriaAsync(c =>
+                c.LinkedToFlights.Any(f => f.FlightId == id) && c.CommentType == commentType);
+
+            var commentsGroupedByPassenger = comments.GroupBy(c => c.Passenger).ToList();
+
+            var passengerCommentsDtoList = new List<PassengerCommentsDto>();
+
+            foreach (var group in commentsGroupedByPassenger)
+            {
+                var passengerCommentsDto = _mapper.Map<PassengerCommentsDto>(group.Key, opt =>
+                {
+                    opt.Items["FlightId"] = id;
+                });
+                passengerCommentsDto.Comments = _mapper.Map<List<CommentDto>>(group.ToList());
+
+                passengerCommentsDtoList.Add(passengerCommentsDto);
+            }
+
+            return Ok(passengerCommentsDtoList);
+        }
+
+        private async Task<ActionResult<List<Passenger>>> _GetPassengersWithSpecialRequests(Guid id, List<string> ssrcodes)
+        {
+            var recordsWithSpecialRequests = await _specialServiceRequestRepository.GetSpecialServiceRequestsByCriteriaAsync(
+                ssr => ssr.FlightId == id && ssrcodes.Contains(ssr.SSRCode.Code));
+
+            var ssrGroupedByPassenger = recordsWithSpecialRequests.GroupBy(ssr => ssr.Passenger).ToList();
+
+            var passengerSpecialRequestsDtoList = new List<PassengerSpecialServiceRequestsDto>();
+
+            foreach (var group in ssrGroupedByPassenger)
+            {
+                var passengerSpecialRequestsDto = _mapper.Map<PassengerSpecialServiceRequestsDto>(group.Key, opt =>
+                {
+                    opt.Items["FlightId"] = id;
+                });
+                passengerSpecialRequestsDto.SpecialServiceRequests = _mapper.Map<List<SpecialServiceRequestDto>>(group.ToList());
+
+                passengerSpecialRequestsDtoList.Add(passengerSpecialRequestsDto);
+            }
+
+            return Ok(passengerSpecialRequestsDtoList);
+        }
+
+        [HttpGet("flight/{id:guid}/passengers-with-special-assistance")]
+        public async Task<ActionResult<List<Passenger>>> GetPassengersWithSpecialAssistance(Guid id)
+        {
+            var specialAssistanceSSRCodes = new List<string> { "WCHC", "WCHR", "WCHS", "MAAS" };
+            return await _GetPassengersWithSpecialRequests(id, specialAssistanceSSRCodes);
+        }
+
+        [HttpGet("flight/{id:guid}/passengers-with-disability")]
+        public async Task<ActionResult<List<Passenger>>> GetPassengersWithDisability(Guid id)
+        {
+            var disabilitySSRCodes = new List<string> { "MEDA", "STCR", "DPNA", "DEAF", "BLND" };
+            return await _GetPassengersWithSpecialRequests(id, disabilitySSRCodes);
+        }
+
+        [HttpGet("flight/{id:guid}/deportee-passengers")]
+        public async Task<ActionResult<List<Passenger>>> GetDeporteePassengers(Guid id)
+        {
+            var deporteeSSRCodes = new List<string> { "DEPA", "DEPU", "PICA", "PICU" };
+            return await _GetPassengersWithSpecialRequests(id, deporteeSSRCodes);
+        }
+
+        [HttpGet("flight/{id:guid}/passengers-with-animals")]
+        public async Task<ActionResult<List<Passenger>>> GetPassengersWithAnimals(Guid id)
+        {
+            var animalsSSRCodes = new List<string> { "SVAN", "ESAN", "PETC", "AVIH" };
+            return await _GetPassengersWithSpecialRequests(id, animalsSSRCodes);
+        }
+
+        [HttpGet("flight/{id:guid}/unaccompanied-minors")]
+        public async Task<ActionResult<List<Passenger>>> GetUnaccompaniedMinors(Guid id)
+        {
+            var unaccompaniedMinorSSRCodes = new List<string> { "UMNR" };
+            return await _GetPassengersWithSpecialRequests(id, unaccompaniedMinorSSRCodes);
+        }
+
+        [HttpGet("flight/{id:guid}/passengers-with-sport-equipment")]
+        public async Task<ActionResult<List<Passenger>>> GetPassengersWithSportEquipment(Guid id)
+        {
+            var sportEquipmentSSRCodes = new List<string> { "SPEQ", "BIKE" };
+            return await _GetPassengersWithSpecialRequests(id, sportEquipmentSSRCodes);
+        }
+
+        [HttpGet("flight/{id:guid}/passengers-with-firearm")]
+        public async Task<ActionResult<List<Passenger>>> GetPassengersWithFirearm(Guid id)
+        {
+            var firearmSSRCodes = new List<string> { "WEAP" };
+            return await _GetPassengersWithSpecialRequests(id, firearmSSRCodes);
+        }
+
+        [HttpGet("flight/{id:guid}/passengers-with-infants")]
+        public async Task<ActionResult<List<BasePassengerOrItem>>> GetPassengersWithInfants(Guid id)
+        {
+            var infants = await _basePassengerOrItemRepository.GetBasePassengerOrItemByCriteriaAsync(
+                p => p.Flights.Any(f => f.FlightId == id) && p is Infant);
+
+            var infantList = infants.ToList();
+
+            return Ok(infantList);
+        }
+
+        [HttpGet("flight/{id:guid}/passengers-with-cbbg-or-exst")]
+        public async Task<ActionResult<List<Passenger>>> GetPassengersWithCBBGOrEXST(Guid id)
+        {
+            var cbbgOrExsts = await _basePassengerOrItemRepository.GetBasePassengerOrItemByCriteriaAsync(
+                p => p.Flights.Any(f => f.FlightId == id) && (p is CabinBaggageRequiringSeat || p is ExtraSeat));
+
+            var cbbgOrExstList = cbbgOrExsts.ToList();
+
+            return Ok(cbbgOrExstList);
+        }
+
+        [HttpGet("flight/{id:guid}/passenger-list")]
+        public async Task<ActionResult<List<Passenger>>> GetPassengerList(Guid id,
+            AcceptanceStatusEnum acceptanceStatus, bool applyAcceptanceStatusFilter)
+        {
+            IReadOnlyList<Passenger> passengers;
+
+            if (applyAcceptanceStatusFilter)
+            {
+                passengers = await _passengerRepository.GetPassengersByCriteriaAsync(p =>
+                                   p.Flights.Any(f => f.FlightId == id && f.AcceptanceStatus == acceptanceStatus));
+            }
+            else
+            {
+                passengers = await _passengerRepository.GetPassengersByCriteriaAsync(p =>
+                                   p.Flights.Any(f => f.FlightId == id));                
+            }
+
+            var passengerDtos = _mapper.Map<List<BasePassengerDto>>(passengers, opt =>
+            {
+                opt.Items["FlightId"] = id;
+            });
+
+            return Ok(passengerDtos);
         }
     }
 }

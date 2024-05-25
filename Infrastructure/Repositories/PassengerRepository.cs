@@ -34,6 +34,7 @@ namespace Infrastructure.Repositories
                 .Include(_ => _.Flights)
                     .ThenInclude(_ => _.Flight)
                 .Include(_ => _.AssignedSeats)
+                .Include(_ => _.Infant)
                 .Where(criteria);
 
             if (displayDetails)

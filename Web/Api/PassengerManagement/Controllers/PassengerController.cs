@@ -66,7 +66,7 @@ namespace Web.Api.PassengerManagement.Controllers
         /// </remarks> 
         /// <returns>Returns a list of Passenger objects that match the search criteria.</returns>
         [HttpPost("search-passengers")]
-        public async Task<ActionResult<List<Passenger>>> SearchPassengers([FromBody] JObject data)
+        public async Task<ActionResult<List<PassengerOverviewDto>>> SearchPassengers([FromBody] JObject data)
         {
             var model = new PassengerSearchModel
             {
@@ -136,7 +136,7 @@ namespace Web.Api.PassengerManagement.Controllers
         /// If no passengers are found for the provided ids, returns a NotFound response with an ApiResponse message.
         /// </returns>
         [HttpPost("selected-flight/{flightId:guid}/passenger-details")]
-        public async Task<ActionResult<Passenger>> GetPassengerDetails(Guid flightId,
+        public async Task<ActionResult<PassengerDetailsDto>> GetPassengerDetails(Guid flightId,
             [FromBody] List<Guid> passengerIds)
         {
             Expression<Func<Passenger, bool>> criteria = c => passengerIds.Contains(c.Id);
@@ -171,7 +171,7 @@ namespace Web.Api.PassengerManagement.Controllers
         /// If passengers are found, returns an <see cref="OkObjectResult"/> with a collection of passengers.
         /// </returns>
         [HttpGet("selected-flight/{flightId:guid}/booking-reference/{bookingReference}/passenger-list")]
-        public async Task<ActionResult<List<Passenger>>> GetPassengersByBookingReference(Guid flightId,
+        public async Task<ActionResult<List<PassengerOverviewDto>>> GetPassengersByBookingReference(Guid flightId,
             string bookingReference)
         {
             Expression<Func<Passenger, bool>> criteria = c => c.BookingDetails.PNRId == bookingReference;
@@ -199,7 +199,7 @@ namespace Web.Api.PassengerManagement.Controllers
         /// <param name="id">The id of the passenger.</param>
         /// <returns>A list of BaggageDetailsDto objects representing the bags of the passenger.</returns>
         [HttpGet("passenger/{id:guid}/all-bags")]
-        public async Task<ActionResult<List<Baggage>>> GetAllPassengersBags(Guid id)
+        public async Task<ActionResult<List<BaggageDetailsDto>>> GetAllPassengersBags(Guid id)
         {
             var passenger = await _passengerRepository.GetPassengerByIdAsync(id, false, true);
 
@@ -222,7 +222,7 @@ namespace Web.Api.PassengerManagement.Controllers
         /// The list of passengers with additional details (PassengerDetailsDto) for the selected flight.
         /// </returns>
         [HttpPost("selected-flight/{flightId:guid}/add-passengers")]
-        public async Task<ActionResult<List<Passenger>>> AddPassengersToSelection(Guid flightId,
+        public async Task<ActionResult<List<PassengerDetailsDto>>> AddPassengersToSelection(Guid flightId,
             [FromBody] PassengerSelectionUpdateModel passengerSelectionUpdate)
         {
             var selectedFlight = await _flightRepository.GetFlightByIdAsync(flightId, false);

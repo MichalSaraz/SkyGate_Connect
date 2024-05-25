@@ -34,6 +34,7 @@ namespace Web.Extensions
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IPredefinedCommentRepository, PredefinedCommentRepository>();
             services.AddScoped<IPassengerBookingDetailsRepository, PassengerBookingDetailsRepository>();
+            services.AddScoped<IBasePassengerOrItemRepository, BasePassengerOrItemRepository>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
