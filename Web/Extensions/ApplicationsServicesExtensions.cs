@@ -1,6 +1,7 @@
 ﻿using Core.Interfaces;
 using Core.Time;
 using Infrastructure.Repositories;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using Web.Errors;
 
@@ -35,6 +36,8 @@ namespace Web.Extensions
             services.AddScoped<IPredefinedCommentRepository, PredefinedCommentRepository>();
             services.AddScoped<IPassengerBookingDetailsRepository, PassengerBookingDetailsRepository>();
             services.AddScoped<IBasePassengerOrItemRepository, BasePassengerOrItemRepository>();
+            services.AddScoped<ISeatRepository, SeatRepository>();
+            services.AddScoped<ICommentService, CommentService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

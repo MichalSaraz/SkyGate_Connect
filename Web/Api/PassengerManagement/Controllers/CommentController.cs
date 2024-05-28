@@ -14,13 +14,16 @@ namespace Web.Api.PassengerManagement.Controllers
     {
         private readonly ICommentRepository _commentRepository;
         private readonly IPredefinedCommentRepository _predefinedCommentRepository;
+        private readonly ICommentService _commentService;
 
         public CommentController(
             ICommentRepository commentRepository,
-            IPredefinedCommentRepository predefinedCommentRepository)
+            IPredefinedCommentRepository predefinedCommentRepository,
+            ICommentService commentService)
         {
             _commentRepository = commentRepository;
             _predefinedCommentRepository = predefinedCommentRepository;
+            _commentService = commentService;
         }
 
         /// <summary>
@@ -51,49 +54,20 @@ namespace Web.Api.PassengerManagement.Controllers
             var flightIds = data["flightIds"]?.ToObject<List<Guid>>();
             var text = data["text"]?.ToString();
 
-            Comment comment;
-
-            if (!string.IsNullOrEmpty(predefineCommentId))
-            {
-                var predefinedComment =
-                    await _predefinedCommentRepository.GetPredefinedCommentByIdAsync(predefineCommentId);
-
-                if (predefinedComment == null)
-                {
-                    return BadRequest(new ApiResponse(400, "Predefined comment not found."));
-                }
-
-                var existingComment = await _commentRepository.GetCommentByCriteriaAsync(c =>
-                    c.PassengerId == id && c.PredefinedCommentId == predefineCommentId);
-
-                if (existingComment != null)
-                {
-                    return BadRequest(new ApiResponse(400, "Predefined comment already exists."));
-                }
-
-                comment = new Comment(id, predefineCommentId, predefinedComment.Text);
-            }
-            else
-            {
-                comment = new Comment(id, commentType, text ?? string.Empty);
-            }
-
-            await _commentRepository.AddAsync(comment);
-
             if (flightIds == null)
             {
                 return BadRequest(new ApiResponse(400, "Flight IDs must be provided."));
             }
 
-            foreach (var flightId in flightIds)
+            try
             {
-                var newFlightComment = new FlightComment(comment.Id, flightId);
-                comment.LinkedToFlights.Add(newFlightComment);
+                var comment = await _commentService.AddCommentAsync(id, commentType, text, flightIds, predefineCommentId);
+                return Ok();
             }
-
-            await _commentRepository.UpdateAsync(comment);
-
-            return Ok();
+            catch (Exception e)
+            {
+                return BadRequest(new ApiResponse(400, e.Message));
+            }
         }
 
         /// <summary>

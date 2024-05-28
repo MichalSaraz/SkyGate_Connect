@@ -3,6 +3,7 @@ using Core.PassengerContext;
 using Core.PassengerContext.JoinClasses;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Repositories
@@ -14,11 +15,19 @@ namespace Infrastructure.Repositories
         }
 
         public async Task<IReadOnlyList<BasePassengerOrItem>> GetBasePassengerOrItemByCriteriaAsync(
-            Expression<Func<BasePassengerOrItem, bool>> criteria)
+            Expression<Func<BasePassengerOrItem, bool>> criteria, bool tracked = true)
         {
-            return await _context.Passengers.AsQueryable().AsNoTracking()
-                .Where(criteria)
-                .ToListAsync();
+            var basePassengerOrItemQuery = _context.Passengers.AsQueryable()
+                .Include(_ => _.Flights)
+                .Where(criteria);
+
+            if (!tracked)
+            {
+                basePassengerOrItemQuery = basePassengerOrItemQuery.AsNoTracking();
+            }
+
+            var basePassengerOrItems = await basePassengerOrItemQuery.ToListAsync();
+            return basePassengerOrItems;
         }
     }
 }
