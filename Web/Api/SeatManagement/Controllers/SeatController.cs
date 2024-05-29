@@ -1,26 +1,24 @@
-﻿using Core.Interfaces;
+﻿#nullable enable
+using Core.Interfaces;
 using Core.PassengerContext;
 using Core.PassengerContext.Booking.Enums;
 using Core.SeatingContext;
 using Core.SeatingContext.Enums;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using Web.Errors;
 
 namespace Web.Api.SeatManagement.Controllers
 {
     [ApiController]
-    [Route("seat-management")]
+    [Route("seat-management/flight/{flightId:guid}")]
     public class SeatController : ControllerBase
     {
         private readonly ISeatRepository _seatRepository;
         private readonly ICommentService _commentService;
         private readonly IBasePassengerOrItemRepository _basePassengerOrItemRepository;
 
-        public SeatController(
-            ISeatRepository seatRepository,
-            ICommentService commentService,
+        public SeatController(ISeatRepository seatRepository, ICommentService commentService,
             IBasePassengerOrItemRepository basePassengerOrItemRepository)
         {
             _seatRepository = seatRepository;
@@ -28,14 +26,22 @@ namespace Web.Api.SeatManagement.Controllers
             _basePassengerOrItemRepository = basePassengerOrItemRepository;
         }
 
-        [HttpPatch("flight/{flightId:guid}/update-seat-status")]
+        /// <summary>
+        /// Updates the seat status for selected seats on a specific flight.
+        /// </summary>
+        /// <param name="flightId">The unique identifier of the flight.</param>
+        /// <param name="selectedSeats">A list of seat numbers that need to be updated.</param>
+        /// <param name="blockSeats">A boolean value indicating whether to block the seats (<c>true</c>) or unblock
+        /// them (<c>false</c>).</param>
+        /// <returns>An <see cref="IActionResult"/> representing the response of the update operation.</returns>
+        [HttpPatch("update-seat-status")]
         public async Task<IActionResult> UpdateSeatStatus(Guid flightId, List<string> selectedSeats, bool blockSeats)
         {
             var targetStatus = blockSeats ? SeatStatusEnum.Empty : SeatStatusEnum.Blocked;
             var newStatus = blockSeats ? SeatStatusEnum.Blocked : SeatStatusEnum.Empty;
 
-            var seats = await _seatRepository.GetSeatsByCriteriaAsync(c => selectedSeats.Contains(c.SeatNumber)
-                && c.SeatStatus == targetStatus && c.FlightId == flightId);
+            var seats = await _seatRepository.GetSeatsByCriteriaAsync(c =>
+                selectedSeats.Contains(c.SeatNumber) && c.SeatStatus == targetStatus && c.FlightId == flightId);
 
             if (seats == null || seats.Count < selectedSeats.Count)
             {
@@ -52,87 +58,17 @@ namespace Web.Api.SeatManagement.Controllers
             return Ok();
         }
 
-        //[HttpPatch("flight/{flightId:guid}/change-seats")]
-        //public async Task<IActionResult> ChangeSeats(Guid flightId, Dictionary<Guid, string> newSeatNumbers, bool swapSeats)
-        //{
-        //    var seatIds = newSeatNumbers.Keys.ToList();
-        //    var seatNumbers = newSeatNumbers.Values.ToList();
-        //    var flightIds = new List<Guid> { flightId };
-        //    var passengersToSwap = new Dictionary<Guid, Guid>();
-
-        //    var seats = await _seatRepository.GetSeatsByCriteriaAsync(c =>
-        //        seatIds.Contains(c.Id) || (seatNumbers.Contains(c.SeatNumber) && c.FlightId == flightId));
-
-        //    if (seats == null || seats.Count < newSeatNumbers.Count * 2)
-        //    {
-        //        return NotFound(new ApiResponse(404, "Seats not found"));
-        //    }
-
-        //    var newSeats = seats.Where(s => seatNumbers.Contains(s.SeatNumber)).ToList();
-        //    var currentSeats = seats.Where(s => seatIds.Contains(s.Id)).ToList();
-
-        //    foreach (var newSeat in newSeats)
-        //    {
-        //        if (!swapSeats && newSeat.SeatStatus != SeatStatusEnum.Empty)
-        //        {
-        //            return BadRequest(new ApiResponse(400, "Seat is not available"));
-        //        }
-
-        //        if (swapSeats && newSeat.SeatStatus == SeatStatusEnum.Empty)
-        //        {
-        //            return BadRequest(new ApiResponse(400, "Seat is not occupied"));
-        //        }
-
-        //        if (swapSeats)
-        //        {
-        //            passengersToSwap.Add(newSeat.Id, newSeat.PassengerOrItemId.Value);
-        //        }
-
-        //        var correspondingCurrentSeat = currentSeats.FirstOrDefault(c => c.Id == newSeatNumbers.FirstOrDefault(s => s.Value == newSeat.SeatNumber).Key);
-        //        newSeat.SeatStatus = SeatStatusEnum.Occupied;
-        //        newSeat.PassengerOrItemId = correspondingCurrentSeat.PassengerOrItemId;
-
-        //        var commentResult = await _AddSeatChangeRelatedComment(newSeat, flightIds);
-
-        //        if (commentResult != null)
-        //        {
-        //            return commentResult;
-        //        }
-        //    }
-
-        //    foreach (var currentSeat in currentSeats)
-        //    {
-        //        if (currentSeat.SeatNumber == newSeatNumbers[currentSeat.Id])
-        //        {
-        //            return BadRequest(new ApiResponse(400, "Seat number is the same"));
-        //        }
-
-        //        if (swapSeats)
-        //        {
-        //            currentSeat.PassengerOrItemId = passengersToSwap[currentSeat.Id];
-        //            var commentResult = await _AddSeatChangeRelatedComment(currentSeat, flightIds);
-
-        //            if (commentResult != null)
-        //            {
-        //                return commentResult;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            currentSeat.SeatStatus = SeatStatusEnum.Empty;
-        //            currentSeat.PassengerOrItemId = null;
-        //        }
-        //    }
-
-        //    var seatsToUpdate = currentSeats.Concat(newSeats).ToList();
-        //    await _seatRepository.UpdateAsync(seatsToUpdate.ToArray());
-
-        //    return Ok();
-        //}
-
-
-        [HttpPatch("flight/{flightId:guid}/change-seats")]
-        public async Task<IActionResult> ChangeSeats(Guid flightId, Dictionary<Guid, string> newSeatNumbers, bool swapSeats)
+        /// <summary>
+        /// Changes the seats for a given flight.
+        /// </summary>
+        /// <param name="flightId">The ID of the flight.</param>
+        /// <param name="newSeatNumbers">A dictionary containing the passenger or item IDs as keys and the new seat
+        /// numbers as values.</param>
+        /// <param name="swapSeats">A boolean value indicating whether to swap seats or not.</param>
+        /// <returns>An IActionResult indicating the success or failure of the seat changes.</returns>
+        [HttpPatch("change-seats")]
+        public async Task<IActionResult> ChangeSeats(Guid flightId, Dictionary<Guid, string> newSeatNumbers,
+            bool swapSeats)
         {
             var passengerIds = newSeatNumbers.Keys.ToList();
             var seatNumbers = newSeatNumbers.Values.ToList();
@@ -147,7 +83,8 @@ namespace Web.Api.SeatManagement.Controllers
             }
 
             var currentSeats = await _seatRepository.GetSeatsByCriteriaAsync(c =>
-                passengerIds.Contains(c.PassengerOrItemId.Value) && c.FlightId == flightId);
+                c.PassengerOrItemId != null && passengerIds.Contains(c.PassengerOrItemId.Value) &&
+                c.FlightId == flightId);
 
             if (currentSeats == null || currentSeats.Count < newSeatNumbers.Count)
             {
@@ -155,7 +92,7 @@ namespace Web.Api.SeatManagement.Controllers
             }
 
             var newSeatsDict = seats.ToDictionary(s => s.SeatNumber);
-            var currentSeatsDict = currentSeats.ToDictionary(c => c.PassengerOrItemId.Value);
+            var currentSeatsDict = currentSeats.ToDictionary(c => c.PassengerOrItemId ?? Guid.Empty);
             var passengersToSwap = new Dictionary<Guid, Guid>();
             var currentToNewSeatMapping = new Dictionary<Guid, Guid>();
 
@@ -176,7 +113,7 @@ namespace Web.Api.SeatManagement.Controllers
 
                 if (swapSeats)
                 {
-                    passengersToSwap.Add(newSeat.Id, newSeat.PassengerOrItemId.Value);
+                    passengersToSwap.Add(newSeat.Id, newSeat.PassengerOrItemId ?? Guid.Empty);
                 }
 
                 newSeat.SeatStatus = SeatStatusEnum.Occupied;
@@ -221,20 +158,26 @@ namespace Web.Api.SeatManagement.Controllers
             return Ok();
         }
 
-
-        [HttpPatch("flight/{flightId:guid}/allocate-seats")]
+        /// <summary>
+        /// Allocates seats to passengers for a given flight.
+        /// </summary>
+        /// <param name="flightId">The ID of the flight.</param>
+        /// <param name="seatsToAllocate">A dictionary of passenger IDs and corresponding seat numbers to allocate.
+        /// </param>
+        /// <returns>An IActionResult representing the result of the allocation.</returns>
+        [HttpPatch("allocate-seats")]
         public async Task<IActionResult> AllocateSeats(Guid flightId, Dictionary<Guid, string> seatsToAllocate)
         {
-            Expression<Func<BasePassengerOrItem, bool>> passengerCriteria = c => seatsToAllocate.Keys.Contains(c.Id) && 
-                c.Flights.FirstOrDefault(f => f.FlightId == flightId).AcceptanceStatus == AcceptanceStatusEnum.NotAccepted;
+            Expression<Func<BasePassengerOrItem, bool>> passengerCriteria = c => seatsToAllocate.Keys.Contains(c.Id) &&
+                c.Flights.Any(f => f.FlightId == flightId && f.AcceptanceStatus == AcceptanceStatusEnum.NotAccepted);
 
             var passengers =
                 await _basePassengerOrItemRepository.GetBasePassengerOrItemByCriteriaAsync(passengerCriteria);
-            var seats = 
-                await _seatRepository.GetSeatsByCriteriaAsync(c => seatsToAllocate.Values.Contains(c.SeatNumber) && c.FlightId == flightId);
+            var seats = await _seatRepository.GetSeatsByCriteriaAsync(c =>
+                seatsToAllocate.Values.Contains(c.SeatNumber) && c.FlightId == flightId);
 
-            if (seats == null || seats.Count != seatsToAllocate.Count || 
-                passengers == null || passengers.Count != seatsToAllocate.Count)
+            if (seats == null || seats.Count != seatsToAllocate.Count || passengers == null ||
+                passengers.Count != seatsToAllocate.Count)
             {
                 return NotFound(new ApiResponse(404, "Seats or passengers not found"));
             }
@@ -261,12 +204,20 @@ namespace Web.Api.SeatManagement.Controllers
             return Ok();
         }
 
-        [HttpPatch("flight/{flightId:guid}/deallocate-seats")]
+        /// <summary>
+        /// Deallocates seats for the specified flight and passenger IDs.
+        /// </summary>
+        /// <param name="flightId">The ID of the flight.</param>
+        /// <param name="passengerIds">The IDs of the passengers.</param>
+        /// <returns>Returns an IActionResult representing the result of the operation.</returns>
+        [HttpPatch("deallocate-seats")]
         public async Task<IActionResult> DeallocateSeats(Guid flightId, List<Guid> passengerIds)
         {
-            Expression<Func<Seat, bool>> seatCriteria = c => passengerIds.Contains(c.PassengerOrItemId.Value) &&
-                c.PassengerOrItem.Flights.FirstOrDefault(f => f.FlightId == flightId).AcceptanceStatus == AcceptanceStatusEnum.NotAccepted;
-            
+            Expression<Func<Seat, bool>> seatCriteria = c => passengerIds.Contains(c.PassengerOrItemId ?? Guid.Empty) &&
+                                                             c.PassengerOrItem.Flights.Any(f =>
+                                                                 f.FlightId == flightId && f.AcceptanceStatus ==
+                                                                 AcceptanceStatusEnum.NotAccepted);
+
             var seatsToDeallocate = await _seatRepository.GetSeatsByCriteriaAsync(seatCriteria);
 
             if (seatsToDeallocate == null || seatsToDeallocate.Count != passengerIds.Count)
@@ -296,7 +247,8 @@ namespace Web.Api.SeatManagement.Controllers
             {
                 try
                 {
-                    await _commentService.AddCommentAsync(newSeat.PassengerOrItemId.Value, CommentTypeEnum.Gate, null, flightIds, "Exit");
+                    await _commentService.AddCommentAsync(newSeat.PassengerOrItemId ?? Guid.Empty, CommentTypeEnum.Gate,
+                        null, flightIds, "Exit");
                 }
                 catch (Exception e)
                 {
@@ -306,12 +258,14 @@ namespace Web.Api.SeatManagement.Controllers
 
             try
             {
-                await _commentService.AddCommentAsync(newSeat.PassengerOrItemId.Value, CommentTypeEnum.Gate, null, flightIds, "SeatChng");
+                await _commentService.AddCommentAsync(newSeat.PassengerOrItemId ?? Guid.Empty, CommentTypeEnum.Gate,
+                    null, flightIds, "SeatChng");
             }
             catch (Exception e)
             {
                 return BadRequest(new ApiResponse(400, e.Message));
             }
+
             return null;
         }
     }

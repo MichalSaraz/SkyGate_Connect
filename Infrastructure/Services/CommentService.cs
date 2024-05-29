@@ -2,7 +2,6 @@
 using Core.Interfaces;
 using Core.PassengerContext.Booking;
 using Core.PassengerContext.Booking.Enums;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Infrastructure.Services
 {
@@ -11,15 +10,15 @@ namespace Infrastructure.Services
         private readonly ICommentRepository _commentRepository;
         private readonly IPredefinedCommentRepository _predefinedCommentRepository;
 
-        public CommentService(
-            ICommentRepository commentRepository,
+        public CommentService(ICommentRepository commentRepository,
             IPredefinedCommentRepository predefinedCommentRepository)
         {
             _commentRepository = commentRepository;
             _predefinedCommentRepository = predefinedCommentRepository;
         }
 
-        public async Task<Comment> AddCommentAsync(Guid id, CommentTypeEnum commentType, string text, List<Guid> flightIds, string predefinedCommentId = null)
+        public async Task<Comment> AddCommentAsync(Guid id, CommentTypeEnum commentType, string text,
+            List<Guid> flightIds, string predefinedCommentId = null)
         {
             Comment comment;
 
@@ -59,6 +58,6 @@ namespace Infrastructure.Services
             await _commentRepository.UpdateAsync(comment);
 
             return comment;
-        } 
+        }
     }
 }

@@ -1,4 +1,3 @@
-using Core.FlightContext.JoinClasses;
 using Core.Interfaces;
 using Core.PassengerContext.Booking;
 using Core.PassengerContext.Booking.Enums;
@@ -16,10 +15,8 @@ namespace Web.Api.PassengerManagement.Controllers
         private readonly IPredefinedCommentRepository _predefinedCommentRepository;
         private readonly ICommentService _commentService;
 
-        public CommentController(
-            ICommentRepository commentRepository,
-            IPredefinedCommentRepository predefinedCommentRepository,
-            ICommentService commentService)
+        public CommentController(ICommentRepository commentRepository,
+            IPredefinedCommentRepository predefinedCommentRepository, ICommentService commentService)
         {
             _commentRepository = commentRepository;
             _predefinedCommentRepository = predefinedCommentRepository;
@@ -61,7 +58,8 @@ namespace Web.Api.PassengerManagement.Controllers
 
             try
             {
-                var comment = await _commentService.AddCommentAsync(id, commentType, text, flightIds, predefineCommentId);
+                var comment =
+                    await _commentService.AddCommentAsync(id, commentType, text, flightIds, predefineCommentId);
                 return Ok();
             }
             catch (Exception e)
