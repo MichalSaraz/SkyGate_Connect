@@ -19,6 +19,9 @@ namespace Infrastructure.Data.Config
                 .WithMany(f => f.Seats)
                 .HasForeignKey(s => s.FlightId);
             
+            builder.Property(s => s.Letter)
+                .HasEnumConversion();
+
             builder.Property(s => s.Position)
                 .HasEnumConversion();
             

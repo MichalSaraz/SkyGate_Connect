@@ -2,6 +2,7 @@
 using AutoMapper;
 using Core.Dtos;
 using Core.FlightContext;
+using Core.FlightContext.FlightInfo.Enums;
 using Core.Interfaces;
 using Core.PassengerContext;
 using Core.PassengerContext.Booking.Enums;
@@ -554,7 +555,7 @@ namespace Web.Api.FlightManagement.Controllers
         [HttpGet("flight/{id:guid}/passengers-with-infants")]
         public async Task<ActionResult<List<BasePassengerOrItem>>> GetPassengersWithInfants(Guid id)
         {
-            var infants = await _basePassengerOrItemRepository.GetBasePassengerOrItemByCriteriaAsync(
+            var infants = await _basePassengerOrItemRepository.GetBasePassengerOrItemsByCriteriaAsync(
                 p => p.Flights.Any(f => f.FlightId == id) && p is Infant);
 
             var infantList = infants.ToList();
@@ -571,7 +572,7 @@ namespace Web.Api.FlightManagement.Controllers
         [HttpGet("flight/{id:guid}/passengers-with-cbbg-or-exst")]
         public async Task<ActionResult<List<Passenger>>> GetPassengersWithCBBGOrEXST(Guid id)
         {
-            var cbbgOrExsts = await _basePassengerOrItemRepository.GetBasePassengerOrItemByCriteriaAsync(
+            var cbbgOrExsts = await _basePassengerOrItemRepository.GetBasePassengerOrItemsByCriteriaAsync(
                 p => p.Flights.Any(f => f.FlightId == id) && (p is CabinBaggageRequiringSeat || p is ExtraSeat));
 
             var cbbgOrExstList = cbbgOrExsts.ToList();
@@ -613,6 +614,37 @@ namespace Web.Api.FlightManagement.Controllers
             });
 
             return Ok(passengerDtos);
+        }
+
+        [HttpGet("flight/{id:guid}/get-onload-list")]
+        public async Task<ActionResult<List<Passenger>>> GetOnloadList(Guid id)
+        {
+            var passengers = await _passengerRepository.GetPassengersByCriteriaAsync(p =>
+                p.Flights.Any(f => f.FlightId == id && f.AcceptanceStatus == AcceptanceStatusEnum.Standby));
+
+            var passengerDtos = _mapper.Map<List<BasePassengerDto>>(passengers, opt =>
+            {
+                opt.Items["FlightId"] = id;
+            });
+
+            return Ok(passengerDtos);
+        }
+
+        [HttpPatch("flight/{id:guid}/update-flight-status")]
+        public async Task<ActionResult<Flight>> UpdateFlightStatus(Guid id, FlightStatusEnum flightStatus)
+        {
+            var flight = await _flightRepository.GetFlightByIdAsync(id, true) as Flight;
+
+            if (flight == null)
+            {
+                return NotFound(new ApiResponse(404, $"Flight {id} not found"));
+            }
+
+            flight.FlightStatus = flightStatus;
+
+            await _flightRepository.UpdateAsync(flight);
+
+            return Ok(flight);
         }
     }
 }

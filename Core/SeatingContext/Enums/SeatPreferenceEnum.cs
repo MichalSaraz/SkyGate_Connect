@@ -5,6 +5,9 @@
         None,
         Window,
         Aisle,
-        Middle
+        Middle,
+        Exit,
+        Bulkhead,
+        Front
     }
 }

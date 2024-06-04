@@ -14,7 +14,7 @@ namespace Infrastructure.Repositories
         {            
         }
 
-        public async Task<IReadOnlyList<BasePassengerOrItem>> GetBasePassengerOrItemByCriteriaAsync(
+        public async Task<IReadOnlyList<BasePassengerOrItem>> GetBasePassengerOrItemsByCriteriaAsync(
             Expression<Func<BasePassengerOrItem, bool>> criteria, bool tracked = true)
         {
             var basePassengerOrItemQuery = _context.Passengers.AsQueryable()

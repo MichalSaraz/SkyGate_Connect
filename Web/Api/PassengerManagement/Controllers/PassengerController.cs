@@ -1,13 +1,16 @@
-﻿using System.Linq.Expressions;
+﻿using System.Linq;
+using System.Linq.Expressions;
 using AutoMapper;
 using Core.BaggageContext;
 using Core.Dtos;
 using Core.FlightContext;
+using Core.FlightContext.FlightInfo.Enums;
 using Core.Interfaces;
 using Core.PassengerContext;
 using Core.PassengerContext.Booking;
 using Core.PassengerContext.Booking.Enums;
 using Core.PassengerContext.JoinClasses;
+using Core.SeatingContext;
 using Core.SeatingContext.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
@@ -26,6 +29,9 @@ namespace Web.Api.PassengerManagement.Controllers
         private readonly IPassengerRepository _passengerRepository;
         private readonly IInfantRepository _infantRepository;
         private readonly IPassengerBookingDetailsRepository _passengerBookingDetailsRepository;
+        private readonly IPassengerFlightRepository _passengerFlightRepository;
+        private readonly ISeatRepository _seatRepository;
+        private readonly IBasePassengerOrItemRepository _basePassengerOrItemRepository;
 
         public PassengerController(
             IMapper mapper,
@@ -33,7 +39,10 @@ namespace Web.Api.PassengerManagement.Controllers
             IFlightRepository flightRepository,
             IPassengerRepository passengerRepository,
             IInfantRepository infantRepository,
-            IPassengerBookingDetailsRepository passengerBookingDetailsRepository)
+            IPassengerBookingDetailsRepository passengerBookingDetailsRepository,
+            IPassengerFlightRepository passengerFlightRepository,
+            ISeatRepository seatRepository,
+            IBasePassengerOrItemRepository basePassengerOrItemRepository)
         {
             _mapper = mapper;
             _timeProvider = timeProvider;
@@ -41,6 +50,9 @@ namespace Web.Api.PassengerManagement.Controllers
             _passengerRepository = passengerRepository;
             _infantRepository = infantRepository;
             _passengerBookingDetailsRepository = passengerBookingDetailsRepository;
+            _passengerFlightRepository = passengerFlightRepository;
+            _seatRepository = seatRepository;
+            _basePassengerOrItemRepository = basePassengerOrItemRepository;
         }
 
         /// <summary>
@@ -174,6 +186,7 @@ namespace Web.Api.PassengerManagement.Controllers
         public async Task<ActionResult<List<PassengerOverviewDto>>> GetPassengersByBookingReference(Guid flightId,
             string bookingReference)
         {
+            //ToDo : Include to search also ExtraSeat and CabinBaggageRequiringSeat
             Expression<Func<Passenger, bool>> criteria = c => c.BookingDetails.PNRId == bookingReference;
 
             var passengers = await _passengerRepository.GetPassengersByCriteriaAsync(criteria, false, true);
@@ -236,10 +249,10 @@ namespace Web.Api.PassengerManagement.Controllers
                 await _passengerRepository.GetPassengersByCriteriaAsync(
                     p => passengerSelectionUpdate.ExistingPassengers.Contains(p.Id), true, true);
 
-            var passengersToAdd = 
+            var passengersToAdd =
                 await _passengerRepository.GetPassengersByCriteriaAsync(
-                    p => passengerSelectionUpdate.PassengersToAdd.Contains(p.Id), true, true);            
-            
+                    p => passengerSelectionUpdate.PassengersToAdd.Contains(p.Id), true, true);
+
             if (!existingPassengers.Any() || !passengersToAdd.Any())
             {
                 return NotFound(new ApiResponse(404, $"No passengers found with provided ids"));
@@ -269,7 +282,7 @@ namespace Web.Api.PassengerManagement.Controllers
         public async Task<ActionResult<Infant>> AddInfant(Guid id,
             [FromBody] InfantModel infantModel)
         {
-            var passenger = await _passengerRepository.GetPassengerByIdAsync(id);           
+            var passenger = await _passengerRepository.GetPassengerByIdAsync(id);
 
             if (passenger == null)
             {
@@ -322,8 +335,8 @@ namespace Web.Api.PassengerManagement.Controllers
             Expression<Func<Passenger, bool>> criteria = c => c.InfantId == id;
             var passenger = await _passengerRepository.GetPassengerByCriteriaAsync(criteria);
             var bookingDetails = await _passengerBookingDetailsRepository.GetBookingDetailsByCriteriaAsync(
-                               pbd => pbd.PassengerId == id);    
-            
+                               pbd => pbd.PassengerId == id);
+
             if (passenger != null)
             {
                 passenger.InfantId = null;
@@ -342,8 +355,8 @@ namespace Web.Api.PassengerManagement.Controllers
             {
                 return NotFound(new ApiResponse(404, $"Infant with Id {id} was not found."));
             }
-            
-            await _infantRepository.DeleteAsync(infant);                    
+
+            await _infantRepository.DeleteAsync(infant);
 
             return Ok();
         }
@@ -478,5 +491,482 @@ namespace Web.Api.PassengerManagement.Controllers
 
             return Ok();
         }
+
+        [HttpPut("selected-flight/{flightId:guid}/check-in-passenger")]
+        public async Task<ActionResult<BasePassengerOrItem>> CheckInPassenger(Guid flightId, [FromBody] PassengerCheckInModel model)
+        {
+            Expression<Func<BasePassengerOrItem, bool>> criteria = c => model.PassengerIds.Contains(c.Id) &&
+                (c is Passenger || c is CabinBaggageRequiringSeat || c is ExtraSeat);
+
+            var passengersOrItems = await _basePassengerOrItemRepository.GetBasePassengerOrItemsByCriteriaAsync(criteria);
+            var flights = await _flightRepository.GetFlightsByCriteriaAsync(f => model.FlightIds.Contains(f.Id), false);
+            var selectedFlight = await _flightRepository.GetFlightByIdAsync(flightId, false) as Flight;
+
+            if (passengersOrItems == null || flights == null || selectedFlight == null)
+            {
+                return NotFound(new ApiResponse(404, $"Passenger(s) or flight(s) not found with provided ids"));
+            }
+
+            var selectedFlightDeparture = selectedFlight.DepartureDateTime;
+
+            var hasInvalidPassengersOrItems = passengersOrItems.Any(p =>
+                p.Flights.Any(f2 =>
+                    flights.Any(f3 => f3.DepartureDateTime > f2.Flight.DepartureDateTime) &&
+                    !model.FlightIds.Contains(f2.FlightId) &&
+                    f2.AcceptanceStatus == AcceptanceStatusEnum.NotAccepted)
+            );
+
+            if (hasInvalidPassengersOrItems)
+            {
+                return BadRequest(new ApiResponse(400,
+                    "Passenger(s) cannot be checked in for a future flight if they are not checked in for the current flight"));
+            }
+
+            if (selectedFlight.FlightStatus != FlightStatusEnum.Open)
+            {
+                return BadRequest(new ApiResponse(400, "Passenger(s) cannot be checked in for a closed flight"));
+            }
+
+            if (passengersOrItems.Any(p => p is Passenger && (p.TravelDocuments == null || !p.TravelDocuments.Any())))
+            {
+                return BadRequest(new ApiResponse(400, "Passenger(s) cannot be checked in without travel documents"));
+            }
+
+            var flightClassesMismatch = passengersOrItems
+                .SelectMany(p => p.Flights)
+                .Where(f => model.FlightIds.Contains(f.FlightId))
+                .GroupBy(f => f.FlightId)
+                .Any(g => g.Select(f => f.FlightClass).Distinct().Count() > 1);
+
+            if (flightClassesMismatch)
+            {
+                return BadRequest(new ApiResponse(400, "Passenger(s) flight classes on the selected flights do not match"));
+            }
+
+            foreach (var flight in flights)
+            {
+                var orderedSeats = flight.Seats.OrderBy(s => s.Row).ThenBy(s => s.Letter).ToList();
+                var emptySeats = orderedSeats.Where(s => s.SeatStatus == SeatStatusEnum.Empty).ToList();
+                var seatsToAssign = new List<Seat>();
+
+                var passengersOrItemsWithoutSeat = passengersOrItems.Where(p => p.AssignedSeats.All(s => s.FlightId != flight.Id)).ToList();
+                var passengersOrItemsWithSeats = passengersOrItems.Except(passengersOrItemsWithoutSeat).ToList();
+                var groupSize = passengersOrItemsWithoutSeat.Count;
+
+                if (groupSize == 1)
+                {
+                    var availableSeat = _SelectSeatForSinglePassenger(emptySeats);
+                    if (availableSeat != null)
+                    {
+                        seatsToAssign.Add(availableSeat);
+                    }
+                }
+                else
+                {
+                    var potentialSeatGroups = _FindSeatsForGroup(orderedSeats, groupSize, false);
+                    seatsToAssign = _SelectSeatsForPassengerGroup(potentialSeatGroups, orderedSeats, groupSize);
+                }
+
+                for (int i = 0; i < groupSize; i++)
+                {
+                    if (seatsToAssign[i] == null)
+                    {
+                        passengersOrItemsWithoutSeat[i].Flights.FirstOrDefault(f => f.FlightId == flight.Id).AcceptanceStatus = AcceptanceStatusEnum.Standby;
+                    }
+                    passengersOrItemsWithoutSeat[i].AssignedSeats.Add(seatsToAssign[i]);
+                }
+
+                var highestSequenceNumber = await _passengerFlightRepository.GetHighestSequenceNumberOfTheFlight(flight.Id);
+
+                foreach (var passengerOrItem in passengersOrItems)
+                {
+                    if (passengerOrItem.AssignedSeats.Any(s => s.FlightId == flight.Id))
+                    {
+                        passengerOrItem.Flights.FirstOrDefault(f => f.FlightId == flight.Id).AcceptanceStatus = AcceptanceStatusEnum.Accepted;
+                        passengerOrItem.Flights.FirstOrDefault(f => f.FlightId == flight.Id).BoardingSequenceNumber = ++highestSequenceNumber;
+
+                        if (passengerOrItem is Passenger)
+                        {
+                            passengerOrItem.Flights.FirstOrDefault(f => f.FlightId == flight.Id).BoardingZone = (passengerOrItem as Passenger).PriorityBoarding
+                                ? BoardingZoneEnum.A : (passengerOrItem as Passenger).BaggageAllowance > 0
+                                ? BoardingZoneEnum.B : BoardingZoneEnum.C;
+
+                            if ((passengerOrItem as Passenger).InfantId != null)
+                            {
+                                var infant = await _infantRepository.GetInfantByIdAsync((passengerOrItem as Passenger).InfantId.Value);
+                                infant.Flights.FirstOrDefault(f => f.FlightId == flight.Id).AcceptanceStatus = AcceptanceStatusEnum.Accepted;
+                                infant.Flights.FirstOrDefault(f => f.FlightId == flight.Id).BoardingSequenceNumber = highestSequenceNumber;
+                            }
+                        }
+                        else if (passengerOrItem is CabinBaggageRequiringSeat)
+                        {
+                            (passengerOrItem as CabinBaggageRequiringSeat).Weight = model.Weight;
+                        }
+                    }
+                }
+            }
+
+            await _passengerRepository.UpdateAsync(passengersOrItems.ToArray());
+
+            return Ok();
+        }
+
+        private Seat _SelectSeatForSinglePassenger(List<Seat> emptySeats)
+        {
+            if (emptySeats.Any())
+            {
+                var windowSeat = emptySeats.FirstOrDefault(s => s.Position == SeatPositionEnum.Window);
+                if (windowSeat != null) return windowSeat;
+
+                var aisleSeat = emptySeats.FirstOrDefault(s => s.Position == SeatPositionEnum.Aisle);
+                if (aisleSeat != null) return aisleSeat;
+
+                return emptySeats.First();
+            }
+
+            return null;
+        }
+
+        private List<Seat> _SelectSeatsForPassengerGroup(List<List<Seat>> potentialSeatGroups, List<Seat> orderedSeats, int groupSize)
+        {
+            var availableSeats = new List<Seat>();
+            var seatsToAssign = new List<Seat>();
+            var emptySeats = orderedSeats.Where(s => s.SeatStatus == SeatStatusEnum.Empty).ToList();
+
+            if (potentialSeatGroups.Count > 0)
+            {
+                var bestSelection = potentialSeatGroups.OrderByDescending(g =>
+                    g.Any(s => s.Position == SeatPositionEnum.Window) ? 3 :
+                    g.Any(s => s.Position == SeatPositionEnum.Aisle) ? 2 :
+                    g.Zip(g, (a, b) => new { a = a.Position, b = b.Position }).All(pair =>
+                        pair.a != SeatPositionEnum.Aisle && pair.b != SeatPositionEnum.Aisle) ? 1 : 0
+                ).FirstOrDefault();
+
+                if (bestSelection != null)
+                {
+                    seatsToAssign.AddRange(bestSelection);
+                }
+            }
+
+            if (seatsToAssign.Count == 0)
+            {
+                var splitGroups = _SplitGroup(groupSize);
+                foreach (var split in splitGroups)
+                {
+                    foreach (var subGroup in split)
+                    {
+                        availableSeats = _FindSeatsForGroup(orderedSeats, subGroup, true).First();
+                        if (availableSeats.Count == subGroup)
+                        {
+                            seatsToAssign.AddRange(availableSeats);
+                        }
+                    }
+                    if (seatsToAssign.Count == groupSize)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        seatsToAssign.Clear();
+                    }
+                }
+            }
+
+            if (seatsToAssign.Count == 0 && emptySeats.Count > 0)
+            {
+                int count = Math.Min(groupSize, emptySeats.Count);
+                for (int i = 0; i < count; i++)
+                {
+                    seatsToAssign.Add(emptySeats[i]);
+                }
+            }
+
+            return seatsToAssign;
+        }
+
+        private List<int[]> _SplitGroup(int groupSize)
+        {
+            List<int[]> splits = new List<int[]>();
+            for (int i = groupSize - 1; i > 0; i--)
+            {
+                splits.Add(new int[] { i, groupSize - i });
+            }
+
+            return splits;
+        }
+
+        private List<List<Seat>> _FindSeatsForGroup(List<Seat> orderedSeats, int groupSize, bool takeFirst)
+        {
+            List<List<Seat>> seatGroups = new List<List<Seat>>();
+            List<Seat> selectedSeats = new List<Seat>(groupSize);
+
+            foreach (var seat in orderedSeats)
+            {
+                selectedSeats.Add(seat);
+
+                if (selectedSeats.Count > groupSize)
+                {
+                    selectedSeats.RemoveAt(0);
+                }
+
+                if (selectedSeats.Count == groupSize
+                    && selectedSeats.All(s => s.SeatStatus == SeatStatusEnum.Empty)
+                    && (selectedSeats.Count < 2
+                        || (selectedSeats[0].Row == selectedSeats[1].Row
+                            && selectedSeats[selectedSeats.Count - 2].Row == selectedSeats[selectedSeats.Count - 1].Row)))
+                {
+                    seatGroups.Add(new List<Seat>(selectedSeats));
+                }
+
+                if (takeFirst && seatGroups.Count > 0)
+                {
+                    break;
+                }
+            }
+
+            return seatGroups;
+        }
+
+        [HttpPut("selected-flight/{flightId:guid}/cancel-passenger-acceptance")]
+        public async Task<ActionResult<BasePassengerOrItem>> CancelPassengerAcceptance(Guid flightId, [FromBody] PassengerCheckInModel model,
+            AcceptanceStatusEnum updateStatusTo)
+        {
+            Expression<Func<BasePassengerOrItem, bool>> criteria = c => model.PassengerIds.Contains(c.Id) &&
+                (c is Passenger || c is CabinBaggageRequiringSeat || c is ExtraSeat);
+
+            var passengersOrItems = await _basePassengerOrItemRepository.GetBasePassengerOrItemsByCriteriaAsync(criteria);
+            var flights = await _flightRepository.GetFlightsByCriteriaAsync(f => model.FlightIds.Contains(f.Id), false);
+            var selectedFlight = await _flightRepository.GetFlightByIdAsync(flightId, false) as Flight;
+
+            if (passengersOrItems == null || flights == null || selectedFlight == null)
+            {
+                return NotFound(new ApiResponse(404, $"Passenger(s) or flight(s) not found with provided ids"));
+            }
+
+            var selectedFlightDeparture = selectedFlight.DepartureDateTime;
+
+            var hasInvalidPassengersOrItems = passengersOrItems.Any(p =>
+                p.Flights.Any(f2 =>
+                    flights.Any(f3 => f3.DepartureDateTime < f2.Flight.DepartureDateTime) &&
+                    !model.FlightIds.Contains(f2.FlightId) &&
+                    f2.AcceptanceStatus == AcceptanceStatusEnum.Accepted)
+            );
+
+            if (hasInvalidPassengersOrItems)
+            {
+                return BadRequest(new ApiResponse(400,
+
+                    "Acceptance of selected passenger(s) and flights can't be cancelled as some of them are already checked in for onward flights"));
+            }
+
+            if (selectedFlight.FlightStatus == FlightStatusEnum.Finalised)
+            {
+                return BadRequest(new ApiResponse(400, "Acceptance of selected passenger(s) can't be cancelled as the flight is finalised"));
+            }
+
+            if (passengersOrItems.Any(p => p.Flights.FirstOrDefault(f => f.FlightId == flightId).AcceptanceStatus == AcceptanceStatusEnum.Boarded))
+            {
+                return BadRequest(new ApiResponse(400, "Acceptance of selected passenger(s) can't be cancelled as some of them are already boarded"));
+            }
+
+            foreach (var flight in flights)
+            {
+                foreach (var passengerOrItem in passengersOrItems)
+                {
+                    var passengerFlight = passengerOrItem.Flights.FirstOrDefault(f => f.FlightId == flight.Id);
+                    if (passengerFlight != null)
+                    {
+                        passengerFlight.AcceptanceStatus = updateStatusTo;
+                        passengerFlight.BoardingSequenceNumber = null;
+                        passengerFlight.BoardingZone = null;
+
+                        switch (updateStatusTo)
+                        {
+                            case AcceptanceStatusEnum.Standby:
+                                passengerOrItem.AssignedSeats.RemoveAll(s => s.FlightId == flight.Id);
+                                break;
+                            case AcceptanceStatusEnum.NotTravelling:
+                                passengerOrItem.AssignedSeats.RemoveAll(s => s.FlightId == flight.Id);
+                                //ToDo : Create class with offload reasons
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        return NotFound(new ApiResponse(404, "Passenger(s) not found on the selected flight"));
+                    }
+                }
+            }
+
+            await _passengerRepository.UpdateAsync(passengersOrItems.ToArray());
+
+            return Ok();
+        }
+
+        [HttpPatch("selected-flight/{flightId:guid}/onload-passenger")]
+        public async Task<ActionResult<Passenger>> OnloadPassenger(Guid flightId, List<Guid> passengerIds)
+        {
+            Expression<Func<BasePassengerOrItem, bool>> criteria = c => passengerIds.Contains(c.Id) &&
+                (c is Passenger || c is CabinBaggageRequiringSeat || c is ExtraSeat);
+
+            var passengersOrItems = await _basePassengerOrItemRepository.GetBasePassengerOrItemsByCriteriaAsync(criteria);
+            var availableSeats = await _seatRepository.GetSeatsByCriteriaAsync(s => s.FlightId == flightId && s.SeatStatus == SeatStatusEnum.Empty, false);
+            var flight = await _flightRepository.GetFlightByIdAsync(flightId, false) as Flight;
+
+            if (passengersOrItems == null || flight == null)
+            {
+                return NotFound(new ApiResponse(404, $"Passenger(s) or flight not found with provided ids"));
+            }
+
+            if (flight.FlightStatus == FlightStatusEnum.Finalised)
+            {
+                return BadRequest(new ApiResponse(400, "Onload of selected passenger(s) can't be done as the flight is finalised"));
+            }
+
+            if (passengersOrItems.Any(p => p.Flights.FirstOrDefault(f => f.FlightId == flightId).AcceptanceStatus != AcceptanceStatusEnum.Standby))
+            {
+                return BadRequest(new ApiResponse(400, "Onload of selected passenger(s) can't be done as some of them are not on standby"));
+            }
+
+            if (availableSeats == null)
+            {
+                return NotFound(new ApiResponse(404, "No available seats found on the current flight"));
+            }
+
+            var highestSequenceNumber = await _passengerFlightRepository.GetHighestSequenceNumberOfTheFlight(flight.Id);
+
+            foreach (var passengerOrItem in passengers)
+            {
+                var passengerFlight = passengerOrItem.Flights.FirstOrDefault(f => f.FlightId == flight.Id);
+                if (passengerFlight != null)
+                {
+                    var availableSeat = availableSeats.FirstOrDefault(s => s.FlightClass == passengerFlight.FlightClass);
+                    if (availableSeat != null)
+                    {
+                        passengerOrItem.AssignedSeats.Add(availableSeat);
+                        passengerFlight.AcceptanceStatus = AcceptanceStatusEnum.Accepted;
+                        passengerFlight.BoardingSequenceNumber = ++highestSequenceNumber;
+                        passengerFlight.BoardingZone = passengerOrItem.PriorityBoarding
+                            ? BoardingZoneEnum.A : passengerOrItem.BaggageAllowance > 0
+                            ? BoardingZoneEnum.B : BoardingZoneEnum.C;
+                    }
+                    else
+                    {
+                        return NotFound(new ApiResponse(404,
+                            "No seats available for the passenger(s) in required flight class"));
+                    }
+                }
+                else
+                {
+                    return NotFound(new ApiResponse(404, "Passenger(s) not found on the selected flight"));
+                }
+            }
+
+            await _passengerRepository.UpdateAsync(passengers.ToArray());
+
+            return Ok();
+        }
+
+
+        //[HttpPut("selected-flight/{flightId:guid}/check-in-passenger")]
+        //public async Task<ActionResult<Passenger>> CheckInPassenger(Guid flightId, [FromBody] PassengerCheckInModel model)
+        //{
+        //    var passengers = await _passengerRepository.GetPassengersByCriteriaAsync(p => model.PassengerIds.Contains(p.Id), true, false);
+        //    var flights = await _flightRepository.GetFlightsByCriteriaAsync(f => model.FlightIds.Contains(f.Id), false);
+        //    var selectedFlight = await _flightRepository.GetFlightByIdAsync(flightId, false) as Flight;
+
+        //    if (passengers == null || flights == null || selectedFlight == null)
+        //    {
+        //        return NotFound(new ApiResponse(404, $"Passenger(s) or flight(s) not found with provided ids"));
+        //    }
+
+        //    var selectedFlightDeparture = selectedFlight.DepartureDateTime;
+
+        //    var hasInvalidPassengers = passengers.Any(p =>
+        //        p.Flights.Any(f2 =>
+        //            flights.Any(f3 => f3.DepartureDateTime > f2.Flight.DepartureDateTime) &&
+        //            !model.FlightIds.Contains(f2.FlightId) &&
+        //            f2.AcceptanceStatus == AcceptanceStatusEnum.NotAccepted)
+        //    );
+
+        //    if (hasInvalidPassengers)
+        //    {
+        //        return BadRequest(new ApiResponse(400,
+        //            "Passenger(s) cannot be checked in for a future flight if they are not checked in for the current flight"));
+        //    }
+
+        //    if (selectedFlight.FlightStatus != FlightStatusEnum.Open)
+        //    {
+        //        return BadRequest(new ApiResponse(400, "Passenger(s) cannot be checked in for a closed flight"));
+        //    }
+
+        //    if (passengers.Any(p => p.TravelDocuments == null || !p.TravelDocuments.Any()))
+        //    {
+        //        return BadRequest(new ApiResponse(400, "Passenger(s) cannot be checked in without travel documents"));
+        //    }
+
+        //    var flightClassesMismatch = passengers
+        //        .SelectMany(p => p.Flights)
+        //        .Where(f => model.FlightIds.Contains(f.FlightId))
+        //        .GroupBy(f => f.FlightId)
+        //        .Any(g => g.Select(f => f.FlightClass).Distinct().Count() > 1);
+
+        //    if (flightClassesMismatch)
+        //    {
+        //        return BadRequest(new ApiResponse(400, "Passenger(s) flight classes on the selected flights do not match"));
+        //    }
+
+        //    foreach (var flight in flights)
+        //    {
+        //        var orderedSeats = flight.Seats.OrderBy(s => s.Row).ThenBy(s => s.Letter).ToList();
+        //        var emptySeats = orderedSeats.Where(s => s.SeatStatus == SeatStatusEnum.Empty).ToList();
+        //        var seatsToAssign = new List<Seat>();
+
+        //        var passengersWithoutSeats = passengers.Where(p => p.AssignedSeats.All(s => s.FlightId != flight.Id)).ToList();
+        //        var passengersWithSeats = passengers.Except(passengersWithoutSeats).ToList();
+        //        var groupSize = passengersWithoutSeats.Count;
+
+        //        if (groupSize == 1)
+        //        {
+        //            var availableSeat = _SelectSeatForSinglePassenger(emptySeats);
+        //            if (availableSeat != null)
+        //            {
+        //                seatsToAssign.Add(availableSeat);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            var potentialSeatGroups = _FindSeatsForGroup(orderedSeats, groupSize, false);
+        //            seatsToAssign = _SelectSeatsForPassengerGroup(potentialSeatGroups, orderedSeats, groupSize);
+        //        }
+
+        //        for (int i = 0; i < groupSize; i++)
+        //        {
+        //            if (seatsToAssign[i] == null)
+        //            {
+        //                passengersWithoutSeats[i].Flights.FirstOrDefault(f => f.FlightId == flight.Id).AcceptanceStatus = AcceptanceStatusEnum.Standby;
+        //            }
+        //            passengersWithoutSeats[i].AssignedSeats.Add(seatsToAssign[i]);
+        //        }
+
+        //        var highestSequenceNumber = await _passengerFlightRepository.GetHighestSequenceNumberOfTheFlight(flight.Id);
+
+        //        foreach (var passenger in passengers)
+        //        {
+        //            if (passenger.AssignedSeats.Any(s => s.FlightId == flight.Id))
+        //            {
+        //                passenger.Flights.FirstOrDefault(f => f.FlightId == flight.Id).AcceptanceStatus = AcceptanceStatusEnum.Accepted;
+        //                passenger.Flights.FirstOrDefault(f => f.FlightId == flight.Id).BoardingSequenceNumber = ++highestSequenceNumber;
+        //                passenger.Flights.FirstOrDefault(f => f.FlightId == flight.Id).BoardingZone = passenger.PriorityBoarding
+        //                    ? BoardingZoneEnum.A : passenger.BaggageAllowance > 0
+        //                    ? BoardingZoneEnum.B : BoardingZoneEnum.C;
+        //            }
+        //        }
+        //    }
+
+        //    await _passengerRepository.UpdateAsync(passengers.ToArray());
+
+        //    return Ok();
+        //}
     }
 }

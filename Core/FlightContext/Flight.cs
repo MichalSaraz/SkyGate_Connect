@@ -20,7 +20,7 @@ namespace Core.FlightContext
 
         public int? DividerPlacedBehindRow { get; set; }
 
-        public FlightStatusEnum FlightStatus { get; private set; } = FlightStatusEnum.Closed;
+        public FlightStatusEnum FlightStatus { get; set; } = FlightStatusEnum.Open;
 
         public List<Seat> Seats { get; private set; } = new();
 

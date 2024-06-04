@@ -16,19 +16,21 @@ namespace Core.SeatingContext
 
         public string SeatNumber
         {
-            get => $"{Row}{Position}";
+            get => $"{Row}{Letter}";
 
             private set 
             {
                 if (!string.IsNullOrEmpty(value) && value.Length >= 2)
                 {
                     Row = int.Parse(value[..^1]);
-                    Position = (SeatPositionEnum)Enum.Parse(typeof(SeatPositionEnum), value[^1..]);
+                    Letter = (SeatLetterEnum)Enum.Parse(typeof(SeatLetterEnum), value[^1..]);
                 }
             }
         }
 
         public int Row { get; private set; }
+
+        public SeatLetterEnum Letter { get; private set; }
 
         public SeatPositionEnum Position { get; private set; }
 

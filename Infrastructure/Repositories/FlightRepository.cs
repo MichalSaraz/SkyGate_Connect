@@ -39,6 +39,7 @@ namespace Infrastructure.Repositories
         {
             var flightsQuery = _context.Set<Flight>().AsQueryable()
                 .Include(_ => _.ListOfBookedPassengers)
+                .Include(_ => _.Seats)
                 .Where(criteria);
 
             if (!tracked)

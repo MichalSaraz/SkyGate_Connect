@@ -172,7 +172,7 @@ namespace Web.Api.SeatManagement.Controllers
                 c.Flights.Any(f => f.FlightId == flightId && f.AcceptanceStatus == AcceptanceStatusEnum.NotAccepted);
 
             var passengers =
-                await _basePassengerOrItemRepository.GetBasePassengerOrItemByCriteriaAsync(passengerCriteria);
+                await _basePassengerOrItemRepository.GetBasePassengerOrItemsByCriteriaAsync(passengerCriteria);
             var seats = await _seatRepository.GetSeatsByCriteriaAsync(c =>
                 seatsToAllocate.Values.Contains(c.SeatNumber) && c.FlightId == flightId);
 

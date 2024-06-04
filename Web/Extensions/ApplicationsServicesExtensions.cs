@@ -38,6 +38,7 @@ namespace Web.Extensions
             services.AddScoped<IBasePassengerOrItemRepository, BasePassengerOrItemRepository>();
             services.AddScoped<ISeatRepository, SeatRepository>();
             services.AddScoped<ICommentService, CommentService>();
+            services.AddScoped<IPassengerFlightRepository, PassengerFlightRepository>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
