@@ -2,11 +2,8 @@
 
 namespace Core.Dtos
 {
-    public class PassengerOverviewDto : BasePassengerDto
+    public class PassengerOverviewDto : BasePassengerOrItemDto
     {
-        [JsonProperty(Order = -2)]
-        public string PNR { get; set; }
-
         [JsonProperty(Order = -2)]
         public int NumberOfCheckedBags { get; set; }
 

@@ -12,9 +12,11 @@ namespace Infrastructure.Repositories
         {
         }
 
-        public async Task<OtherFlight> GetOtherFlightByCriteriaAsync(Expression<Func<OtherFlight, bool>> criteria, bool tracked = false)
+        public async Task<OtherFlight> GetOtherFlightByCriteriaAsync(Expression<Func<OtherFlight, bool>> criteria,
+            bool tracked = false)
         {
-            var flightQuery = _context.Set<OtherFlight>().AsQueryable()
+            var flightQuery = _context.Set<OtherFlight>()
+                .AsQueryable()
                 .Include(_ => _.Airline)
                 .Include(_ => _.ListOfBookedPassengers)
                 .Where(criteria);

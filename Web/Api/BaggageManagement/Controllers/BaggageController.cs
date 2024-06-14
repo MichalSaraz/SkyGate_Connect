@@ -35,16 +35,23 @@ namespace Web.Api.BaggageManagement.Controllers
             _destinationRepository = destinationRepository;
         }
 
+
         /// <summary>
         /// Retrieves the details of a baggage by its tag number.
         /// </summary>
         /// <param name="tagNumber">The tag number of the baggage.</param>
-        /// <returns>The details of the baggage with the specified tag number.</returns>
+        /// <returns>The details of the baggage with the specified tag number or a 404 response if the baggage is not
+        /// found.</returns>
         [HttpGet("tag-number/{tagNumber}/details")]
         public async Task<ActionResult<BaggageDetailsDto>> GetBaggageDetails(string tagNumber)
         {
             //ToDo: Add validation for tagNumber
             var baggage = await _baggageRepository.GetBaggageByTagNumber(tagNumber);
+            
+            if (baggage == null)
+            {
+                return NotFound(new ApiResponse(404, $"Baggage with tag number {tagNumber} was not found."));
+            }
 
             var baggageDto = _mapper.Map<Baggage, BaggageDetailsDto>(baggage);
 
@@ -56,12 +63,17 @@ namespace Web.Api.BaggageManagement.Controllers
         /// </summary>
         /// <param name="flightId">The ID of the flight.</param>
         /// <returns>An asynchronous task that represents the operation. The task result contains an HTTP action result
-        /// with the list of bags for the specified flight.</returns>
+        /// with the list of bags for the specified flight. If no bags are found, a 404 response is returned.</returns>
         [HttpGet("flight/{flightId:guid}/all-bags")]
         public async Task<ActionResult<List<BaggageOverviewDto>>> GetAllBags(Guid flightId)
         {
             var bagList = await _baggageRepository.GetAllBaggageByCriteriaAsync(b =>
                 b.Flights.Any(fb => fb.FlightId == flightId));
+            
+            if (bagList.Count == 0)
+            {
+                return NotFound(new ApiResponse(404, $"No bags found for flight with ID {flightId}."));
+            }
 
             var bagListDto = _mapper.Map<List<BaggageOverviewDto>>(bagList, opt => opt.Items["FlightId"] = flightId);
 
@@ -73,15 +85,23 @@ namespace Web.Api.BaggageManagement.Controllers
         /// </summary>
         /// <param name="flightId">The ID of the flight.</param>
         /// <param name="specialBagType">The special bag type to filter by.</param>
-        /// <returns>A list of baggage of the specified special bag type for the given flight ID.</returns>
+        /// <returns>A list of baggage of the specified special bag type for the given flight ID. If no bags are found,
+        /// a 404 response is returned.</returns>
         [HttpGet("flight/{flightId:guid}/special-bag-type/{specialBagType}")]
         public async Task<ActionResult<List<BaggageOverviewDto>>> GetAllBagsBySpecialBagType(Guid flightId,
             SpecialBagEnum specialBagType)
         {
             Expression<Func<Baggage, bool>> criteria = c =>
-                c.Flights.Any(fb => fb.FlightId == flightId) && c.SpecialBag.SpecialBagType == specialBagType;
+                c.Flights.Any(fb => fb.FlightId == flightId) && c.SpecialBag != null &&
+                c.SpecialBag.SpecialBagType == specialBagType;
 
             var bagList = await _baggageRepository.GetAllBaggageByCriteriaAsync(criteria);
+            
+            if (bagList.Count == 0)
+            {
+                return NotFound(new ApiResponse(404,
+                    $"No bags found for flight with ID {flightId} and special bag type {specialBagType}."));
+            }
 
             var bagListDto = _mapper.Map<List<BaggageOverviewDto>>(bagList, opt => opt.Items["FlightId"] = flightId);
 
@@ -93,7 +113,8 @@ namespace Web.Api.BaggageManagement.Controllers
         /// </summary>
         /// <param name="flightId">The ID of the flight.</param>
         /// <param name="baggageType">The type of baggage to filter the bags by.</param>
-        /// <returns>A list of bags filtered by the specified baggage type for the given flight.</returns>
+        /// <returns>A list of bags filtered by the specified baggage type for the given flight. If no bags are found,
+        /// a 404 response is returned.</returns>
         [HttpGet("flight/{flightId:guid}/baggage-type/{baggageType}")]
         public async Task<ActionResult<List<BaggageOverviewDto>>> GetAllBagsByBaggageType(Guid flightId,
             BaggageTypeEnum baggageType)
@@ -102,26 +123,38 @@ namespace Web.Api.BaggageManagement.Controllers
                 c.Flights.Any(fb => fb.FlightId == flightId && fb.BaggageType == baggageType);
 
             var bagList = await _baggageRepository.GetAllBaggageByCriteriaAsync(criteria);
+            
+            if (bagList.Count == 0)
+            {
+                return NotFound(new ApiResponse(404,
+                    $"No bags found for flight with ID {flightId} and baggage type {baggageType}."));
+            }
 
             var bagListDto = _mapper.Map<List<BaggageOverviewDto>>(bagList, opt => opt.Items["FlightId"] = flightId);
 
             return Ok(bagListDto);
         }
 
+
         /// <summary>
-        /// Retrieves all inactive bags for a specific flight.
+        /// Retrieves a list of all inactive bags for a specified flight.
         /// </summary>
         /// <param name="flightId">The ID of the flight.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation. The task result contains
-        /// an <see cref="ActionResult"/> of type <see cref="List{Baggage}"/> that represents the inactive bags
-        /// for the specified flight.</returns>
+        /// <returns>A list of inactive bags for the specified flight. If no inactive bags are found, a 404 response is
+        /// returned.</returns>
         [HttpGet("flight/{flightId:guid}/inactive-bags")]
         public async Task<ActionResult<List<BaggageOverviewDto>>> GetAllInactiveBags(Guid flightId)
         {
             Expression<Func<Baggage, bool>> criteria = c =>
-                c.Flights.Any(fb => fb.FlightId == flightId) && string.IsNullOrEmpty(c.BaggageTag.TagNumber);
+                c.Flights.Any(fb => fb.FlightId == flightId) && c.BaggageTag != null &&
+                string.IsNullOrEmpty(c.BaggageTag.TagNumber);
 
             var bagList = await _baggageRepository.GetAllBaggageByCriteriaAsync(criteria);
+            
+            if (bagList.Count == 0)
+            {
+                return NotFound(new ApiResponse(404, $"No inactive bags found for flight with ID {flightId}."));
+            }
 
             var bagListDto = _mapper.Map<List<BaggageOverviewDto>>(bagList, opt => opt.Items["FlightId"] = flightId);
 
@@ -132,16 +165,23 @@ namespace Web.Api.BaggageManagement.Controllers
         /// Retrieves a list of all bags with onward connections for a given flight ID.
         /// </summary>
         /// <param name="flightId">The ID of the flight.</param>
-        /// <returns>A list of bags with onward connections.</returns>
+        /// <returns>A list of bags with onward connections. If no bags are found, a 404 response is returned.</returns>
         [HttpGet("flight/{flightId:guid}/onward-connections")]
         public async Task<ActionResult<List<BaggageDetailsDto>>> GetAllBagsWithOnwardConnection(Guid flightId)
         {
             Expression<Func<Baggage, bool>> criteria = c =>
-                c.Flights.Any(fb => fb.FlightId == flightId) && c.Flights.Any(fb =>
-                    fb.Flight.DepartureDateTime >
-                    c.Flights.FirstOrDefault(b => b.FlightId == flightId).Flight.DepartureDateTime);
-
+                c.Flights.Any(fb => fb.FlightId == flightId) && c.Flights
+                    .Where(fb => fb.FlightId == flightId && fb.Flight != null)
+                    .Any(fb => c.Flights.Any(fb2 =>
+                        fb2.Flight != null && fb2.Flight.DepartureDateTime > fb.Flight.DepartureDateTime));
+            
             var bagList = await _baggageRepository.GetAllBaggageByCriteriaAsync(criteria);
+            
+            if (bagList.Count == 0)
+            {
+                return NotFound(new ApiResponse(404,
+                    $"No bags found with onward connections for flight with ID {flightId}."));
+            }
 
             var bagListDto = _mapper.Map<List<BaggageDetailsDto>>(bagList);
 
@@ -154,22 +194,38 @@ namespace Web.Api.BaggageManagement.Controllers
         /// <param name="passengerId">The ID of the passenger.</param>
         /// <param name="flightId">The ID of the flight.</param>
         /// <param name="addBaggageModels">The list of baggage models to add.</param>
-        /// <returns>An ActionResult with the added baggage.</returns>
+        /// <returns>A list of added baggage if the operation is successful. Otherwise, an appropriate error response is
+        /// returned.</returns>
         [HttpPost("passenger/{passengerId:guid}/flight/{flightId:guid}/add-baggage")]
-        public async Task<ActionResult<Baggage>> AddBaggage(Guid passengerId, Guid flightId,
+        public async Task<ActionResult<BaggageDetailsDto>> AddBaggage(Guid passengerId, Guid flightId,
             [FromBody] List<AddBaggageModel> addBaggageModels)
         {
+            if (addBaggageModels.Count == 0) {
+                return BadRequest(new ApiResponse(400, "No baggage data provided."));
+            }
+            
             var passenger = await _passengerRepository.GetPassengerByIdAsync(passengerId);
             var selectedFlight = await _flightRepository.GetFlightByIdAsync(flightId);
             var destination = await _destinationRepository.GetDestinationByCriteriaAsync(d =>
-                d.IATAAirportCode == addBaggageModels.FirstOrDefault().FinalDestination);
+                d.IATAAirportCode == addBaggageModels.First().FinalDestination);
 
             if (passenger == null)
             {
                 return NotFound(new ApiResponse(404, $"Passenger with Id {passengerId} was not found."));
             }
+            
+            if (selectedFlight == null)
+            {
+                return NotFound(new ApiResponse(404, $"Flight with Id {flightId} was not found."));
+            }
+            
+            if (destination == null)
+            {
+                return NotFound(new ApiResponse(404,
+                    $"Destination with IATA Airport Code {addBaggageModels.First().FinalDestination} was not found."));
+            }
 
-            var baggageList = new List<Baggage>();
+            var bagList = new List<Baggage>();
 
             foreach (var baggageModel in addBaggageModels)
             {
@@ -195,10 +251,10 @@ namespace Web.Api.BaggageManagement.Controllers
 
                 await _baggageRepository.AddAsync(newBaggage);
 
-                baggageList.Add(newBaggage);
+                bagList.Add(newBaggage);
 
                 var orderedFlights = passenger.Flights
-                    .Where(pf => pf.Flight.DepartureDateTime >= selectedFlight.DepartureDateTime)
+                    .Where(pf => pf.Flight != null && pf.Flight.DepartureDateTime >= selectedFlight.DepartureDateTime)
                     .OrderBy(pf => pf.Flight.DepartureDateTime)
                     .ToList();
 
@@ -223,9 +279,11 @@ namespace Web.Api.BaggageManagement.Controllers
                 }
             }
 
-            await _baggageRepository.UpdateAsync(baggageList.ToArray());
+            await _baggageRepository.UpdateAsync(bagList.ToArray());
+            
+            var addedBaggageList = _mapper.Map<List<BaggageDetailsDto>>(bagList);
 
-            return Ok();
+            return Ok(addedBaggageList);
         }
 
         /// <summary>
@@ -233,9 +291,9 @@ namespace Web.Api.BaggageManagement.Controllers
         /// </summary>
         /// <param name="passengerId">The ID of the passenger.</param>
         /// <param name="editBaggageModels">The list of baggage models containing the changes to apply.</param>
-        /// <returns>The updated baggage information.</returns>
+        /// <returns>List of updated baggage. If no baggage is found, a 404 response is returned.</returns>
         [HttpPut("passenger/{passengerId:guid}/edit-baggage")]
-        public async Task<ActionResult<Baggage>> EditBaggage(Guid passengerId,
+        public async Task<ActionResult<BaggageDetailsDto>> EditBaggage(Guid passengerId,
             [FromBody] List<EditBaggageModel> editBaggageModels)
         {
             var changesToSave = new List<Baggage>();
@@ -245,35 +303,39 @@ namespace Web.Api.BaggageManagement.Controllers
                 var selectedBaggage =
                     await _baggageRepository.GetBaggageByCriteriaAsync(b =>
                         b.Id == model.BaggageId && b.PassengerId == passengerId);
-
-                if (selectedBaggage != null)
+                
+                if (selectedBaggage == null)
                 {
-                    selectedBaggage.Weight = model.Weight;
-
-                    if (model.SpecialBagType.HasValue)
-                    {
-                        if (selectedBaggage.SpecialBag == null)
-                        {
-                            selectedBaggage.SpecialBag = new SpecialBag(model.SpecialBagType.Value, model.Description);
-                        }
-                        else
-                        {
-                            selectedBaggage.SpecialBag.SpecialBagType = model.SpecialBagType.Value;
-                            selectedBaggage.SpecialBag.SpecialBagDescription = model.Description;
-                        }
-                    }
-                    else if (!model.SpecialBagType.HasValue && selectedBaggage.SpecialBag != null)
-                    {
-                        selectedBaggage.SpecialBag = null;
-                    }
-
-                    changesToSave.Add(selectedBaggage);
+                    return NotFound(new ApiResponse(404, $"Baggage with ID {model.BaggageId} does not exist."));
                 }
+
+                selectedBaggage.Weight = model.Weight;
+
+                if (model.SpecialBagType.HasValue)
+                {
+                    if (selectedBaggage.SpecialBag == null)
+                    {
+                        selectedBaggage.SpecialBag = new SpecialBag(model.SpecialBagType.Value, model.Description);
+                    }
+                    else
+                    {
+                        selectedBaggage.SpecialBag.SpecialBagType = model.SpecialBagType.Value;
+                        selectedBaggage.SpecialBag.SpecialBagDescription = model.Description;
+                    }
+                }
+                else if (!model.SpecialBagType.HasValue && selectedBaggage.SpecialBag != null)
+                {
+                    selectedBaggage.SpecialBag = null;
+                }
+
+                changesToSave.Add(selectedBaggage);
             }
 
             await _baggageRepository.UpdateAsync(changesToSave.ToArray());
+            
+            var updatedBaggageList = _mapper.Map<List<BaggageDetailsDto>>(changesToSave);
 
-            return Ok();
+            return Ok(updatedBaggageList);
         }
 
         /// <summary>
@@ -281,7 +343,8 @@ namespace Web.Api.BaggageManagement.Controllers
         /// </summary>
         /// <param name="passengerId">The ID of the passenger.</param>
         /// <param name="baggageIds">The list of baggage IDs to delete.</param>
-        /// <returns>Returns an ActionResult representing the HTTP response.</returns>
+        /// <returns>Returns an ActionResult representing the HTTP response. If no baggage is found, a 404 response is
+        /// returned.</returns>
         [HttpDelete("passenger/{passengerId:guid}/delete-baggage")]
         public async Task<ActionResult> DeleteSelectedBaggage(Guid passengerId, [FromBody] List<Guid> baggageIds)
         {
@@ -292,16 +355,13 @@ namespace Web.Api.BaggageManagement.Controllers
                 var baggage =
                     await _baggageRepository.GetBaggageByCriteriaAsync(b =>
                         b.Id == baggageId && b.PassengerId == passengerId);
-
-                if (baggage != null)
+                
+                if (baggage == null)
                 {
-                    selectedBaggage.Add(baggage);
+                    return BadRequest(new ApiResponse(400, $"Baggage with ID {baggageId} does not exist."));
                 }
-            }
 
-            if (selectedBaggage.Count != baggageIds.Count)
-            {
-                return BadRequest(new ApiResponse(400, "Invalid baggage IDs."));
+                selectedBaggage.Add(baggage);
             }
 
             await _baggageRepository.DeleteAsync(selectedBaggage.ToArray());

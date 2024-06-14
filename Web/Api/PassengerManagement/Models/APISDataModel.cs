@@ -7,10 +7,10 @@ namespace Web.Api.PassengerManagement.Models
     public class APISDataModel
     {
         [Required]
-        public string FirstName { get; set; }
+        public required string FirstName { get; set; }
 
         [Required]
-        public string LastName { get; set; }
+        public required string LastName { get; set; }
 
         [Required]
         public PaxGenderEnum Gender { get; set; }
@@ -21,14 +21,14 @@ namespace Web.Api.PassengerManagement.Models
         public DateTime DateOfBirth { get; set; }
 
         [Required]
-        public string DocumentNumber { get; set; }
+        public required string DocumentNumber { get; set; }
 
         [Required]
         public DocumentTypeEnum DocumentType { get; set; }
 
         [Required]
         [RegularExpression(@"^[A-Za-z]{3}$", ErrorMessage = "Country must be in the format XXX")]
-        public string CountryOfIssue { get; set; }
+        public required string CountryOfIssue { get; set; }
 
         [Required]
         [RegularExpression(@"^([1-9]|[12][0-9]|3[01])(?i)(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)([0-9]{4})$",
@@ -42,6 +42,6 @@ namespace Web.Api.PassengerManagement.Models
 
         [Required]
         [RegularExpression(@"^[A-Za-z]{3}$", ErrorMessage = "Country must be in the format XXX")]
-        public string Nationality { get; set; }
+        public required string Nationality { get; set; }
     }
 }

@@ -1,3 +1,5 @@
+using AutoMapper;
+using Core.Dtos;
 using Core.Interfaces;
 using Core.PassengerContext.Booking;
 using Core.PassengerContext.Booking.Enums;
@@ -12,15 +14,17 @@ namespace Web.Api.PassengerManagement.Controllers
     public class CommentController : ControllerBase
     {
         private readonly ICommentRepository _commentRepository;
-        private readonly IPredefinedCommentRepository _predefinedCommentRepository;
         private readonly ICommentService _commentService;
+        private readonly IMapper _mapper;
 
-        public CommentController(ICommentRepository commentRepository,
-            IPredefinedCommentRepository predefinedCommentRepository, ICommentService commentService)
+        public CommentController(
+            ICommentRepository commentRepository, 
+            ICommentService commentService, 
+            IMapper mapper)
         {
             _commentRepository = commentRepository;
-            _predefinedCommentRepository = predefinedCommentRepository;
             _commentService = commentService;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -43,10 +47,12 @@ namespace Web.Api.PassengerManagement.Controllers
         ///     }
         ///
         /// </remarks>
-        /// <returns>An ActionResult of type Comment.</returns>
+        /// <returns> Returns an <see cref="ActionResult"/> containing the result of the add operation. If the comment
+        /// was added successfully, returns <see cref="OkResult"/> with the comment data. If the request is invalid,
+        /// returns <see cref="BadRequestResult"/> with an error message.</returns>
         [HttpPost("passenger/{id:guid}/add-comment")]
-        public async Task<ActionResult<Comment>> AddComment(Guid id, CommentTypeEnum commentType,
-            [FromBody] JObject data, string predefineCommentId = null)
+        public async Task<ActionResult<CommentDto>> AddComment(Guid id, CommentTypeEnum commentType,
+            [FromBody] JObject data, string? predefineCommentId = null)
         {
             var flightIds = data["flightIds"]?.ToObject<List<Guid>>();
             var text = data["text"]?.ToString();
@@ -60,7 +66,9 @@ namespace Web.Api.PassengerManagement.Controllers
             {
                 var comment =
                     await _commentService.AddCommentAsync(id, commentType, text, flightIds, predefineCommentId);
-                return Ok();
+                var commentDto = _mapper.Map<CommentDto>(comment);
+                
+                return Ok(commentDto);
             }
             catch (Exception e)
             {
@@ -86,7 +94,7 @@ namespace Web.Api.PassengerManagement.Controllers
         /// If no comments were deleted, returns <see cref="OkResult"/>.
         /// </returns>
         [HttpDelete("delete-comment")]
-        public async Task<ActionResult<Comment>> DeleteComment([FromBody] Dictionary<string, List<Guid>> commentIds)
+        public async Task<ActionResult> DeleteComment([FromBody] Dictionary<string, List<Guid>> commentIds)
         {
             var commentsToDelete = new HashSet<Comment>();
 
@@ -142,7 +150,7 @@ namespace Web.Api.PassengerManagement.Controllers
         /// a BadRequest response with an ApiResponse message will be returned. Otherwise, a NoContent response will be
         /// returned.</returns>
         [HttpDelete("mark-comment-as-read")]
-        public async Task<ActionResult<Comment>> MarkGateCommentAsRead([FromBody] Guid commentId)
+        public async Task<ActionResult> MarkGateCommentAsRead([FromBody] Guid commentId)
         {
             var comment = await _commentRepository.GetCommentByCriteriaAsync(c =>
                 c.Id == commentId && c.CommentType == CommentTypeEnum.Gate);

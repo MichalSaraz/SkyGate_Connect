@@ -17,7 +17,9 @@ namespace Infrastructure.Repositories
         {
             var seatQuery = _context.Seats.AsQueryable()
                 .Include(_ => _.PassengerOrItem)
-                .ThenInclude(_ => _.Flights)
+                    .ThenInclude(_ => _.Flights)
+                .Include(_ => _.PassengerOrItem)
+                    .ThenInclude(_ => _.Comments)
                 .Where(criteria);
 
             if (!tracked)

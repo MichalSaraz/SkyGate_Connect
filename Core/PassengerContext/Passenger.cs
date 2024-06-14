@@ -1,7 +1,7 @@
 ﻿using Core.BaggageContext;
 using Core.PassengerContext.Booking;
-using Core.PassengerContext.JoinClasses;
 using Core.PassengerContext.Booking.Enums;
+using Core.PassengerContext.JoinClasses;
 
 namespace Core.PassengerContext
 {
@@ -17,10 +17,16 @@ namespace Core.PassengerContext
 
         public int BaggageAllowance { get; set; }
         public bool PriorityBoarding { get; set; }
+        
+        public Guid? CabinBaggageRequiringSeatId { get; set; }
+        public CabinBaggageRequiringSeat CabinBaggageRequiringSeat { get; set; }
+        
+        public Guid? ExtraSeatId { get; set; }
+        public ExtraSeat ExtraSeat { get; set; }
 
         public List<Baggage> PassengerCheckedBags { get; set; } = new();        
         public List<SpecialServiceRequest> SpecialServiceRequests { get; set; } = new();
-
+        
         public Passenger(int baggageAllowance, bool priorityBoarding, string firstName, string lastName,
             PaxGenderEnum gender, Guid? bookingDetailsId, int? weight) : base(firstName, lastName, gender,
             bookingDetailsId, weight)
@@ -33,7 +39,7 @@ namespace Core.PassengerContext
         /// Maps a <see cref="PassengerBookingDetails"/> object to this <see cref="Passenger"/> object.
         /// </summary>
         /// <param name="passengerBookingDetails">The <see cref="PassengerBookingDetails"/> object to be mapped.</param>
-        public override void MapFromPassengerBookingDetails(PassengerBookingDetails passengerBookingDetails)
+        protected override void MapFromPassengerBookingDetails(PassengerBookingDetails passengerBookingDetails)
         {
             base.MapFromPassengerBookingDetails(passengerBookingDetails);
             BaggageAllowance = passengerBookingDetails.BaggageAllowance;

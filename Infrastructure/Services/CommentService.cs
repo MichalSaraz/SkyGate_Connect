@@ -18,7 +18,7 @@ namespace Infrastructure.Services
         }
 
         public async Task<Comment> AddCommentAsync(Guid id, CommentTypeEnum commentType, string text,
-            List<Guid> flightIds, string predefinedCommentId = null)
+            List<Guid> flightIds, string? predefinedCommentId = null)
         {
             Comment comment;
 
@@ -37,14 +37,14 @@ namespace Infrastructure.Services
 
                 if (existingComment != null)
                 {
-                    return null;
+                    throw new Exception("Predefined comment already exists.");
                 }
 
                 comment = new Comment(id, predefinedCommentId, predefinedComment.Text);
             }
             else
             {
-                comment = new Comment(id, commentType, text ?? string.Empty);
+                comment = new Comment(id, commentType, text);
             }
 
             await _commentRepository.AddAsync(comment);

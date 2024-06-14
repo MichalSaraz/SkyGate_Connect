@@ -1,9 +1,7 @@
 ﻿using Core.Interfaces;
 using Core.PassengerContext;
-using Core.PassengerContext.JoinClasses;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Repositories
@@ -19,6 +17,9 @@ namespace Infrastructure.Repositories
         {
             var basePassengerOrItemQuery = _context.Passengers.AsQueryable()
                 .Include(_ => _.Flights)
+                    .ThenInclude(_ => _.Flight)
+                .Include(_ => _.AssignedSeats)
+                .Include(_ => _.Comments)
                 .Where(criteria);
 
             if (!tracked)
@@ -28,6 +29,18 @@ namespace Infrastructure.Repositories
 
             var basePassengerOrItems = await basePassengerOrItemQuery.ToListAsync();
             return basePassengerOrItems;
+        }
+        
+        public async Task<BasePassengerOrItem> GetBasePassengerOrItemByIdAsync(Guid id)
+        {
+            var basePassengerOrItem = await _context.Passengers.AsNoTracking()
+                .Include(_ => _.Flights)
+                    .ThenInclude(_ => _.Flight)
+                .Include(_ => _.AssignedSeats)
+                .Include(_ => _.Comments)
+                .FirstOrDefaultAsync(_ => _.Id == id);
+
+            return basePassengerOrItem;
         }
     }
 }

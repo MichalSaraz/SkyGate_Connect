@@ -20,6 +20,8 @@ namespace Core.PassengerContext.JoinClasses
         public FlightClassEnum FlightClass { get; private set; }
         public AcceptanceStatusEnum AcceptanceStatus { get; set; } = AcceptanceStatusEnum.NotAccepted;
         
+        public NotTravellingReasonEnum? NotTravellingReason { get; set; }
+        
         public PassengerFlight(
             Guid passengerOrItemId,
             Guid flightId,

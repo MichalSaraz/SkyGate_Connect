@@ -15,7 +15,7 @@ namespace Core.PassengerContext
             AssociatedAdultPassengerId = associatedAdultPassengerId;
         }
 
-        public override void MapFromPassengerBookingDetails(PassengerBookingDetails passengerBookingDetails)
+        protected override void MapFromPassengerBookingDetails(PassengerBookingDetails passengerBookingDetails)
         {
             base.MapFromPassengerBookingDetails(passengerBookingDetails);
 

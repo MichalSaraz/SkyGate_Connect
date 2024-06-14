@@ -1,7 +1,6 @@
 ﻿using Core.PassengerContext.JoinClasses;
 using Infrastructure.Data;
 using Core.Interfaces;
-using Core.PassengerContext.Booking;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 

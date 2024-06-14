@@ -1,3 +1,5 @@
+using AutoMapper;
+using Core.Dtos;
 using Core.Interfaces;
 using Core.PassengerContext;
 using Core.PassengerContext.JoinClasses;
@@ -14,15 +16,24 @@ namespace Web.Api.PassengerManagement.Controllers
         private readonly IPassengerRepository _passengerRepository;
         private readonly ISSRCodeRepository _sSRCodeRepository;
         private readonly ISpecialServiceRequestRepository _specialServiceRequestRepository;
+        private readonly IBasePassengerOrItemRepository _basePassengerOrItemRepository;
+        private readonly IFlightRepository _flightRepository;
+        private readonly IMapper _mapper;
 
         public SpecialServiceRequestController(
             IPassengerRepository passengerRepository,
             ISSRCodeRepository sSRCodeRepository,
-            ISpecialServiceRequestRepository specialServiceRequestRepository)
+            ISpecialServiceRequestRepository specialServiceRequestRepository,
+            IBasePassengerOrItemRepository basePassengerOrItemRepository,
+            IFlightRepository flightRepository,
+            IMapper mapper)
         {
             _passengerRepository = passengerRepository;
             _sSRCodeRepository = sSRCodeRepository;
             _specialServiceRequestRepository = specialServiceRequestRepository;
+            _basePassengerOrItemRepository = basePassengerOrItemRepository;
+            _flightRepository = flightRepository;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -51,15 +62,28 @@ namespace Web.Api.PassengerManagement.Controllers
         ///     ]
         ///
         /// </remarks>
-        /// <returns>An ActionResult representing the HTTP status code and result of the operation.</returns>
+        /// <returns>A list of created special service requests</returns>
         [HttpPost("passenger/{id:guid}/add-request")]
-        public async Task<ActionResult<Passenger>> AddSpecialServiceRequest(Guid id,
+        public async Task<ActionResult<SpecialServiceRequestDto>> AddSpecialServiceRequest(Guid id,
             [FromBody] List<JObject> requestData)
         {
+            var entity = await _basePassengerOrItemRepository.GetBasePassengerOrItemByIdAsync(id);
+            
+            if (entity == null)
+            {
+                return NotFound(new ApiResponse(404, "Passenger not found."));
+            }
+            
+            if (entity is Infant or CabinBaggageRequiringSeat or ExtraSeat)
+            {
+                return BadRequest(new ApiResponse(400, "Special service requests cannot be added to this entity."));
+            }
+            
+            var specialServiceRequests = new List<SpecialServiceRequest>();
+            
             foreach (var request in requestData)
             {
                 var flightIds = request["flightIds"]?.ToObject<List<Guid>>();
-                var specialServiceRequests = new List<SpecialServiceRequest>();
 
                 var ssrData = request["specialServiceRequests"];
                 
@@ -72,8 +96,7 @@ namespace Web.Api.PassengerManagement.Controllers
 
                         if (SSRCode == null)
                         {
-                            return BadRequest(new ApiResponse(400,
-                                "SSR must be filled in for the special service request."));
+                            return NotFound(new ApiResponse(404, "SSRCode not found."));
                         }
 
                         if (SSRCode.IsFreeTextMandatory && string.IsNullOrEmpty(freeText))
@@ -81,11 +104,16 @@ namespace Web.Api.PassengerManagement.Controllers
                             return BadRequest(new ApiResponse(400, "FreeText is required for this SSRCode."));
                         }
 
-                        //ToDo: Add validation for adding INFT SSR
                         if (flightIds != null)
                         {
                             foreach (var iteratedFlightId in flightIds)
                             {
+                                var flight = await _flightRepository.GetFlightByIdAsync(iteratedFlightId, false);
+                                if (flight == null)
+                                {
+                                    return NotFound(new ApiResponse(404, "Flight not found."));
+                                }
+
                                 var specialServiceRequest =
                                     new SpecialServiceRequest(SSRCode.Code, iteratedFlightId, id, freeText);
                                 specialServiceRequests.Add(specialServiceRequest);
@@ -93,11 +121,12 @@ namespace Web.Api.PassengerManagement.Controllers
                         }
                     }
                 }
-
-                await _specialServiceRequestRepository.AddAsync(specialServiceRequests.ToArray());
             }
+            
+            await _specialServiceRequestRepository.AddAsync(specialServiceRequests.ToArray());
+            var specialServiceRequestsDto = _mapper.Map<List<SpecialServiceRequestDto>>(specialServiceRequests);
 
-            return Ok();
+            return Ok(specialServiceRequestsDto);
         }
 
         /// <summary>
@@ -118,7 +147,7 @@ namespace Web.Api.PassengerManagement.Controllers
         /// </remarks>
         /// <returns>The result of the deletion operation.</returns>
         [HttpDelete("passenger/{id:guid}/delete-request")]
-        public async Task<ActionResult<Passenger>> DeleteSpecialServiceRequest(Guid id,
+        public async Task<ActionResult> DeleteSpecialServiceRequest(Guid id,
             [FromBody] Dictionary<string, List<string>> ssrCodesToDelete)
         {
             var passenger = await _passengerRepository.GetPassengerByIdAsync(id, true, true);

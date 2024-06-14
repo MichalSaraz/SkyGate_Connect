@@ -47,14 +47,15 @@ namespace Web.Extensions
                 options.InvalidModelStateResponseFactory = context =>
                 {
                     var errors = context.ModelState
-                        .Where(e => e.Value.Errors.Count > 0)
-                        .SelectMany(x => x.Value.Errors)
+                        .Where(e => e.Value is { Errors.Count: > 0 })
+                        .SelectMany(x =>
+                        {
+                            if (x.Value != null) return x.Value.Errors;
+                            throw new InvalidOperationException();
+                        })
                         .Select(x => x.ErrorMessage).ToArray();
 
-                    var errorResponse = new ApiValidationErrorResponse
-                    {
-                        Errors = errors
-                    };
+                    var errorResponse = new ApiValidationErrorResponse(errors);
 
                     return new BadRequestObjectResult(errorResponse);
                 };

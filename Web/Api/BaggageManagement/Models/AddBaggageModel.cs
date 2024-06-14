@@ -8,8 +8,8 @@ namespace Web.Api.BaggageManagement.Models
         public int Weight { get; set; }
         public SpecialBagEnum? SpecialBagType { get; set; }
         public BaggageTypeEnum BaggageType { get; set; } = BaggageTypeEnum.Local;
-        public string Description { get; set; }
-        public string FinalDestination { get; set; }
-        public string TagNumber { get; set; }
+        public string? Description { get; set; }
+        public required string FinalDestination { get; set; }
+        public string TagNumber { get; set; } = string.Empty;
     }
 }

@@ -23,7 +23,6 @@ namespace Infrastructure.Data.Config
                 .HasForeignKey<BasePassengerOrItem>(p => p.BookingDetailsId)
                 .OnDelete(DeleteBehavior.SetNull);
 
-
             builder.HasOne(pbd => pbd.AssociatedPassengerBookingDetails)
                 .WithOne()
                 .HasForeignKey<PassengerBookingDetails>(p => p.AssociatedPassengerBookingDetailsId)

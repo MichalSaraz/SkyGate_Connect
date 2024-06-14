@@ -35,7 +35,7 @@ namespace Core.PassengerContext
             Weight = weight;
         }
 
-        public virtual void MapFromPassengerBookingDetails(PassengerBookingDetails passengerBookingDetails)
+        protected virtual void MapFromPassengerBookingDetails(PassengerBookingDetails passengerBookingDetails)
         {
             Id = new Guid();
             FirstName = passengerBookingDetails.FirstName;
