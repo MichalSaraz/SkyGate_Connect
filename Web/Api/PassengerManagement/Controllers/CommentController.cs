@@ -64,8 +64,12 @@ namespace Web.Api.PassengerManagement.Controllers
 
             try
             {
-                var comment =
-                    await _commentService.AddCommentAsync(id, commentType, text, flightIds, predefineCommentId);
+                var comment = string.IsNullOrEmpty(predefineCommentId)
+                    ? await _commentService.AddCommentAsync(id, commentType, text, flightIds)
+                    : await _commentRepository.GetCommentByCriteriaAsync(c =>
+                        c.PredefinedCommentId == predefineCommentId && c.PassengerId == id)
+                    ?? await _commentService.AddCommentAsync(id, commentType, text, flightIds, predefineCommentId);
+
                 var commentDto = _mapper.Map<CommentDto>(comment);
                 
                 return Ok(commentDto);
@@ -84,8 +88,10 @@ namespace Web.Api.PassengerManagement.Controllers
         /// Sample request:
         ///
         ///     DELETE /delete-comment
-        ///     "58590667-cec5-4a89-a58e-b1572d7086e9": ["17e72928-7c09-48b8-bbe0-a5aa9491eb6c"],
-        ///     "99382844-5d43-4051-97a7-07858f76bc7e": ["17e72928-7c09-48b8-bbe0-a5aa9491eb6c", "8ff272ba-58e0-4578-8d8a-71d79b917074"]
+        ///     {
+        ///         "58590667-cec5-4a89-a58e-b1572d7086e9": ["17e72928-7c09-48b8-bbe0-a5aa9491eb6c"],
+        ///         "99382844-5d43-4051-97a7-07858f76bc7e": ["17e72928-7c09-48b8-bbe0-a5aa9491eb6c", "8ff272ba-58e0-4578-8d8a-71d79b917074"]
+        ///     }
         ///
         /// </remarks>
         /// <returns>
@@ -108,14 +114,14 @@ namespace Web.Api.PassengerManagement.Controllers
 
                     if (comment == null)
                     {
-                        return BadRequest(new ApiResponse(400, $"Comment with ID {commentId} does not exist."));
+                        return NotFound(new ApiResponse(404, $"Comment with Id {commentId} does not exist."));
                     }
 
-                    if (comment.LinkedToFlights.All(f => f.FlightId != Guid.Parse(flight)) &&
-                        comment.LinkedToFlights.Count > 0)
+                    if (comment.LinkedToFlights.All(f => f.FlightId != Guid.Parse(flight)) ||
+                        comment.LinkedToFlights.Count == 0)
                     {
                         return BadRequest(new ApiResponse(400,
-                            $"Comment with ID {commentId} is not linked to flight with ID {flight}"));
+                            $"Comment with Id {commentId} is not linked to flight with Id {flight}"));
                     }
 
                     comment.LinkedToFlights.RemoveAll(f => f.FlightId == Guid.Parse(flight));
@@ -150,14 +156,19 @@ namespace Web.Api.PassengerManagement.Controllers
         /// a BadRequest response with an ApiResponse message will be returned. Otherwise, a NoContent response will be
         /// returned.</returns>
         [HttpDelete("mark-comment-as-read")]
-        public async Task<ActionResult> MarkGateCommentAsRead([FromBody] Guid commentId)
+        public async Task<ActionResult> MarkGateCommentAsRead([FromBody] string commentId)
         {
+            if (!Guid.TryParse(commentId, out var guidCommentId))
+            {
+                return BadRequest(new ApiResponse(400, "Invalid comment Id format."));
+            }
+
             var comment = await _commentRepository.GetCommentByCriteriaAsync(c =>
-                c.Id == commentId && c.CommentType == CommentTypeEnum.Gate);
+                c.Id == guidCommentId && c.CommentType == CommentTypeEnum.Gate);
 
             if (comment == null)
             {
-                return BadRequest(new ApiResponse(400, $"Gate comment with ID {commentId} does not exist."));
+                return NotFound(new ApiResponse(404, $"Comment with Id {commentId} and type 'Gate' not found."));
             }
 
             await _commentRepository.DeleteAsync(comment);

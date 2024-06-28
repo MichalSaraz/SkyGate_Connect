@@ -23,8 +23,8 @@ namespace Infrastructure.Data.Config
                 .HasEnumConversion();
 
             builder.HasOne(bpoi => bpoi.BookingDetails)
-                .WithOne(pbd => pbd.Passenger)
-                .HasForeignKey<PassengerBookingDetails>(pbd => pbd.PassengerId);            
+                .WithOne(pbd => pbd.PassengerOrItem)
+                .HasForeignKey<PassengerBookingDetails>(pbd => pbd.PassengerOrItemId);            
 
             builder.HasMany(bpoi => bpoi.TravelDocuments)
                 .WithOne(td => td.Passenger)

@@ -17,18 +17,9 @@ namespace Infrastructure.Repositories
 
         public async Task<Destination> GetDestinationByCriteriaAsync(Expression<Func<Destination, bool>> criteria)
         {
-            return await _context.Destinations.AsNoTracking().Where(criteria).FirstOrDefaultAsync();
-        }
-
-        public async Task<IReadOnlyList<Destination>> GetDestinationsByCriteriaAsync(
-            Expression<Func<Destination, bool>> criteria)
-        {
             return await _context.Destinations.AsNoTracking()
-                .Include(_ => _.Country)
-                .Include(_ => _.Departures)
-                .Include(_ => _.Arrivals)
                 .Where(criteria)
-                .ToListAsync();
+                .FirstOrDefaultAsync();
         }
     }
 }

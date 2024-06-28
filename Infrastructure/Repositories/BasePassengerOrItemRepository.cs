@@ -12,6 +12,11 @@ namespace Infrastructure.Repositories
         {            
         }
 
+        public virtual async Task<bool> ExistsAsync(Guid id)
+        {
+            return await _context.Passengers.AnyAsync(f => f.Id == id);
+        }
+
         public async Task<IReadOnlyList<BasePassengerOrItem>> GetBasePassengerOrItemsByCriteriaAsync(
             Expression<Func<BasePassengerOrItem, bool>> criteria, bool tracked = true)
         {
@@ -19,6 +24,7 @@ namespace Infrastructure.Repositories
                 .Include(_ => _.Flights)
                     .ThenInclude(_ => _.Flight)
                 .Include(_ => _.AssignedSeats)
+                .Include(_ => _.BookingDetails)
                 .Include(_ => _.Comments)
                 .Where(criteria);
 

@@ -12,6 +12,10 @@ namespace Web.Api.FlightManagement.Models
             ErrorMessage = "Date must be in the format dMMM or DDMMM")]
         public required string DepartureDate { get; set; }
 
+        [RegularExpression(@"^([01]?[0-9]|2[0-3]):[0-5][0-9]$",
+            ErrorMessage = "Time must be in the format HH:MM or H:MM")]
+        public string DepartureTime { get; set; }
+
         [RegularExpression(@"^[A-Za-z]{3}$", ErrorMessage = "Destination must be in the format XXX")]
         public required string DestinationFrom { get; set; }
 

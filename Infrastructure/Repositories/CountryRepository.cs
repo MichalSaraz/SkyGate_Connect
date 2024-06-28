@@ -21,12 +21,5 @@ namespace Infrastructure.Repositories
                 .Where(criteria)
                 .FirstOrDefaultAsync();
         }
-
-        public async Task<IReadOnlyList<Country>> GetCountriesByCriteriaAsync(Expression<Func<Country, bool>> criteria)
-        {
-            return await _context.Countries.AsNoTracking()
-                .Where(criteria)
-                .ToListAsync();
-        }
     }
 }

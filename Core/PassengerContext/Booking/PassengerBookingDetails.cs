@@ -28,8 +28,8 @@ namespace Core.PassengerContext.Booking
         public bool PriorityBoarding { get; private set; }
         public string FrequentFlyerCardNumber { get; private set; }
 
-        public BasePassengerOrItem Passenger { get; private set; }
-        public Guid? PassengerId { get; set; }
+        public BasePassengerOrItem PassengerOrItem { get; private set; }
+        public Guid? PassengerOrItemId { get; set; }
 
         public PassengerBookingDetails AssociatedPassengerBookingDetails { get; private set; }
         public Guid? AssociatedPassengerBookingDetailsId { get; set; }

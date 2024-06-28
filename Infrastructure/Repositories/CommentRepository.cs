@@ -33,6 +33,7 @@ namespace Infrastructure.Repositories
             return await _context.Comments.AsQueryable().AsNoTracking()
                 .Include(_ => _.LinkedToFlights)
                 .Include(_ => _.Passenger.AssignedSeats)
+                .Include(_ =>_.Passenger.BookingDetails)
                 .Where(criteria)
                 .ToListAsync();
         }

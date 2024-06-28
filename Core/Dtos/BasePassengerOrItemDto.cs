@@ -20,7 +20,7 @@ namespace Core.Dtos
         public string PNR { get; set; }
         
         [JsonProperty(Order = -3)]
-        public string SeatNumberOnCurrentFlight { get; set; }
+        public virtual string SeatNumberOnCurrentFlight { get; set; }
         
         [JsonProperty(Order = -3)]
         public string Type { get; set; }

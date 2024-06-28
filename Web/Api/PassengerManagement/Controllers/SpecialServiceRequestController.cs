@@ -67,18 +67,13 @@ namespace Web.Api.PassengerManagement.Controllers
         public async Task<ActionResult<SpecialServiceRequestDto>> AddSpecialServiceRequest(Guid id,
             [FromBody] List<JObject> requestData)
         {
-            var entity = await _basePassengerOrItemRepository.GetBasePassengerOrItemByIdAsync(id);
-            
-            if (entity == null)
+            var passenger = await _passengerRepository.GetPassengerByIdAsync(id, false, true);
+
+            if (passenger == null)
             {
-                return NotFound(new ApiResponse(404, "Passenger not found."));
+                return NotFound(new ApiResponse(404, $"Passenger with Id {id} was not found."));
             }
-            
-            if (entity is Infant or CabinBaggageRequiringSeat or ExtraSeat)
-            {
-                return BadRequest(new ApiResponse(400, "Special service requests cannot be added to this entity."));
-            }
-            
+
             var specialServiceRequests = new List<SpecialServiceRequest>();
             
             foreach (var request in requestData)
@@ -108,10 +103,17 @@ namespace Web.Api.PassengerManagement.Controllers
                         {
                             foreach (var iteratedFlightId in flightIds)
                             {
-                                var flight = await _flightRepository.GetFlightByIdAsync(iteratedFlightId, false);
-                                if (flight == null)
+                                if (!await _flightRepository.ExistsAsync(iteratedFlightId))
                                 {
-                                    return NotFound(new ApiResponse(404, "Flight not found."));
+                                    return NotFound(new ApiResponse(404, $"Flight with Id {iteratedFlightId} not found."));
+                                }
+
+                                var isSSRAlreadyExists = passenger.SpecialServiceRequests.Any(ssr =>
+                                    ssr.FlightId == iteratedFlightId && ssr.SSRCodeId == SSRCode.Code);
+                                if (isSSRAlreadyExists)
+                                {
+                                    return BadRequest(new ApiResponse(400,
+                                        $"SSR {SSRCode.Code} already exists for passenger {id} on flight {iteratedFlightId}"));
                                 }
 
                                 var specialServiceRequest =

@@ -5,6 +5,8 @@ namespace Core.Interfaces
 {
     public interface IBasePassengerOrItemRepository : IGenericRepository<BasePassengerOrItem>
     {
+        Task<bool> ExistsAsync(Guid id);
+
         /// <summary>
         /// Retrieves a list of BasePassengerOrItem objects that meet the specified criteria.
         /// </summary>

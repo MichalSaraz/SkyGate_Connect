@@ -36,25 +36,6 @@ namespace Infrastructure.Repositories
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<Baggage> GetBaggageByIdAsync(Guid id, bool tracked = true)
-        {
-            var baggageQuery = _context.Baggage.AsQueryable()
-                .Include(_ => _.Passenger)
-                .Include(_ => _.BaggageTag)
-                .Include(_ => _.SpecialBag)
-                .Include(_ => _.FinalDestination)
-                .Where(_ => _.Id == id);
-
-            if (!tracked)
-            {
-                baggageQuery = baggageQuery.AsNoTracking();
-            }
-
-            var baggage = await baggageQuery.SingleOrDefaultAsync();
-
-            return baggage;
-        }
-
         public async Task<IReadOnlyList<Baggage>> GetAllBaggageByCriteriaAsync(Expression<Func<Baggage, bool>> criteria)
         {
             return await _context.Baggage.AsNoTracking()

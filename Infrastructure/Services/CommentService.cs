@@ -1,5 +1,6 @@
 ﻿using Core.FlightContext.JoinClasses;
 using Core.Interfaces;
+using Core.PassengerContext;
 using Core.PassengerContext.Booking;
 using Core.PassengerContext.Booking.Enums;
 
@@ -9,18 +10,36 @@ namespace Infrastructure.Services
     {
         private readonly ICommentRepository _commentRepository;
         private readonly IPredefinedCommentRepository _predefinedCommentRepository;
+        private readonly IBasePassengerOrItemRepository _basePassengerOrItemRepository;
+        private readonly IFlightRepository _flightRepository;
 
         public CommentService(ICommentRepository commentRepository,
-            IPredefinedCommentRepository predefinedCommentRepository)
+            IPredefinedCommentRepository predefinedCommentRepository,
+            IBasePassengerOrItemRepository basePassengerOrItemRepository,
+            IFlightRepository flightRepository)
         {
             _commentRepository = commentRepository;
             _predefinedCommentRepository = predefinedCommentRepository;
+            _basePassengerOrItemRepository = basePassengerOrItemRepository;
+            _flightRepository = flightRepository;
         }
 
         public async Task<Comment> AddCommentAsync(Guid id, CommentTypeEnum commentType, string text,
             List<Guid> flightIds, string? predefinedCommentId = null)
         {
             Comment comment;
+
+            var flights = await _flightRepository.GetFlightsByCriteriaAsync(f => flightIds.Contains(f.Id));
+
+            if (flights.Count != flightIds.Count)
+            {
+                throw new Exception("Flight not found.");
+            }
+
+            if (await _basePassengerOrItemRepository.GetBasePassengerOrItemByIdAsync(id) == null)
+            {
+                throw new Exception("Passenger or item not found.");
+            }
 
             if (!string.IsNullOrEmpty(predefinedCommentId))
             {
@@ -31,19 +50,21 @@ namespace Infrastructure.Services
                 {
                     throw new Exception("Predefined comment not found.");
                 }
-
-                var existingComment = await _commentRepository.GetCommentByCriteriaAsync(c =>
-                    c.PassengerId == id && c.PredefinedCommentId == predefinedCommentId);
-
-                if (existingComment != null)
-                {
-                    throw new Exception("Predefined comment already exists.");
-                }
-
-                comment = new Comment(id, predefinedCommentId, predefinedComment.Text);
+                
+                comment = new Comment(id, predefinedCommentId, predefinedComment.Text);              
             }
             else
             {
+                if (string.IsNullOrEmpty(text))
+                {
+                    throw new Exception("Text is required.");
+                }
+                
+                if (await _basePassengerOrItemRepository.GetBasePassengerOrItemByIdAsync(id) is Infant)
+                {
+                    throw new Exception("Infants cannot have comments.");
+                }
+
                 comment = new Comment(id, commentType, text);
             }
 

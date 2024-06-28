@@ -11,10 +11,11 @@ namespace Infrastructure.Repositories
         public PassengerBookingDetailsRepository(AppDbContext context) : base(context)
         {
         }
+
         public async Task<PassengerBookingDetails> GetBookingDetailsByCriteriaAsync(Expression<Func<PassengerBookingDetails, bool>> criteria)
         {
             return await _context.PassengerBookingDetails.AsNoTracking()
-                .Include(_ => _.Passenger)
+                .Include(_ => _.PassengerOrItem)
                 .Include(_ => _.PNR)
                 .Where(criteria)
                 .FirstOrDefaultAsync();

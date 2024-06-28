@@ -1,9 +1,13 @@
-﻿using Core.SeatingContext.Enums;
+﻿using Core.PassengerContext.Booking.Enums;
+using Core.SeatingContext.Enums;
 
 namespace Web.Api.PassengerManagement.Models
 {
-    public class NoRecPassengerModel : InfantModel 
+    public class NoRecPassengerModel
     {
+        public required string FirstName { get; set; }
+        public required string LastName { get; set; }
+        public PaxGenderEnum Gender { get; set; }
         public int BaggageAllowance { get; set; }
         public bool PriorityBoarding { get; set; }
         public string? PNRId { get; set; }

@@ -15,7 +15,7 @@ namespace Core.Time
         /// is false.</param>
         /// <returns> If the input string is a valid date format, returns the parsed DateTime object. Otherwise,
         /// throws an ArgumentException with the message "Invalid date format". </returns>
-        public virtual DateTime? ParseDate(string input, bool useFormatsWithYear = false)
+        public virtual DateTime? ParseDate(string input, string defaultTime = "0:00:00", bool useFormatsWithYear = false)
         {
             string[] formatsDateOnly = { "dMMM", "DDMMM", "ddMMM" };
             string[] formatsDateWithYear = { "dMMMyyyy", "ddMMMyyyy", "DDMMMyyyy" };
@@ -27,20 +27,36 @@ namespace Core.Time
                 return null;
             }
 
-            var isValid = DateTime.TryParseExact(input, formatsToUse, CultureInfo.InvariantCulture, DateTimeStyles.None,
-                out var result);
-
-            if (isValid)
+            DateTime parsedDate;
+            var isValidDate = DateTime.TryParseExact(input, formatsToUse, CultureInfo.InvariantCulture, DateTimeStyles.None, out parsedDate);
+            if (!isValidDate)
             {
-                return ParseDateWithCurrentYear(result);
+                throw new ArgumentException("Invalid date format");
             }
 
-            throw new ArgumentException("Invalid date format");
+            TimeSpan parsedTime;
+            if (defaultTime == "0:00:00")
+            {
+                parsedTime = TimeSpan.Zero;
+            }
+            else
+            {
+                var isValidTime = TimeSpan.TryParseExact(defaultTime, @"hh\:mm", CultureInfo.InvariantCulture, out parsedTime);
+                if (!isValidTime)
+                {
+                    throw new ArgumentException("Invalid time format");
+                }
+            }
+              
+
+            DateTime result = parsedDate.Date + parsedTime;
+
+            return ParseDateWithCurrentYear(result);
         }
 
         protected virtual DateTime? ParseDateWithCurrentYear(DateTime date)
         {
-            return new DateTime(Now.Year, date.Month, date.Day).Date;
+            return new DateTime(Now.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second);
         }
     }
 }

@@ -29,16 +29,27 @@ namespace Infrastructure.Repositories
             return flights;
         }
 
-        public virtual async Task<BaseFlight> GetFlightByIdAsync(Guid id, bool tracked = true)
+        public virtual async Task<BaseFlight> GetFlightByIdAsync(Guid id, bool tracked = true, bool displayDetails = false)
         {
             var flightQuery = _context.Flights.AsQueryable()
                 .Include(_ => _.Airline)
                 .Include(_ => _.ListOfBookedPassengers)
-                .Where(_ => _.Id == id);
+                .Where(_ => _.Id == id);            
 
             if (!tracked)
             {
                 flightQuery = flightQuery.AsNoTracking();
+            }
+
+            if (displayDetails && await flightQuery.OfType<Flight>().AnyAsync())
+            {
+                flightQuery = flightQuery.OfType<Flight>()
+                    .Include(_ => _.Seats)
+                    .Include(_ => _.ScheduledFlight)
+                    .Include(_ => _.Aircraft)
+                    .Include(_ => _.DestinationTo)
+                    .Include(_ => _.ListOfBookedPassengers)
+                        .ThenInclude(_ => _.PassengerOrItem);
             }
 
             var flight = await flightQuery.FirstOrDefaultAsync();

@@ -13,7 +13,8 @@ namespace Infrastructure.Repositories
         
         public async Task<SSRCode> GetSSRCodeAsync(string code)
         {
-            return await _context.SSRCodes.AsNoTracking().FirstOrDefaultAsync(x => x.Code == code);
+            return await _context.SSRCodes.AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Code == code);
         }
     }
 }

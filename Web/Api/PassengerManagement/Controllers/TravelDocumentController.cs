@@ -109,18 +109,20 @@ namespace Web.Api.PassengerManagement.Controllers
         /// Sample request:
         ///
         ///     POST /passenger/3F2504E0-4F89-41D3-9A0C-0305E82C3301/add-document
-        ///     {
-        ///         "firstName": "John",
-        ///         "lastName": "Doe",
-        ///         "gender": "M",
-        ///         "dateOfBirth": "12JUL2011",
-        ///         "documentNumber": "16543415",
-        ///         "documentType": "NormalPassport",
-        ///         "countryOfIssue": "NOR",
-        ///         "dateOfIssue": "14AUG2020",
-        ///         "expirationDate": "14AUG2030",
-        ///         "nationality": "NOR"
-        ///     }
+        ///     [
+        ///         {
+        ///             "firstName": "John",
+        ///             "lastName": "Doe",
+        ///             "gender": "M",
+        ///             "dateOfBirth": "12JUL2011",
+        ///             "documentNumber": "16543415",
+        ///             "documentType": "NormalPassport",
+        ///             "countryOfIssue": "NOR",
+        ///             "dateOfIssue": "14AUG2020",
+        ///             "expirationDate": "14AUG2030",
+        ///             "nationality": "NOR"
+        ///         }
+        ///     ]
         ///
         /// </remarks>
         /// <returns>A list of added travel documents with APIS data</returns>
@@ -149,19 +151,21 @@ namespace Web.Api.PassengerManagement.Controllers
         /// Sample request:
         ///
         ///     PUT /passenger/3F2504E0-4F89-41D3-9A0C-0305E82C3301/edit-document
-        ///     {
-        ///         "apisDataId": "c9a46b82-b1f8-4d0e-ac61-28e7debc2c03",
-        ///         "firstName": "John",
-        ///         "lastName": "Doe",
-        ///         "gender": "M",
-        ///         "dateOfBirth": "12JUL2011",
-        ///         "documentNumber": "16543415",
-        ///         "documentType": "NormalPassport",
-        ///         "countryOfIssue": "NOR",
-        ///         "dateOfIssue": "14AUG2020",
-        ///         "expirationDate": "14AUG2030",
-        ///         "nationality": "NOR"
-        ///     }
+        ///     [
+        ///         {
+        ///             "apisDataId": "c9a46b82-b1f8-4d0e-ac61-28e7debc2c03",
+        ///             "firstName": "John",
+        ///             "lastName": "Doe",
+        ///             "gender": "M",
+        ///             "dateOfBirth": "12JUL2011",
+        ///             "documentNumber": "16543415",
+        ///             "documentType": "NormalPassport",
+        ///             "countryOfIssue": "NOR",
+        ///             "dateOfIssue": "14AUG2020",
+        ///             "expirationDate": "14AUG2030",
+        ///             "nationality": "NOR"
+        ///         }
+        ///     ]
         ///
         /// </remarks>
         /// <returns>A list of edited travel documents with APIS data.</returns>

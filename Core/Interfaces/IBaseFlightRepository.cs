@@ -15,15 +15,8 @@ namespace Core.Interfaces
         /// flights that match the criteria.</returns>
         Task<IReadOnlyList<BaseFlight>> GetFlightsByCriteriaAsync(Expression<Func<BaseFlight, bool>> criteria,
             bool tracked = false);
-
-        /// <summary>
-        /// Retrieves a flight by its ID asynchronously.
-        /// </summary>
-        /// <param name="id">The ID of the flight.</param>
-        /// <param name="tracked">Whether to track changes made to the flight entity. Default is true.</param>
-        /// <returns>
-        /// The flight with the specified ID if it exists; otherwise, null.
-        /// </returns>
-        Task<BaseFlight> GetFlightByIdAsync(Guid id, bool tracked = true);
+                
+        
+        Task<BaseFlight> GetFlightByIdAsync(Guid id, bool tracked = true, bool displayDetails = false);
     }
 }

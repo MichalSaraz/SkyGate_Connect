@@ -20,6 +20,7 @@ namespace Infrastructure.Repositories
                 .Include(_ => _.SSRCode)
                 .Include(_ => _.Passenger)
                 .Include(_ => _.Passenger.AssignedSeats)
+                .Include(_ => _.Passenger.BookingDetails)
                 .Where(criteria)
                 .ToListAsync();
         }

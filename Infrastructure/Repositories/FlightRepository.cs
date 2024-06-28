@@ -16,9 +16,21 @@ namespace Infrastructure.Repositories
             _cache = cache;
         }
 
+        public async Task<bool> ExistsAsync(Guid id)
+        {
+            return await _context.Set<Flight>().AnyAsync(f => f.Id == id);
+        }
+
         public async Task<Flight> GetFlightByCriteriaAsync(
         Expression<Func<Flight, bool>> criteria, bool tracked = false)
         {
+            var CACHE_KEY = $"Flight_{criteria}_{tracked}";
+
+            if (!tracked && _cache.TryGetValue(CACHE_KEY, out Flight cachedFlight))
+            {
+                return cachedFlight;
+            }
+
             var flightQuery = _context.Set<Flight>().AsQueryable()
                 .Include(_ => _.Airline)
                 .Include(_ => _.ListOfBookedPassengers)
@@ -30,6 +42,11 @@ namespace Infrastructure.Repositories
             }
 
             var flight = await flightQuery.FirstOrDefaultAsync();
+
+            _cache.Set(CACHE_KEY, flight, new MemoryCacheEntryOptions
+            {
+                SlidingExpiration = TimeSpan.FromMinutes(5)
+            });
 
             return flight;
         }
@@ -52,16 +69,16 @@ namespace Infrastructure.Repositories
             return flights;
         }
 
-        public override async Task<BaseFlight> GetFlightByIdAsync(Guid id, bool tracked = true)
+        public override async Task<BaseFlight> GetFlightByIdAsync(Guid id, bool tracked = true, bool displayDetails = false)
         {
-            var CACHE_KEY = $"Flight_{id}";
+            var CACHE_KEY = $"Flight_{id}_{tracked}_{displayDetails}";
 
             if (!tracked && _cache.TryGetValue(CACHE_KEY, out BaseFlight cachedFlight))
             {
                 return cachedFlight;
             }
 
-            var flight = await base.GetFlightByIdAsync(id, tracked) as Flight;
+            var flight = await base.GetFlightByIdAsync(id, tracked, displayDetails) as Flight;           
 
             _cache.Set(CACHE_KEY, flight, new MemoryCacheEntryOptions
             {

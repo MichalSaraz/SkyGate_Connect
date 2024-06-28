@@ -1,4 +1,4 @@
-﻿namespace Core.BoardingContext.Enums
+﻿namespace Core.FlightContext.FlightInfo.Enums
 {
     public enum BoardingStatusEnum
     {

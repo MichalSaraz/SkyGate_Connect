@@ -1,10 +1,12 @@
 ﻿using Core.FlightContext;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace Core.Interfaces
 {
     public interface IFlightRepository : IBaseFlightRepository
     {
+        Task<bool> ExistsAsync(Guid flightId);
         /// <summary>
         /// Retrieves a list of flights based on the given criteria.
         /// </summary>

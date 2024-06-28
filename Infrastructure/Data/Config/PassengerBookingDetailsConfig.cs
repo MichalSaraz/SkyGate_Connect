@@ -18,7 +18,7 @@ namespace Infrastructure.Data.Config
                 .WithMany(br => br.LinkedPassengers)
                 .HasForeignKey(pi => pi.PNRId);
 
-            builder.HasOne(pbd => pbd.Passenger)
+            builder.HasOne(pbd => pbd.PassengerOrItem)
                 .WithOne(p => p.BookingDetails)
                 .HasForeignKey<BasePassengerOrItem>(p => p.BookingDetailsId)
                 .OnDelete(DeleteBehavior.SetNull);

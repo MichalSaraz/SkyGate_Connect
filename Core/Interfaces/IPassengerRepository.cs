@@ -5,24 +5,9 @@ namespace Core.Interfaces
 {
     public interface IPassengerRepository : IBasePassengerOrItemRepository
     {
-        /// <summary>
-        /// Retrieves a list of passengers based on the given criteria.
-        /// </summary>
-        /// <param name="criteria">The criteria to be used for filtering the passengers.</param>
-        /// <param name="tracked">
-        /// Optional parameter indicating whether the retrieved entities should be tracked by the context.</param>
-        /// <returns>A task representing the asynchronous operation, which contains the list of passengers matching
-        /// the criteria.</returns>
-        Task<IReadOnlyList<Passenger>> GetPassengersByCriteriaAsync(Expression<Func<Passenger, bool>> criteria,
-            bool tracked = false, bool displayDetails = false);
+        Task<IReadOnlyList<Passenger>> GetPassengersByCriteriaAsync(Expression<Func<Passenger, bool>> criteria);
 
-        /// <summary>
-        /// Retrieves a passenger based on the specified criteria.
-        /// </summary>
-        /// <param name="criteria">The criteria to filter passengers.</param>
-        /// <param name="tracked">A flag indicating whether to enable tracking of the entity.</param>
-        /// <returns>The passenger that matches the specified criteria.</returns>
-        Task<Passenger> GetPassengerByCriteriaAsync(Expression<Func<Passenger, bool>> criteria, bool tracked = true);
+        Task<Passenger> GetPassengerByCriteriaAsync(Expression<Func<Passenger, bool>> criteria);
 
        /// <summary>
        /// Retrieves a passenger by ID asynchronously.

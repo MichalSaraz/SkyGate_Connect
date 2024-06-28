@@ -64,7 +64,7 @@ namespace Web.Api.PassengerManagement.Controllers
         ///     {
         ///         "flightNumber": "1305",
         ///         "airlineId": "DY",
-        ///         "departureDate": "18OCT"
+        ///         "departureDate": "18OCT",
         ///         "destinationFrom": "OSL",
         ///         "destinationTo": "LHR",
         ///         "documentNumber": "12345789",
@@ -101,8 +101,7 @@ namespace Web.Api.PassengerManagement.Controllers
                                                   string.IsNullOrEmpty(model.DestinationTo) &&
                                                   string.IsNullOrEmpty(model.SeatNumber)))
             {
-                return BadRequest(new ApiResponse(400,
-                    "All mandatory plus one optional field must be filled in for the search criteria."));
+                return BadRequest(new ApiResponse(400, "Flight number, Airline, Departure date plus one optional field must be filled in for the search criteria."));
             }
             
             Expression<Func<BasePassengerOrItem, bool>> criteria = c =>
@@ -130,7 +129,7 @@ namespace Web.Api.PassengerManagement.Controllers
             
             if (!passengerOrItems.Any())
             {
-                return NotFound(new ApiResponse(404, "No passengers found with provided search criteria"));
+                return Ok(new ApiResponse(200, "No passengers found with provided search criteria"));
             }
             
             if (selectedFlight == null)
@@ -158,7 +157,7 @@ namespace Web.Api.PassengerManagement.Controllers
         {
             if (await _flightRepository.GetFlightByIdAsync(flightId, false) is not Flight selectedFlight)
             {
-                return NotFound(new ApiResponse(404, "Flight not found with provided id"));
+                return NotFound(new ApiResponse(404, $"Flight with Id {flightId} was not found."));
             }
             
             var passengerOrItems = await _CastPassengerOrItems(c => passengerIds.Contains(c.Id));
@@ -168,7 +167,7 @@ namespace Web.Api.PassengerManagement.Controllers
                 return NotFound(new ApiResponse(404, "Passengers not found for provided ids"));
             }
             
-            var passengerOrItemsDto = _MapPassengerOrItemsToDto(passengerOrItems, selectedFlight, false);
+            var passengerOrItemsDto = _MapPassengerOrItemsToDto(passengerOrItems, selectedFlight, true);
 
             return Ok(passengerOrItemsDto);
         }
@@ -240,12 +239,18 @@ namespace Web.Api.PassengerManagement.Controllers
         /// <summary>
         /// Retrieves all the bags of a passenger based on the provided id.
         /// </summary>
+        /// <param name="flightId"></param>
         /// <param name="id">The id of the passenger.</param>
         /// <returns> An ActionResult containing the PassengerDetailsDto object for the passenger including all bags.
         /// If the passenger is not found, returns a NotFound response with an ApiResponse message.</returns>
-        [HttpGet("passenger/{id:guid}/all-bags")]
-        public async Task<ActionResult<List<PassengerDetailsDto>>> GetAllPassengersBags(Guid id)
+        [HttpGet("selected-flight/{flightId:guid}/passenger/{id:guid}/all-bags")]
+        public async Task<ActionResult<List<PassengerDetailsDto>>> GetAllPassengersBags(Guid flightId, Guid id)
         {
+            if (await _flightRepository.GetFlightByIdAsync(flightId, false) is not Flight selectedFlight)
+            {
+                return NotFound(new ApiResponse(404, "Flight not found with provided id"));
+            }
+
             var passenger = await _passengerRepository.GetPassengerByIdAsync(id, false, true);
 
             if (passenger == null)
@@ -253,7 +258,11 @@ namespace Web.Api.PassengerManagement.Controllers
                 return NotFound(new ApiResponse(404, $"Passenger with Id {id} was not found."));
             }
 
-            var passengerDto = _mapper.Map<PassengerDetailsDto>(passenger);
+            var passengerDto = _mapper.Map<PassengerDetailsDto>(passenger, opt =>
+            {
+                opt.Items["DepartureDateTime"] = selectedFlight.DepartureDateTime;
+                opt.Items["FlightId"] = flightId;
+            });
 
             return Ok(passengerDto);
         }
@@ -303,28 +312,43 @@ namespace Web.Api.PassengerManagement.Controllers
         /// <summary>
         /// Adds an infant to a passenger.
         /// </summary>
+        /// <param name="flightId"></param>
         /// <param name="id">The ID of the passenger.</param>
         /// <param name="infantModel">The details of the infant to be added.</param>
         /// <returns>An ActionResult with the Infant object if the operation is successful; otherwise, an appropriate
         /// status code is returned.</returns>
-        [HttpPost("passenger/{id:guid}/add-infant")]
-        public async Task<ActionResult<InfantDto>> AddInfant(Guid id,
+        [HttpPost("selected-flight/{flightId:guid}/passenger/{id:guid}/add-infant")]
+        public async Task<ActionResult<InfantOverviewDto>> AddInfant(Guid flightId, Guid id,
             [FromBody] InfantModel infantModel)
         {
+            if (await _flightRepository.GetFlightByIdAsync(flightId, false) is not Flight selectedFlight)
+            {
+                return NotFound(new ApiResponse(404, $"Flight with Id {flightId} was not found."));
+            }
+
             var passenger = await _passengerRepository.GetPassengerByIdAsync(id);
 
             if (passenger == null)
             {
                 return NotFound(new ApiResponse(404, $"Passenger with Id {id} was not found."));
             }
+
             if (passenger.Infant != null)
             {
                 return BadRequest(new ApiResponse(400, $"Passenger with Id {id} already has an infant associated."));
             }
+
             if (passenger.BookingDetails.Age < 18)
             {
                 return BadRequest(new ApiResponse(400,
                     $"Passenger with Id {id} must be 18 years or older to have an infant associated."));
+            }
+
+            if (passenger.Flights.Any(f => f.Flight.DepartureDateTime >= selectedFlight.DepartureDateTime &&
+                f.AcceptanceStatus == AcceptanceStatusEnum.Accepted))
+            {
+                return BadRequest(new ApiResponse(400,
+                    "Infant cannot be added if the passenger is already checked in"));
             }
 
             var infant = new Infant(id, infantModel.FirstName, infantModel.LastName, infantModel.Gender,
@@ -333,8 +357,12 @@ namespace Web.Api.PassengerManagement.Controllers
             foreach (var flight in passenger.Flights)
             {
                 infant.Flights.Add(new PassengerFlight(infant.Id, flight.FlightId, flight.FlightClass));
-                infant.AssociatedAdultPassenger.SpecialServiceRequests.Add(
-                    new SpecialServiceRequest("INFT", flight.FlightId, infant.Id, infantModel.FreeText));
+
+                if (!passenger.SpecialServiceRequests.Any(ssr => ssr.SSRCodeId == "INFT"))
+                {
+                    passenger.SpecialServiceRequests.Add(
+                        new SpecialServiceRequest("INFT", flight.FlightId, infant.Id, infantModel.FreeText));
+                }
             }
 
             await _infantRepository.AddAsync(infant);
@@ -345,13 +373,16 @@ namespace Web.Api.PassengerManagement.Controllers
 
             if (bookingDetails != null)
             {
-                bookingDetails.PassengerId = infant.Id;
+                bookingDetails.PassengerOrItemId = infant.Id;
                 await _passengerBookingDetailsRepository.UpdateAsync(bookingDetails);
             }
 
             await _passengerRepository.UpdateAsync(passenger);
             
-            var infantDto = _mapper.Map<InfantDto>(infant);
+            var infantDto = _mapper.Map<InfantOverviewDto>(infant, opt =>
+            {
+                opt.Items["DepartureDateTime"] = selectedFlight.DepartureDateTime;
+            });
 
             return Ok(infantDto);
         }
@@ -359,24 +390,25 @@ namespace Web.Api.PassengerManagement.Controllers
         /// <summary>
         /// Removes the infant associated with the specified passenger ID.
         /// </summary>
-        /// <param name="id">The ID of the passenger.</param>
+        /// <param name="id">The ID of the infant.</param>
         /// <returns> An ActionResult representing the result of the operation.</returns>
         [HttpDelete("infant/{id:guid}/remove-infant")]
         public async Task<ActionResult> RemoveInfant(Guid id)
         {
             var passenger = await _passengerRepository.GetPassengerByCriteriaAsync(c => c.InfantId == id);
             var bookingDetails = await _passengerBookingDetailsRepository.GetBookingDetailsByCriteriaAsync(
-                               pbd => pbd.PassengerId == id);
+                               pbd => pbd.PassengerOrItemId == id);
 
             if (passenger != null)
             {
                 passenger.InfantId = null;
+                passenger.SpecialServiceRequests.RemoveAll(ssr => ssr.SSRCodeId == "INFT");
                 await _passengerRepository.UpdateAsync(passenger);
             }
 
             if (bookingDetails != null)
             {
-                bookingDetails.PassengerId = null;
+                bookingDetails.PassengerOrItemId = null;
                 await _passengerBookingDetailsRepository.UpdateAsync(bookingDetails);
             }
 
@@ -437,6 +469,11 @@ namespace Web.Api.PassengerManagement.Controllers
             {
                 return BadRequest(new ApiResponse(400, "No-rec passenger must be added to the selected flight"));
             }
+
+            if(!model.Flights.Any(f => model.BookedClass.ContainsKey(f.Key)))
+            {
+                return BadRequest(new ApiResponse(400, "Key value pairs in flights and bookedClass must match"));
+            }
             
             if (selectedFlight.FlightStatus == FlightStatusEnum.Closed)
             {
@@ -446,7 +483,7 @@ namespace Web.Api.PassengerManagement.Controllers
             var bookingDetails = (model.PNRId != null)
                 ? await _passengerBookingDetailsRepository.GetBookingDetailsByCriteriaAsync(b =>
                     b.PNRId == model.PNRId && b.FirstName == model.FirstName && b.LastName == model.LastName &&
-                    b.Passenger == null)
+                    b.PassengerOrItem == null)
                 : null;
 
             var noRecPassenger = new Passenger(model.BaggageAllowance, model.PriorityBoarding, model.FirstName,
@@ -531,11 +568,17 @@ namespace Web.Api.PassengerManagement.Controllers
 
             if (bookingDetails != null)
             {
-                bookingDetails.PassengerId = noRecPassenger.Id;
+                bookingDetails.PassengerOrItemId = noRecPassenger.Id;
                 await _passengerBookingDetailsRepository.UpdateAsync(bookingDetails);
             }
-            
-            var noRecPassengerDto = _mapper.Map<PassengerDetailsDto>(noRecPassenger);
+
+            var updatedPassengerForDto = await _passengerRepository.GetPassengerByIdAsync(noRecPassenger.Id, false, true);
+
+            var noRecPassengerDto = _mapper.Map<PassengerDetailsDto>(updatedPassengerForDto, opt =>
+            {
+                opt.Items["DepartureDateTime"] = selectedFlight.DepartureDateTime;
+                opt.Items["FlightId"] = flightId;
+            });
 
             return Ok(noRecPassengerDto);
         }
@@ -560,9 +603,13 @@ namespace Web.Api.PassengerManagement.Controllers
             var passengersOrItems =
                 await _basePassengerOrItemRepository.GetBasePassengerOrItemsByCriteriaAsync(criteria);
             var flights = await _flightRepository.GetFlightsByCriteriaAsync(f => model.FlightIds.Contains(f.Id));
-            var selectedFlight = await _flightRepository.GetFlightByIdAsync(flightId, false) as Flight;
 
-            if (passengersOrItems == null || flights == null || selectedFlight == null)
+            if (await _flightRepository.GetFlightByIdAsync(flightId, false) is not Flight selectedFlight)
+            {
+                return NotFound(new ApiResponse(404, $"Flight {flightId} not found"));
+            }
+
+            if (!passengersOrItems.Any() || !flights.Any())
             {
                 return NotFound(new ApiResponse(404, "Passenger(s) or flight(s) not found with provided ids"));
             }
@@ -577,14 +624,18 @@ namespace Web.Api.PassengerManagement.Controllers
                                                        "aren't checked in for the current flight"));
             }
 
-            if (selectedFlight.FlightStatus != FlightStatusEnum.Open)
+            if (flights.Any(f => f.FlightStatus != FlightStatusEnum.Open))
             {
                 return BadRequest(new ApiResponse(400, "Passenger(s) cannot be checked in for a closed flight"));
             }
 
-            if (passengersOrItems.Any(p => p is Passenger && (p.TravelDocuments == null || !p.TravelDocuments.Any())))
+            if (passengersOrItems.Any(p => p is Passenger))
             {
-                return BadRequest(new ApiResponse(400, "Passenger(s) cannot be checked in without travel documents"));
+                var passengers = await _passengerRepository.GetPassengersByCriteriaAsync(p =>
+                    model.PassengerIds.Contains(p.Id) && (p.TravelDocuments == null || !p.TravelDocuments.Any()));
+
+                if (passengers.Count > 0) return BadRequest(new ApiResponse(400,
+                    "Passenger(s) cannot be checked in without travel documents"));
             }
 
             var flightClassesMismatch = passengersOrItems.SelectMany(p => p.Flights)
@@ -596,6 +647,17 @@ namespace Web.Api.PassengerManagement.Controllers
             {
                 return BadRequest(new ApiResponse(400,
                     "Passenger(s) flight classes on the selected flights do not match"));
+            }
+
+            var destinationsMismatch = passengersOrItems.SelectMany(p => p.Flights)
+                .Where(f => model.FlightIds.Contains(f.FlightId))
+                .GroupBy(f => f.FlightId)
+                .Any(g => g.Select(f => f.Flight.DestinationToId).Distinct().Count() > 1);
+
+            if (destinationsMismatch)
+            {
+                  return BadRequest(new ApiResponse(400,
+                      "Passenger(s) final destinations on the selected flights do not match"));
             }
 
             foreach (var flight in flights)
@@ -838,6 +900,11 @@ namespace Web.Api.PassengerManagement.Controllers
         [HttpPatch("selected-flight/{flightId:guid}/onload-passengers")]
         public async Task<ActionResult<List<object>>> OnloadPassengers(Guid flightId, List<Guid> passengerIds)
         {
+            if(!await _flightRepository.ExistsAsync(flightId))
+            {
+                return NotFound(new ApiResponse(404, $"Flight with Id {flightId} was not found."));
+            }
+
             Expression<Func<BasePassengerOrItem, bool>> criteria = c => passengerIds.Contains(c.Id) &&
                                                                         (c is Passenger ||
                                                                          c is CabinBaggageRequiringSeat ||
@@ -848,11 +915,15 @@ namespace Web.Api.PassengerManagement.Controllers
             var availableSeats =
                 await _seatRepository.GetSeatsByCriteriaAsync(
                     s => s.FlightId == flightId && s.SeatStatus == SeatStatusEnum.Empty, false);
-            var flight = await _flightRepository.GetFlightByIdAsync(flightId, false) as Flight;
 
-            if (passengersOrItems == null || flight == null)
+            if (!passengersOrItems.Any())
             {
                 return NotFound(new ApiResponse(404, $"Passenger(s) or flight not found with provided ids"));
+            }
+
+            if (await _flightRepository.GetFlightByIdAsync(flightId, false) is not Flight flight)
+            {
+                return NotFound(new ApiResponse(404, $"Flight {flightId} not found"));
             }
 
             if (flight.FlightStatus == FlightStatusEnum.Finalised)
@@ -861,9 +932,9 @@ namespace Web.Api.PassengerManagement.Controllers
                     "Onload of selected passenger(s) can't be done as the flight is finalised"));
             }
 
-            if (availableSeats == null)
+            if (availableSeats.Count == 0)
             {
-                return NotFound(new ApiResponse(404, "No available seats found on the current flight"));
+                return Ok(new ApiResponse(200, "No available seats found on the current flight"));
             }
 
             var highestSequenceNumber = await _passengerFlightRepository.GetHighestSequenceNumberOfTheFlight(flight.Id);
@@ -881,9 +952,11 @@ namespace Web.Api.PassengerManagement.Controllers
 
                     var availableSeat =
                         availableSeats.FirstOrDefault(s => s.FlightClass == passengerFlight.FlightClass);
+
                     if (availableSeat != null)
                     {
                         passengerOrItem.AssignedSeats.Add(availableSeat);
+                        availableSeat.SeatStatus = SeatStatusEnum.Occupied;
                         passengerFlight.AcceptanceStatus = AcceptanceStatusEnum.Accepted;
                         passengerFlight.BoardingSequenceNumber = ++highestSequenceNumber;
 
@@ -895,7 +968,7 @@ namespace Web.Api.PassengerManagement.Controllers
                     }
                     else
                     {
-                        return NotFound(new ApiResponse(404,
+                        return Ok(new ApiResponse(200,
                             "No seats available for the passenger(s) in required flight class"));
                     }
                 }
@@ -929,6 +1002,7 @@ namespace Web.Api.PassengerManagement.Controllers
             if (passenger.InfantId != null)
             {
                 var infant = await _infantRepository.GetInfantByIdAsync(passenger.InfantId.Value);
+
                 var infantFlight = infant.Flights.FirstOrDefault(f => f.FlightId == flight.Id);
                 if (infantFlight != null)
                 {
@@ -950,9 +1024,13 @@ namespace Web.Api.PassengerManagement.Controllers
             var passengersOrItems =
                 await _basePassengerOrItemRepository.GetBasePassengerOrItemsByCriteriaAsync(criteria);
             var flights = await _flightRepository.GetFlightsByCriteriaAsync(f => model.FlightIds.Contains(f.Id));
-            var selectedFlight = await _flightRepository.GetFlightByIdAsync(flightId, false) as Flight;
 
-            if (passengersOrItems == null || flights == null || selectedFlight == null)
+            if (await _flightRepository.GetFlightByIdAsync(flightId, false) is not Flight selectedFlight)
+            {
+                return NotFound(new ApiResponse(404, $"Flight {flightId} not found"));
+            }
+
+            if (!passengersOrItems.Any() || !flights.Any())
             {
                 return NotFound(new ApiResponse(404, $"Passenger(s) or flight(s) not found with provided ids"));
             }
@@ -984,7 +1062,7 @@ namespace Web.Api.PassengerManagement.Controllers
                         if (passengerFlight.AcceptanceStatus == AcceptanceStatusEnum.Boarded)
                         {
                             return BadRequest(new ApiResponse(400,
-                                "Acceptance of the passenger can't be cancelled the passenger is already boarded"));
+                                "Acceptance of the passenger can't be cancelled as the passenger is already boarded"));
                         }
 
                         passengerFlight.AcceptanceStatus = updateStatusTo;
@@ -1011,7 +1089,9 @@ namespace Web.Api.PassengerManagement.Controllers
 
             await _passengerRepository.UpdateAsync(passengersOrItems.ToArray());
 
-            return Ok();
+            var cancelledPassengerOrItemsDto = _MapPassengerOrItemsToDto(passengersOrItems, selectedFlight);
+
+            return Ok(cancelledPassengerOrItemsDto);
         }
 
         private object? _MapSinglePassengerOrItemToDto(object passengerOrItem,

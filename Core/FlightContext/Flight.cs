@@ -1,5 +1,4 @@
-﻿using Core.BoardingContext;
-using Core.FlightContext.FlightInfo;
+﻿using Core.FlightContext.FlightInfo;
 using Core.FlightContext.FlightInfo.Enums;
 using Core.FlightContext.JoinClasses;
 using Core.PassengerContext.JoinClasses;
@@ -16,9 +15,9 @@ namespace Core.FlightContext
         public Aircraft Aircraft { get; private set; }
         public string AircraftId { get; set; }
 
-        public Boarding Boarding { get; private set; }
-
         public int? DividerPlacedBehindRow { get; set; }
+
+        public BoardingStatusEnum BoardingStatus { get; set; } = BoardingStatusEnum.Closed;
 
         public FlightStatusEnum FlightStatus { get; set; } = FlightStatusEnum.Open;
 

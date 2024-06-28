@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240614165911_Minor_changes")]
+    partial class Minor_changes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -489,7 +492,7 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("PassengerOrItemId")
+                    b.Property<Guid?>("PassengerId")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("PriorityBoarding")
@@ -660,10 +663,6 @@ namespace Infrastructure.Migrations
                     b.HasBaseType("Core.FlightContext.BaseFlight");
 
                     b.Property<string>("AircraftId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("BoardingStatus")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int?>("DividerPlacedBehindRow")
@@ -937,7 +936,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.PassengerContext.BasePassengerOrItem", b =>
                 {
                     b.HasOne("Core.PassengerContext.Booking.PassengerBookingDetails", "BookingDetails")
-                        .WithOne("PassengerOrItem")
+                        .WithOne("Passenger")
                         .HasForeignKey("Core.PassengerContext.BasePassengerOrItem", "BookingDetailsId")
                         .OnDelete(DeleteBehavior.SetNull);
 
@@ -1070,7 +1069,27 @@ namespace Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("ScheduledFlightId");
 
+                    b.OwnsOne("Core.BoardingContext.Boarding", "Boarding", b1 =>
+                        {
+                            b1.Property<Guid>("FlightId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("BoardingStatus")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("BoardingStatus");
+
+                            b1.HasKey("FlightId");
+
+                            b1.ToTable("Flights");
+
+                            b1.WithOwner()
+                                .HasForeignKey("FlightId");
+                        });
+
                     b.Navigation("Aircraft");
+
+                    b.Navigation("Boarding");
 
                     b.Navigation("ScheduledFlight");
                 });
@@ -1138,7 +1157,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.PassengerContext.Booking.PassengerBookingDetails", b =>
                 {
-                    b.Navigation("PassengerOrItem");
+                    b.Navigation("Passenger");
                 });
 
             modelBuilder.Entity("Core.FlightContext.Flight", b =>

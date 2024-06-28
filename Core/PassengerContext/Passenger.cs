@@ -17,12 +17,6 @@ namespace Core.PassengerContext
 
         public int BaggageAllowance { get; set; }
         public bool PriorityBoarding { get; set; }
-        
-        public Guid? CabinBaggageRequiringSeatId { get; set; }
-        public CabinBaggageRequiringSeat CabinBaggageRequiringSeat { get; set; }
-        
-        public Guid? ExtraSeatId { get; set; }
-        public ExtraSeat ExtraSeat { get; set; }
 
         public List<Baggage> PassengerCheckedBags { get; set; } = new();        
         public List<SpecialServiceRequest> SpecialServiceRequests { get; set; } = new();

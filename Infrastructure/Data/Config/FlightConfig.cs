@@ -16,14 +16,10 @@ namespace Infrastructure.Data.Config
             builder.HasOne(f => f.Aircraft)
                 .WithMany(a => a.Flights)
                 .HasForeignKey(f => f.AircraftId);
-            
-            builder.OwnsOne(f => f.Boarding, add =>
-            {
-                add.Property(b => b.BoardingStatus)
-                    .HasColumnName("BoardingStatus")
-                    .HasEnumConversion();
-            });  
-            
+
+            builder.Property(f => f.BoardingStatus)
+                .HasEnumConversion();
+
             builder.Property(f => f.FlightStatus)
                 .HasEnumConversion();
 

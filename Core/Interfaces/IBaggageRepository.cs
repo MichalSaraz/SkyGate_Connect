@@ -28,22 +28,6 @@ namespace Core.Interfaces
         Task<Baggage> GetBaggageByCriteriaAsync(Expression<Func<Baggage, bool>> criteria);
 
         /// <summary>
-        /// Retrieves a baggage by its ID.
-        /// </summary>
-        /// <param name="id">The ID of the baggage.</param>
-        /// <param name="tracked">
-        /// Optional. Determines whether the baggage should be retrieved with tracking enabled or disabled.
-        /// Default is true.
-        /// </param>
-        /// <returns>The baggage with the specified ID.</returns>
-        /// <remarks>
-        /// This method retrieves the baggage from the database based on the provided ID.
-        /// It includes related entities such as passenger, baggage tag, special bag, and final destination.
-        /// The baggage is retrieved with tracking enabled by default.
-        /// </remarks>
-        Task<Baggage> GetBaggageByIdAsync(Guid id, bool tracked = true);
-
-        /// <summary>
         /// Retrieves all baggage that meets the specified criteria.
         /// </summary>
         /// <param name="criteria">The criteria to filter the baggage by.</param>

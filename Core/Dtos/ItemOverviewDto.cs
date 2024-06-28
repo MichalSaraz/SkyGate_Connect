@@ -1,4 +1,3 @@
-using Core.PassengerContext.JoinClasses;
 using Newtonsoft.Json;
 
 namespace Core.Dtos;
