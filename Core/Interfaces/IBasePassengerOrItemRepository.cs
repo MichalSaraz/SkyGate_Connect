@@ -11,7 +11,8 @@ namespace Core.Interfaces
         /// Retrieves a list of BasePassengerOrItem objects that meet the specified criteria.
         /// </summary>
         /// <param name="criteria">The expression representing the criteria to filter the objects.</param>
-        /// <param name="tracked">Indicates whether the objects should be tracked by the context.</param>
+        /// <param name="tracked">Indicates whether the objects should be tracked by the context. Default is
+        /// true.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains a read-only list of
         /// BasePassengerOrItem objects.</returns>
         Task<IReadOnlyList<BasePassengerOrItem>> GetBasePassengerOrItemsByCriteriaAsync(

@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Core.Interfaces;
+﻿using Core.Interfaces;
 using Core.PassengerContext;
 using Core.PassengerContext.Booking.Enums;
 using Core.SeatingContext;
@@ -47,9 +46,11 @@ namespace Web.Api.SeatManagement.Controllers
         /// <param name="selectedSeats">A list of seat numbers that need to be updated.</param>
         /// <param name="blockSeats">A boolean value indicating whether to block the seats (<c>true</c>) or unblock
         /// them (<c>false</c>).</param>
-        /// <returns>An <see cref="IActionResult"/> representing the response of the update operation.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of <see cref="SeatDto"/>
+        ///  objects representing the updated seats.</returns>
         [HttpPatch("update-seat-status")]
-        public async Task<ActionResult<List<SeatDto>>> UpdateSeatStatus(Guid flightId, List<string> selectedSeats, bool blockSeats)
+        public async Task<ActionResult<List<SeatDto>>> UpdateSeatStatus(Guid flightId, List<string> selectedSeats,
+            bool blockSeats)
         {
             if (!await _flightRepository.ExistsAsync(flightId))
             {
@@ -86,10 +87,11 @@ namespace Web.Api.SeatManagement.Controllers
         /// <param name="newSeatNumbers">A dictionary containing the passenger or item IDs as keys and the new seat
         /// numbers as values.</param>
         /// <param name="swapSeats">A boolean value indicating whether to swap seats or not.</param>
-        /// <returns>An IActionResult indicating the success or failure of the seat changes.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of <see cref="SeatDto"/>
+        ///  objects representing the changed seats.</returns>
         [HttpPatch("change-seats")]
-        public async Task<ActionResult<List<SeatDto>>> ChangeSeats(Guid flightId, Dictionary<Guid, string> newSeatNumbers,
-            bool swapSeats)
+        public async Task<ActionResult<List<SeatDto>>> ChangeSeats(Guid flightId,
+            Dictionary<Guid, string> newSeatNumbers, bool swapSeats)
         {
             if (!await _flightRepository.ExistsAsync(flightId))
             {
@@ -189,9 +191,11 @@ namespace Web.Api.SeatManagement.Controllers
         /// <param name="flightId">The ID of the flight.</param>
         /// <param name="seatsToAllocate">A dictionary of passenger IDs and corresponding seat numbers to allocate.
         /// </param>
-        /// <returns>An IActionResult representing the result of the allocation.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of <see cref="SeatDto"/>
+        ///  objects representing the allocated seats.</returns>
         [HttpPatch("allocate-seats")]
-        public async Task<ActionResult<List<SeatDto>>> AllocateSeats(Guid flightId, Dictionary<Guid, string> seatsToAllocate)
+        public async Task<ActionResult<List<SeatDto>>> AllocateSeats(Guid flightId,
+            Dictionary<Guid, string> seatsToAllocate)
         {
             if (!await _flightRepository.ExistsAsync(flightId))
             {
@@ -246,7 +250,8 @@ namespace Web.Api.SeatManagement.Controllers
         /// </summary>
         /// <param name="flightId">The ID of the flight.</param>
         /// <param name="passengerIds">The IDs of the passengers.</param>
-        /// <returns>Returns an IActionResult representing the result of the operation.</returns>
+        /// <returns> An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of <see cref="SeatDto"/>
+        /// objects representing the deallocated seats.</returns>
         [HttpPatch("deallocate-seats")]
         public async Task<ActionResult<List<SeatDto>>> DeallocateSeats(Guid flightId, List<Guid> passengerIds)
         {
@@ -287,7 +292,11 @@ namespace Web.Api.SeatManagement.Controllers
             return Ok(seatsToDeallocateDto);
         }
 
-        private void _RemoveExitCommentsIfNotEmergencyExit(Seat seat)
+        /// <summary>
+        /// Removes the exit comments from a seat if it is not an emergency exit seat.
+        /// </summary>
+        /// <param name="seat">The seat to remove exit comments from.</param>
+        private static void _RemoveExitCommentsIfNotEmergencyExit(Seat seat)
         {
             if (seat.SeatType != SeatTypeEnum.EmergencyExit &&
                 seat.PassengerOrItem.Comments.Any(c => c.PredefinedCommentId == "Exit"))
@@ -296,7 +305,16 @@ namespace Web.Api.SeatManagement.Controllers
             }
         }
 
-        private async Task<ActionResult<Comment>> _AddSeatChangeRelatedComment(Seat newSeat, List<Guid> flightIds)
+        /// <summary>
+        /// Adds a seat change related comment to a seat.
+        /// </summary>
+        /// <param name="newSeat">The new seat to add the comment to.</param>
+        /// <param name="flightIds">The list of flight IDs the seat is associated with.</param>
+        /// <returns>
+        /// Returns an <see cref="OkObjectResult"/> if the comment is added successfully.
+        /// Returns a <see cref="BadRequestObjectResult"/> if an exception occurs.
+        /// </returns>
+        private async Task _AddSeatChangeRelatedComment(Seat newSeat, List<Guid> flightIds)
         {
             if (newSeat.SeatType == SeatTypeEnum.EmergencyExit)
             {
@@ -305,31 +323,39 @@ namespace Web.Api.SeatManagement.Controllers
 
             try
             {
-                var seatChangeComment = await _commentRepository.GetCommentByCriteriaAsync(c => c.PassengerId == newSeat.PassengerOrItemId && c.PredefinedCommentId == "SeatChng");
+                var seatChangeComment =
+                    await _commentRepository.GetCommentByCriteriaAsync(c =>
+                        c.PassengerId == newSeat.PassengerOrItemId && c.PredefinedCommentId == "SeatChng") ??
+                    await _commentService.AddCommentAsync(newSeat.PassengerOrItemId ?? Guid.Empty, CommentTypeEnum.Gate,
+                        null, flightIds, "SeatChng");
 
-                if (seatChangeComment == null)
-                {
-                    seatChangeComment = await _commentService.AddCommentAsync(newSeat.PassengerOrItemId ?? Guid.Empty, CommentTypeEnum.Gate, null, flightIds, "SeatChng");
-                }
-                
-                return Ok(seatChangeComment);
+                Ok(seatChangeComment);
             }
             catch (Exception e)
             {
-                return BadRequest(new ApiResponse(400, e.Message));
+                BadRequest(new ApiResponse(400, e.Message));
             }
         }
 
-        private async Task<ActionResult<Comment>> _AddEmergencyExitSuitabilityCheckComment(Seat newSeat, List<Guid> flightIds)
+        /// <summary>
+        /// Adds a comment for emergency exit suitability check to a seat.
+        /// </summary>
+        /// <param name="newSeat">The seat to add the comment to.</param>
+        /// <param name="flightIds">The list of flight IDs to associate the comment with.</param>
+        /// <returns>
+        /// Returns an <see cref="OkObjectResult"/> if the comment is added successfully.
+        /// Returns a <see cref="BadRequestObjectResult"/> if an exception occurs.
+        /// </returns>
+        private async Task<ActionResult<Comment>> _AddEmergencyExitSuitabilityCheckComment(Seat newSeat,
+            List<Guid> flightIds)
         {
             try
             {
-                var suitabilityCheckComment = await _commentRepository.GetCommentByCriteriaAsync(c => c.PassengerId == newSeat.PassengerOrItemId && c.PredefinedCommentId == "Exit");
-
-                if (suitabilityCheckComment == null)
-                {
-                    suitabilityCheckComment = await _commentService.AddCommentAsync(newSeat.PassengerOrItemId ?? Guid.Empty, CommentTypeEnum.Gate, null, flightIds, "Exit");
-                }
+                var suitabilityCheckComment =
+                    await _commentRepository.GetCommentByCriteriaAsync(c =>
+                        c.PassengerId == newSeat.PassengerOrItemId && c.PredefinedCommentId == "Exit") ??
+                    await _commentService.AddCommentAsync(newSeat.PassengerOrItemId ?? Guid.Empty, CommentTypeEnum.Gate,
+                        null, flightIds, "Exit");
 
                 return Ok(suitabilityCheckComment);
             }

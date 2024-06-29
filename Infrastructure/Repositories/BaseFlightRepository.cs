@@ -29,7 +29,8 @@ namespace Infrastructure.Repositories
             return flights;
         }
 
-        public virtual async Task<BaseFlight> GetFlightByIdAsync(Guid id, bool tracked = true, bool displayDetails = false)
+        public virtual async Task<BaseFlight> GetFlightByIdAsync(Guid id, bool tracked = true,
+            bool displayDetails = false)
         {
             var flightQuery = _context.Flights.AsQueryable()
                 .Include(_ => _.Airline)

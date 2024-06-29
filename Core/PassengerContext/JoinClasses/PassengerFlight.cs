@@ -6,10 +6,10 @@ namespace Core.PassengerContext.JoinClasses
 {
     public class PassengerFlight
     {
-        public BasePassengerOrItem PassengerOrItem { get; private set; }
+        public BasePassengerOrItem PassengerOrItem { get; }
         public Guid PassengerOrItemId { get; private set; }
 
-        public BaseFlight Flight { get; private set; }
+        public BaseFlight Flight { get; }
         public Guid FlightId { get; private set; }
 
         // is null when AcceptanceStatus is NotAccepted

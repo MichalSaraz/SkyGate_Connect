@@ -19,19 +19,19 @@ namespace Core.PassengerContext.Booking
         public PaxGenderEnum Gender { get; private set; }
 
         [Required]
-        public BookingReference PNR { get; private set; }
+        public BookingReference PNR { get; }
         public string PNRId { get; private set; }
 
-        public int? Age { get; private set; }
+        public int? Age { get; }
 
-        public int BaggageAllowance { get; private set; }
-        public bool PriorityBoarding { get; private set; }
-        public string FrequentFlyerCardNumber { get; private set; }
+        public int BaggageAllowance { get; }
+        public bool PriorityBoarding { get; }
+        public string FrequentFlyerCardNumber { get; }
 
-        public BasePassengerOrItem PassengerOrItem { get; private set; }
+        public BasePassengerOrItem PassengerOrItem { get; }
         public Guid? PassengerOrItemId { get; set; }
 
-        public PassengerBookingDetails AssociatedPassengerBookingDetails { get; private set; }
+        public PassengerBookingDetails AssociatedPassengerBookingDetails { get; }
         public Guid? AssociatedPassengerBookingDetailsId { get; set; }
 
         public Dictionary<string, FlightClassEnum> BookedClass { get; private set; } = new();

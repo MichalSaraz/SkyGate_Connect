@@ -7,15 +7,8 @@ namespace Core.Time
     {
         public virtual DateTime Now => DateTime.Now;
 
-        /// <summary>
-        /// Parses the input string into a DateTime object.
-        /// </summary>
-        /// <param name="input">The string to parse into a DateTime object.</param>
-        /// <param name="useFormatsWithYear">Optional. Specifies whether to use formats with year or not. Default
-        /// is false.</param>
-        /// <returns> If the input string is a valid date format, returns the parsed DateTime object. Otherwise,
-        /// throws an ArgumentException with the message "Invalid date format". </returns>
-        public virtual DateTime? ParseDate(string input, string defaultTime = "0:00:00", bool useFormatsWithYear = false)
+        public virtual DateTime? ParseDate(string input, string defaultTime = "0:00:00",
+            bool useFormatsWithYear = false)
         {
             string[] formatsDateOnly = { "dMMM", "DDMMM", "ddMMM" };
             string[] formatsDateWithYear = { "dMMMyyyy", "ddMMMyyyy", "DDMMMyyyy" };
@@ -27,29 +20,31 @@ namespace Core.Time
                 return null;
             }
 
-            DateTime parsedDate;
-            var isValidDate = DateTime.TryParseExact(input, formatsToUse, CultureInfo.InvariantCulture, DateTimeStyles.None, out parsedDate);
+            var isValidDate = DateTime.TryParseExact(input, formatsToUse, CultureInfo.InvariantCulture,
+                DateTimeStyles.None, out var parsedDate);
+            
             if (!isValidDate)
             {
                 throw new ArgumentException("Invalid date format");
             }
 
             TimeSpan parsedTime;
+            
             if (defaultTime == "0:00:00")
             {
                 parsedTime = TimeSpan.Zero;
             }
             else
             {
-                var isValidTime = TimeSpan.TryParseExact(defaultTime, @"hh\:mm", CultureInfo.InvariantCulture, out parsedTime);
+                var isValidTime = TimeSpan.TryParseExact(defaultTime, @"hh\:mm", CultureInfo.InvariantCulture,
+                    out parsedTime);
                 if (!isValidTime)
                 {
                     throw new ArgumentException("Invalid time format");
                 }
             }
-              
 
-            DateTime result = parsedDate.Date + parsedTime;
+            var result = parsedDate.Date + parsedTime;
 
             return ParseDateWithCurrentYear(result);
         }

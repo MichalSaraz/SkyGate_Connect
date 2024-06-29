@@ -28,19 +28,5 @@ namespace Core.PassengerContext
             BaggageAllowance = baggageAllowance;
             PriorityBoarding = priorityBoarding;
         }
-
-        /// <summary>
-        /// Maps a <see cref="PassengerBookingDetails"/> object to this <see cref="Passenger"/> object.
-        /// </summary>
-        /// <param name="passengerBookingDetails">The <see cref="PassengerBookingDetails"/> object to be mapped.</param>
-        protected override void MapFromPassengerBookingDetails(PassengerBookingDetails passengerBookingDetails)
-        {
-            base.MapFromPassengerBookingDetails(passengerBookingDetails);
-            BaggageAllowance = passengerBookingDetails.BaggageAllowance;
-            PriorityBoarding = passengerBookingDetails.PriorityBoarding;
-            InfantId = passengerBookingDetails.AssociatedPassengerBookingDetailsId;
-            // FrequentFlyerCard
-            // FrequentFlyerCardId
-        }
     }
 }

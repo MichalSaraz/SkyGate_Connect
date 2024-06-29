@@ -5,14 +5,14 @@ namespace Core.PassengerContext.APIS
     public class Country
     {
         [Key]
-        public string Country2LetterCode { get; private set; }
+        public string Country2LetterCode { get; set; }
 
-        public string Country3LetterCode { get; private set; }        
+        public string Country3LetterCode { get; set; }        
 
-        public string CountryName { get; private set; }   
+        public string CountryName { get; set; }   
         
-        public string[] AircraftRegistrationPrefix { get; private set; }
+        public string[] AircraftRegistrationPrefix { get; set; }
 
-        public bool IsEEACountry { get; private set; }
+        public bool IsEEACountry { get; set; }
     }
 }

@@ -29,8 +29,19 @@ namespace Web.Api.PassengerManagement.Controllers
             _mapper = mapper;
         }
 
-        private async Task<ActionResult<List<APISDataDto>>> _ProcessTravelDocumentsAsync<TModel>(Guid id, List<JObject> dataList,
-            Func<APISData[], Task> saveMethod, Func<Guid, Task<APISData>>? getByIdMethod = null)
+        /// <summary>
+        /// Processes travel documents asynchronously.
+        /// </summary>
+        /// <typeparam name="TModel">The type of the travel document model.</typeparam>
+        /// <param name="id">The ID of the passenger.</param>
+        /// <param name="dataList">The list of JSON objects representing the travel documents.</param>
+        /// <param name="saveMethod">The save method to be called with the processed travel documents.</param>
+        /// <param name="getByIdMethod">The method to get a travel document by ID. This is optional and needed only for
+        /// edit operations.</param>
+        /// <returns>An ActionResult containing a list of APISDataDto objects representing the processed travel
+        /// documents.</returns>
+        private async Task<ActionResult<List<APISDataDto>>> _ProcessTravelDocumentsAsync<TModel>(Guid id,
+            List<JObject> dataList, Func<APISData[], Task> saveMethod, Func<Guid, Task<APISData>>? getByIdMethod = null)
             where TModel : APISDataModel
         {
             var processedApisDataList = new List<APISData>();
@@ -125,7 +136,9 @@ namespace Web.Api.PassengerManagement.Controllers
         ///     ]
         ///
         /// </remarks>
-        /// <returns>A list of added travel documents with APIS data</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of
+        /// <see cref="APISDataDto"/> objects. If the request is invalid, returns <see cref="NotFoundResult"/> with an
+        /// error message.</returns>
         [HttpPost("passenger/{id:guid}/add-document")]
         public async Task<ActionResult<List<APISDataDto>>> AddTravelDocument(Guid id, [FromBody] List<JObject> dataList)
         {
@@ -168,15 +181,19 @@ namespace Web.Api.PassengerManagement.Controllers
         ///     ]
         ///
         /// </remarks>
-        /// <returns>A list of edited travel documents with APIS data.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of
+        /// <see cref="APISDataDto"/> objects. If the request is invalid, returns <see cref="NotFoundResult"/> with an
+        /// error message.</returns>
         [HttpPut("passenger/{id:guid}/edit-document")]
-        public async Task<ActionResult<List<APISDataDto>>> EditTravelDocument(Guid id, [FromBody] List<JObject> dataList)
+        public async Task<ActionResult<List<APISDataDto>>> EditTravelDocument(Guid id,
+            [FromBody] List<JObject> dataList)
         {
             Func<APISData[], Task> saveMethod = _apisDataRepository.UpdateAsync;
 
             try
             {
-                var editedApisData = await _ProcessTravelDocumentsAsync<EditAPISDataModel>(id, dataList, saveMethod, GetByIdMethod);
+                var editedApisData =
+                    await _ProcessTravelDocumentsAsync<EditAPISDataModel>(id, dataList, saveMethod, GetByIdMethod);
                 return Ok(editedApisData);
             }
             catch (Exception ex)
@@ -193,7 +210,7 @@ namespace Web.Api.PassengerManagement.Controllers
         /// </summary>
         /// <param name="id">The ID of the passenger.</param>
         /// <param name="apisDataIds">The IDs of the travel documents to delete.</param>
-        /// <returns>An ActionResult</returns>
+        /// <returns>A <see cref="NoContentResult"/> if the comment was deleted successfully.</returns>
         [HttpDelete("passenger/{id:guid}/delete-document")]
         public async Task<ActionResult> DeleteTravelDocument(Guid id, [FromBody] List<Guid> apisDataIds)
         {

@@ -1,5 +1,4 @@
-﻿using Core.PassengerContext.Booking;
-using Core.PassengerContext.Booking.Enums;
+﻿using Core.PassengerContext.Booking.Enums;
 
 namespace Core.PassengerContext
 {
@@ -13,13 +12,6 @@ namespace Core.PassengerContext
             Guid? bookingDetailsId, int? weight) : base(firstName, lastName, gender, bookingDetailsId, weight)
         {
             AssociatedAdultPassengerId = associatedAdultPassengerId;
-        }
-
-        protected override void MapFromPassengerBookingDetails(PassengerBookingDetails passengerBookingDetails)
-        {
-            base.MapFromPassengerBookingDetails(passengerBookingDetails);
-
-            AssociatedAdultPassengerId = passengerBookingDetails.AssociatedPassengerBookingDetailsId ?? Guid.Empty;
         }
     }
 }

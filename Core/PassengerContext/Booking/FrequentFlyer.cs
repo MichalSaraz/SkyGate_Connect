@@ -21,10 +21,10 @@ namespace Core.PassengerContext.Booking
             }
         }
         
-        public Passenger Passenger { get; private set; }
+        public Passenger Passenger { get; }
         public Guid PassengerId { get; private set; }
 
-        public Airline Airline { get; private set; }
+        public Airline Airline { get; }
         public string AirlineId { get; private set; }
                 
         [Required]

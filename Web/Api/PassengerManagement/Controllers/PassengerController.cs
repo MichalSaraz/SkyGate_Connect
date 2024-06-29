@@ -74,8 +74,8 @@ namespace Web.Api.PassengerManagement.Controllers
         ///     }
         ///
         /// </remarks> 
-        /// <returns>Returns a list of Passenger objects that match the search criteria. If the operation is
-        /// unsuccessful, returns an appropriate error response.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of <see cref="object"/>.
+        /// </returns>
         [HttpPost("search-passengers")]
         public async Task<ActionResult<List<object>>> SearchPassengers([FromBody] JObject data)
         {
@@ -101,7 +101,8 @@ namespace Web.Api.PassengerManagement.Controllers
                                                   string.IsNullOrEmpty(model.DestinationTo) &&
                                                   string.IsNullOrEmpty(model.SeatNumber)))
             {
-                return BadRequest(new ApiResponse(400, "Flight number, Airline, Departure date plus one optional field must be filled in for the search criteria."));
+                return BadRequest(new ApiResponse(400,
+                    "Flight number, Airline, Departure date plus one optional field must be filled in for the search criteria."));
             }
             
             Expression<Func<BasePassengerOrItem, bool>> criteria = c =>
@@ -147,9 +148,7 @@ namespace Web.Api.PassengerManagement.Controllers
         /// </summary>
         /// <param name="flightId">The id of the flight.</param>
         /// <param name="passengerIds">The list of passenger ids.</param>
-        /// <returns>
-        /// An ActionResult containing the list of passenger details as PassengerDetailsDto objects.
-        /// If no passengers are found for the provided ids, returns a NotFound response with an ApiResponse message.
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of <see cref="object"/>.
         /// </returns>
         [HttpPost("selected-flight/{flightId:guid}/passenger-details")]
         public async Task<ActionResult<List<object>>> GetPassengerDetails(Guid flightId,
@@ -167,18 +166,26 @@ namespace Web.Api.PassengerManagement.Controllers
                 return NotFound(new ApiResponse(404, "Passengers not found for provided ids"));
             }
             
-            var passengerOrItemsDto = _MapPassengerOrItemsToDto(passengerOrItems, selectedFlight, true);
+            var passengerOrItemsDto = _MapPassengerOrItemsToDto(passengerOrItems, selectedFlight);
 
             return Ok(passengerOrItemsDto);
         }
-        
+
+        /// <summary>
+        /// Casts Passenger, CabinBaggageRequiringSeat, ExtraSeat or Infant objects from a list of
+        /// <see cref="BasePassengerOrItem"/> objects based on provided criteria.
+        /// </summary>
+        /// <param name="criteria">The expression representing the criteria to filter the
+        /// <see cref="BasePassengerOrItem"/> objects.</param>
+        /// <returns>A list <see cref="List{T}"/> of <see cref="CabinBaggageRequiringSeat"/>, <see cref="ExtraSeat"/>,
+        /// <see cref="Passenger"/> or <see cref="Infant"/> objects.</returns>
         private async Task<List<object>> _CastPassengerOrItems(Expression<Func<BasePassengerOrItem, bool>> criteria)
         {
             var passengerOrItemsList = new List<object>();
             var passengerOrItems = 
                 await _basePassengerOrItemRepository.GetBasePassengerOrItemsByCriteriaAsync(
                     criteria, false);
-            
+
             foreach (var passengerOrItem in passengerOrItems)
             {
                 if (passengerOrItem is Passenger passenger)
@@ -188,12 +195,15 @@ namespace Web.Api.PassengerManagement.Controllers
                 }
                 else if (passengerOrItem is CabinBaggageRequiringSeat cbbg)
                 {
-                    cbbg = await _basePassengerOrItemRepository.GetBasePassengerOrItemByIdAsync(cbbg.Id) as CabinBaggageRequiringSeat ?? cbbg;
+                    cbbg =
+                        await _basePassengerOrItemRepository.GetBasePassengerOrItemByIdAsync(cbbg.Id) as
+                            CabinBaggageRequiringSeat ?? cbbg;
                     passengerOrItemsList.Add(cbbg);
                 }
                 else if (passengerOrItem is ExtraSeat exst)
                 {
-                    exst = await _basePassengerOrItemRepository.GetBasePassengerOrItemByIdAsync(exst.Id) as ExtraSeat ?? exst;
+                    exst = await _basePassengerOrItemRepository.GetBasePassengerOrItemByIdAsync(exst.Id) as ExtraSeat ??
+                           exst;
                     passengerOrItemsList.Add(exst);
                 }
                 else if (passengerOrItem is Infant infant)
@@ -211,8 +221,7 @@ namespace Web.Api.PassengerManagement.Controllers
         /// </summary>
         /// <param name="flightId">The ID of the flight.</param>
         /// <param name="bookingReference">The booking reference.</param>
-        /// <returns>
-        /// An asynchronous task that returns an ActionResult object which contains a list of passenger details.
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of <see cref="object"/>.
         /// </returns>
         [HttpGet("selected-flight/{flightId:guid}/booking-reference/{bookingReference}/passenger-list")]
         public async Task<ActionResult<List<object>>> GetPassengersByBookingReference(Guid flightId,
@@ -239,10 +248,10 @@ namespace Web.Api.PassengerManagement.Controllers
         /// <summary>
         /// Retrieves all the bags of a passenger based on the provided id.
         /// </summary>
-        /// <param name="flightId"></param>
+        /// <param name="flightId">The id of the flight.</param>
         /// <param name="id">The id of the passenger.</param>
-        /// <returns> An ActionResult containing the PassengerDetailsDto object for the passenger including all bags.
-        /// If the passenger is not found, returns a NotFound response with an ApiResponse message.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of
+        /// <see cref="PassengerDetailsDto"/> objects.</returns>
         [HttpGet("selected-flight/{flightId:guid}/passenger/{id:guid}/all-bags")]
         public async Task<ActionResult<List<PassengerDetailsDto>>> GetAllPassengersBags(Guid flightId, Guid id)
         {
@@ -272,8 +281,7 @@ namespace Web.Api.PassengerManagement.Controllers
         /// </summary>
         /// <param name="flightId">The ID of the flight to add passengers to.</param>
         /// <param name="passengerSelectionUpdate">The model containing passenger selection updates.</param>
-        /// <returns>
-        /// The list of passengers with additional details (PassengerDetailsDto) for the selected flight.
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of <see cref="object"/>.
         /// </returns>
         [HttpPost("selected-flight/{flightId:guid}/add-passengers")]
         public async Task<ActionResult<List<object>>> AddPassengersToSelection(Guid flightId,
@@ -315,8 +323,7 @@ namespace Web.Api.PassengerManagement.Controllers
         /// <param name="flightId"></param>
         /// <param name="id">The ID of the passenger.</param>
         /// <param name="infantModel">The details of the infant to be added.</param>
-        /// <returns>An ActionResult with the Infant object if the operation is successful; otherwise, an appropriate
-        /// status code is returned.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing an <see cref="InfantOverviewDto"/> object.</returns>
         [HttpPost("selected-flight/{flightId:guid}/passenger/{id:guid}/add-infant")]
         public async Task<ActionResult<InfantOverviewDto>> AddInfant(Guid flightId, Guid id,
             [FromBody] InfantModel infantModel)
@@ -358,7 +365,7 @@ namespace Web.Api.PassengerManagement.Controllers
             {
                 infant.Flights.Add(new PassengerFlight(infant.Id, flight.FlightId, flight.FlightClass));
 
-                if (!passenger.SpecialServiceRequests.Any(ssr => ssr.SSRCodeId == "INFT"))
+                if (passenger.SpecialServiceRequests.All(ssr => ssr.SSRCodeId != "INFT"))
                 {
                     passenger.SpecialServiceRequests.Add(
                         new SpecialServiceRequest("INFT", flight.FlightId, infant.Id, infantModel.FreeText));
@@ -391,7 +398,7 @@ namespace Web.Api.PassengerManagement.Controllers
         /// Removes the infant associated with the specified passenger ID.
         /// </summary>
         /// <param name="id">The ID of the infant.</param>
-        /// <returns> An ActionResult representing the result of the operation.</returns>
+        /// <returns>A <see cref='NoContentResult'/> if the operation is successful.</returns>
         [HttpDelete("infant/{id:guid}/remove-infant")]
         public async Task<ActionResult> RemoveInfant(Guid id)
         {
@@ -425,12 +432,14 @@ namespace Web.Api.PassengerManagement.Controllers
         }
 
         /// <summary>
-        /// Adds a no-rec passenger to a selected flight. No-rec passengers are passengers who have not been found
-        /// in the customer list of the flight but have valid booking reference on the flight.
+        /// Adds a no-rec passenger to a selected flight.
         /// </summary>
         /// <param name="flightId">The ID of the selected flight.</param>
         /// <param name="model">The model containing the details of the non-recurring passenger.</param>
         /// <remarks>
+        /// No-rec passengers are passengers who have not been found in the customer list of the flight but have valid
+        /// booking reference on the flight.
+        /// 
         /// Sample request:
         /// 
         ///     POST /passenger/selected-flight/3F2504E0-4F89-41D3-9A0C-0305E82C3301/add-no-rec-passenger
@@ -453,8 +462,7 @@ namespace Web.Api.PassengerManagement.Controllers
         ///         }
         ///     }
         /// </remarks>
-        /// <returns> An ActionResult containing the PassengerDetailsDto object for the added no-rec passenger. If
-        /// the operation is unsuccessful, returns an appropriate error response.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a <see cref="PassengerDetailsDto"/> object.</returns>
         [HttpPost("passenger/selected-flight/{flightId:guid}/add-no-rec-passenger")]
         public async Task<ActionResult<PassengerDetailsDto>> AddNoRecPassenger(Guid flightId,
             [FromBody] NoRecPassengerModel model)
@@ -588,9 +596,8 @@ namespace Web.Api.PassengerManagement.Controllers
         /// </summary>
         /// <param name="flightId">The ID of the selected flight.</param>
         /// <param name="model">The passenger check-in model.</param>
-        /// <returns>
-        /// An ActionResult containing a list of PassengerDetailsDto if the check-in is successful. Otherwise,
-        /// an appropriate error response is returned.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of <see cref="object"/>.
+        /// </returns>
         [HttpPut("selected-flight/{flightId:guid}/check-in-passengers")]
         public async Task<ActionResult<List<object>>> CheckInPassengers(Guid flightId,
             [FromBody] PassengerCheckInModel model)
@@ -620,8 +627,8 @@ namespace Web.Api.PassengerManagement.Controllers
 
             if (hasInvalidPassengersOrItems)
             {
-                return BadRequest(new ApiResponse(400, "Passenger(s) can't be checked in for a future flight if they " +
-                                                       "aren't checked in for the current flight"));
+                return BadRequest(new ApiResponse(400, 
+                    "Passenger(s) can't be checked in for a future flight if they aren't checked in for the current flight"));
             }
 
             if (flights.Any(f => f.FlightStatus != FlightStatusEnum.Open))
@@ -735,6 +742,12 @@ namespace Web.Api.PassengerManagement.Controllers
             return Ok(passengerOrItemsDto);
         }
 
+        /// <summary>
+        /// Selects a seat for a single passenger based on their seat preference and seat availability.
+        /// </summary>
+        /// <param name="emptySeats">The list of available seats.</param>
+        /// <param name="model">The passenger check-in model containing the seat preference.</param>
+        /// <returns>The selected seat for the passenger.</returns>
         private static Seat _SelectSeatForSinglePassenger(IReadOnlyCollection<Seat> emptySeats,
             PassengerCheckInModel model)
         {
@@ -895,8 +908,8 @@ namespace Web.Api.PassengerManagement.Controllers
         /// </summary>
         /// <param name="flightId">The ID of the selected flight.</param>
         /// <param name="passengerIds">The list of passenger IDs to accept</param>
-        /// <returns>Returns the details of the accepted passenger(s). If the operation is unsuccessful, an appropriate
-        /// error response is returned.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of <see cref="object"/>.
+        /// </returns>
         [HttpPatch("selected-flight/{flightId:guid}/onload-passengers")]
         public async Task<ActionResult<List<object>>> OnloadPassengers(Guid flightId, List<Guid> passengerIds)
         {
@@ -986,12 +999,12 @@ namespace Web.Api.PassengerManagement.Controllers
         }
 
         /// <summary>
-        /// Updates the boarding zone and infant acceptance status for a passenger on a flight.
+        /// Updates the boarding zone and infant acceptance status for a passenger.
         /// </summary>
         /// <param name="passenger">The passenger to update.</param>
-        /// <param name="flight">The flight the passenger is on.</param>
-        /// <param name="passengerFlight">The passenger's flight details.</param>
-        /// <param name="highestSequenceNumber">The highest sequence number of all passengers on the flight.</param>
+        /// <param name="flight">The flight the passenger is associated with.</param>
+        /// <param name="passengerFlight">The join class linking the passenger and flight.</param>
+        /// <param name="highestSequenceNumber">The highest sequence number among all passengers on the flight.</param>
         private async Task _UpdateBoardingZoneAndInfantAcceptance(Passenger passenger, BaseFlight flight, 
             PassengerFlight passengerFlight, int highestSequenceNumber)
         {
@@ -1012,6 +1025,15 @@ namespace Web.Api.PassengerManagement.Controllers
             }
         }
 
+        /// <summary>
+        /// Cancels the acceptance of passenger(s) for a selected flight.
+        /// </summary>
+        /// <param name="flightId">The ID of the flight for which the passenger acceptance needs to be cancelled.
+        /// </param>
+        /// <param name="model">The passenger check-in model containing the IDs of the passengers to cancel acceptance
+        /// for.</param>
+        /// <param name="updateStatusTo">The acceptance status to update the passengers to after cancellation.</param>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a <see cref="BasePassengerOrItem"/> object.</returns>
         [HttpPut("selected-flight/{flightId:guid}/cancel-passenger-acceptance")]
         public async Task<ActionResult<BasePassengerOrItem>> CancelPassengerAcceptance(Guid flightId,
             [FromBody] PassengerCheckInModel model, AcceptanceStatusEnum updateStatusTo)
@@ -1094,6 +1116,13 @@ namespace Web.Api.PassengerManagement.Controllers
             return Ok(cancelledPassengerOrItemsDto);
         }
 
+        /// <summary>
+        /// Maps a single passenger or item to a DTO based on the given flight and display details flag.
+        /// </summary>
+        /// <param name="passengerOrItem">The passenger or item to map.</param>
+        /// <param name="flight">The flight associated with the passenger or item.</param>
+        /// <param name="displayDetails">Flag indicating whether to include detailed information in the DTO.</param>
+        /// <returns>The mapped DTO object or null if the passenger or item does not match any specific type.</returns>
         private object? _MapSinglePassengerOrItemToDto(object passengerOrItem,
             BaseFlight flight, bool displayDetails = true)
         {
@@ -1136,6 +1165,14 @@ namespace Web.Api.PassengerManagement.Controllers
             };
         }
 
+        /// <summary>
+        /// Maps a collection of passenger or item objects to DTOs using the <see cref="BaseFlight"/> information.
+        /// </summary>
+        /// <param name="passengerOrItems">The collection of passenger or item objects to be mapped to DTOs.</param>
+        /// <param name="flight">The <see cref="BaseFlight"/> object containing flight information.</param>
+        /// <param name="displayDetails">A flag indicating whether to display additional details in the DTOs (default is
+        /// true).</param>
+        /// <returns>The collection of DTOs mapped from the passenger or item objects.</returns>
         private List<object> _MapPassengerOrItemsToDto(IEnumerable<object> passengerOrItems,
             BaseFlight flight, bool displayDetails = true)
         {

@@ -42,7 +42,7 @@ namespace TestProject.TestDataInitializationClasses
 
                 foreach (var passengerBookingDetails in bookingReference.LinkedPassengers.ToList())
                 {
-                    BasePassengerOrItem? passengerOrItem = null;
+                    BasePassengerOrItem? passengerOrItem;
 
                     if (passengerBookingDetails.FirstName == "CBBG")
                     {
@@ -156,10 +156,6 @@ namespace TestProject.TestDataInitializationClasses
                     }
 
                     Trace.WriteLine($"Iteration {count++}");
-                }
-
-                foreach (var flight in flightsInPNR)
-                {
                 }
             }
 

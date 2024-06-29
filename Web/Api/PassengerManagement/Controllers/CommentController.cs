@@ -47,7 +47,7 @@ namespace Web.Api.PassengerManagement.Controllers
         ///     }
         ///
         /// </remarks>
-        /// <returns> Returns an <see cref="ActionResult"/> containing the result of the add operation. If the comment
+        /// <returns>Returns an <see cref="ActionResult{T}"/> containing the result of the add operation. If the comment
         /// was added successfully, returns <see cref="OkResult"/> with the comment data. If the request is invalid,
         /// returns <see cref="BadRequestResult"/> with an error message.</returns>
         [HttpPost("passenger/{id:guid}/add-comment")]
@@ -152,9 +152,7 @@ namespace Web.Api.PassengerManagement.Controllers
         /// Marks a gate comment as read (deletes it).
         /// </summary>
         /// <param name="commentId">The ID of the gate comment to mark as read.</param>
-        /// <returns>Returns an ActionResult of type Comment. If the gate comment with the specified ID does not exist,
-        /// a BadRequest response with an ApiResponse message will be returned. Otherwise, a NoContent response will be
-        /// returned.</returns>
+        /// <returns>A <see cref="NoContentResult"/> if the comment was deleted successfully.</returns>
         [HttpDelete("mark-comment-as-read")]
         public async Task<ActionResult> MarkGateCommentAsRead([FromBody] string commentId)
         {

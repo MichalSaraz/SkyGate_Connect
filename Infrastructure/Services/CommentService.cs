@@ -25,7 +25,7 @@ namespace Infrastructure.Services
         }
 
         public async Task<Comment> AddCommentAsync(Guid id, CommentTypeEnum commentType, string text,
-            List<Guid> flightIds, string? predefinedCommentId = null)
+            List<Guid> flightIds, string predefinedCommentId = null)
         {
             Comment comment;
 

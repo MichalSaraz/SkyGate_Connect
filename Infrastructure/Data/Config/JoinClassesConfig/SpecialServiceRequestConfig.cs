@@ -8,7 +8,7 @@ namespace Infrastructure.Data.Config.JoinClassesConfig
     {
         public void Configure(EntityTypeBuilder<SpecialServiceRequest> builder)
         {
-            builder.HasKey(ssr => new { PassengerId = ssr.PassengerId, ssr.FlightId, ssr.SSRCodeId });
+            builder.HasKey(ssr => new { ssr.PassengerId, ssr.FlightId, ssr.SSRCodeId });
 
             builder.HasOne(ssr => ssr.SSRCode)
                 .WithMany()

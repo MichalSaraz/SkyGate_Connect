@@ -26,7 +26,6 @@ namespace Web.Api.FlightManagement.Controllers
         private readonly ISpecialServiceRequestRepository _specialServiceRequestRepository;
         private readonly IBasePassengerOrItemRepository _basePassengerOrItemRepository;
         private readonly IInfantRepository _infantRepository;
-        private readonly IItemRepository _itemRepository;
         private readonly ITimeProvider _timeProvider;
         private readonly IMapper _mapper;
 
@@ -39,7 +38,6 @@ namespace Web.Api.FlightManagement.Controllers
             ISpecialServiceRequestRepository specialServiceRequestRepository,
             IBasePassengerOrItemRepository basePassengerOrItemRepository,
             IInfantRepository infantRepository,
-            IItemRepository itemRepository,
             ITimeProvider timeProvider,
             IMapper mapper)
         {
@@ -51,7 +49,6 @@ namespace Web.Api.FlightManagement.Controllers
             _specialServiceRequestRepository = specialServiceRequestRepository;
             _basePassengerOrItemRepository = basePassengerOrItemRepository;
             _infantRepository = infantRepository;
-            _itemRepository = itemRepository;
             _timeProvider = timeProvider;
             _mapper = mapper;
         }
@@ -73,8 +70,8 @@ namespace Web.Api.FlightManagement.Controllers
         ///     }
         ///
         /// </remarks> 
-        /// <returns>A list of flights that match the search criteria if operation is successful; otherwise,
-        /// an appropriate error message is returned.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of
+        /// <see cref="FlightDetailsDto"/> objects that match the search criteria.</returns>
         [HttpPost("search-flights")]
         public async Task<ActionResult<List<FlightDetailsDto>>> SearchFlights([FromBody] JObject data)
         {
@@ -133,17 +130,19 @@ namespace Web.Api.FlightManagement.Controllers
             return Ok(flightDtos);
         }
 
+
         /// <summary>
-        /// Retrieves the details of a flight.
+        /// Retrieves the details of a flight by its ID.
         /// </summary>
         /// <param name="id">The ID of the flight.</param>
-        /// <returns>The flight details. If no flight is found, a 404 error is returned.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing the <see cref="FlightDetailsDto"/> object that
+        /// represents the flight details.</returns>
         [HttpGet("flight/{id:guid}/details")]
         public async Task<ActionResult<FlightDetailsDto>> GetFlightDetails(Guid id)
         {
             var flight = await _flightRepository.GetFlightByIdAsync(id, false, true);
 
-            if (flight == null || flight is OtherFlight)
+            if (flight is null or OtherFlight)
             {
                 var message = flight == null
                     ? $"Flight {id} not found"
@@ -161,8 +160,8 @@ namespace Web.Api.FlightManagement.Controllers
         /// Get the onward flights for a specific flight.
         /// </summary>
         /// <param name="id">The ID of the flight to retrieve onward flights for.</param>
-        /// <returns>A list of <see cref="List{T}"/> of <see cref="FlightConnectionsDto"/> objects representing
-        /// the onward flights. If the operation is unsuccessful, an appropriate error message is returned.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of
+        /// <see cref="FlightConnectionsDto"/> objects.</returns>
         [HttpGet("flight/{id:guid}/onward-flights")]
         public async Task<ActionResult<List<FlightConnectionsDto>>> GetOnwardFlights(Guid id)
         {
@@ -174,8 +173,8 @@ namespace Web.Api.FlightManagement.Controllers
         /// Retrieves a list of inbound flights related to a specific flight.
         /// </summary>
         /// <param name="id">The ID of the flight to retrieve inbound flights for.</param>
-        /// <returns>A list of <see cref="List{T}"/> of <see cref="FlightConnectionsDto"/> objects representing
-        /// the inbound flights. If the operation is unsuccessful, an appropriate error message is returned.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of
+        /// <see cref="FlightConnectionsDto"/> objects.</returns>
         [HttpGet("flight/{id:guid}/inbound-flights")]
         public async Task<ActionResult<List<FlightConnectionsDto>>> GetInboundFlights(Guid id)
         {
@@ -188,8 +187,8 @@ namespace Web.Api.FlightManagement.Controllers
         /// </summary>
         /// <param name="id">The ID of the current flight.</param>
         /// <param name="condition">A function that defines the condition for determining connected flights.</param>
-        /// <returns>A list of FlightConnectionsDto objects representing the connected flights. If the operation is
-        /// unsuccessful, an appropriate error message is returned.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of
+        /// <see cref="FlightConnectionsDto"/> objects.</returns>
         private async Task<ActionResult<List<FlightConnectionsDto>>> _GetConnectedFlights(Guid id,
             Func<(Guid FlightId, BaseFlight IteratedFlight, BaseFlight CurrentFlight), bool> condition)
         {
@@ -238,20 +237,17 @@ namespace Web.Api.FlightManagement.Controllers
                 .DistinctBy(f => f.Id)
                 .ToList();
 
-            if (flightDtos.Count == 0)
-            {
-                return Ok(new ApiResponse(200, $"No connected flights found for this flight"));
-            }
-
-            return Ok(flightDtos);
+            return flightDtos.Count == 0
+                ? Ok(new ApiResponse(200, $"No connected flights found for this flight"))
+                : Ok(flightDtos);
         }
 
         /// <summary>
         /// Gets the list of passengers with onward flight for a given flight ID.
         /// </summary>
         /// <param name="id">The ID of the flight.</param>
-        /// <returns>The list of passengers with onward flight. If no passenger or flight is found, a 404 error is
-        /// returned.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a <see cref="IEnumerable{T}"/> of objects representing
+        /// passengers with an onward flight.</returns>
         [HttpGet("flight/{id:guid}/passengers-with-onward-flight")]
         public async Task<ActionResult<IEnumerable<object>>> GetPassengersWithOnwardFlight(Guid id)
         {
@@ -262,8 +258,8 @@ namespace Web.Api.FlightManagement.Controllers
         /// Retrieves a list of passengers with an inbound flight for the specified flight ID.
         /// </summary>
         /// <param name="id">The ID of the flight.</param>
-        /// <returns>A list of passengers with an inbound flight. If no passenger or flight is found, a 404 error is
-        /// returned.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a <see cref="IEnumerable{T}"/> of objects representing
+        /// passengers with an inbound flight.</returns>
         [HttpGet("flight/{id:guid}/passengers-with-inbound-flight")]
         public async Task<ActionResult<IEnumerable<object>>> GetPassengersWithInboundFlight(Guid id)
         {
@@ -276,8 +272,7 @@ namespace Web.Api.FlightManagement.Controllers
         /// <param name="id">The ID of the flight.</param>
         /// <param name="isOnwardFlight">Flag indicating if the passengers should have onward flight connections or
         /// inbound flight connections.</param>
-        /// <returns>A list of passenger details objects. If no passenger or flight is found, a 404 error is
-        /// returned.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a <see cref="IEnumerable{T}"/> of objects.</returns>
         private async Task<ActionResult<IEnumerable<object>>> _GetPassengersWithFlightConnection(Guid id,
             bool isOnwardFlight)
         {
@@ -320,8 +315,8 @@ namespace Web.Api.FlightManagement.Controllers
         /// <param name="id">The ID of the flight.</param>
         /// <param name="isInbound">Specifies if the connecting flight is inbound.</param>
         /// <param name="addConnectingFlightModels">The list of connecting flights to add.</param>
-        /// <returns>Details of the passenger with added flights(s) included. If the operation is unsuccessful,
-        /// an appropriate error message is returned.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a <see cref="PassengerDetailsDto"/> object with added
+        /// flights(s) included.</returns>
         [HttpPost("flight/{id:guid}/passenger/{passengerId:guid}/add-connecting-flight")]
         public async Task<ActionResult<PassengerDetailsDto>> AddConnectingFlight(Guid id, Guid passengerId,
             bool isInbound, [FromBody] List<AddConnectingFlightModel> addConnectingFlightModels)
@@ -403,10 +398,8 @@ namespace Web.Api.FlightManagement.Controllers
         /// </summary>
         /// <param name="connectingFlightModel">The model containing the details of the connecting flight.</param>
         /// <param name="parsedDepartureDateTime">The parsed departure datetime of the connecting flight.</param>
-        /// <returns>
-        /// Returns a <see cref="Task"/> representing the asynchronous operation that
-        /// returns a <see cref="BaseFlight"/> object.
-        /// </returns>
+        /// <returns>Returns a <see cref="Task{T}"/> representing the asynchronous operation that returns a
+        /// <see cref="BaseFlight"/> object.</returns>
         private async Task<BaseFlight> _GetOrCreateFlightAsync(AddConnectingFlightModel connectingFlightModel,
             DateTime parsedDepartureDateTime)
         {
@@ -427,6 +420,12 @@ namespace Web.Api.FlightManagement.Controllers
             return otherFlight;
         }
 
+        /// <summary>
+        /// Builds the flight criteria based on the given connecting flight model and parsed departure datetime.
+        /// </summary>
+        /// <param name="connectingFlightModel">The connecting flight model.</param>
+        /// <param name="parsedDepartureDateTime">The parsed departure datetime.</param>
+        /// <returns>The flight criteria as an expression.</returns>
         private static Expression<Func<Flight, bool>> _BuildFlightCriteria(
             AddConnectingFlightModel connectingFlightModel, DateTime parsedDepartureDateTime)
         {
@@ -437,6 +436,13 @@ namespace Web.Api.FlightManagement.Controllers
                         f.DestinationToId == connectingFlightModel.DestinationTo;
         }
 
+        /// <summary>
+        /// Build the criteria for finding other flights based on the connecting flight model and the parsed departure
+        /// datetime.
+        /// </summary>
+        /// <param name="connectingFlightModel">The connecting flight model</param>
+        /// <param name="parsedDepartureDateTime">The parsed departure date time</param>
+        /// <returns>The expression representing the criteria for finding other flights</returns>
         private static Expression<Func<OtherFlight, bool>> _BuildOtherFlightCriteria(
             AddConnectingFlightModel connectingFlightModel, DateTime parsedDepartureDateTime)
         {
@@ -448,13 +454,12 @@ namespace Web.Api.FlightManagement.Controllers
         }
 
         /// <summary>
-        /// Deletes the connecting flight for a passenger.
+        /// Deletes a connecting flight for a passenger.
         /// </summary>
-        /// <param name="id">The id of the current flight.</param>
-        /// <param name="passengerId">The id of the passenger.</param>
-        /// <param name="flightIds">The list of flight ids to delete.</param>
-        /// <returns>Returns an ActionResult of type BaseFlight. If the operation is unsuccessful, an appropriate error
-        /// message is returned.</returns>
+        /// <param name="id">The ID of the flight.</param>
+        /// <param name="passengerId">The ID of the passenger.</param>
+        /// <param name="flightIds">The list of flight IDs to delete.</param>
+        /// <returns>A <see cref='NoContentResult'/> if the operation is successful.</returns>
         [HttpDelete("flight/{id:guid}/passenger/{passengerId:guid}/delete-connecting-flight")]
         public async Task<ActionResult> DeleteConnectingFlight(Guid id, Guid passengerId,
             [FromBody] List<Guid> flightIds)
@@ -494,10 +499,9 @@ namespace Web.Api.FlightManagement.Controllers
         /// </summary>
         /// <param name="id">The ID of the flight.</param>
         /// <param name="commentType">The type of comments to retrieve.</param>
-        /// <returns>
-        /// A list of PassengerCommentsDto objects, each containing the details of a passenger along with their
-        /// comments. If no comments are found, a 404 error is returned.
-        /// </returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of
+        /// <see cref="PassengerOrItemCommentsDto"/> objects, each containing the details of a passenger along with
+        /// their comments.</returns>
         [HttpGet("flight/{id:guid}/get-passengers-with-comments")]
         public async Task<ActionResult<List<PassengerOrItemCommentsDto>>> GetPassengersWithComments(Guid id,
             CommentTypeEnum commentType)
@@ -539,11 +543,8 @@ namespace Web.Api.FlightManagement.Controllers
         /// </summary>
         /// <param name="id">The ID of the flight.</param>
         /// <param name="ssrCodes">The collection of special service request codes.</param>
-        /// <returns>
-        /// An <see cref="ActionResult{T}"/> containing a list of <see cref="PassengerSpecialServiceRequestsDto"/>
-        /// objects. If no passengers are found with special requests for the flight, returns a
-        /// <see cref="NotFoundResult"/> with a <see cref="ApiResponse"/> containing a custom message.
-        /// </returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of
+        /// <see cref="PassengerSpecialServiceRequestsDto"/> objects.</returns>
         private async Task<ActionResult<List<PassengerSpecialServiceRequestsDto>>> _GetPassengersWithSpecialRequests(
             Guid id, ICollection<string> ssrCodes)
         {
@@ -583,8 +584,8 @@ namespace Web.Api.FlightManagement.Controllers
         /// Retrieves a list of passengers with special assistance for a specific flight.
         /// </summary>
         /// <param name="id">The ID of the flight.</param>
-        /// <returns>A list of passengers with special assistance. If no passengers are found, a 404 error is returned.
-        /// </returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of
+        /// <see cref="PassengerSpecialServiceRequestsDto"/> objects.</returns>
         [HttpGet("flight/{id:guid}/passengers-with-special-assistance")]
         public async Task<ActionResult<List<PassengerSpecialServiceRequestsDto>>> GetPassengersWithSpecialAssistance(
             Guid id)
@@ -597,8 +598,8 @@ namespace Web.Api.FlightManagement.Controllers
         /// Retrieves a list of passengers with disability for a specific flight.
         /// </summary>
         /// <param name="id">The unique identifier of the flight.</param>
-        /// <returns>A list of passengers with disability. If no passengers are found, a 404 error is returned.
-        /// </returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of
+        /// <see cref="PassengerSpecialServiceRequestsDto"/> objects.</returns>
         [HttpGet("flight/{id:guid}/passengers-with-disability")]
         public async Task<ActionResult<List<PassengerSpecialServiceRequestsDto>>> GetPassengersWithDisability(Guid id)
         {
@@ -610,7 +611,8 @@ namespace Web.Api.FlightManagement.Controllers
         /// Retrieves the list of deportee passengers for a given flight.
         /// </summary>
         /// <param name="id">The ID of the flight.</param>
-        /// <returns>The list of deportee passengers. If no passengers are found, a 404 error is returned.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of
+        /// <see cref="PassengerSpecialServiceRequestsDto"/> objects.</returns>
         [HttpGet("flight/{id:guid}/deportee-passengers")]
         public async Task<ActionResult<List<PassengerSpecialServiceRequestsDto>>> GetDeporteePassengers(Guid id)
         {
@@ -622,8 +624,8 @@ namespace Web.Api.FlightManagement.Controllers
         /// Returns a list of passengers with animals on a flight.
         /// </summary>
         /// <param name="id">The ID of the flight.</param>
-        /// <returns>A list of Passenger objects with animals. If no passengers are found, a 404 error is returned.
-        /// </returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of
+        /// <see cref="PassengerSpecialServiceRequestsDto"/> objects.</returns>
         [HttpGet("flight/{id:guid}/passengers-with-animals")]
         public async Task<ActionResult<List<PassengerSpecialServiceRequestsDto>>> GetPassengersWithAnimals(Guid id)
         {
@@ -635,8 +637,8 @@ namespace Web.Api.FlightManagement.Controllers
         /// Retrieves a list of unaccompanied minors for a specific flight.
         /// </summary>
         /// <param name="id">The ID of the flight.</param>
-        /// <returns>A list of passengers who are unaccompanied minors for the specified flight. If no passengers are
-        /// found, a 404 error is returned.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of
+        /// <see cref="PassengerSpecialServiceRequestsDto"/> objects.</returns>
         [HttpGet("flight/{id:guid}/unaccompanied-minors")]
         public async Task<ActionResult<List<PassengerSpecialServiceRequestsDto>>> GetUnaccompaniedMinors(Guid id)
         {
@@ -648,8 +650,8 @@ namespace Web.Api.FlightManagement.Controllers
         /// Get the list of passengers with sport equipment for a given flight.
         /// </summary>
         /// <param name="id">The ID of the flight.</param>
-        /// <returns>The list of passengers with sport equipment. If no passengers are found, a 404 error is returned.
-        /// </returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of
+        /// <see cref="PassengerSpecialServiceRequestsDto"/> objects.</returns>
         [HttpGet("flight/{id:guid}/passengers-with-sport-equipment")]
         public async Task<ActionResult<List<PassengerSpecialServiceRequestsDto>>> GetPassengersWithSportEquipment(
             Guid id)
@@ -662,8 +664,8 @@ namespace Web.Api.FlightManagement.Controllers
         /// Retrieves a list of passengers with a firearm on a specific flight.
         /// </summary>
         /// <param name="id">The ID of the flight.</param>
-        /// <returns>A list of passengers with a firearm on the specified flight. If no passengers are found,
-        /// a 404 error is returned.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of
+        /// <see cref="PassengerSpecialServiceRequestsDto"/> objects.</returns>
         [HttpGet("flight/{id:guid}/passengers-with-firearm")]
         public async Task<ActionResult<List<PassengerSpecialServiceRequestsDto>>> GetPassengersWithFirearm(Guid id)
         {
@@ -675,8 +677,8 @@ namespace Web.Api.FlightManagement.Controllers
         /// Retrieves a list of infants for a specific flight.
         /// </summary>
         /// <param name="id">The ID of the flight.</param>
-        /// <returns>A list of BasePassengerOrItem objects representing infants. If no infants are found, a 404 error is
-        /// returned.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of
+        /// <see cref="InfantOverviewDto"/> objects.</returns>
         [HttpGet("flight/{id:guid}/infants")]
         public async Task<ActionResult<List<InfantOverviewDto>>> GetInfants(Guid id)
         {
@@ -706,8 +708,8 @@ namespace Web.Api.FlightManagement.Controllers
         /// Retrieves a list of either CabinBaggageRequiringSeat or ExtraSeat associated with a specific flight.
         /// </summary>
         /// <param name="id">The unique identifier of the flight.</param>
-        /// <returns>A list of BasePassengerOrItem objects representing either CabinBaggageRequiringSeat or ExtraSeat.
-        /// If no passengers are found, a 404 error is returned.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list of <see cref="List{T}"/> of
+        /// <see cref="ItemOverviewDto"/> objects.</returns>
         [HttpGet("flight/{id:guid}/passengers-with-cbbg-or-exst")]
         public async Task<ActionResult<List<ItemOverviewDto>>> GetCabinBaggageRequiringSeatOrExtraSeat(Guid id)
         {
@@ -725,11 +727,12 @@ namespace Web.Api.FlightManagement.Controllers
                 return Ok(new ApiResponse(200, "No Cabin baggage requiring seat or Extra seat found for this flight"));
             }
 
-            var cabinBaggageRequiringSeatOrExtraSeatList = _mapper.Map<List<ItemOverviewDto>>(cabinBaggageRequiringSeatOrExtraSeats, opt =>
-            {
-                opt.Items["FlightId"] = id;
-                opt.Items["DepartureDateTime"] = flight.DepartureDateTime;
-            });
+            var cabinBaggageRequiringSeatOrExtraSeatList = _mapper.Map<List<ItemOverviewDto>>(
+                cabinBaggageRequiringSeatOrExtraSeats, opt =>
+                {
+                    opt.Items["FlightId"] = id;
+                    opt.Items["DepartureDateTime"] = flight.DepartureDateTime;
+                });
 
             return Ok(cabinBaggageRequiringSeatOrExtraSeatList);
         }
@@ -741,9 +744,8 @@ namespace Web.Api.FlightManagement.Controllers
         /// <param name="acceptanceStatus">The acceptance status of the passengers.</param>
         /// <param name="applyAcceptanceStatusFilter">A flag indicating whether to apply the acceptance status
         /// filter.</param>
-        /// <returns>
-        /// An <see cref="ActionResult"/> object containing a list of <see cref="BasePassengerOrItemDto"/> objects
-        /// representing the passengers. If no passengers are found, a 404 error is returned.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of
+        /// <see cref="BasePassengerOrItemDto"/> objects.</returns>
         [HttpGet("flight/{id:guid}/passenger-list")]
         public async Task<ActionResult<List<BasePassengerOrItemDto>>> GetPassengerList(Guid id,
             AcceptanceStatusEnum acceptanceStatus, bool applyAcceptanceStatusFilter)
@@ -760,7 +762,8 @@ namespace Web.Api.FlightManagement.Controllers
                 criteria = p => p.Flights.Any(f => f.FlightId == id && f.AcceptanceStatus == acceptanceStatus);
             }
 
-            var passengerOrItems = await _basePassengerOrItemRepository.GetBasePassengerOrItemsByCriteriaAsync(criteria);
+            var passengerOrItems =
+                await _basePassengerOrItemRepository.GetBasePassengerOrItemsByCriteriaAsync(criteria);
 
             if (passengerOrItems.Count == 0)
             {
@@ -777,14 +780,14 @@ namespace Web.Api.FlightManagement.Controllers
         }
 
         /// <summary>
-        /// Updates the flight status of a flight.
+        /// Updates the flight status of a specific flight.
         /// </summary>
-        /// <param name="id">The ID of the flight to update.</param>
+        /// <param name="id">The unique identifier of the flight.</param>
         /// <param name="flightStatus">The new flight status.</param>
-        /// <returns>Returns the updated flight after the status has been updated. If the flight is not found, a 404
-        /// error is returned.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing the updated <see cref="FlightDetailsDto"/> object.
+        /// </returns>
         [HttpPatch("flight/{id:guid}/update-flight-status")]
-        public async Task<ActionResult<Flight>> UpdateFlightStatus(Guid id, FlightStatusEnum flightStatus)
+        public async Task<ActionResult<FlightDetailsDto>> UpdateFlightStatus(Guid id, FlightStatusEnum flightStatus)
         {
             if (await _flightRepository.GetFlightByIdAsync(id) is not Flight flight)
             {

@@ -9,10 +9,10 @@ namespace Core.FlightContext
 {
     public class Flight : BaseFlight
     {
-        public ScheduledFlight ScheduledFlight { get; private set; }
+        public ScheduledFlight ScheduledFlight { get; }
         public string ScheduledFlightId { get; private set; }
 
-        public Aircraft Aircraft { get; private set; }
+        public Aircraft Aircraft { get; }
         public string AircraftId { get; set; }
 
         public int? DividerPlacedBehindRow { get; set; }

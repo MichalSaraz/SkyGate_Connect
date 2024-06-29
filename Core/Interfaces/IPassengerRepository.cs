@@ -5,8 +5,19 @@ namespace Core.Interfaces
 {
     public interface IPassengerRepository : IBasePassengerOrItemRepository
     {
+        /// <summary>
+        /// Retrieves a list of passengers that match the specified criteria.
+        /// </summary>
+        /// <param name="criteria">The criteria to filter the passengers by.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a read-only list of
+        /// passengers.</returns>
         Task<IReadOnlyList<Passenger>> GetPassengersByCriteriaAsync(Expression<Func<Passenger, bool>> criteria);
 
+        /// <summary>
+        /// Retrieves a passenger from the database based on the specified criteria.
+        /// </summary>
+        /// <param name="criteria">The criteria used to filter the passengers.</param>
+        /// <returns>The passenger that matches the criteria, or null if no match is found.</returns>
         Task<Passenger> GetPassengerByCriteriaAsync(Expression<Func<Passenger, bool>> criteria);
 
        /// <summary>

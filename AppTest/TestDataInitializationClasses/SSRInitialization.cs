@@ -67,13 +67,13 @@ namespace TestProject.TestDataInitializationClasses
 
             if (SSR == "WCMP" || SSR == "WCBD" || SSR == "WCLB" && SSRFrequency != null)
             {
-                countForSSR = eligiblePassengers?.Count / SSRFrequency ?? 0;
+                countForSSR = eligiblePassengers.Count / SSRFrequency ?? 0;
             }
             else if (SSRFrequency != null)
             {
                 countForSSR = (int)(dbContext.PassengerBookingDetails.ToList().Count / SSRFrequency);
             }
-            else if (SSRFrequency == null && eligiblePassengers != null)
+            else if (SSRFrequency == null)
             {
                 if (SSR == "XBAG")
                 {
@@ -236,22 +236,6 @@ namespace TestProject.TestDataInitializationClasses
             string[] commentOptions = comments[ssr.ToLower()];
             string selectedComment = commentOptions[random.Next(commentOptions.Length)];
             return $"{ssr} - {selectedComment}";
-        }
-
-        private void _DeleteEXSTAndCBBGInstances()
-        {
-            var bookingReferences = dbContext.BookingReferences
-                .Include(bookingReference => bookingReference.LinkedPassengers)
-                .Where(f => f.LinkedPassengers.Any(r => r.Gender == PaxGenderEnum.UNDEFINED));
-
-            foreach (var passenger in bookingReferences)
-            {
-                var item = passenger.LinkedPassengers.FirstOrDefault(s => s.Gender == PaxGenderEnum.UNDEFINED);
-
-                passenger.LinkedPassengers.Remove(item);
-            }
-
-            dbContext.SaveChanges();
         }
     }
 }

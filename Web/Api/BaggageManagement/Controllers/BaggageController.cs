@@ -35,13 +35,11 @@ namespace Web.Api.BaggageManagement.Controllers
             _destinationRepository = destinationRepository;
         }
 
-
         /// <summary>
         /// Retrieves the details of a baggage by its tag number.
         /// </summary>
         /// <param name="tagNumber">The tag number of the baggage.</param>
-        /// <returns>The details of the baggage with the specified tag number or a 404 response if the baggage is not
-        /// found.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing the <see cref="BaggageDetailsDto"/> object.</returns>
         [HttpGet("tag-number/{tagNumber}/details")]
         public async Task<ActionResult<BaggageDetailsDto>> GetBaggageDetails(string tagNumber)
         {
@@ -62,8 +60,8 @@ namespace Web.Api.BaggageManagement.Controllers
         /// Retrieves all bags for a given flight.
         /// </summary>
         /// <param name="flightId">The ID of the flight.</param>
-        /// <returns>An asynchronous task that represents the operation. The task result contains an HTTP action result
-        /// with the list of bags for the specified flight. If no bags are found, a 404 response is returned.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of
+        /// <see cref="BaggageOverviewDto"/> objects.</returns>
         [HttpGet("flight/{flightId:guid}/all-bags")]
         public async Task<ActionResult<List<BaggageOverviewDto>>> GetAllBags(Guid flightId)
         {
@@ -90,8 +88,8 @@ namespace Web.Api.BaggageManagement.Controllers
         /// </summary>
         /// <param name="flightId">The ID of the flight.</param>
         /// <param name="specialBagType">The special bag type to filter by.</param>
-        /// <returns>A list of baggage of the specified special bag type for the given flight ID. If no bags are found,
-        /// a 404 response is returned.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of
+        /// <see cref="BaggageOverviewDto"/> objects.</returns>
         [HttpGet("flight/{flightId:guid}/special-bag-type/{specialBagType}")]
         public async Task<ActionResult<List<BaggageOverviewDto>>> GetAllBagsBySpecialBagType(Guid flightId,
             SpecialBagEnum specialBagType)
@@ -122,8 +120,8 @@ namespace Web.Api.BaggageManagement.Controllers
         /// </summary>
         /// <param name="flightId">The ID of the flight.</param>
         /// <param name="baggageType">The type of baggage to filter the bags by.</param>
-        /// <returns>A list of bags filtered by the specified baggage type for the given flight. If no bags are found,
-        /// a 404 response is returned.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of
+        /// <see cref="BaggageOverviewDto"/> objects.</returns>
         [HttpGet("flight/{flightId:guid}/baggage-type/{baggageType}")]
         public async Task<ActionResult<List<BaggageOverviewDto>>> GetAllBagsByBaggageType(Guid flightId,
             BaggageTypeEnum baggageType)
@@ -148,13 +146,12 @@ namespace Web.Api.BaggageManagement.Controllers
             return Ok(bagListDto);
         }
 
-
         /// <summary>
         /// Retrieves a list of all inactive bags for a specified flight.
         /// </summary>
         /// <param name="flightId">The ID of the flight.</param>
-        /// <returns>A list of inactive bags for the specified flight. If no inactive bags are found, a 404 response is
-        /// returned.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of
+        /// <see cref="BaggageOverviewDto"/> objects.</returns>
         [HttpGet("flight/{flightId:guid}/inactive-bags")]
         public async Task<ActionResult<List<BaggageOverviewDto>>> GetAllInactiveBags(Guid flightId)
         {
@@ -183,7 +180,8 @@ namespace Web.Api.BaggageManagement.Controllers
         /// Retrieves a list of all bags with onward connections for a given flight ID.
         /// </summary>
         /// <param name="flightId">The ID of the flight.</param>
-        /// <returns>A list of bags with onward connections. If no bags are found, a 404 response is returned.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of
+        /// <see cref="BaggageDetailsDto"/> objects.</returns>
         [HttpGet("flight/{flightId:guid}/onward-connections")]
         public async Task<ActionResult<List<BaggageDetailsDto>>> GetAllBagsWithOnwardConnection(Guid flightId)
         {
@@ -216,8 +214,8 @@ namespace Web.Api.BaggageManagement.Controllers
         /// <param name="passengerId">The ID of the passenger.</param>
         /// <param name="flightId">The ID of the flight.</param>
         /// <param name="addBaggageModels">The list of baggage models to add.</param>
-        /// <returns>A list of added baggage if the operation is successful. Otherwise, an appropriate error response is
-        /// returned.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of
+        /// <see cref="BaggageOverviewDto"/> objects representing the added baggage.</returns>
         [HttpPost("passenger/{passengerId:guid}/flight/{flightId:guid}/add-baggage")]
         public async Task<ActionResult<BaggageOverviewDto>> AddBaggage(Guid passengerId, Guid flightId,
             [FromBody] List<AddBaggageModel> addBaggageModels)
@@ -252,8 +250,8 @@ namespace Web.Api.BaggageManagement.Controllers
                     $"Destination with IATA Airport Code {addBaggageModels.First().FinalDestination} was not found."));
             }
 
-            if (passenger.PassengerCheckedBags.Any(b => addBaggageModels.Where(a => a.FinalDestination != b.DestinationId)
-                .ToList().Count > 0))
+            if (passenger.PassengerCheckedBags.Any(b =>
+                    addBaggageModels.Where(a => a.FinalDestination != b.DestinationId).ToList().Count > 0))
             {
                 return BadRequest(new ApiResponse(400, "All baggage must have the same final destination."));
             }
@@ -313,8 +311,9 @@ namespace Web.Api.BaggageManagement.Controllers
             }
 
             await _baggageRepository.UpdateAsync(bagList.ToArray());
-            
-            var addedBaggageList = _mapper.Map<List<BaggageOverviewDto>>(bagList, opt => opt.Items["FlightId"] = flightId);
+
+            var addedBaggageList =
+                _mapper.Map<List<BaggageOverviewDto>>(bagList, opt => opt.Items["FlightId"] = flightId);
 
             foreach (var baggageDetails in addedBaggageList)
             {
@@ -330,7 +329,8 @@ namespace Web.Api.BaggageManagement.Controllers
         /// </summary>
         /// <param name="passengerId">The ID of the passenger.</param>
         /// <param name="editBaggageModels">The list of baggage models containing the changes to apply.</param>
-        /// <returns>List of updated baggage. If no baggage is found, a 404 response is returned.</returns>
+        /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of
+        /// <see cref="BaggageOverviewDto"/> objects representing the updated baggage.</returns>   
         [HttpPut("passenger/{passengerId:guid}/edit-baggage")]
         public async Task<ActionResult<BaggageOverviewDto>> EditBaggage(Guid passengerId,
             [FromBody] List<EditBaggageModel> editBaggageModels)
@@ -383,12 +383,11 @@ namespace Web.Api.BaggageManagement.Controllers
         }
 
         /// <summary>
-        /// Deletes the selected baggage for a passenger.
+        /// Deletes the selected baggage for a specific passenger.
         /// </summary>
         /// <param name="passengerId">The ID of the passenger.</param>
-        /// <param name="baggageIds">The list of baggage IDs to delete.</param>
-        /// <returns>Returns an ActionResult representing the HTTP response. If no baggage is found, a 404 response is
-        /// returned.</returns>
+        /// <param name="baggageIds">The IDs of the baggage to be deleted.</param>
+        /// <returns>A <see cref="NoContentResult"/> object if the operation is successful.</returns>
         [HttpDelete("passenger/{passengerId:guid}/delete-baggage")]
         public async Task<ActionResult> DeleteSelectedBaggage(Guid passengerId, [FromBody] List<Guid> baggageIds)
         {

@@ -9,13 +9,13 @@ namespace Core.BaggageContext
         public string TagNumber { get; private set; }
         
         public Airline? Airline { get; }
-        public string? AirlineId { get; }
+        public string? AirlineId { get; set; }
 
-        public int LeadingDigit { get; }
+        public int LeadingDigit { get; set; }
         
-        public int Number { get; }
+        public int Number { get; set; }
 
-        public TagTypeEnum TagType { get; }
+        public TagTypeEnum TagType { get; set; }
 
         public BaggageTag(string tagNumber)
         {

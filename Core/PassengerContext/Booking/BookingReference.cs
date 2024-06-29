@@ -6,7 +6,7 @@ namespace Core.PassengerContext.Booking
     {
         [Key]
         [RegularExpression("^[A-Z0-9]{6}$")]
-        public string PNR { get; private set; }
+        public string PNR { get; set; }
         
         [Required]
         public List<PassengerBookingDetails> LinkedPassengers { get; set; } = new();

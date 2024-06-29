@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240330234832_edit_PK_FrequentFlyer_step2")]
-    partial class edit_PK_FrequentFlyer_step2
+    [Migration("20240628171656_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,11 +55,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.FlightContext.BaseFlight", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("AirlineId")
                         .HasColumnType("text");
@@ -186,8 +184,8 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.FlightContext.JoinClasses.FlightBaggage", b =>
                 {
-                    b.Property<int>("FlightId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("FlightId")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("BaggageId")
                         .HasColumnType("uuid");
@@ -208,8 +206,8 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("CommentId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("FlightId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("FlightId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("CommentId", "FlightId");
 
@@ -335,7 +333,7 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("BookingDetailsId")
+                    b.Property<Guid?>("BookingDetailsId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("FirstName")
@@ -391,9 +389,6 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<bool>("IsMarkedAsRead")
-                        .HasColumnType("boolean");
-
                     b.Property<Guid>("PassengerId")
                         .HasColumnType("uuid");
 
@@ -435,9 +430,6 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("FrequentFlyerNumber")
-                        .HasColumnType("text");
-
                     b.Property<long>("MilesAvailable")
                         .HasColumnType("bigint");
 
@@ -451,9 +443,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AirlineId");
-
-                    b.HasIndex("CardNumber")
-                        .IsUnique();
 
                     b.HasIndex("PassengerId")
                         .IsUnique();
@@ -470,7 +459,7 @@ namespace Infrastructure.Migrations
                     b.Property<int?>("Age")
                         .HasColumnType("integer");
 
-                    b.Property<Guid?>("AssociatedPassengerId")
+                    b.Property<Guid?>("AssociatedPassengerBookingDetailsId")
                         .HasColumnType("uuid");
 
                     b.Property<int>("BaggageAllowance")
@@ -499,14 +488,11 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("NewId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("PNRId")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("PassengerId")
+                    b.Property<Guid?>("PassengerOrItemId")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("PriorityBoarding")
@@ -518,7 +504,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AssociatedPassengerId")
+                    b.HasIndex("AssociatedPassengerBookingDetailsId")
                         .IsUnique();
 
                     b.HasIndex("PNRId");
@@ -560,8 +546,8 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("PassengerOrItemId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("FlightId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("FlightId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("AcceptanceStatus")
                         .IsRequired()
@@ -577,6 +563,9 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int?>("NotTravellingReason")
+                        .HasColumnType("integer");
+
                     b.HasKey("PassengerOrItemId", "FlightId");
 
                     b.HasIndex("FlightId");
@@ -589,8 +578,8 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("PassengerId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("FlightId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("FlightId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("SSRCodeId")
                         .HasColumnType("text");
@@ -618,8 +607,12 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("FlightId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("FlightId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Letter")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<Guid?>("PassengerOrItemId")
                         .HasColumnType("uuid");
@@ -672,6 +665,10 @@ namespace Infrastructure.Migrations
                     b.Property<string>("AircraftId")
                         .HasColumnType("text");
 
+                    b.Property<string>("BoardingStatus")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<int?>("DividerPlacedBehindRow")
                         .HasColumnType("integer");
 
@@ -718,10 +715,10 @@ namespace Infrastructure.Migrations
                 {
                     b.HasBaseType("Core.PassengerContext.BasePassengerOrItem");
 
-                    b.Property<Guid>("AssociatedPassengerId")
+                    b.Property<Guid>("AssociatedAdultPassengerId")
                         .HasColumnType("uuid");
 
-                    b.HasIndex("AssociatedPassengerId")
+                    b.HasIndex("AssociatedAdultPassengerId")
                         .IsUnique();
 
                     b.HasDiscriminator().HasValue("Infant");
@@ -943,10 +940,9 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.PassengerContext.BasePassengerOrItem", b =>
                 {
                     b.HasOne("Core.PassengerContext.Booking.PassengerBookingDetails", "BookingDetails")
-                        .WithOne("Passenger")
+                        .WithOne("PassengerOrItem")
                         .HasForeignKey("Core.PassengerContext.BasePassengerOrItem", "BookingDetailsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("BookingDetails");
                 });
@@ -988,9 +984,10 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.PassengerContext.Booking.PassengerBookingDetails", b =>
                 {
-                    b.HasOne("Core.PassengerContext.Booking.PassengerBookingDetails", "AssociatedPassenger")
+                    b.HasOne("Core.PassengerContext.Booking.PassengerBookingDetails", "AssociatedPassengerBookingDetails")
                         .WithOne()
-                        .HasForeignKey("Core.PassengerContext.Booking.PassengerBookingDetails", "AssociatedPassengerId");
+                        .HasForeignKey("Core.PassengerContext.Booking.PassengerBookingDetails", "AssociatedPassengerBookingDetailsId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("Core.PassengerContext.Booking.BookingReference", "PNR")
                         .WithMany("LinkedPassengers")
@@ -998,7 +995,7 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("AssociatedPassenger");
+                    b.Navigation("AssociatedPassengerBookingDetails");
 
                     b.Navigation("PNR");
                 });
@@ -1025,7 +1022,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.PassengerContext.JoinClasses.SpecialServiceRequest", b =>
                 {
                     b.HasOne("Core.FlightContext.Flight", "Flight")
-                        .WithMany()
+                        .WithMany("SSRList")
                         .HasForeignKey("FlightId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1076,40 +1073,20 @@ namespace Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("ScheduledFlightId");
 
-                    b.OwnsOne("Core.BoardingContext.Boarding", "Boarding", b1 =>
-                        {
-                            b1.Property<int>("FlightId")
-                                .HasColumnType("integer");
-
-                            b1.Property<string>("BoardingStatus")
-                                .IsRequired()
-                                .HasColumnType("text")
-                                .HasColumnName("BoardingStatus");
-
-                            b1.HasKey("FlightId");
-
-                            b1.ToTable("Flights");
-
-                            b1.WithOwner()
-                                .HasForeignKey("FlightId");
-                        });
-
                     b.Navigation("Aircraft");
-
-                    b.Navigation("Boarding");
 
                     b.Navigation("ScheduledFlight");
                 });
 
             modelBuilder.Entity("Core.PassengerContext.Infant", b =>
                 {
-                    b.HasOne("Core.PassengerContext.Passenger", "AssociatedPassenger")
+                    b.HasOne("Core.PassengerContext.Passenger", "AssociatedAdultPassenger")
                         .WithOne("Infant")
-                        .HasForeignKey("Core.PassengerContext.Infant", "AssociatedPassengerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("Core.PassengerContext.Infant", "AssociatedAdultPassengerId")
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
-                    b.Navigation("AssociatedPassenger");
+                    b.Navigation("AssociatedAdultPassenger");
                 });
 
             modelBuilder.Entity("Core.BaggageContext.Baggage", b =>
@@ -1164,12 +1141,14 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.PassengerContext.Booking.PassengerBookingDetails", b =>
                 {
-                    b.Navigation("Passenger");
+                    b.Navigation("PassengerOrItem");
                 });
 
             modelBuilder.Entity("Core.FlightContext.Flight", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("SSRList");
 
                     b.Navigation("Seats");
                 });

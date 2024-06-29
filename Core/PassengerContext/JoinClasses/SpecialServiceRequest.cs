@@ -6,13 +6,13 @@ namespace Core.PassengerContext.JoinClasses
 {
     public class SpecialServiceRequest
     {
-        public SSRCode SSRCode { get; private set; }
+        public SSRCode SSRCode { get; }
         public string SSRCodeId { get; private set; }
 
-        public Passenger Passenger { get; private set; }
+        public Passenger Passenger { get; }
         public Guid PassengerId { get; private set; }
 
-        public Flight Flight { get; private set; }
+        public Flight Flight { get; }
         public Guid FlightId { get; private set; }
 
         [MaxLength(150)]

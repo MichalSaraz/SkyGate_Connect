@@ -7,7 +7,7 @@ namespace Core.BaggageContext
 {
     public class Baggage
     {
-        public Guid Id { get; }
+        public Guid Id { get; private set; }
 
         [Required]
         public Passenger Passenger { get; init; }

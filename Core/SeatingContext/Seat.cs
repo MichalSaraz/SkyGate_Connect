@@ -10,7 +10,7 @@ namespace Core.SeatingContext
         public BasePassengerOrItem PassengerOrItem  { get; set; }
         public Guid? PassengerOrItemId { get; set; }
 
-        public Flight Flight { get; private set; }
+        public Flight Flight { get; }
         public Guid FlightId { get; private set; }
         
 
@@ -32,7 +32,7 @@ namespace Core.SeatingContext
 
         public SeatLetterEnum Letter { get; private set; }
 
-        public SeatPositionEnum Position { get; private set; }
+        public SeatPositionEnum Position { get; }
 
         public SeatTypeEnum SeatType { get; private set; }
 

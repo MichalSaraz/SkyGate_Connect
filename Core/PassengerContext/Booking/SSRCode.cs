@@ -5,8 +5,8 @@ namespace Core.PassengerContext.Booking
     public class SSRCode
     {
         [Key]
-        public string Code { get; private set; }
-        public string Description { get; private set; }
-        public bool IsFreeTextMandatory { get; private set; }
+        public string Code { get; set; }
+        public string Description { get; set; }
+        public bool IsFreeTextMandatory { get; set; }
     }
 }

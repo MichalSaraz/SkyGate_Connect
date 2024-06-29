@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Globalization;
+﻿using System.Globalization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Newtonsoft.Json;
@@ -59,28 +58,6 @@ namespace Infrastructure.Data.Extensions
         }
 
         /// <summary>
-        /// Adds a value conversion to the property for a list of enums type to support storing and retrieving
-        /// the list as JSON array in the database.
-        /// </summary>
-        /// <typeparam name="T">The enum type.</typeparam>
-        /// <param name="propertyBuilder">The property builder.</param>
-        /// <returns>The updated property builder.</returns>
-        public static PropertyBuilder<T> HasJsonEnumArrayConversion<T>(this PropertyBuilder<T> propertyBuilder)
-            where T : IList
-        {
-            Func<T, List<string>> getNames = v => (from object j in v select j.ToString()).ToList();
-
-            propertyBuilder.HasConversion(
-                    v => JsonConvert.SerializeObject(getNames(v),
-                        new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-                    v => JsonConvert.DeserializeObject<T>(v,
-                        new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }))
-                .HasColumnType("jsonb");
-
-            return propertyBuilder;
-        }
-
-        /// <summary>
         /// Adds JSON conversion for the specified property.
         /// </summary>
         /// <typeparam name="T">The type of the property.</typeparam>
@@ -93,28 +70,6 @@ namespace Infrastructure.Data.Extensions
                     new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
                 v => JsonConvert.DeserializeObject<T>(v,
                     new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
-
-            propertyBuilder.HasColumnType("jsonb");
-
-            return propertyBuilder;
-        }
-
-        /// <summary>
-        /// Adds a JSON value conversion to the property for storing and retrieving JSON data in the database.
-        /// </summary>
-        /// <typeparam name="T">The type of the property.</typeparam>
-        /// <param name="propertyBuilder">The property builder.</param>
-        /// <param name="toJson">The function to convert the property value to a JSON object.</param>
-        /// <param name="fromJson">The function to convert the JSON object to the property value.</param>
-        /// <returns>The property builder.</returns>
-        public static PropertyBuilder<T> HasJsonConversion<T>(this PropertyBuilder<T> propertyBuilder,
-            Func<T, object> toJson, Func<object, T> fromJson)
-        {
-            propertyBuilder.HasConversion(
-                v => JsonConvert.SerializeObject(toJson(v),
-                    new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-                v => fromJson(JsonConvert.DeserializeObject<T>(v,
-                    new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore })));
 
             propertyBuilder.HasColumnType("jsonb");
 

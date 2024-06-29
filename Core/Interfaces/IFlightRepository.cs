@@ -23,7 +23,7 @@ namespace Core.Interfaces
         /// </summary>
         /// <param name="criteria">The criteria used to filter the flights.</param>
         /// <param name="tracked">Indicates whether the retrieved flight should be tracked in the entity framework
-        /// context.</param>
+        /// context. Default is false</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains the flight that matches
         /// the criteria.</returns>
         Task<Flight> GetFlightByCriteriaAsync(Expression<Func<Flight, bool>> criteria, bool tracked = false);       

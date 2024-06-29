@@ -13,8 +13,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
 .LogTo(Console.WriteLine, LogLevel.Information));
 
-builder.Services.AddSingleton<QueryExecutionService>();
-
 builder.Services.AddControllers()
     .AddNewtonsoftJson()
     .AddJsonOptions(options =>

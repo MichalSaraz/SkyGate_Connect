@@ -14,7 +14,7 @@ namespace Web.Api.FlightManagement.Models
 
         [RegularExpression(@"^([01]?[0-9]|2[0-3]):[0-5][0-9]$",
             ErrorMessage = "Time must be in the format HH:MM or H:MM")]
-        public string DepartureTime { get; set; }
+        public required string DepartureTime { get; set; }
 
         [RegularExpression(@"^[A-Za-z]{3}$", ErrorMessage = "Destination must be in the format XXX")]
         public required string DestinationFrom { get; set; }

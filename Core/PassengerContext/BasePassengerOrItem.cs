@@ -34,13 +34,5 @@ namespace Core.PassengerContext
             BookingDetailsId = bookingDetailsId;
             Weight = weight;
         }
-
-        protected virtual void MapFromPassengerBookingDetails(PassengerBookingDetails passengerBookingDetails)
-        {
-            Id = new Guid();
-            FirstName = passengerBookingDetails.FirstName;
-            LastName = passengerBookingDetails.LastName;
-            Gender = passengerBookingDetails.Gender;
-        }
     }
 }
