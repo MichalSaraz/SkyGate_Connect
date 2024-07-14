@@ -4,6 +4,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using System.Linq.Expressions;
+using Core.HistoryTracking;
 
 namespace Infrastructure.Repositories
 {
@@ -32,7 +33,7 @@ namespace Infrastructure.Repositories
 
         public async Task<Passenger> GetPassengerByCriteriaAsync(Expression<Func<Passenger, bool>> criteria)
         {
-            return await _context.Set<Passenger>().AsQueryable()
+            return await _context.Set<Passenger>().AsQueryable().AsNoTracking()
                 .Include(_ => _.SpecialServiceRequests)
                 .Where(criteria)
                 .SingleOrDefaultAsync();
@@ -53,6 +54,7 @@ namespace Infrastructure.Repositories
                 .Include(_ => _.Flights)
                     .ThenInclude(_ => _.Flight)
                 .Include(_ => _.AssignedSeats)
+                    .ThenInclude(_ => _.Flight)
                 .Include(_ => _.Infant.BookingDetails)
                 .Include(_ => _.Infant)
                     .ThenInclude(_ => _.Flights)
@@ -63,18 +65,22 @@ namespace Infrastructure.Repositories
             {
                 passengerQuery = passengerQuery
                     .Include(_ => _.PassengerCheckedBags)
-                        .ThenInclude(_ => _.BaggageTag)
+                    .ThenInclude(_ => _.BaggageTag)
                     .Include(_ => _.PassengerCheckedBags)
-                        .ThenInclude(_ => _.SpecialBag)
+                    .ThenInclude(_ => _.SpecialBag)
                     .Include(_ => _.PassengerCheckedBags)
-                        .ThenInclude(_ => _.FinalDestination)
+                    .ThenInclude(_ => _.FinalDestination)
                     .Include(_ => _.PassengerCheckedBags)
-                        .ThenInclude(_ => _.Flights)
-                            .ThenInclude(_ => _.Flight)
+                    .ThenInclude(_ => _.Flights)
+                    .ThenInclude(_ => _.Flight)
                     .Include(_ => _.SpecialServiceRequests)
-                        .ThenInclude(_ => _.SSRCode)
+                    .ThenInclude(_ => _.SSRCode)
+                    .Include(_ => _.SpecialServiceRequests)
+                    .ThenInclude(_ => _.Flight)
                     .Include(_ => _.TravelDocuments)
-                    .Include(_ => _.Comments);
+                    .Include(_ => _.Comments)
+                        .ThenInclude(_ => _.LinkedToFlights)
+                            .ThenInclude(_ => _.Flight);
             }
 
             if (!tracked)

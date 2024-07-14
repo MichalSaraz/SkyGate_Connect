@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
 using AutoMapper;
 using Core.Dtos;
+using Core.HistoryTracking;
+using Core.HistoryTracking.Enums;
 using Core.PassengerContext.Booking;
 using Web.Errors;
 
@@ -21,6 +23,8 @@ namespace Web.Api.SeatManagement.Controllers
         private readonly IBasePassengerOrItemRepository _basePassengerOrItemRepository;
         private readonly IFlightRepository _flightRepository;
         private readonly ICommentRepository _commentRepository;
+        private readonly IPassengerHistoryService _passengerHistoryService;
+        private readonly IActionHistoryRepository _actionHistoryRepository;
         private readonly IMapper _mapper;
 
         public SeatController(
@@ -29,6 +33,8 @@ namespace Web.Api.SeatManagement.Controllers
             IBasePassengerOrItemRepository basePassengerOrItemRepository,
             IFlightRepository flightRepository,
             ICommentRepository commentRepository,
+            IPassengerHistoryService passengerHistoryService,
+            IActionHistoryRepository actionHistoryRepository,
             IMapper mapper)
         {
             _seatRepository = seatRepository;
@@ -36,6 +42,8 @@ namespace Web.Api.SeatManagement.Controllers
             _basePassengerOrItemRepository = basePassengerOrItemRepository;
             _flightRepository = flightRepository;
             _commentRepository = commentRepository;
+            _passengerHistoryService = passengerHistoryService;
+            _actionHistoryRepository = actionHistoryRepository;
             _mapper = mapper;
         }
 
@@ -123,11 +131,16 @@ namespace Web.Api.SeatManagement.Controllers
             var currentSeatsDictionary = currentSeats.ToDictionary(c => c.PassengerOrItemId ?? Guid.Empty);
             var passengersToSwap = new Dictionary<Guid, Guid>();
             var currentToNewSeatMapping = new Dictionary<Guid, Guid>();
+            var oldValues = new List<BasePassengerOrItem>();
 
             foreach (var allocation in newSeatNumbers)
             {
                 var newSeat = newSeatsDictionary[allocation.Value];
                 var currentSeat = currentSeatsDictionary[allocation.Key];
+                var passengerOrItemOldValueToAdd =
+                    await _basePassengerOrItemRepository.GetBasePassengerOrItemByIdAsync(allocation.Key);
+                
+                if (passengerOrItemOldValueToAdd != null) oldValues.Add(passengerOrItemOldValueToAdd);
 
                 if (!swapSeats && newSeat.SeatStatus != SeatStatusEnum.Empty)
                 {
@@ -142,6 +155,13 @@ namespace Web.Api.SeatManagement.Controllers
                 if (swapSeats)
                 {
                     passengersToSwap.Add(newSeat.Id, newSeat.PassengerOrItemId ?? Guid.Empty);
+                    
+                    var swappedPassengerOrItemOldValueToAdd =
+                        await _basePassengerOrItemRepository.GetBasePassengerOrItemByIdAsync(
+                            newSeat.PassengerOrItemId ?? Guid.Empty);
+                    
+                    if (swappedPassengerOrItemOldValueToAdd != null) oldValues.Add(swappedPassengerOrItemOldValueToAdd);
+
                 }
 
                 newSeat.SeatStatus = SeatStatusEnum.Occupied;
@@ -149,8 +169,7 @@ namespace Web.Api.SeatManagement.Controllers
                 currentToNewSeatMapping[currentSeat.Id] = newSeat.Id;
 
                 await _AddSeatChangeRelatedComment(newSeat, flightIds);
-
-                _RemoveExitCommentsIfNotEmergencyExit(newSeat);
+                await _RemoveSeatRelatedComments(newSeat);
             }
 
             foreach (var allocation in newSeatNumbers)
@@ -165,10 +184,9 @@ namespace Web.Api.SeatManagement.Controllers
                 if (swapSeats)
                 {
                     currentSeat.PassengerOrItemId = passengersToSwap[currentToNewSeatMapping[currentSeat.Id]];
-
+                    
                     await _AddSeatChangeRelatedComment(currentSeat, flightIds);
-
-                    _RemoveExitCommentsIfNotEmergencyExit(currentSeat);
+                    await _RemoveSeatRelatedComments(currentSeat);
                 }
                 else
                 {
@@ -176,12 +194,14 @@ namespace Web.Api.SeatManagement.Controllers
                     currentSeat.PassengerOrItemId = null;
                 }
             }
-
+            
             var seatsToUpdate = currentSeats.Concat(seats).ToList();
+            
             await _seatRepository.UpdateAsync(seatsToUpdate.ToArray());
             
-            var seatsToUpdateDto = _mapper.Map<List<SeatDto>>(seatsToUpdate);
-
+            var seatsToUpdateDto =
+                await _passengerHistoryService.SaveSeatActionsToPassengerHistoryAsync(flightId, oldValues);
+            
             return Ok(seatsToUpdateDto);
         }
 
@@ -189,37 +209,39 @@ namespace Web.Api.SeatManagement.Controllers
         /// Allocates seats to passengers for a given flight.
         /// </summary>
         /// <param name="flightId">The ID of the flight.</param>
-        /// <param name="seatsToAllocate">A dictionary of passenger IDs and corresponding seat numbers to allocate.
+        /// <param name="seatNumbersToAllocate">A dictionary of passenger IDs and corresponding seat numbers to allocate.
         /// </param>
         /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of <see cref="SeatDto"/>
         ///  objects representing the allocated seats.</returns>
         [HttpPatch("allocate-seats")]
         public async Task<ActionResult<List<SeatDto>>> AllocateSeats(Guid flightId,
-            Dictionary<Guid, string> seatsToAllocate)
+            Dictionary<Guid, string> seatNumbersToAllocate)
         {
             if (!await _flightRepository.ExistsAsync(flightId))
             {
                 return NotFound(new ApiResponse(404, $"Flight with id {flightId} not found"));
             }
 
-            Expression<Func<BasePassengerOrItem, bool>> passengerCriteria = c => seatsToAllocate.Keys.Contains(c.Id) &&
-                c.Flights.Any(f => f.FlightId == flightId && f.AcceptanceStatus == AcceptanceStatusEnum.NotAccepted);
+            Expression<Func<BasePassengerOrItem, bool>> criteria = c =>
+                seatNumbersToAllocate.Keys.Contains(c.Id) && c.Flights.Any(f =>
+                    f.FlightId == flightId && f.AcceptanceStatus == AcceptanceStatusEnum.NotAccepted);
 
             var passengerOrItems =
-                await _basePassengerOrItemRepository.GetBasePassengerOrItemsByCriteriaAsync(passengerCriteria);
-            var seatsToAllocateList = await _seatRepository.GetSeatsByCriteriaAsync(c =>
-                seatsToAllocate.Values.Contains(c.SeatNumber) && c.FlightId == flightId);
+                await _basePassengerOrItemRepository.GetBasePassengerOrItemsByCriteriaAsync(criteria);
+            var seatsToAllocate = await _seatRepository.GetSeatsByCriteriaAsync(c =>
+                seatNumbersToAllocate.Values.Contains(c.SeatNumber) && c.FlightId == flightId);
             var flightIds = new List<Guid> { flightId };
 
-            if (seatsToAllocateList.Count != seatsToAllocate.Count || passengerOrItems.Count != seatsToAllocate.Count)
+            if (seatsToAllocate.Count != seatNumbersToAllocate.Count ||
+                passengerOrItems.Count != seatNumbersToAllocate.Count)
             {
                 return NotFound(new ApiResponse(404, "Seats or passengers not found"));
             }
 
-            var seatsDictionary = seatsToAllocateList.ToDictionary(s => s.SeatNumber);
+            var seatsDictionary = seatsToAllocate.ToDictionary(s => s.SeatNumber);
             var passengersDictionary = passengerOrItems.ToDictionary(p => p.Id);
 
-            foreach (var allocation in seatsToAllocate)
+            foreach (var allocation in seatNumbersToAllocate)
             {
                 var seatToAllocate = seatsDictionary[allocation.Value];
                 var passenger = passengersDictionary[allocation.Key];
@@ -234,13 +256,17 @@ namespace Web.Api.SeatManagement.Controllers
 
                 if (seatToAllocate.SeatType == SeatTypeEnum.EmergencyExit)
                 {
-                    var comment = await _AddEmergencyExitSuitabilityCheckComment(seatToAllocate, flightIds);
+                    await _AddEmergencyExitSuitabilityCheckComment(seatToAllocate, flightIds);
                 }
             }
+            
+            var oldValues = await _basePassengerOrItemRepository.GetBasePassengerOrItemsByCriteriaAsync(c =>
+                seatNumbersToAllocate.Keys.Contains(c.Id), false);
+            
+            await _seatRepository.UpdateAsync(seatsToAllocate.ToArray());
 
-            await _seatRepository.UpdateAsync(seatsToAllocateList.ToArray());
-
-            var seatsToAllocateDto = _mapper.Map<List<SeatDto>>(seatsToAllocateList);
+            var seatsToAllocateDto =
+                await _passengerHistoryService.SaveSeatActionsToPassengerHistoryAsync(flightId, oldValues);
 
             return Ok(seatsToAllocateDto);
         }
@@ -260,13 +286,15 @@ namespace Web.Api.SeatManagement.Controllers
                 return NotFound(new ApiResponse(404, $"Flight with id {flightId} not found"));
             }
 
-            Expression<Func<Seat, bool>> seatCriteria = c => passengerIds.Contains(c.PassengerOrItemId ?? Guid.Empty) &&
+            Expression<Func<Seat, bool>> criteria = c => passengerIds.Contains(c.PassengerOrItemId ?? Guid.Empty) &&
                                                              c.PassengerOrItem.Flights.Any(f =>
                                                                  f.FlightId == flightId && f.AcceptanceStatus ==
                                                                  AcceptanceStatusEnum.NotAccepted);
 
-            var seatsToDeallocate = await _seatRepository.GetSeatsByCriteriaAsync(seatCriteria);
-
+            var seatsToDeallocate = await _seatRepository.GetSeatsByCriteriaAsync(criteria);
+            var oldValues = await _basePassengerOrItemRepository.GetBasePassengerOrItemsByCriteriaAsync(c =>
+                passengerIds.Contains(c.Id), false);
+            
             if (seatsToDeallocate.Count != passengerIds.Count)
             {
                 return NotFound(new ApiResponse(404, "Seats not found"));
@@ -279,13 +307,14 @@ namespace Web.Api.SeatManagement.Controllers
                     return BadRequest(new ApiResponse(400, "Seat is not occupied"));
                 }
 
+                await _RemoveSeatRelatedComments(seat, true);
+                
                 seat.SeatStatus = SeatStatusEnum.Empty;
                 seat.PassengerOrItemId = null;
-
-                _RemoveExitCommentsIfNotEmergencyExit(seat);
             }
 
             await _seatRepository.UpdateAsync(seatsToDeallocate.ToArray());
+            await _passengerHistoryService.SaveSeatActionsToPassengerHistoryAsync(flightId, oldValues);
             
             var seatsToDeallocateDto = _mapper.Map<List<SeatDto>>(seatsToDeallocate);
 
@@ -293,15 +322,45 @@ namespace Web.Api.SeatManagement.Controllers
         }
 
         /// <summary>
-        /// Removes the exit comments from a seat if it is not an emergency exit seat.
+        /// Removes seat-related comments for a given seat.
         /// </summary>
-        /// <param name="seat">The seat to remove exit comments from.</param>
-        private static void _RemoveExitCommentsIfNotEmergencyExit(Seat seat)
+        /// <param name="seat">The seat object for which to remove comments.</param>
+        /// <param name="isNewSeatValueNull">Optional. Indicates if the new seat value is null.</param>
+        /// <returns>A Task representing the asynchronous operation.</returns>
+        private async Task _RemoveSeatRelatedComments(Seat seat, bool isNewSeatValueNull = false)
         {
-            if (seat.SeatType != SeatTypeEnum.EmergencyExit &&
-                seat.PassengerOrItem.Comments.Any(c => c.PredefinedCommentId == "Exit"))
+            if (isNewSeatValueNull || seat.SeatType != SeatTypeEnum.EmergencyExit && seat.PassengerOrItemId != null)
             {
-                seat.PassengerOrItem.Comments.RemoveAll(c => c.PredefinedCommentId == "Exit");
+                var comment = 
+                    await _commentRepository.GetCommentByCriteriaAsync(c =>
+                        c.PassengerOrItemId == seat.PassengerOrItemId && c.PredefinedCommentId == "Exit");
+                
+                if (comment != null)
+                {
+                    var commentDto = _mapper.Map<CommentDto>(comment);
+                    var record = new ActionHistory<object?>(ActionTypeEnum.Deleted, comment.PassengerOrItemId,
+                        nameof(Comment), null, commentDto);
+                    
+                    await _actionHistoryRepository.AddAsync(record);
+                    await _commentRepository.DeleteAsync(comment);
+                }
+                
+                if (isNewSeatValueNull)
+                {
+                    comment = 
+                        await _commentRepository.GetCommentByCriteriaAsync(c =>
+                            c.PassengerOrItemId == seat.PassengerOrItemId && c.PredefinedCommentId == "SeatChng");
+                    
+                    if (comment != null)
+                    {
+                        var commentDto = _mapper.Map<CommentDto>(comment);
+                        var record = new ActionHistory<object?>(ActionTypeEnum.Deleted, comment.PassengerOrItemId,
+                            nameof(Comment), null, commentDto);
+                        
+                        await _actionHistoryRepository.AddAsync(record);
+                        await _commentRepository.DeleteAsync(comment);
+                    }
+                }
             }
         }
 
@@ -323,13 +382,22 @@ namespace Web.Api.SeatManagement.Controllers
 
             try
             {
-                var seatChangeComment =
-                    await _commentRepository.GetCommentByCriteriaAsync(c =>
-                        c.PassengerId == newSeat.PassengerOrItemId && c.PredefinedCommentId == "SeatChng") ??
-                    await _commentService.AddCommentAsync(newSeat.PassengerOrItemId ?? Guid.Empty, CommentTypeEnum.Gate,
-                        null, flightIds, "SeatChng");
+                var passengerOrItem = await _basePassengerOrItemRepository.GetBasePassengerOrItemByIdAsync(
+                    newSeat.PassengerOrItemId ?? Guid.Empty);
+                var passengerFlight = passengerOrItem?.Flights.FirstOrDefault(f => f.FlightId == newSeat.FlightId);
+                
+                if (passengerFlight == null) return;
+                
+                if (passengerFlight.AcceptanceStatus == AcceptanceStatusEnum.Accepted)
+                {
+                    var seatChangeComment = 
+                        await _commentRepository.GetCommentByCriteriaAsync(c =>
+                            c.PassengerOrItemId == newSeat.PassengerOrItemId && c.PredefinedCommentId == "SeatChng") ??
+                        await _commentService.AddCommentAsync(newSeat.PassengerOrItemId ?? Guid.Empty,
+                            CommentTypeEnum.Gate, null, flightIds, "SeatChng");
 
-                Ok(seatChangeComment);
+                    Ok(seatChangeComment);
+                }
             }
             catch (Exception e)
             {
@@ -346,22 +414,21 @@ namespace Web.Api.SeatManagement.Controllers
         /// Returns an <see cref="OkObjectResult"/> if the comment is added successfully.
         /// Returns a <see cref="BadRequestObjectResult"/> if an exception occurs.
         /// </returns>
-        private async Task<ActionResult<Comment>> _AddEmergencyExitSuitabilityCheckComment(Seat newSeat,
-            List<Guid> flightIds)
+        private async Task _AddEmergencyExitSuitabilityCheckComment(Seat newSeat, List<Guid> flightIds)
         {
             try
             {
                 var suitabilityCheckComment =
                     await _commentRepository.GetCommentByCriteriaAsync(c =>
-                        c.PassengerId == newSeat.PassengerOrItemId && c.PredefinedCommentId == "Exit") ??
+                        c.PassengerOrItemId == newSeat.PassengerOrItemId && c.PredefinedCommentId == "Exit") ??
                     await _commentService.AddCommentAsync(newSeat.PassengerOrItemId ?? Guid.Empty, CommentTypeEnum.Gate,
                         null, flightIds, "Exit");
 
-                return Ok(suitabilityCheckComment);
+                Ok(suitabilityCheckComment);
             }
             catch (Exception e)
             {
-                return BadRequest(new ApiResponse(400, e.Message));
+                BadRequest(new ApiResponse(400, e.Message));
             }
         }
     }

@@ -17,15 +17,17 @@ namespace Core.Interfaces
         /// </remarks>
         Task<Baggage> GetBaggageByTagNumber(string tagNumber);
 
+
         /// <summary>
-        /// Retrieves a baggage based on the specified criteria.
+        /// Retrieves a baggage item that matches the specified criteria asynchronously.
         /// </summary>
-        /// <param name="criteria">The criteria used to filter the baggage.</param>
+        /// <param name="criteria">The criteria to match against the baggage items.</param>
+        /// <param name="tracked">A flag indicating whether the retrieved baggage item should be tracked by the context.</param>
         /// <returns>
-        /// A task representing the asynchronous operation. The task result contains the baggage that matches
-        /// the specified criteria, or null if no matching baggage is found.
+        /// A task that represents the asynchronous operation.
+        /// The task result contains the baggage item that matches the criteria, or null if no match is found.
         /// </returns>
-        Task<Baggage> GetBaggageByCriteriaAsync(Expression<Func<Baggage, bool>> criteria);
+        Task<Baggage> GetBaggageByCriteriaAsync(Expression<Func<Baggage, bool>> criteria, bool tracked = true);
 
         /// <summary>
         /// Retrieves all baggage that meets the specified criteria.

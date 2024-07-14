@@ -9,8 +9,10 @@
         public string DestinationTo { get; init; }
         public DateTime DepartureDateTime { get; init; }
         public DateTime? ArrivalDateTime { get; init; }
+        public string FlightClass { get; init; }
         public int? BoardingSequenceNumber { get; init; }        
         public string BoardingZone { get; init; }        
         public string AcceptanceStatus { get; init; }
+        public string NotTravellingReason { get; init; }
     }
 }

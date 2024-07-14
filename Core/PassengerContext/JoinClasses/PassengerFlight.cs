@@ -17,7 +17,7 @@ namespace Core.PassengerContext.JoinClasses
 
         // is null when AcceptanceStatus is NotAccepted
         public BoardingZoneEnum? BoardingZone { get; set; }
-        public FlightClassEnum FlightClass { get; private set; }
+        public FlightClassEnum FlightClass { get; set; }
         public AcceptanceStatusEnum AcceptanceStatus { get; set; } = AcceptanceStatusEnum.NotAccepted;
         
         public NotTravellingReasonEnum? NotTravellingReason { get; set; }

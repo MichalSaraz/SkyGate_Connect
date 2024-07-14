@@ -37,10 +37,14 @@ namespace Web.Extensions
             services.AddScoped<IPassengerBookingDetailsRepository, PassengerBookingDetailsRepository>();
             services.AddScoped<IBasePassengerOrItemRepository, BasePassengerOrItemRepository>();
             services.AddScoped<ISeatRepository, SeatRepository>();
-            services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IPassengerFlightRepository, PassengerFlightRepository>();
             services.AddScoped<IItemRepository, ItemRepository>();
-
+            services.AddScoped<IActionHistoryRepository, ActionHistoryRepository>();
+            
+            services.AddScoped<ICommentService, CommentService>();
+            services.AddScoped<IPassengerHistoryService, PassengerHistoryService>();
+            services.AddScoped<IPassengerDtoMappingService, PassengerDtoMappingService>();
+            
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.Configure<ApiBehaviorOptions>(options =>

@@ -13,9 +13,9 @@ namespace Infrastructure.Data.Config
             builder.Property(c => c.CommentType)
                 .HasEnumConversion();
             
-            builder.HasOne(c => c.Passenger)
+            builder.HasOne(c => c.PassengerOrItem)
                 .WithMany(p => p.Comments)
-                .HasForeignKey(c => c.PassengerId);
+                .HasForeignKey(c => c.PassengerOrItemId);
 
             builder.HasOne(c => c.PredefinedComment)
                 .WithMany()

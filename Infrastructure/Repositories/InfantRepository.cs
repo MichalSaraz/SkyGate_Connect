@@ -3,6 +3,7 @@ using Core.PassengerContext;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using Core.HistoryTracking;
 
 namespace Infrastructure.Repositories
 {
@@ -40,6 +41,8 @@ namespace Infrastructure.Repositories
         {
             var infantQuery = _context.Set<Infant>().AsQueryable()
                 .Include(_ => _.BookingDetails)
+                .Include(_ => _.Flights)
+                    .ThenInclude(_ => _.Flight)
                 .Where(_ => _.Id == id);
 
             return await infantQuery.FirstOrDefaultAsync();

@@ -20,6 +20,7 @@ namespace Infrastructure.Repositories
                     .ThenInclude(_ => _.Flights)
                 .Include(_ => _.PassengerOrItem)
                     .ThenInclude(_ => _.Comments)
+                .Include(_ => _.Flight)
                 .Where(criteria);
 
             if (!tracked)

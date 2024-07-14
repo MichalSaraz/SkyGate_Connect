@@ -2,6 +2,7 @@
 using Core.FlightContext.JoinClasses;
 using Core.PassengerContext;
 using System.ComponentModel.DataAnnotations;
+using Core.HistoryTracking;
 
 namespace Core.BaggageContext
 {

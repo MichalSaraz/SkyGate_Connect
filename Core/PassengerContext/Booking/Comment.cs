@@ -8,8 +8,8 @@ namespace Core.PassengerContext.Booking
     {
         public Guid Id { get; private set; }
 
-        public BasePassengerOrItem Passenger { get; }
-        public Guid PassengerId { get; private set; }        
+        public BasePassengerOrItem PassengerOrItem { get; }
+        public Guid PassengerOrItemId { get; private set; }        
 
         public PredefinedComment PredefinedComment { get; }
         public string PredefinedCommentId { get; private set; } 
@@ -23,20 +23,20 @@ namespace Core.PassengerContext.Booking
         public List<FlightComment> LinkedToFlights { get; private set; } = new();
 
         // Constructor for adding custom comment
-        public Comment(Guid passengerId, CommentTypeEnum commentType, string text)
+        public Comment(Guid passengerOrItemId, CommentTypeEnum commentType, string text)
         {
             Id = Guid.NewGuid();
-            PassengerId = passengerId;
+            PassengerOrItemId = passengerOrItemId;
             CommentType = commentType;
             Text = text;
         }
 
         // Constructor for adding predefined comment
-        public Comment(Guid passengerId, string predefinedCommentId, string text, 
+        public Comment(Guid passengerOrItemId, string predefinedCommentId, string text, 
             CommentTypeEnum commentType = CommentTypeEnum.Gate)
         {
             Id = Guid.NewGuid();
-            PassengerId = passengerId;
+            PassengerOrItemId = passengerOrItemId;
             PredefinedCommentId = predefinedCommentId;
             Text = text;
             CommentType = commentType;

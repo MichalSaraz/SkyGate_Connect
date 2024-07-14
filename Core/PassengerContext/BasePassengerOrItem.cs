@@ -1,4 +1,5 @@
-﻿using Core.PassengerContext.Booking.Enums;
+﻿using Core.HistoryTracking;
+using Core.PassengerContext.Booking.Enums;
 using Core.PassengerContext.Booking;
 using Core.PassengerContext.JoinClasses;
 using Core.PassengerContext.APIS;
@@ -23,7 +24,8 @@ namespace Core.PassengerContext
         public List<Comment> Comments { get; set; }
         public List<Seat> AssignedSeats { get; set; }
         public List<PassengerFlight> Flights { get; set; } = new();
-
+        public List<ActionHistory<object>> CustomerHistory { get; set; } = new();
+        
         protected BasePassengerOrItem(string firstName, string lastName, PaxGenderEnum gender, Guid? bookingDetailsId,
             int? weight)
         {

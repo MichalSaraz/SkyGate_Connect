@@ -1,4 +1,5 @@
-﻿using Core.Interfaces;
+﻿using Core.HistoryTracking;
+using Core.Interfaces;
 using Core.PassengerContext;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;

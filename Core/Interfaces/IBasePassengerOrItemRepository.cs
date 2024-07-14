@@ -1,5 +1,6 @@
 ﻿using Core.PassengerContext;
 using System.Linq.Expressions;
+using Core.HistoryTracking;
 
 namespace Core.Interfaces
 {
@@ -28,5 +29,18 @@ namespace Core.Interfaces
         /// or null if the base passenger or item is not found.
         /// </returns>
         Task<BasePassengerOrItem> GetBasePassengerOrItemByIdAsync(Guid id);
+
+
+        /// <summary>
+        /// Adds an action record to the base passenger or item asynchronously.
+        /// </summary>
+        /// <param name="basePassengerOrItemId">The ID of the base passenger or item.</param>
+        /// <param name="actionHistory">The action history to add.</param>
+        /// <returns>
+        /// A task representing the asynchronous operation. The task result contains the base passenger or item
+        /// after the action record has been added.
+        /// </returns>
+        Task<BasePassengerOrItem> AddActionRecordAsync(
+            Guid basePassengerOrItemId, ActionHistory<object> actionHistory);
     }
 }

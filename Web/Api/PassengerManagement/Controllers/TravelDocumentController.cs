@@ -1,6 +1,8 @@
 using System.Linq.Expressions;
 using AutoMapper;
 using Core.Dtos;
+using Core.HistoryTracking;
+using Core.HistoryTracking.Enums;
 using Core.Interfaces;
 using Core.PassengerContext.APIS;
 using Microsoft.AspNetCore.Mvc;
@@ -17,15 +19,18 @@ namespace Web.Api.PassengerManagement.Controllers
     {
         private readonly IAPISDataRepository _apisDataRepository;
         private readonly ICountryRepository _countryRepository;
+        private readonly IActionHistoryRepository _actionHistoryRepository;
         private readonly IMapper _mapper;
 
         public TravelDocumentController(
             IAPISDataRepository apisDataRepository,
             ICountryRepository countryRepository,
+            IActionHistoryRepository actionHistoryRepository,
             IMapper mapper)
         {
             _apisDataRepository = apisDataRepository;
             _countryRepository = countryRepository;
+            _actionHistoryRepository = actionHistoryRepository;
             _mapper = mapper;
         }
 
@@ -45,6 +50,8 @@ namespace Web.Api.PassengerManagement.Controllers
             where TModel : APISDataModel
         {
             var processedApisDataList = new List<APISData>();
+            var oldValues = new List<APISData>();
+            
             foreach (var data in dataList)
             {
                 var model = JsonConvert.DeserializeObject<TModel>(data.ToString());
@@ -71,6 +78,7 @@ namespace Web.Api.PassengerManagement.Controllers
                 }
 
                 APISData? travelDocument;
+                
                 if (getByIdMethod == null) // Add method
                 {
                     travelDocument = new APISData(id, nationality.Country2LetterCode,
@@ -84,10 +92,9 @@ namespace Web.Api.PassengerManagement.Controllers
                         ? await getByIdMethod(dataModel.APISDataId)
                         : null;
                     
-                    if (travelDocument == null)
-                    {
-                        throw new Exception("APIS data not found.");
-                    }
+                    if (travelDocument == null) throw new Exception("APIS data not found.");
+                    
+                    oldValues.Add(travelDocument);
 
                     travelDocument.FirstName = model.FirstName;
                     travelDocument.LastName = model.LastName;
@@ -103,10 +110,25 @@ namespace Web.Api.PassengerManagement.Controllers
 
                 processedApisDataList.Add(travelDocument);
             }
-
-            await saveMethod(processedApisDataList.ToArray());
             
+            ActionHistory<object> record;
             var apisDataDto = _mapper.Map<List<APISDataDto>>(processedApisDataList);
+            
+            if (getByIdMethod != null)
+            {
+                record = new ActionHistory<object>(ActionTypeEnum.Updated, id, nameof(APISData), apisDataDto,
+                    _mapper.Map<List<APISDataDto>>(oldValues));
+                
+                await _actionHistoryRepository.AddAsync(record);
+            }
+            else
+            {
+                record = new ActionHistory<object>(ActionTypeEnum.Created, id, nameof(APISData), apisDataDto);
+                
+                await _actionHistoryRepository.AddAsync(record);
+            }
+            
+            await saveMethod(processedApisDataList.ToArray());
 
             return Ok(apisDataDto);
         }
@@ -229,7 +251,11 @@ namespace Web.Api.PassengerManagement.Controllers
 
                 travelDocumentsToDelete.Add(travelDocument);
             }
-
+            
+            var record = new ActionHistory<object?>(ActionTypeEnum.Deleted, id, nameof(APISData), null,
+                _mapper.Map<List<APISDataDto>>(travelDocumentsToDelete));
+            
+            await _actionHistoryRepository.AddAsync(record);
             await _apisDataRepository.DeleteAsync(travelDocumentsToDelete.ToArray());
 
             return NoContent();

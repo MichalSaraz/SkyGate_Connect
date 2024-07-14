@@ -21,6 +21,7 @@ namespace Infrastructure.Repositories
                 .Include(_ => _.Passenger)
                 .Include(_ => _.Passenger.AssignedSeats)
                 .Include(_ => _.Passenger.BookingDetails)
+                .Include(_ => _.Flight)
                 .Where(criteria)
                 .ToListAsync();
         }

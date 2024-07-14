@@ -8,7 +8,7 @@ namespace Core.Interfaces
         /// <summary>
         /// Adds a comment asynchronously.
         /// </summary>
-        /// <param name="id">The ID of the comment.</param>
+        /// <param name="id">The ID of the passenger or item.</param>
         /// <param name="commentType">The type of the comment.</param>
         /// <param name="text">The text of the comment.</param>
         /// <param name="flightIds">The list of flight IDs associated with the comment.</param>

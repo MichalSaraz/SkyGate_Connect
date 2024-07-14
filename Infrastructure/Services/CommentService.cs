@@ -1,4 +1,8 @@
-﻿using Core.FlightContext.JoinClasses;
+﻿using AutoMapper;
+using Core.Dtos;
+using Core.FlightContext.JoinClasses;
+using Core.HistoryTracking;
+using Core.HistoryTracking.Enums;
 using Core.Interfaces;
 using Core.PassengerContext;
 using Core.PassengerContext.Booking;
@@ -12,16 +16,22 @@ namespace Infrastructure.Services
         private readonly IPredefinedCommentRepository _predefinedCommentRepository;
         private readonly IBasePassengerOrItemRepository _basePassengerOrItemRepository;
         private readonly IFlightRepository _flightRepository;
+        private readonly IActionHistoryRepository _actionHistoryRepository;
+        private readonly IMapper _mapper;
 
         public CommentService(ICommentRepository commentRepository,
             IPredefinedCommentRepository predefinedCommentRepository,
             IBasePassengerOrItemRepository basePassengerOrItemRepository,
-            IFlightRepository flightRepository)
+            IFlightRepository flightRepository,
+            IActionHistoryRepository actionHistoryRepository,
+            IMapper mapper)
         {
             _commentRepository = commentRepository;
             _predefinedCommentRepository = predefinedCommentRepository;
             _basePassengerOrItemRepository = basePassengerOrItemRepository;
             _flightRepository = flightRepository;
+            _actionHistoryRepository = actionHistoryRepository;
+            _mapper = mapper;
         }
 
         public async Task<Comment> AddCommentAsync(Guid id, CommentTypeEnum commentType, string text,
@@ -29,7 +39,8 @@ namespace Infrastructure.Services
         {
             Comment comment;
 
-            var flights = await _flightRepository.GetFlightsByCriteriaAsync(f => flightIds.Contains(f.Id));
+            var flights = (await _flightRepository.GetFlightsByCriteriaAsync(f => flightIds.Contains(f.Id), true))
+                .ToDictionary(f => f.Id);
 
             if (flights.Count != flightIds.Count)
             {
@@ -77,6 +88,13 @@ namespace Infrastructure.Services
             }
 
             await _commentRepository.UpdateAsync(comment);
+            
+            comment.LinkedToFlights.ForEach(f => f.Flight = flights[f.FlightId]);
+            
+            var record = new ActionHistory<object>(ActionTypeEnum.Created, comment.PassengerOrItemId, nameof(Comment),
+                _mapper.Map<CommentDto>(comment));
+                
+            await _actionHistoryRepository.AddAsync(record);
 
             return comment;
         }

@@ -27,6 +27,9 @@ namespace Infrastructure.Data.Config.JoinClassesConfig
             
             builder.Property(pf => pf.AcceptanceStatus)
                 .HasEnumConversion();
+
+            builder.Property(pf => pf.NotTravellingReason)
+                .HasNullableEnumConversion();
         }
     }
 }

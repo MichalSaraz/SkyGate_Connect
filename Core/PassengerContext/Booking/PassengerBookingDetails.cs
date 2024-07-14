@@ -22,11 +22,11 @@ namespace Core.PassengerContext.Booking
         public BookingReference PNR { get; }
         public string PNRId { get; private set; }
 
-        public int? Age { get; }
+        public int? Age { get; set; }
 
-        public int BaggageAllowance { get; }
-        public bool PriorityBoarding { get; }
-        public string FrequentFlyerCardNumber { get; }
+        public int BaggageAllowance { get; set; }
+        public bool PriorityBoarding { get; set; }
+        public string FrequentFlyerCardNumber { get; set; }
 
         public BasePassengerOrItem PassengerOrItem { get; }
         public Guid? PassengerOrItemId { get; set; }

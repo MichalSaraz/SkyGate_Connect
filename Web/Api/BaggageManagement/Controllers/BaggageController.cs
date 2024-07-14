@@ -3,8 +3,13 @@ using AutoMapper;
 using Core.BaggageContext;
 using Core.BaggageContext.Enums;
 using Core.Dtos;
+using Core.FlightContext;
+using Core.FlightContext.FlightInfo.Enums;
 using Core.FlightContext.JoinClasses;
+using Core.HistoryTracking;
+using Core.HistoryTracking.Enums;
 using Core.Interfaces;
+using Core.PassengerContext.Booking.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Web.Api.BaggageManagement.Models;
 using Web.Errors;
@@ -20,19 +25,22 @@ namespace Web.Api.BaggageManagement.Controllers
         private readonly IPassengerRepository _passengerRepository;
         private readonly IFlightRepository _flightRepository;
         private readonly IDestinationRepository _destinationRepository;
+        private readonly IActionHistoryRepository _actionHistoryRepository;
 
         public BaggageController(
             IMapper mapper, 
             IBaggageRepository baggageRepository,
             IPassengerRepository passengerRepository, 
             IFlightRepository flightRepository, 
-            IDestinationRepository destinationRepository)
+            IDestinationRepository destinationRepository,
+            IActionHistoryRepository actionHistoryRepository)
         {
             _mapper = mapper;
             _baggageRepository = baggageRepository;
             _passengerRepository = passengerRepository;
             _flightRepository = flightRepository;
             _destinationRepository = destinationRepository;
+            _actionHistoryRepository = actionHistoryRepository;
         }
 
         /// <summary>
@@ -51,7 +59,10 @@ namespace Web.Api.BaggageManagement.Controllers
                 return NotFound(new ApiResponse(404, $"Baggage with tag number {tagNumber} was not found."));
             }
 
-            var baggageDto = _mapper.Map<Baggage, BaggageDetailsDto>(baggage);
+            var baggageDto = _mapper.Map<Baggage, BaggageDetailsDto>(baggage, opt =>
+            {
+                opt.Items["FlightId"] = baggage.Flights.First().FlightId;
+            });
 
             return Ok(baggageDto);
         }
@@ -203,7 +214,7 @@ namespace Web.Api.BaggageManagement.Controllers
                 return Ok(new ApiResponse(200, $"No bags found with onward connections for this flight."));
             }
 
-            var bagListDto = _mapper.Map<List<BaggageDetailsDto>>(bagList);
+            var bagListDto = _mapper.Map<List<BaggageDetailsDto>>(bagList, opt => opt.Items["FlightId"] = flightId);
 
             return Ok(bagListDto);
         }
@@ -230,7 +241,7 @@ namespace Web.Api.BaggageManagement.Controllers
             }
 
             var passenger = await _passengerRepository.GetPassengerByIdAsync(passengerId, false, true);
-            var selectedFlight = await _flightRepository.GetFlightByIdAsync(flightId);
+            var selectedFlight = await _flightRepository.GetFlightByIdAsync(flightId) as Flight;
             var destination = await _destinationRepository.GetDestinationByCriteriaAsync(d =>
                 d.IATAAirportCode == addBaggageModels.First().FinalDestination);
 
@@ -242,6 +253,17 @@ namespace Web.Api.BaggageManagement.Controllers
             if (selectedFlight == null)
             {
                 return NotFound(new ApiResponse(404, $"Flight with Id {flightId} was not found."));
+            }
+            
+            if (selectedFlight.FlightStatus == FlightStatusEnum.Closed)
+            {
+                return BadRequest(new ApiResponse(400, "Cannot add baggage to a closed flight."));
+            }
+
+            if (passenger.Flights.First(pf => pf.FlightId == flightId).AcceptanceStatus is
+                AcceptanceStatusEnum.NotAccepted or AcceptanceStatusEnum.NotTravelling)
+            {
+                return BadRequest(new ApiResponse(400, "Cannot add baggage to a passenger who is not checked in."));
             }
             
             if (destination == null)
@@ -306,33 +328,39 @@ namespace Web.Api.BaggageManagement.Controllers
 
                     isFirstIteration = false;
                 }
-
+                
                 bagList.Add(newBaggage);
             }
 
             await _baggageRepository.UpdateAsync(bagList.ToArray());
-
-            var addedBaggageList =
+            
+            var addedBaggageListDto =
                 _mapper.Map<List<BaggageOverviewDto>>(bagList, opt => opt.Items["FlightId"] = flightId);
 
-            foreach (var baggageDetails in addedBaggageList)
+            foreach (var baggageDto in addedBaggageListDto)
             {
-                baggageDetails.PassengerFirstName = passenger.FirstName;
-                baggageDetails.PassengerLastName = passenger.LastName;
+                baggageDto.PassengerFirstName = passenger.FirstName;
+                baggageDto.PassengerLastName = passenger.LastName;
             }
+            
+            var record = 
+                new ActionHistory<object>(ActionTypeEnum.Created, passengerId, nameof(Baggage), addedBaggageListDto);
+                
+            await _actionHistoryRepository.AddAsync(record);
 
-            return Ok(addedBaggageList);
+            return Ok(addedBaggageListDto);
         }
 
         /// <summary>
         /// Edit baggage information for a passenger.
         /// </summary>
         /// <param name="passengerId">The ID of the passenger.</param>
+        /// <param name="flightId">The ID of the flight.</param>
         /// <param name="editBaggageModels">The list of baggage models containing the changes to apply.</param>
         /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of
         /// <see cref="BaggageOverviewDto"/> objects representing the updated baggage.</returns>   
-        [HttpPut("passenger/{passengerId:guid}/edit-baggage")]
-        public async Task<ActionResult<BaggageOverviewDto>> EditBaggage(Guid passengerId,
+        [HttpPut("passenger/{passengerId:guid}/flight/{flightId:guid}/edit-baggage")]
+        public async Task<ActionResult<BaggageOverviewDto>> EditBaggage(Guid passengerId, Guid flightId,
             [FromBody] List<EditBaggageModel> editBaggageModels)
         {
             var changesToSave = new List<Baggage>();
@@ -352,7 +380,7 @@ namespace Web.Api.BaggageManagement.Controllers
                 {
                     return NotFound(new ApiResponse(404, $"Baggage with Id {model.BaggageId} does not exist."));
                 }
-
+                
                 selectedBaggage.Weight = model.Weight;
 
                 if (model.SpecialBagType.HasValue)
@@ -375,21 +403,33 @@ namespace Web.Api.BaggageManagement.Controllers
                 changesToSave.Add(selectedBaggage);
             }
 
+            var oldValues =
+                await _baggageRepository.GetAllBaggageByCriteriaAsync(
+                    b => editBaggageModels.Select(x => x.BaggageId).Contains(b.Id));
+            
+            var updatedBaggageListDto = 
+                _mapper.Map<List<BaggageOverviewDto>>(changesToSave, opt => opt.Items["FlightId"] = flightId);
+
+            var record = 
+                new ActionHistory<object>(ActionTypeEnum.Updated, passengerId, nameof(Baggage), updatedBaggageListDto, 
+                _mapper.Map<List<BaggageOverviewDto>>(oldValues, opt => opt.Items["FlightId"] = flightId));
+
+            await _actionHistoryRepository.AddAsync(record);
             await _baggageRepository.UpdateAsync(changesToSave.ToArray());
             
-            var updatedBaggageList = _mapper.Map<List<BaggageOverviewDto>>(changesToSave);
-
-            return Ok(updatedBaggageList);
+            return Ok(updatedBaggageListDto);
         }
 
         /// <summary>
         /// Deletes the selected baggage for a specific passenger.
         /// </summary>
         /// <param name="passengerId">The ID of the passenger.</param>
+        /// <param name="flightId">The ID of the flight.</param>
         /// <param name="baggageIds">The IDs of the baggage to be deleted.</param>
         /// <returns>A <see cref="NoContentResult"/> object if the operation is successful.</returns>
-        [HttpDelete("passenger/{passengerId:guid}/delete-baggage")]
-        public async Task<ActionResult> DeleteSelectedBaggage(Guid passengerId, [FromBody] List<Guid> baggageIds)
+        [HttpDelete("passenger/{passengerId:guid}/flight/{flightId:guid}/delete-baggage")]
+        public async Task<ActionResult> DeleteSelectedBaggage(Guid passengerId, Guid flightId,
+            [FromBody] List<Guid> baggageIds)
         {
             var selectedBaggage = new List<Baggage>();
 
@@ -406,7 +446,11 @@ namespace Web.Api.BaggageManagement.Controllers
 
                 selectedBaggage.Add(baggage);
             }
-
+                
+            var record = new ActionHistory<object?>(ActionTypeEnum.Deleted, passengerId, nameof(Baggage), null, 
+                _mapper.Map<List<BaggageOverviewDto>>(selectedBaggage, opt => opt.Items["FlightId"] = flightId));
+                
+            await _actionHistoryRepository.AddAsync(record);
             await _baggageRepository.DeleteAsync(selectedBaggage.ToArray());
 
             return NoContent();

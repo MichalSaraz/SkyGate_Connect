@@ -31,12 +31,17 @@ namespace Infrastructure.Data.Config
                 .HasForeignKey(td => td.PassengerId);
 
             builder.HasMany(bpoi => bpoi.Comments)
-                .WithOne(c => c.Passenger)
-                .HasForeignKey(c => c.PassengerId);
+                .WithOne(c => c.PassengerOrItem)
+                .HasForeignKey(c => c.PassengerOrItemId);
 
             builder.HasMany(bpoi => bpoi.AssignedSeats)
                 .WithOne(s => s.PassengerOrItem)
                 .HasForeignKey(s => s.PassengerOrItemId);
+            
+            builder.HasMany(bpoi => bpoi.CustomerHistory)
+                .WithOne(ah => ah.PassengerOrItem)
+                .HasForeignKey(ah => ah.PassengerOrItemId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

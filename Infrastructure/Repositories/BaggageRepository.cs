@@ -25,15 +25,25 @@ namespace Infrastructure.Repositories
                 .FirstOrDefaultAsync(_ => _.BaggageTag.TagNumber == tagNumber);
         }
 
-        public async Task<Baggage> GetBaggageByCriteriaAsync(Expression<Func<Baggage, bool>> criteria)
+        public async Task<Baggage> GetBaggageByCriteriaAsync(Expression<Func<Baggage, bool>> criteria,
+            bool tracked = true)
         {
-            return await _context.Baggage.AsQueryable()
+            var baggageQuery = _context.Baggage.AsQueryable()
                 .Include(_ => _.Passenger)
                 .Include(_ => _.BaggageTag)
                 .Include(_ => _.SpecialBag)
+                .Include(_ => _.Flights)
                 .Include(_ => _.FinalDestination)
-                .Where(criteria)
-                .FirstOrDefaultAsync();
+                .Where(criteria);
+            
+            if (!tracked)
+            {
+                baggageQuery = baggageQuery.AsNoTracking();
+            }
+            
+            var baggage = await baggageQuery.FirstOrDefaultAsync();
+            
+            return baggage;
         }
 
         public async Task<IReadOnlyList<Baggage>> GetAllBaggageByCriteriaAsync(Expression<Func<Baggage, bool>> criteria)

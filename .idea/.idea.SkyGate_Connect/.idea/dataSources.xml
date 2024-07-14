@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="skyGate_connect@localhost" uuid="ec5fc746-28f6-43a3-9e91-093f945c8046">
+    <data-source source="LOCAL" name="skyGate_connect@localhost" uuid="93e894ad-a9ac-476d-bb49-921ae62508b8">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <configured-by-url>true</configured-by-url>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost/skyGate_connect?password=Maicuss00&amp;user=postgres</jdbc-url>
+      <jdbc-url>jdbc:postgresql://localhost/skyGate_connect?logServerErrorDetail=true&amp;password=Maicuss00&amp;user=postgres</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

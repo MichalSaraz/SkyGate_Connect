@@ -244,6 +244,38 @@ namespace Infrastructure.Migrations
                     b.ToTable("ScheduledFlights");
                 });
 
+            modelBuilder.Entity("Core.HistoryTracking.ActionHistory<object>", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("PassengerOrItemId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("SerializedNewValue")
+                        .HasColumnType("jsonb");
+
+                    b.Property<string>("SerializedOldValue")
+                        .HasColumnType("jsonb");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PassengerOrItemId");
+
+                    b.ToTable("ActionHistory");
+                });
+
             modelBuilder.Entity("Core.PassengerContext.APIS.APISData", b =>
                 {
                     b.Property<Guid>("Id")
@@ -386,7 +418,7 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("PassengerId")
+                    b.Property<Guid>("PassengerOrItemId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("PredefinedCommentId")
@@ -399,7 +431,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PassengerId");
+                    b.HasIndex("PassengerOrItemId");
 
                     b.HasIndex("PredefinedCommentId");
 
@@ -560,8 +592,8 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("NotTravellingReason")
-                        .HasColumnType("integer");
+                    b.Property<string>("NotTravellingReason")
+                        .HasColumnType("text");
 
                     b.HasKey("PassengerOrItemId", "FlightId");
 
@@ -912,6 +944,17 @@ namespace Infrastructure.Migrations
                     b.Navigation("Flight");
                 });
 
+            modelBuilder.Entity("Core.HistoryTracking.ActionHistory<object>", b =>
+                {
+                    b.HasOne("Core.PassengerContext.BasePassengerOrItem", "PassengerOrItem")
+                        .WithMany("CustomerHistory")
+                        .HasForeignKey("PassengerOrItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PassengerOrItem");
+                });
+
             modelBuilder.Entity("Core.PassengerContext.APIS.APISData", b =>
                 {
                     b.HasOne("Core.PassengerContext.APIS.Country", "CountryOfIssue")
@@ -946,9 +989,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.PassengerContext.Booking.Comment", b =>
                 {
-                    b.HasOne("Core.PassengerContext.BasePassengerOrItem", "Passenger")
+                    b.HasOne("Core.PassengerContext.BasePassengerOrItem", "PassengerOrItem")
                         .WithMany("Comments")
-                        .HasForeignKey("PassengerId")
+                        .HasForeignKey("PassengerOrItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -956,7 +999,7 @@ namespace Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("PredefinedCommentId");
 
-                    b.Navigation("Passenger");
+                    b.Navigation("PassengerOrItem");
 
                     b.Navigation("PredefinedComment");
                 });
@@ -1120,6 +1163,8 @@ namespace Infrastructure.Migrations
                     b.Navigation("AssignedSeats");
 
                     b.Navigation("Comments");
+
+                    b.Navigation("CustomerHistory");
 
                     b.Navigation("Flights");
 

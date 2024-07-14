@@ -12,12 +12,21 @@ namespace Infrastructure.Repositories
         {
         }
 
-        public async Task<Comment> GetCommentByIdAsync(Guid id)
+        public async Task<Comment> GetCommentByIdAsync(Guid id, bool tracked = false)
         {
-            return await _context.Comments.AsQueryable()
+            var commentQuery = _context.Comments.AsQueryable()
                 .Include(_ => _.LinkedToFlights)
-                .Where(_ => _.Id == id)
-                .FirstOrDefaultAsync();
+                    .ThenInclude(_ => _.Flight)
+                .Where(_ => _.Id == id);
+            
+            if (!tracked)
+            {
+                commentQuery = commentQuery.AsNoTracking();
+            }
+            
+            var comment = await commentQuery.FirstOrDefaultAsync();
+            
+            return comment;
         }
 
         public async Task<Comment> GetCommentByCriteriaAsync(Expression<Func<Comment, bool>> criteria)
@@ -32,8 +41,9 @@ namespace Infrastructure.Repositories
         {
             return await _context.Comments.AsQueryable().AsNoTracking()
                 .Include(_ => _.LinkedToFlights)
-                .Include(_ => _.Passenger.AssignedSeats)
-                .Include(_ =>_.Passenger.BookingDetails)
+                    .ThenInclude(_ => _.Flight)
+                .Include(_ => _.PassengerOrItem.AssignedSeats)
+                .Include(_ =>_.PassengerOrItem.BookingDetails)
                 .Where(criteria)
                 .ToListAsync();
         }

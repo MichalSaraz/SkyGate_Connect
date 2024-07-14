@@ -1,5 +1,7 @@
 using AutoMapper;
 using Core.Dtos;
+using Core.HistoryTracking;
+using Core.HistoryTracking.Enums;
 using Core.Interfaces;
 using Core.PassengerContext.Booking;
 using Core.PassengerContext.Booking.Enums;
@@ -15,15 +17,18 @@ namespace Web.Api.PassengerManagement.Controllers
     {
         private readonly ICommentRepository _commentRepository;
         private readonly ICommentService _commentService;
+        private readonly IActionHistoryRepository _actionHistoryRepository;
         private readonly IMapper _mapper;
 
         public CommentController(
             ICommentRepository commentRepository, 
             ICommentService commentService, 
+            IActionHistoryRepository actionHistoryRepository,
             IMapper mapper)
         {
             _commentRepository = commentRepository;
             _commentService = commentService;
+            _actionHistoryRepository = actionHistoryRepository;
             _mapper = mapper;
         }
 
@@ -67,9 +72,9 @@ namespace Web.Api.PassengerManagement.Controllers
                 var comment = string.IsNullOrEmpty(predefineCommentId)
                     ? await _commentService.AddCommentAsync(id, commentType, text, flightIds)
                     : await _commentRepository.GetCommentByCriteriaAsync(c =>
-                        c.PredefinedCommentId == predefineCommentId && c.PassengerId == id)
+                        c.PredefinedCommentId == predefineCommentId && c.PassengerOrItemId == id)
                     ?? await _commentService.AddCommentAsync(id, commentType, text, flightIds, predefineCommentId);
-
+                
                 var commentDto = _mapper.Map<CommentDto>(comment);
                 
                 return Ok(commentDto);
@@ -102,7 +107,21 @@ namespace Web.Api.PassengerManagement.Controllers
         [HttpDelete("delete-comment")]
         public async Task<ActionResult> DeleteComment([FromBody] Dictionary<string, List<Guid>> commentIds)
         {
-            var commentsToDelete = new HashSet<Comment>();
+            var commentsToProcess = new Dictionary<Guid, Comment>();
+            var deletedComments = new List<Comment>();
+            var allCommentIds = commentIds.Values.SelectMany(id => id).Distinct().ToList();
+
+            foreach (var commentId in allCommentIds)
+            {
+                var comment = await _commentRepository.GetCommentByIdAsync(commentId, true);
+
+                if (comment == null)
+                {
+                    return NotFound(new ApiResponse(404, $"Comment with Id {commentId} does not exist."));
+                }
+
+                commentsToProcess[commentId] = comment;
+            }
 
             foreach (var flight in commentIds.Keys)
             {
@@ -110,42 +129,47 @@ namespace Web.Api.PassengerManagement.Controllers
 
                 foreach (var commentId in commentIdsList)
                 {
-                    var comment = await _commentRepository.GetCommentByIdAsync(commentId);
+                    var comment = commentsToProcess[commentId];
 
-                    if (comment == null)
-                    {
-                        return NotFound(new ApiResponse(404, $"Comment with Id {commentId} does not exist."));
-                    }
-
-                    if (comment.LinkedToFlights.All(f => f.FlightId != Guid.Parse(flight)) ||
-                        comment.LinkedToFlights.Count == 0)
+                    if (comment.LinkedToFlights.All(f => f.FlightId != Guid.Parse(flight)))
                     {
                         return BadRequest(new ApiResponse(400,
                             $"Comment with Id {commentId} is not linked to flight with Id {flight}"));
                     }
 
                     comment.LinkedToFlights.RemoveAll(f => f.FlightId == Guid.Parse(flight));
-
-                    if (commentsToDelete.All(c => c.Id != commentId) && comment.LinkedToFlights.Count == 0)
-                    {
-                        commentsToDelete.Add(comment);
-                    }
                 }
             }
 
-            foreach (var comment in commentsToDelete)
+            foreach (var comment in commentsToProcess.Values)
             {
+                ActionHistory<object?> record;
+                var commentDto = _mapper.Map<CommentDto>(comment);
+
                 if (comment.LinkedToFlights.Count == 0)
                 {
+                    record = new ActionHistory<object?>(ActionTypeEnum.Deleted, comment.PassengerOrItemId,
+                        nameof(Comment), null, commentDto);
+
                     await _commentRepository.DeleteAsync(comment);
+                    deletedComments.Add(comment);
                 }
                 else
                 {
+                    var oldVal = await _commentRepository.GetCommentByIdAsync(comment.Id);
+
+                    record = new ActionHistory<object?>(ActionTypeEnum.Updated, comment.PassengerOrItemId,
+                        nameof(Comment), commentDto, _mapper.Map<CommentDto>(oldVal));
+
                     await _commentRepository.UpdateAsync(comment);
                 }
+
+                await _actionHistoryRepository.AddAsync(record);
             }
 
-            return commentsToDelete.Any() ? NoContent() : Ok();
+            if (deletedComments.Any()) return NoContent();
+            
+            return Ok();
         }
 
         /// <summary>
@@ -168,8 +192,12 @@ namespace Web.Api.PassengerManagement.Controllers
             {
                 return NotFound(new ApiResponse(404, $"Comment with Id {commentId} and type 'Gate' not found."));
             }
+            
+            var record = new ActionHistory<object?>(ActionTypeEnum.Deleted, comment.PassengerOrItemId, nameof(Comment), 
+                null, _mapper.Map<CommentDto>(comment));
 
             await _commentRepository.DeleteAsync(comment);
+            await _actionHistoryRepository.AddAsync(record);
 
             return NoContent();
         }

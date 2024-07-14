@@ -1,5 +1,8 @@
 using AutoMapper;
 using Core.Dtos;
+using Core.FlightContext;
+using Core.HistoryTracking;
+using Core.HistoryTracking.Enums;
 using Core.Interfaces;
 using Core.PassengerContext.JoinClasses;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +18,7 @@ namespace Web.Api.PassengerManagement.Controllers
         private readonly IPassengerRepository _passengerRepository;
         private readonly ISSRCodeRepository _sSRCodeRepository;
         private readonly ISpecialServiceRequestRepository _specialServiceRequestRepository;
+        private readonly IActionHistoryRepository _actionHistoryRepository;
         private readonly IFlightRepository _flightRepository;
         private readonly IMapper _mapper;
 
@@ -22,12 +26,14 @@ namespace Web.Api.PassengerManagement.Controllers
             IPassengerRepository passengerRepository,
             ISSRCodeRepository sSRCodeRepository,
             ISpecialServiceRequestRepository specialServiceRequestRepository,
+            IActionHistoryRepository actionHistoryRepository,
             IFlightRepository flightRepository,
             IMapper mapper)
         {
             _passengerRepository = passengerRepository;
             _sSRCodeRepository = sSRCodeRepository;
             _specialServiceRequestRepository = specialServiceRequestRepository;
+            _actionHistoryRepository = actionHistoryRepository;
             _flightRepository = flightRepository;
             _mapper = mapper;
         }
@@ -123,8 +129,19 @@ namespace Web.Api.PassengerManagement.Controllers
                 }
             }
 
-            await _specialServiceRequestRepository.AddAsync(specialServiceRequests.ToArray());
             var specialServiceRequestsDto = _mapper.Map<List<SpecialServiceRequestDto>>(specialServiceRequests);
+
+            foreach (var request in specialServiceRequestsDto)
+            {
+                var flight = passenger.Flights.First(f => f.FlightId == request.FlightId).Flight as Flight;
+                request.FlightNumber = flight?.ScheduledFlightId;
+            }
+            
+            var record = new ActionHistory<object>(ActionTypeEnum.Created, id, nameof(SpecialServiceRequest),
+                specialServiceRequestsDto);
+                
+            await _actionHistoryRepository.AddAsync(record);
+            await _specialServiceRequestRepository.AddAsync(specialServiceRequests.ToArray());
 
             return Ok(specialServiceRequestsDto);
         }
@@ -175,7 +192,11 @@ namespace Web.Api.PassengerManagement.Controllers
 
                 ssrToDeleteBatch.AddRange(ssrToDelete);
             }
-
+            
+            var record = new ActionHistory<object?>(ActionTypeEnum.Deleted, id, nameof(SpecialServiceRequest), null,
+                _mapper.Map<List<SpecialServiceRequestDto>>(ssrToDeleteBatch));
+            
+            await _actionHistoryRepository.AddAsync(record);
             await _specialServiceRequestRepository.DeleteAsync(ssrToDeleteBatch.ToArray());
 
             return NoContent();

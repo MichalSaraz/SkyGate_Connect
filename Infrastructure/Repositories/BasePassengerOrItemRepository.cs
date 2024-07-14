@@ -3,6 +3,7 @@ using Core.PassengerContext;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using Core.HistoryTracking;
 
 namespace Infrastructure.Repositories
 {
@@ -24,8 +25,11 @@ namespace Infrastructure.Repositories
                 .Include(_ => _.Flights)
                     .ThenInclude(_ => _.Flight)
                 .Include(_ => _.AssignedSeats)
+                    .ThenInclude(_ => _.Flight)
                 .Include(_ => _.BookingDetails)
                 .Include(_ => _.Comments)
+                    .ThenInclude(_ => _.LinkedToFlights)
+                        .ThenInclude(_ => _.Flight)
                 .Where(criteria);
 
             if (!tracked)
@@ -43,8 +47,23 @@ namespace Infrastructure.Repositories
                 .Include(_ => _.Flights)
                     .ThenInclude(_ => _.Flight)
                 .Include(_ => _.AssignedSeats)
+                    .ThenInclude(_ => _.Flight)
                 .Include(_ => _.Comments)
+                    .ThenInclude(_ => _.LinkedToFlights)
+                        .ThenInclude(_ => _.Flight)
                 .FirstOrDefaultAsync(_ => _.Id == id);
+
+            return basePassengerOrItem;
+        }
+
+        public async Task<BasePassengerOrItem> AddActionRecordAsync(
+            Guid basePassengerOrItemId, ActionHistory<object> actionHistory)
+        {
+            var basePassengerOrItem = await _context.Passengers
+                .Include(_ => _.CustomerHistory)
+                .FirstOrDefaultAsync(_ => _.Id == basePassengerOrItemId);
+            
+            basePassengerOrItem.CustomerHistory.Add(actionHistory);
 
             return basePassengerOrItem;
         }

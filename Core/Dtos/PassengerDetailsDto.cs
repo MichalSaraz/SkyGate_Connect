@@ -1,6 +1,6 @@
 ﻿namespace Core.Dtos
 {
-    public class PassengerDetailsDto : PassengerOverviewDto
+    public class PassengerDetailsDto : PassengerOrItemOverviewDto
     {
         public int BaggageAllowance { get; init; }
         public bool PriorityBoarding { get; init; }
@@ -10,8 +10,5 @@
         public List<BaggageOverviewDto> PassengerCheckedBags { get; init; } = new();
         public List<CommentDto> Comments { get; init; } = new();
         public List<SpecialServiceRequestDto> SpecialServiceRequests { get; set; } = new();
-        public List<PassengerFlightDto> ConnectingFlights { get; init; }
-        public List<PassengerFlightDto> InboundFlights { get; init; }
-        public List<SeatDto> OtherFlightsSeats { get; init; }
     }
 }

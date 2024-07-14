@@ -9,8 +9,11 @@ namespace Core.Interfaces
         /// Retrieves a comment by its ID asynchronously.
         /// </summary>
         /// <param name="id">The ID of the comment to retrieve.</param>
-        /// <returns>The comment with the specified ID, or null if it doesn't exist.</returns>
-        Task<Comment> GetCommentByIdAsync(Guid id);
+        /// <param name="tracked">A boolean indicating whether the comment should be tracked by the context. Default
+        /// value is false.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation, containing the comment if found,
+        /// or null if not found.</returns>
+        Task<Comment> GetCommentByIdAsync(Guid id, bool tracked = false);
 
         /// <summary>
         /// Retrieves a comment based on the specified criteria.

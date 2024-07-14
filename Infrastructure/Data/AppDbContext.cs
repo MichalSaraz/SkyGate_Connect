@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using System.Reflection;
 using Core.PassengerContext.APIS;
 using Core.FlightContext.JoinClasses;
+using Core.HistoryTracking;
+using Infrastructure.Data.Config;
 
 namespace Infrastructure.Data
 {
@@ -37,6 +39,7 @@ namespace Infrastructure.Data
         public DbSet<APISData> APISData { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<SeatMap> SeatMaps { get; set; }
+        public DbSet<ActionHistory<object>> ActionHistory { get; set; }
 
         private readonly IConfiguration _configuration;
 
