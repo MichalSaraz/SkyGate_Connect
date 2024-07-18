@@ -47,7 +47,7 @@ namespace Infrastructure.Data
         {
         }
 
-        public AppDbContext(DbContextOptions options, IConfiguration configuration) : base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration configuration) : base(options)
         {
             _configuration = configuration;
         }

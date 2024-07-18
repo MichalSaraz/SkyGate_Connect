@@ -14,7 +14,6 @@ namespace Web.Extensions
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
 
             services.AddMemoryCache();
             //services.AddSingleton<ITimeProvider, SystemTimeProvider>();
@@ -44,6 +43,7 @@ namespace Web.Extensions
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IPassengerHistoryService, PassengerHistoryService>();
             services.AddScoped<IPassengerDtoMappingService, PassengerDtoMappingService>();
+            services.AddScoped<ITokenService, TokenService>();
             
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

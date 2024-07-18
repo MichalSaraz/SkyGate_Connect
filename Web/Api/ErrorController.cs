@@ -3,6 +3,7 @@ using Web.Errors;
 
 namespace Web.Api
 {
+    [ApiController]
     public class ErrorController : ControllerBase
     {
         [Route("errors/{code:int}")]

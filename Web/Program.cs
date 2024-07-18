@@ -3,6 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text.Json.Serialization;
+using Core.Identity;
+using Infrastructure.Identity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Web.Extensions;
 using Web.Middleware;
 
@@ -10,10 +15,18 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options =>
-options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
-.LogTo(Console.WriteLine, LogLevel.Information));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+        .LogTo(Console.WriteLine, LogLevel.Information));
 
-builder.Services.AddControllers()
+builder.Services.AddDbContext<AppIdentityDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("IdentityConnection"))
+        .LogTo(Console.WriteLine, LogLevel.Information));
+
+builder.Services.AddControllers(config =>
+    {
+        var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+        config.Filters.Add(new AuthorizeFilter(policy));
+    })
     .AddNewtonsoftJson()
     .AddJsonOptions(options =>
     {
@@ -40,6 +53,29 @@ var info = new OpenApiInfo()
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", info);
+    
+    // Add support for JWT Bearer authorization
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement{
+    {
+        new OpenApiSecurityScheme
+        {
+            Reference = new OpenApiReference
+            {
+                Type = ReferenceType.SecurityScheme,
+                Id = "Bearer"
+            }
+        },
+        Array.Empty<string>()
+    }});
 
     // Set the comments path for the Swagger JSON and UI.
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -48,6 +84,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddIdentityServices(builder.Configuration);
 
 var app = builder.Build();
 
@@ -73,6 +110,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
@@ -80,12 +118,16 @@ app.MapControllers();
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 var context = services.GetRequiredService<AppDbContext>();
+var identityContext = services.GetRequiredService<AppIdentityDbContext>();
+var userManager = services.GetRequiredService<UserManager<AppUser>>();
 var logger = services.GetRequiredService<ILogger<Program>>();
 
 try
 {
     await context.Database.MigrateAsync();
+    await identityContext.Database.MigrateAsync();
     await AppDbSeedData.SeedAll(context);
+    await AppIdentityDbContextSeed.SeedUsersAsync(userManager);
 }
 catch (Exception ex)
 {
