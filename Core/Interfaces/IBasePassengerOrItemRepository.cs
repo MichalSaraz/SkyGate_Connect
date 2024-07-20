@@ -30,6 +30,14 @@ namespace Core.Interfaces
         /// </returns>
         Task<BasePassengerOrItem> GetBasePassengerOrItemByIdAsync(Guid id);
 
+        /// <summary>
+        /// Retrieves a BasePassengerOrItem object that meets the specified criteria.
+        /// </summary>
+        /// <param name="criteria">The expression representing the criteria to filter the object.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains a BasePassengerOrItem
+        /// object that meets the specified criteria, or null if no matching object is found.</returns>
+        Task<BasePassengerOrItem> GetBasePassengerOrItemByCriteriaAsync(
+            Expression<Func<BasePassengerOrItem, bool>> criteria);
 
         /// <summary>
         /// Adds an action record to the base passenger or item asynchronously.

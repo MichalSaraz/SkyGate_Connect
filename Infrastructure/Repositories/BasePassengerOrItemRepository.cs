@@ -55,6 +55,22 @@ namespace Infrastructure.Repositories
 
             return basePassengerOrItem;
         }
+        
+        public async Task<BasePassengerOrItem> GetBasePassengerOrItemByCriteriaAsync(
+            Expression<Func<BasePassengerOrItem, bool>> criteria)
+        {
+            var basePassengerOrItem = await _context.Passengers.AsQueryable()
+                .Include(_ => _.Flights)
+                .ThenInclude(_ => _.Flight)
+                .Include(_ => _.AssignedSeats)
+                .ThenInclude(_ => _.Flight)
+                .Include(_ => _.Comments)
+                .ThenInclude(_ => _.LinkedToFlights)
+                .ThenInclude(_ => _.Flight)
+                .FirstOrDefaultAsync(criteria);
+
+            return basePassengerOrItem;
+        }
 
         public async Task<BasePassengerOrItem> AddActionRecordAsync(
             Guid basePassengerOrItemId, ActionHistory<object> actionHistory)

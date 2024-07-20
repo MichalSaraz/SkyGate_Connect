@@ -3,6 +3,7 @@ using Core.BaggageContext;
 using Core.Dtos;
 using Core.FlightContext;
 using Core.FlightContext.JoinClasses;
+using Core.HistoryTracking;
 using Core.PassengerContext;
 using Core.PassengerContext.APIS;
 using Core.PassengerContext.Booking;
@@ -10,6 +11,7 @@ using Core.PassengerContext.Booking.Enums;
 using Core.PassengerContext.JoinClasses;
 using Core.SeatingContext;
 using Core.SeatingContext.Enums;
+using Newtonsoft.Json;
 
 namespace Web.Helpers
 {
@@ -217,7 +219,14 @@ namespace Web.Helpers
             
             // Comment mapping
             CreateMap<Comment, CommentDto>();
-
+            
+            
+            // ActionHistory mapping
+            CreateMap<ActionHistory<object>, ActionHistoryDto>()
+                .ForMember(dest => dest.SerializedOldValue,
+                    opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<object>>(src.SerializedOldValue)))
+                .ForMember(dest => dest.SerializedNewValue,
+                    opt => opt.MapFrom(src => JsonConvert.DeserializeObject<List<object>>(src.SerializedNewValue)));
             
             // Join classes mappings
             CreateMap<PassengerFlight, PassengerFlightDto>()

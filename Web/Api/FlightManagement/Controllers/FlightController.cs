@@ -839,5 +839,29 @@ namespace Web.Api.FlightManagement.Controllers
 
             return Ok(updatedFlightDto);
         }
+
+        /// <summary>
+        /// Updates the boarding status of a flight.
+        /// </summary>
+        /// <param name="id">The ID of the flight to update.</param>
+        /// <param name="updateStatusTo">The new boarding status to set.</param>
+        /// <returns>The updated flight details.</returns>
+        [HttpPatch("flight/{id:guid}/update-boarding-status")]
+        public async Task<ActionResult<FlightDetailsDto>> UpdateBoardingStatus(Guid id,
+            BoardingStatusEnum updateStatusTo)
+        {
+            if (await _flightRepository.GetFlightByIdAsync(id) is not Flight flight)
+            {
+                return NotFound(new ApiResponse(404, $"Flight {id} not found"));
+            }
+
+            flight.BoardingStatus = updateStatusTo;
+
+            await _flightRepository.UpdateAsync(flight);
+
+            var updatedFlightDto = _mapper.Map<FlightDetailsDto>(flight);
+
+            return Ok(updatedFlightDto);
+        }
     }
 }

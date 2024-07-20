@@ -10,7 +10,8 @@ namespace Core.Dtos
         public string AirlineName { get; init; }
         public string AircraftRegistration { get; init; }
         public string AircraftType { get; init; }
-        public string FlightStatus { get; init; }        
+        public string FlightStatus { get; init; }
+        public string BoardingStatus { get; init; }
         public int TotalBookedInfants { get; init; }
         public int TotalCheckedInInfants { get; init; }
         public Dictionary<FlightClassEnum, int> BookedPassengers { get; init; }

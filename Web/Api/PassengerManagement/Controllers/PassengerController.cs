@@ -1219,5 +1219,108 @@ namespace Web.Api.PassengerManagement.Controllers
                     break;
             }
         }
+
+        /// <summary>
+        /// Retrieves the action history for a specific passenger.
+        /// </summary>
+        /// <param name="id">The ID of the passenger to retrieve the action history for.</param>
+        /// <returns>A list of ActionHistoryDto objects representing the action history for the passenger.</returns>
+        [HttpGet("{id:guid}/history")]
+        public async Task<ActionResult<List<ActionHistoryDto>>> ShowPassengerHistory(Guid id)
+        {
+            var passenger = await _passengerRepository.GetPassengerByIdAsync(id, false, true);
+
+            if (passenger == null)
+            {
+                return NotFound(new ApiResponse(404, $"Passenger with Id {id} was not found."));
+            }
+
+            var passengerHistoryList = await _actionHistoryRepository.GetActionHistoryByPassengerId(id);
+            
+            var passengerHistoryDtoList = _mapper.Map<List<ActionHistoryDto>>(passengerHistoryList);
+
+            return Ok(passengerHistoryDtoList);
+        }
+
+        /// <summary>
+        /// Updates the acceptance status of passengers on a flight.
+        /// </summary>
+        /// <param name="flightId">The ID of the flight.</param>
+        /// <param name="model">The model containing the passenger and boarding information.</param>
+        /// <param name="updateStatusTo">The acceptance status to update the passengers to.</param>
+        /// <param name="errorMessage">The error message to return if no passenger is found.</param>
+        /// <returns>An ActionResult containing a list of updated objects or an error response.</returns>
+        private async Task<ActionResult<List<object>>> UpdateBoardStatus(Guid flightId, BoardPassengerModel model,
+            AcceptanceStatusEnum updateStatusTo, string errorMessage)
+        {
+            if (await _flightRepository.GetFlightByIdAsync(flightId, false) is not Flight flight)
+            {
+                return NotFound(new ApiResponse(404, $"Flight with Id {flightId} was not found."));
+            }
+
+            var checkAcceptanceStatus = updateStatusTo == AcceptanceStatusEnum.Accepted
+                ? AcceptanceStatusEnum.Boarded
+                : AcceptanceStatusEnum.Accepted;
+
+            Expression<Func<BasePassengerOrItem, bool>> criteria = c =>
+                c.AssignedSeats.Any(s => s.SeatNumber == model.SeatNumber && s.FlightId == flightId) || c.Flights.Any(
+                    f => f.FlightId == flightId && f.BoardingSequenceNumber == model.BoardingSequenceNumber &&
+                         f.AcceptanceStatus == checkAcceptanceStatus);
+
+            var passengerOrItem = await _basePassengerOrItemRepository.GetBasePassengerOrItemByCriteriaAsync(criteria);
+
+            if (passengerOrItem == null)
+            {
+                return NotFound(new ApiResponse(404, errorMessage));
+            }
+
+            if (flight.BoardingStatus != BoardingStatusEnum.Open)
+            {
+                return BadRequest(new ApiResponse(400, "Passenger(s) cannot be processed when boarding is closed"));
+            }
+
+            passengerOrItem.Flights.First(f => f.FlightId == flightId).AcceptanceStatus = updateStatusTo;
+
+            var oldVal = await _basePassengerOrItemRepository.GetBasePassengerOrItemByIdAsync(passengerOrItem.Id);
+
+            await _basePassengerOrItemRepository.UpdateAsync(passengerOrItem);
+
+            var updatedPassengerOrItemDto =
+                await _passengerHistoryService.SavePassengerOrItemActionsToPassengerHistoryAsync(
+                    new List<BasePassengerOrItem> { oldVal }, new List<BasePassengerOrItem> { passengerOrItem }, flight,
+                    false);
+
+            return Ok(updatedPassengerOrItemDto);
+        }
+
+        /// <summary>
+        /// Updates the boarding status of a passenger for a selected flight.
+        /// </summary>
+        /// <param name="flightId">The ID of the flight.</param>
+        /// <param name="model">The model containing the passenger details.</param>
+        /// <returns>
+        /// Returns a list of objects representing the updated passenger details.
+        /// </returns>
+        [HttpPatch("selected-flight/{flightId:guid}/board-passengers")]
+        public async Task<ActionResult<List<object>>> BoardPassenger(Guid flightId,
+            [FromBody] BoardPassengerModel model)
+        {
+            return await UpdateBoardStatus(flightId, model, AcceptanceStatusEnum.Boarded,
+                "No checked in passenger was found with provided seat number or boarding sequence number");
+        }
+
+        /// <summary>
+        /// Deboards a passenger from a flight.
+        /// </summary>
+        /// <param name="flightId">The unique identifier of the flight.</param>
+        /// <param name="model">The model containing the details of the passenger to be deboarded.</param>
+        /// <returns>A list of objects representing the updated board status of the deboarded passenger.</returns>
+        [HttpPatch("selected-flight/{flightId:guid}/deboard-passengers")]
+        public async Task<ActionResult<List<object>>> DeboardPassenger(Guid flightId,
+            [FromBody] BoardPassengerModel model)
+        {
+            return await UpdateBoardStatus(flightId, model, AcceptanceStatusEnum.Accepted,
+                "No boarded passenger was found with provided seat number or boarding sequence number");
+        }
     }
 }
