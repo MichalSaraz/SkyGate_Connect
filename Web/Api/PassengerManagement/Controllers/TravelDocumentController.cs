@@ -6,8 +6,6 @@ using Core.HistoryTracking.Enums;
 using Core.Interfaces;
 using Core.PassengerContext.APIS;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Web.Api.PassengerManagement.Models;
 using Web.Errors;
 
@@ -20,17 +18,20 @@ namespace Web.Api.PassengerManagement.Controllers
         private readonly IAPISDataRepository _apisDataRepository;
         private readonly ICountryRepository _countryRepository;
         private readonly IActionHistoryRepository _actionHistoryRepository;
+        private readonly ITimeProvider _timeProvider;
         private readonly IMapper _mapper;
 
         public TravelDocumentController(
             IAPISDataRepository apisDataRepository,
             ICountryRepository countryRepository,
             IActionHistoryRepository actionHistoryRepository,
+            ITimeProvider timeProvider,
             IMapper mapper)
         {
             _apisDataRepository = apisDataRepository;
             _countryRepository = countryRepository;
             _actionHistoryRepository = actionHistoryRepository;
+            _timeProvider = timeProvider;
             _mapper = mapper;
         }
 
@@ -39,28 +40,21 @@ namespace Web.Api.PassengerManagement.Controllers
         /// </summary>
         /// <typeparam name="TModel">The type of the travel document model.</typeparam>
         /// <param name="id">The ID of the passenger.</param>
-        /// <param name="dataList">The list of JSON objects representing the travel documents.</param>
+        /// <param name="models">The list of JSON objects representing the travel documents.</param>
         /// <param name="saveMethod">The save method to be called with the processed travel documents.</param>
         /// <param name="getByIdMethod">The method to get a travel document by ID. This is optional and needed only for
         /// edit operations.</param>
         /// <returns>An ActionResult containing a list of APISDataDto objects representing the processed travel
         /// documents.</returns>
         private async Task<ActionResult<List<APISDataDto>>> _ProcessTravelDocumentsAsync<TModel>(Guid id,
-            List<JObject> dataList, Func<APISData[], Task> saveMethod, Func<Guid, Task<APISData>>? getByIdMethod = null)
+            List<TModel> models, Func<APISData[], Task> saveMethod, Func<Guid, Task<APISData>>? getByIdMethod = null)
             where TModel : APISDataModel
         {
             var processedApisDataList = new List<APISData>();
             var oldValues = new List<APISData>();
             
-            foreach (var data in dataList)
+            foreach (var model in models)
             {
-                var model = JsonConvert.DeserializeObject<TModel>(data.ToString());
-                
-                if (model == null)
-                {
-                    throw new Exception("Invalid data.");
-                }
-                
                 var nationality = await _countryRepository.GetCountryByCriteriaAsync(d =>
                     d.Country3LetterCode == model.Nationality);
                 var countryOfIssue = await _countryRepository.GetCountryByCriteriaAsync(d =>
@@ -81,10 +75,11 @@ namespace Web.Api.PassengerManagement.Controllers
                 
                 if (getByIdMethod == null) // Add method
                 {
-                    travelDocument = new APISData(id, nationality.Country2LetterCode,
-                        countryOfIssue.Country2LetterCode,
+                    travelDocument = new APISData(id, nationality.Country2LetterCode, countryOfIssue.Country2LetterCode,
                         model.DocumentNumber, model.DocumentType, model.Gender, model.FirstName, model.LastName,
-                        model.DateOfBirth, model.DateOfIssue, model.ExpirationDate);
+                        _timeProvider.ParseDate(model.DateOfBirth, true),
+                        _timeProvider.ParseDate(model.DateOfIssue, true), 
+                        _timeProvider.ParseDate(model.ExpirationDate, true));
                 }
                 else // Edit method
                 {
@@ -99,12 +94,12 @@ namespace Web.Api.PassengerManagement.Controllers
                     travelDocument.FirstName = model.FirstName;
                     travelDocument.LastName = model.LastName;
                     travelDocument.Gender = model.Gender;
-                    travelDocument.DateOfBirth = model.DateOfBirth;
+                    travelDocument.DateOfBirth = _timeProvider.ParseDate(model.DateOfBirth, true);
                     travelDocument.DocumentNumber = model.DocumentNumber;
                     travelDocument.DocumentType = model.DocumentType;
                     travelDocument.CountryOfIssueId = countryOfIssue.Country2LetterCode;
-                    travelDocument.DateOfIssue = model.DateOfIssue;
-                    travelDocument.ExpirationDate = model.ExpirationDate;
+                    travelDocument.DateOfIssue = _timeProvider.ParseDate(model.DateOfIssue, true);
+                    travelDocument.ExpirationDate = _timeProvider.ParseDate(model.ExpirationDate, true);
                     travelDocument.NationalityId = nationality.Country2LetterCode;
                 }
 
@@ -162,13 +157,15 @@ namespace Web.Api.PassengerManagement.Controllers
         /// <see cref="APISDataDto"/> objects. If the request is invalid, returns <see cref="NotFoundResult"/> with an
         /// error message.</returns>
         [HttpPost("passenger/{id:guid}/add-document")]
-        public async Task<ActionResult<List<APISDataDto>>> AddTravelDocument(Guid id, [FromBody] List<JObject> dataList)
+        public async Task<ActionResult<List<APISDataDto>>> AddTravelDocument(Guid id,
+            [FromBody] List<AddAPISDataModel> dataList)
         {
             Func<APISData[], Task> saveMethod = _apisDataRepository.AddAsync;
 
             try
             {
-                var addedApisData = await _ProcessTravelDocumentsAsync<AddAPISDataModel>(id, dataList, saveMethod);
+                var addedApisData = await _ProcessTravelDocumentsAsync(id, dataList, saveMethod);
+                
                 return Ok(addedApisData);
             }
             catch (Exception ex)
@@ -208,14 +205,14 @@ namespace Web.Api.PassengerManagement.Controllers
         /// error message.</returns>
         [HttpPut("passenger/{id:guid}/edit-document")]
         public async Task<ActionResult<List<APISDataDto>>> EditTravelDocument(Guid id,
-            [FromBody] List<JObject> dataList)
+            [FromBody] List<EditAPISDataModel> dataList)
         {
             Func<APISData[], Task> saveMethod = _apisDataRepository.UpdateAsync;
 
             try
             {
-                var editedApisData =
-                    await _ProcessTravelDocumentsAsync<EditAPISDataModel>(id, dataList, saveMethod, GetByIdMethod);
+                var editedApisData = await _ProcessTravelDocumentsAsync(id, dataList, saveMethod, GetByIdMethod);
+                
                 return Ok(editedApisData);
             }
             catch (Exception ex)

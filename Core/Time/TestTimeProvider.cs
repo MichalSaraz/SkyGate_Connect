@@ -14,7 +14,7 @@
             Now = new DateTime(year, month, day);
         }
 
-        protected override DateTime? ParseDateWithCurrentYear(DateTime date)
+        protected override DateTime ParseDateWithCurrentYear(DateTime date)
         {
             var currentYear = 2023;
             return new DateTime(currentYear, date.Month, date.Day, date.Hour, date.Minute, date.Second);

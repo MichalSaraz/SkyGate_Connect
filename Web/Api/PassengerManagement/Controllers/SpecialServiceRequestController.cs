@@ -6,7 +6,7 @@ using Core.HistoryTracking.Enums;
 using Core.Interfaces;
 using Core.PassengerContext.JoinClasses;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
+using Web.Api.PassengerManagement.Models;
 using Web.Errors;
 
 namespace Web.Api.PassengerManagement.Controllers
@@ -42,7 +42,7 @@ namespace Web.Api.PassengerManagement.Controllers
         /// Adds special service requests for a passenger on a specific flight.
         /// </summary>
         /// <param name="id">The ID of the passenger.</param>
-        /// <param name="requestData">The special service request data.</param>
+        /// <param name="requestData">A model containing the flight IDs and special service requests to add.</param>
         /// <remarks>
         /// Sample request:
         ///
@@ -68,7 +68,7 @@ namespace Web.Api.PassengerManagement.Controllers
         /// object.</returns>
         [HttpPost("passenger/{id:guid}/add-request")]
         public async Task<ActionResult<SpecialServiceRequestDto>> AddSpecialServiceRequest(Guid id,
-            [FromBody] List<JObject> requestData)
+            [FromBody] SpecialServiceRequestModel requestData)
         {
             var passenger = await _passengerRepository.GetPassengerByIdAsync(id, false, true);
 
@@ -79,53 +79,37 @@ namespace Web.Api.PassengerManagement.Controllers
 
             var specialServiceRequests = new List<SpecialServiceRequest>();
 
-            foreach (var request in requestData)
+            foreach (var flightId in requestData.FlightIds)
             {
-                var flightIds = request["flightIds"]?.ToObject<List<Guid>>();
-
-                var ssrData = request["specialServiceRequests"];
-
-                if (ssrData != null)
+                if (!await _flightRepository.ExistsAsync(flightId))
                 {
-                    foreach (var ssrRequest in ssrData)
+                    return NotFound(new ApiResponse(404, $"Flight with Id {flightId} not found."));
+                }
+
+                foreach (var request in requestData.SpecialServiceRequests)
+                {
+                    var SSRCode = await _sSRCodeRepository.GetSSRCodeAsync(request.SSRCode);
+
+                    if (SSRCode == null)
                     {
-                        var SSRCode = await _sSRCodeRepository.GetSSRCodeAsync(ssrRequest["SSRCode"]?.ToString());
-                        var freeText = ssrRequest["freeText"]?.ToString();
-
-                        if (SSRCode == null)
-                        {
-                            return NotFound(new ApiResponse(404, "SSRCode not found."));
-                        }
-
-                        if (SSRCode.IsFreeTextMandatory && string.IsNullOrEmpty(freeText))
-                        {
-                            return BadRequest(new ApiResponse(400, "FreeText is required for this SSRCode."));
-                        }
-
-                        if (flightIds != null)
-                        {
-                            foreach (var flightId in flightIds)
-                            {
-                                if (!await _flightRepository.ExistsAsync(flightId))
-                                {
-                                    return NotFound(new ApiResponse(404,
-                                        $"Flight with Id {flightId} not found."));
-                                }
-
-                                var isSSRAlreadyExists = passenger.SpecialServiceRequests.Any(ssr =>
-                                    ssr.FlightId == flightId && ssr.SSRCodeId == SSRCode.Code);
-                                if (isSSRAlreadyExists)
-                                {
-                                    return BadRequest(new ApiResponse(400,
-                                        $"SSR {SSRCode.Code} already exists for passenger {id} on flight {flightId}"));
-                                }
-
-                                var specialServiceRequest =
-                                    new SpecialServiceRequest(SSRCode.Code, flightId, id, freeText);
-                                specialServiceRequests.Add(specialServiceRequest);
-                            }
-                        }
+                        return NotFound(new ApiResponse(404, "SSRCode not found."));
                     }
+
+                    if (SSRCode.IsFreeTextMandatory && string.IsNullOrEmpty(request.FreeText))
+                    {
+                        return BadRequest(new ApiResponse(400, "FreeText is required for this SSRCode."));
+                    }
+
+                    var isSSRAlreadyExists = passenger.SpecialServiceRequests.Any(ssr =>
+                        ssr.FlightId == flightId && ssr.SSRCodeId == SSRCode.Code);
+                    if (isSSRAlreadyExists)
+                    {
+                        return BadRequest(new ApiResponse(400,
+                            $"SSR {SSRCode.Code} already exists for passenger {id} on flight {flightId}"));
+                    }
+
+                    var specialServiceRequest = new SpecialServiceRequest(SSRCode.Code, flightId, id, request.FreeText);
+                    specialServiceRequests.Add(specialServiceRequest);
                 }
             }
 
@@ -136,10 +120,9 @@ namespace Web.Api.PassengerManagement.Controllers
                 var flight = passenger.Flights.First(f => f.FlightId == request.FlightId).Flight as Flight;
                 request.FlightNumber = flight?.ScheduledFlightId;
             }
-            
+
             var record = new ActionHistory<object>(ActionTypeEnum.Created, id, nameof(SpecialServiceRequest),
                 specialServiceRequestsDto);
-                
             await _actionHistoryRepository.AddAsync(record);
             await _specialServiceRequestRepository.AddAsync(specialServiceRequests.ToArray());
 

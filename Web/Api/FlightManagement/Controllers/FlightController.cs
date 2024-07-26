@@ -11,7 +11,6 @@ using Core.PassengerContext.Booking.Enums;
 using Core.PassengerContext.JoinClasses;
 using Core.SeatingContext.Enums;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using Web.Api.FlightManagement.Models;
 using Web.Errors;
 using Web.Extensions;
@@ -63,7 +62,7 @@ namespace Web.Api.FlightManagement.Controllers
         /// <summary>
         /// Searches for flights based on the provided search criteria.
         /// </summary>
-        /// <param name="data">The search criteria for the flight search.</param>
+        /// <param name="model">The model containing the search criteria.</param>
         /// <remarks>
         /// Sample request:
         ///
@@ -80,30 +79,25 @@ namespace Web.Api.FlightManagement.Controllers
         /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of
         /// <see cref="FlightOverviewDto"/> objects that match the search criteria.</returns>
         [HttpPost("search-flights")]
-        public async Task<ActionResult<List<FlightOverviewDto>>> SearchFlights([FromBody] JObject data)
+        public async Task<ActionResult<List<FlightOverviewDto>>> SearchFlights([FromBody] FlightSearchModel model)
         {
-            var model = new FlightSearchModel
-            {
-                DepartureDate = _timeProvider.ParseDate(data["departureDate"]?.ToString()),
-                AirlineId = data["airlineId"]?.ToString(),
-                DestinationFrom = data["destinationFrom"]?.ToString(),
-                DestinationTo = data["destinationTo"]?.ToString(),
-                FlightNumber = data["flightNumber"]?.ToString()
-            };
+            var parsedDepartureDate = model.DepartureDate != null
+                ? _timeProvider.ParseDate(model.DepartureDate)
+                : (DateTime?)null;
 
             if (!string.IsNullOrEmpty(model.FlightNumber) && string.IsNullOrEmpty(model.AirlineId))
             {
                 return BadRequest(new ApiResponse(400, "AirlineId must be specified when searching by flight number."));
             }
 
-            if (!model.DepartureDate.HasValue && string.IsNullOrEmpty(model.AirlineId) &&
+            if (!parsedDepartureDate.HasValue && string.IsNullOrEmpty(model.AirlineId) &&
                 string.IsNullOrEmpty(model.DestinationFrom) && string.IsNullOrEmpty(model.DestinationTo))
             {
                 return BadRequest(new ApiResponse(400,
                     "At least one field must be filled in for the search criteria."));
             }
 
-            if (model.DepartureDate.HasValue && string.IsNullOrEmpty(model.DestinationFrom) && 
+            if (parsedDepartureDate.HasValue && string.IsNullOrEmpty(model.DestinationFrom) && 
                 string.IsNullOrEmpty(model.DestinationTo) && string.IsNullOrEmpty(model.FlightNumber) &&
                 string.IsNullOrEmpty(model.AirlineId))
             {
@@ -119,7 +113,7 @@ namespace Web.Api.FlightManagement.Controllers
             }
 
             Expression<Func<Flight, bool>> criteria = c =>
-                (!model.DepartureDate.HasValue || c.DepartureDateTime.Date == model.DepartureDate.Value.Date) &&
+                (!parsedDepartureDate.HasValue || c.DepartureDateTime.Date == parsedDepartureDate.Value.Date) &&
                 (string.IsNullOrEmpty(model.AirlineId) || c.AirlineId == model.AirlineId) &&
                 (string.IsNullOrEmpty(model.DestinationFrom) || c.DestinationFromId == model.DestinationFrom) &&
                 (string.IsNullOrEmpty(model.DestinationTo) || c.DestinationToId == model.DestinationTo) &&
@@ -347,18 +341,13 @@ namespace Web.Api.FlightManagement.Controllers
 
             foreach (var connectingFlightModel in addConnectingFlightModels)
             {
-                var parsedDepartureDateTime = _timeProvider.ParseDate(connectingFlightModel.DepartureDate,
+                var parsedDepartureDateTime = _timeProvider.ParseDate(connectingFlightModel.DepartureDate, false,
                     connectingFlightModel.DepartureTime);
-
-                if (!parsedDepartureDateTime.HasValue)
-                {
-                    return BadRequest(new ApiResponse(400, "Invalid departure date."));
-                }
 
                 var lastFlight = currentPassengerFlights[^1];
 
                 var connectingFlight =
-                    await _GetOrCreateFlightAsync(connectingFlightModel, parsedDepartureDateTime.Value);
+                    await _GetOrCreateFlightAsync(connectingFlightModel, parsedDepartureDateTime);
 
                 switch (isInbound)
                 {

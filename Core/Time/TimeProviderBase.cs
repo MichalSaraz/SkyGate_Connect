@@ -7,18 +7,12 @@ namespace Core.Time
     {
         public virtual DateTime Now => DateTime.Now;
 
-        public virtual DateTime? ParseDate(string input, string defaultTime = "0:00:00",
-            bool useFormatsWithYear = false)
+        public virtual DateTime ParseDate(string input, bool useFormatsWithYear = false, string defaultTime = "0:00:00")
         {
             string[] formatsDateOnly = { "dMMM", "DDMMM", "ddMMM" };
             string[] formatsDateWithYear = { "dMMMyyyy", "ddMMMyyyy", "DDMMMyyyy" };
 
             string[] formatsToUse = useFormatsWithYear ? formatsDateWithYear : formatsDateOnly;
-
-            if (string.IsNullOrEmpty(input))
-            {
-                return null;
-            }
 
             var isValidDate = DateTime.TryParseExact(input, formatsToUse, CultureInfo.InvariantCulture,
                 DateTimeStyles.None, out var parsedDate);
@@ -49,7 +43,7 @@ namespace Core.Time
             return ParseDateWithCurrentYear(result);
         }
 
-        protected virtual DateTime? ParseDateWithCurrentYear(DateTime date)
+        protected virtual DateTime ParseDateWithCurrentYear(DateTime date)
         {
             return new DateTime(Now.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second);
         }

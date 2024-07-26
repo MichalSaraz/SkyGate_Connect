@@ -18,7 +18,7 @@ namespace Web.Api.PassengerManagement.Models
         [Required]
         [RegularExpression(@"^([1-9]|[12][0-9]|3[01])(?i)(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)([0-9]{4})$",
             ErrorMessage = "Date must be in the format dMMMyyyy or DDMMMyyyy")]
-        public DateTime DateOfBirth { get; set; }
+        public required string DateOfBirth { get; set; }
 
         [Required]
         public required string DocumentNumber { get; set; }
@@ -33,12 +33,12 @@ namespace Web.Api.PassengerManagement.Models
         [Required]
         [RegularExpression(@"^([1-9]|[12][0-9]|3[01])(?i)(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)([0-9]{4})$",
             ErrorMessage = "Date must be in the format dMMMyyyy or DDMMMyyyy")]
-        public DateTime DateOfIssue { get; set; }
+        public required string DateOfIssue { get; set; }
 
         [Required]
         [RegularExpression(@"^([1-9]|[12][0-9]|3[01])(?i)(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)([0-9]{4})$",
             ErrorMessage = "Date must be in the format dMMMyyyy or DDMMMyyyy")]
-        public DateTime ExpirationDate { get; set; }
+        public required string ExpirationDate { get; set; }
 
         [Required]
         [RegularExpression(@"^[A-Za-z]{3}$", ErrorMessage = "Country must be in the format XXX")]

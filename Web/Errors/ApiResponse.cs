@@ -1,4 +1,6 @@
-﻿namespace Web.Errors
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace Web.Errors
 {
     public class ApiResponse
     {

@@ -13,7 +13,6 @@ using Core.PassengerContext.JoinClasses;
 using Core.SeatingContext;
 using Core.SeatingContext.Enums;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using Web.Api.PassengerManagement.Models;
 using Web.Errors;
 
@@ -67,7 +66,7 @@ namespace Web.Api.PassengerManagement.Controllers
         /// <summary>
         /// Searches for passengers based on the given search criteria.
         /// </summary>
-        /// <param name="data">The search criteria as a JObject.</param>
+        /// <param name="model">The search criteria.</param>
         /// <remarks>
         /// Sample request:
         ///
@@ -88,29 +87,15 @@ namespace Web.Api.PassengerManagement.Controllers
         /// <returns>An <see cref="ActionResult{T}"/> containing a list <see cref="List{T}"/> of <see cref="object"/>.
         /// </returns>
         [HttpPost("search-passengers")]
-        public async Task<ActionResult<List<BasePassengerOrItemDto>>> SearchPassengers([FromBody] JObject data)
+        public async Task<ActionResult<List<BasePassengerOrItemDto>>> SearchPassengers(
+            [FromBody] PassengerSearchModel model)
         {
-            var model = new PassengerSearchModel
-            {
-                //ToDo : ToUpper(), ToLower() apply
-                FlightNumber = data["flightNumber"]?.ToString(),
-                AirlineId = data["airlineId"]?.ToString(),
-                DepartureDate = _timeProvider.ParseDate(data["departureDate"]?.ToString()),
-                DocumentNumber = data["documentNumber"]?.ToString(),
-                LastName = data["lastName"]?.ToString(),
-                PNR = data["pnr"]?.ToString(),
-                DestinationFrom = data["destinationFrom"]?.ToString(),
-                DestinationTo = data["destinationTo"]?.ToString(),
-                SeatNumber = data["seatNumber"]?.ToString()
-            };
+            var parsedDepartureDate = _timeProvider.ParseDate(model.DepartureDate);
 
             if (string.IsNullOrEmpty(model.FlightNumber) || string.IsNullOrEmpty(model.AirlineId) ||
-                !model.DepartureDate.HasValue || (string.IsNullOrEmpty(model.DocumentNumber) &&
-                                                  string.IsNullOrEmpty(model.LastName) &&
-                                                  string.IsNullOrEmpty(model.PNR) &&
-                                                  string.IsNullOrEmpty(model.DestinationFrom) &&
-                                                  string.IsNullOrEmpty(model.DestinationTo) &&
-                                                  string.IsNullOrEmpty(model.SeatNumber)))
+                (string.IsNullOrEmpty(model.DocumentNumber) && string.IsNullOrEmpty(model.LastName) &&
+                 string.IsNullOrEmpty(model.PNR) && string.IsNullOrEmpty(model.DestinationFrom) &&
+                 string.IsNullOrEmpty(model.DestinationTo) && string.IsNullOrEmpty(model.SeatNumber)))
             {
                 return BadRequest(new ApiResponse(400,
                     "Flight number, Airline, Departure date plus one optional field must be filled in for the search criteria."));
@@ -120,7 +105,7 @@ namespace Web.Api.PassengerManagement.Controllers
                 c.Flights.Any(pf =>
                     pf.Flight is Flight && ((Flight)pf.Flight).ScheduledFlightId.Substring(2) == model.FlightNumber &&
                     pf.Flight.AirlineId == model.AirlineId &&
-                    pf.Flight.DepartureDateTime.Date == model.DepartureDate.Value.Date) &&
+                    pf.Flight.DepartureDateTime.Date == parsedDepartureDate.Date) &&
                 (string.IsNullOrEmpty(model.DocumentNumber) ||
                  c.TravelDocuments.Any(a => a.DocumentNumber == model.DocumentNumber)) &&
                 (string.IsNullOrEmpty(model.DestinationFrom) ||
@@ -138,7 +123,7 @@ namespace Web.Api.PassengerManagement.Controllers
 
             var selectedFlight = await _flightRepository.GetFlightByCriteriaAsync(f =>
                 f.ScheduledFlightId.Substring(2) == model.FlightNumber && f.AirlineId == model.AirlineId &&
-                f.DepartureDateTime.Date == model.DepartureDate.Value.Date);
+                f.DepartureDateTime.Date == parsedDepartureDate.Date);
             
             if (!passengerOrItems.Any())
             {

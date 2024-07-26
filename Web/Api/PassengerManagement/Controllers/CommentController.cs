@@ -6,7 +6,7 @@ using Core.Interfaces;
 using Core.PassengerContext.Booking;
 using Core.PassengerContext.Booking.Enums;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
+using Web.Api.PassengerManagement.Models;
 using Web.Errors;
 
 namespace Web.Api.PassengerManagement.Controllers
@@ -37,7 +37,7 @@ namespace Web.Api.PassengerManagement.Controllers
         /// </summary>
         /// <param name="id">The ID of the passenger.</param>
         /// <param name="commentType">The type of the comment (Checkin or Gate).</param>
-        /// <param name="data">The data object containing the flight IDs and text.</param>
+        /// <param name="model">The comment data.</param>
         /// <param name="predefineCommentId">Optional. The ID of a predefined comment to add.</param>
         /// <remarks>
         /// Sample request:
@@ -57,23 +57,16 @@ namespace Web.Api.PassengerManagement.Controllers
         /// returns <see cref="BadRequestResult"/> with an error message.</returns>
         [HttpPost("passenger/{id:guid}/add-comment")]
         public async Task<ActionResult<CommentDto>> AddComment(Guid id, CommentTypeEnum commentType,
-            [FromBody] JObject data, string? predefineCommentId = null)
+            [FromBody] AddCommentModel model, string? predefineCommentId = null)
         {
-            var flightIds = data["flightIds"]?.ToObject<List<Guid>>();
-            var text = data["text"]?.ToString();
-
-            if (flightIds == null)
-            {
-                return BadRequest(new ApiResponse(400, "Flight IDs must be provided."));
-            }
-
             try
             {
                 var comment = string.IsNullOrEmpty(predefineCommentId)
-                    ? await _commentService.AddCommentAsync(id, commentType, text, flightIds)
+                    ? await _commentService.AddCommentAsync(id, commentType, model.Text, model.FlightIds)
                     : await _commentRepository.GetCommentByCriteriaAsync(c =>
-                        c.PredefinedCommentId == predefineCommentId && c.PassengerOrItemId == id)
-                    ?? await _commentService.AddCommentAsync(id, commentType, text, flightIds, predefineCommentId);
+                          c.PredefinedCommentId == predefineCommentId && c.PassengerOrItemId == id) ??
+                      await _commentService.AddCommentAsync(id, commentType, model.Text, model.FlightIds,
+                          predefineCommentId);
                 
                 var commentDto = _mapper.Map<CommentDto>(comment);
                 
